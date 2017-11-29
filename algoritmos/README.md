@@ -4,7 +4,11 @@ En este apartado encontrarás la teoría y diferentes ejercicios con sus respect
 
 A la hora de escribir los algoritmos utilizaré la sintaxis propuesta en el programa [PSeInt](http://pseint.sourceforge.net/).
 
-**José Ramón Jiménez Reyes** @JRJimenezReyes - IES Al-Ándalus
+**José Ramón Jiménez Reyes**
+
+ > ![@JRJimenezReyes](../assets/images/github.png) @JRJimenezReyes
+
+ > ![joseramon.jimenez@iesalandalus.org](../assets/images/mail.png) joseramon.jimenez@iesalandalus.org
 
 ## Contenidos
 - [Algoritmo](#algoritmo)
@@ -239,7 +243,7 @@ Son secuencias que también alteran el flujo del algoritmo, permitiendo repetir 
   Diseñar un algoritmo que lea un número por teclado y nos lo muestre por pantalla.
 
   [Posible solución para el algoritmo LecturaEscritura](ejercicios/LecturaEscritura.psc)
-  
+
 - **Número par o impar**
 	Diseñar un algoritmo que lea un número por teclado y nos indique si es par o impar.
 

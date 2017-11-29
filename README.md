@@ -2,9 +2,7 @@
 
 En este repositorio iré colgando teoría y diferentes ejercicios, con sus respectivas posibles soluciones, utilizados en el módulo de **Programación** del ciclo **Desarrollo de Aplicaciones Multiplataforma** en su modalidad **Semipresencial** impartido en el **IES Al-Ándalus**.
 
-Animo a cualquier profesor a utilizarlo, sea cuál sea el tipo de enseñanza que imparta.
-
-También animo a cualquiera a utilizarlo como formación personal.
+Este repositorio no pretende ser una obra exhaustiva sobre programación ni java. Más bien pretende ser un "chuletario" con las construcciones básicas y sobre todo un repositorio de ejercicios resueltos. La idea es servir a cualquiera que se esté formando en programación y java para ejercitar sus avances por medio de los ejercicios resueltos, que poco a poco iré ampliando, y ser una referencia rápida para su repaso.
 
 ## Contenidos
 - [Resolución de problemas mediante algoritmos](algoritmos/README.md)

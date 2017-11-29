@@ -12,6 +12,7 @@ A la hora de escribir los algoritmos utilizaré la sintaxis propuesta en el prog
 - [Variables](#variables)
 - [Tipos de datos](#tipos-de-datos)
 - [Operadores](#operadores)
+- [Funciones](#funciones)
 - [Sentencias secuenciales](#sentencias-secuenciales)
 - [Sentencias condicionales](#sentencias-condicionales)
 - [Sentencias repetitivas](#sentencias-repetitivas)
@@ -93,12 +94,41 @@ Operador|Significado|Ejemplo
 ------------|--------------|------------
 \+| Suma| suma <- op1 + op2
 \- |Resta| dif <- op1 - op2
-*|Multiplicación|mult <- numero * 5
+\*|Multiplicación|mult <- numero * 5
 /| División|porc <- 100 * parte / total  
 ^|Potenciación| sup <- 3.41 * radio ^ 2
 % ó MOD| Módulo (resto de la división entera) | resto <- num MOD div
 
    La precedencia de los operadores matemáticos es igual a la del álgebra, aunque puede alterarse mediante el uso de paréntesis.
+
+## Funciones
+
+Las funciones en pseudocódigo son parecidas a las que se utilizan en el álgebra, por ejemplo para hallar el seno de un ángulo, aunque su sintaxis es algo diferente ya que los parámetros se encierran entre paréntesis. Se coloca su nombre seguido de los argumentos para la misma encerrados entre paréntesis (por ejemplo `sen(x)`). Se pueden utilizar dentro de cualquier expresión, y cuando se evalúe la misma, se reemplazará por el resultado correspondiente. Actualmente, todas la funciones disponibles en **PSeInt** son matemáticas o de cadena. A continuación se listan las funciones integradas en **PSeInt** disponibles:
+
+
+Función|Significado
+-------|-----------
+`RAIZ(X)`|Raíz Cuadrada de X
+`ABS(X)`|Valor Absoluto de X
+`LN(X)`|Logaritmo Natural de X
+`EXP(X)`|Función Exponencial de X
+`SEN(X)`|Seno de X
+`COS(X)`|Coseno de X
+`TAN(X)`|Tangente de X
+`ASEN(X)`|Arcoseno de X
+`ACOS(X)`|Arcocoseno de X
+`ATAN(X)`|Arcotangente de X
+`TRUNC(X)`|Parte entera de X
+`REDON(X)`|Entero más cercano a X
+`AZAR(X)`|Entero aleatorio en el rango [0;x-1]
+`ALEATORIO(A,B)`|Entero aleatorio en el rango [A;B]
+`LONGITUD(S)`|Cantidad de caracteres de la cadena S
+`MAYUSCULAS(S)`|Devuelve una copia de la cadena S con todos sus caracteres en mayúsculas
+`MINUSCULAS(S)`|Devuelve una copia de la cadena S con todos sus caracteres en minúsculas
+`SUBCADENA(S,X,Y)`|Devuelve una nueva cadena que consiste en la parte de la cadena S que va desde la posición X hasta la posición Y (incluyendo ambos extremos). Las posiciones utilizan la misma base que los arreglos, por lo que la primer letra será la 0 o la 1 de acuerdo al perfil del lenguaje utilizado.
+`CONCATENAR(S1,S2)`|Devuelve una nueva cadena resulta de unir las cadenas S1 y S2.
+`CONVERTIRANUMERO(X)`|Devuelve una cadena de caracteres que contiene un número y devuelve una variable numérica con el mismo.
+`CONVERTIRATEXTO(S)`|Recibe un real y devuelve una variable numérica con la representación como cadena de caracteres de dicho real.
 
 ## Sentencias secuenciales
 

@@ -33,6 +33,6 @@ Este proyecto tiene licencia del MIT - veáse el fichero de [licencia](LICENSE) 
 Os animo a que realicéis vuestras contribuciones en el proyecto en la medida de las posibilidades de cada cuál:
 
 - Sugiriendo mejoras.
-- Aportando nuevo ejemplos.
+- Aportando nuevos ejemplos.
 - Corrigiendo erratas.
-- etc.
+- Etc.

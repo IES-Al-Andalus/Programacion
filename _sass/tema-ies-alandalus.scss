@@ -300,7 +300,7 @@ header {
 
 .contenedor {
   margin-top: 11em;
-  width: 98%;
+  width: 97%;
 }
 
 footer {
@@ -397,14 +397,34 @@ Pantallas pequeñas
 *******************************************************************************/
 
 @media screen and (max-width: 992px) {
+  body {
+    font-size: 16px;
+  }
   img {
     max-width: 100%;
   }
   nav {
     display: none;
   }
+  .contenedor {
+    margin-top: 8em;
+  }
   .contenido {
-    margin-left: 1em;
+    margin-left: 2em;
+    width: 98%;
+  }
+  .contenedor_cabecera {
     width: 95%;
+  }
+  header {
+    text-align: center;
+  }
+  #project_logo {
+    width: 60px;
+    height: 60px;
+    display: none;
+  }
+  #project_tagline {
+    display: none;
   }
 }

@@ -245,10 +245,12 @@ Posicionamiento y tamaño de los diferentes elementos contenedores
   background: #fff;
   position: fixed;
   top: 0;
+  left: -1em;
+  //right: 0;
   z-index: 100;
   padding: 1em 1em 1.5em 1em;
-  width: 97%;
-  //margin-bottom: 12em;
+  width: 100%;
+  margin: auto;
 }
 
 header {
@@ -261,23 +263,23 @@ header {
   margin-top: 1em;
   margin-bottom: 12em;*/
   //padding: 20px 40px;
-  width: 95%;
+  width: 93%;
   margin: auto;
-  display: block;
+  //display: block;
   padding: 1em;
 }
 
 #project_title {
   margin: 0;
   color: #fff;
-  font-size: 42px;
+  font-size: 2.5em;
   font-weight: 700;
   text-shadow: #111 0px 0px 10px;
 }
 
 #project_tagline {
   color: #fff;
-  font-size: 24px;
+  font-size: 1.3em;
   font-weight: 300;
   background: none;
   text-shadow: #111 0px 0px 10px;
@@ -300,7 +302,7 @@ header {
 
 .contenedor {
   margin-top: 11em;
-  width: 98%;
+  width: 97%;
 }
 
 footer {
@@ -397,14 +399,34 @@ Pantallas pequeñas
 *******************************************************************************/
 
 @media screen and (max-width: 992px) {
+  body {
+    font-size: 16px;
+  }
   img {
     max-width: 100%;
   }
   nav {
     display: none;
   }
+  .contenedor {
+    margin-top: 8em;
+  }
   .contenido {
-    margin-left: 1em;
-    width: 95%;
+    margin-left: 2em;
+    width: 98%;
+  }
+  .contenedor_cabecera {
+    width: 100%;
+  }
+  header {
+    text-align: center;
+  }
+  #project_logo {
+    width: 60px;
+    height: 60px;
+    display: none;
+  }
+  #project_tagline {
+    display: none;
   }
 }

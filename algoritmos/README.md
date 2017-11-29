@@ -235,9 +235,12 @@ Son secuencias que también alteran el flujo del algoritmo, permitiendo repetir 
   La claúsula `Con Paso` se puede obviar, en cuyo caso el incremento será de 1.
 
 ## Ejercicios
+- **Lectura/Escritura de un número**
+  Diseñar un algoritmo que lea un número por teclado y nos lo muestre por pantalla.
+
+  [Posible solución para el algoritmo LecturaEscritura](ejercicios/LecturaEscritura.psc)
+  
 - **Número par o impar**
 	Diseñar un algoritmo que lea un número por teclado y nos indique si es par o impar.
 
 	[Posible solución para el algoritmo ParImpar](ejercicios/ParImpar.psc)
-
-- **Otro mas**

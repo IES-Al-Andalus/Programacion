@@ -1,4 +1,5 @@
 Algoritmo LecturaEscritura
+	
 	//Declaración
 	num Es Entero
 	

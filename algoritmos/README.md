@@ -239,6 +239,11 @@ Son secuencias que también alteran el flujo del algoritmo, permitiendo repetir 
   La claúsula `Con Paso` se puede obviar, en cuyo caso el incremento será de 1.
 
 ## Ejercicios
+- **Asignar valor a una variable y mostrarlo**
+  Diseñar un algoritmo que le asigne un valor cualquiera a una variable entera y lo muestre por pantalla.
+
+  [Posible solución para el algoritmo AsignarValor](ejercicios/AsignarValor.psc)
+  
 - **Lectura/Escritura de un número**
   Diseñar un algoritmo que lea un número por teclado y nos lo muestre por pantalla.
 

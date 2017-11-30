@@ -243,40 +243,46 @@ Son secuencias que también alteran el flujo del algoritmo, permitiendo repetir 
 
   Diseñar un algoritmo que le asigne un valor cualquiera a una variable entera y lo muestre por pantalla.
 
-  [Posible solución para el algoritmo **AsignarValor**](ejercicios/AsignarValor.psc)
+  [Descargar posible solución para el algoritmo **AsignarValor**](ejercicios/AsignarValor.psc)
 
 - **Lectura/Escritura de un número**
 
   Diseñar un algoritmo que lea un número por teclado y nos lo muestre por pantalla.
 
-  [Posible solución para el algoritmo **LecturaEscritura**](ejercicios/LecturaEscritura.psc)
+  [Descargar posible solución para el algoritmo **LecturaEscritura**](ejercicios/LecturaEscritura.psc)
 
 - **Mostrar el doble de un número**
 
   Diseñar un algoritmo que lea un número por teclado y muestre el doble del mismo por pantalla.
 
-  [Posible solución para el algoritmo **Doble**](ejercicios/Doble.psc)
+  [Descargar posible solución para el algoritmo **Doble**](ejercicios/Doble.psc)
 
 - **Mostrar el cuadrado de un número**
 
   Diseñar un algoritmo que lea un número por teclado y muestre el cuadrado del mismo por pantalla.
 
-  [Posible solución para el algoritmo **Cuadrado**](ejercicios/Cuadrado.psc)
+  [Descargar posible solución para el algoritmo **Cuadrado**](ejercicios/Cuadrado.psc)
 
 - **Valor absoluto de un número**
 
   Diseñar un algoritmo que lea un número por teclado y muestre el cuadrado del mismo por pantalla.
 
-  [Posible solución para el algoritmo **ValorAbsoluto**](ejercicios/ValorAbsoluto.psc)
+  [Descargar posible solución para el algoritmo **ValorAbsoluto**](ejercicios/ValorAbsoluto.psc)
 
 - **Número par o impar**
 
 	Diseñar un algoritmo que lea un número por teclado y nos indique si es par o impar.
 
-	[Posible solución para el algoritmo **ParImpar**](ejercicios/ParImpar.psc)
+	[Descargar posible solución para el algoritmo **ParImpar**](ejercicios/ParImpar.psc)
 
-- **Positivo o negativo**
+- **Número positivo o negativo**
 
   Diseñar un algoritmo que lea un número por teclado y nos indique si es positivo o negativo.
 
-  [Posible solución para el algoritmo **PositivoNegativo**](ejercicios/PositivoNegativo.psc)
+  [Descargar posible solución para el algoritmo **PositivoNegativo**](ejercicios/PositivoNegativo.psc)
+
+- **Número entre 0 y 100**
+
+  Diseñar un algoritmo que lea un número por teclado y nos indique si éste se encuentra entre 0 y 100 ambos inclusive.
+
+  [Descargar posible solución para el algoritmo **CeroCien**](ejercicios/CeroCien.psc)

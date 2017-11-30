@@ -268,3 +268,9 @@ Son secuencias que también alteran el flujo del algoritmo, permitiendo repetir 
 	Diseñar un algoritmo que lea un número por teclado y nos indique si es par o impar.
 
 	[Posible solución para el algoritmo **ParImpar**](ejercicios/ParImpar.psc)
+
+- **Positivo o negativo**
+
+  Diseñar un algoritmo que lea un número por teclado y nos indique si es positivo o negativo.
+
+  [Posible solución para el algoritmo **PositivoNegativo**](ejercicios/PositivoNegativo.psc)

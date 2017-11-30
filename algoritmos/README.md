@@ -1,6 +1,6 @@
 # Resolución de problemas mediante algoritmos
 
-En este apartado encontrarás la teoría y diferentes ejercicios con sus respectivas posibles soluciones sobre la **resolución de problemas mediante algoritmos**.
+En este apartado encontrarás teoría y ejercicios, con sus respectivas posibles soluciones, sobre la **resolución de problemas mediante algoritmos**.
 
 A la hora de escribir los algoritmos utilizaré la sintaxis propuesta en el programa [PSeInt](http://pseint.sourceforge.net/).
 

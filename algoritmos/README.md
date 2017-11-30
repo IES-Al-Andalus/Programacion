@@ -263,6 +263,12 @@ Son secuencias que también alteran el flujo del algoritmo, permitiendo repetir 
 
   [Posible solución para el algoritmo **Cuadrado**](ejercicios/Cuadrado.psc)
 
+- **Valor absoluto de un número**
+
+  Diseñar un algoritmo que lea un número por teclado y muestre el cuadrado del mismo por pantalla.
+
+  [Posible solución para el algoritmo **ValorAbsoluto**](ejercicios/ValorAbsoluto.psc)
+
 - **Número par o impar**
 
 	Diseñar un algoritmo que lea un número por teclado y nos indique si es par o impar.

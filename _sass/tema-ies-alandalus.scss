@@ -26,24 +26,24 @@ h1 {
 
 h2 {
   padding-bottom: 10px;
-  font-size: 2.4em;
+  font-size: 2.2em;
   background: url('../images/bg_hr.png') repeat-x bottom;
 }
 
 h3 {
-  font-size: 2.3em;
+  font-size: 2em;
 }
 
 h4 {
-  font-size: 2.2em;
+  font-size: 1.9em;
 }
 
 h5 {
-  font-size: 2.1em;
+  font-size: 1.8em;
 }
 
 h6 {
-  font-size: 2em;
+  font-size: 1.7em;
 }
 
 p {
@@ -132,7 +132,6 @@ blockquote {
   padding: 0 0 0 20px;
   border-left: 3px solid #bbb;
 }
-
 
 ul, ol, dl {
   margin-bottom: 15px
@@ -236,6 +235,56 @@ table tfoot td {
 form {
   background: #f2f2f2;
   padding: 20px;
+}
+
+/*Listas*/
+ul { margin-left: 1em; }
+ul li {list-style-image: url(../images/nivel1.png);}
+ul ul li{list-style-image: url(../images/nivel2.png);}
+ul ul ul li{list-style-image: url(../images/nivel3.png);}
+ul ul ul ul li{list-style-image: url(../images/nivel4.png);}
+ul ul ul ul ul li{list-style-image: url(../images/nivel5.png);}
+ul ul ul ul ul ul li{list-style-image: url(../images/nivel6.png);}
+
+/*******************************************************************************
+Estilo para los ejercicios
+*******************************************************************************/
+
+h2#ejercicios ~ ul li img[src*="diagramas"] {
+  display:block;
+  margin: auto;
+}
+
+h2#ejercicios ~ ul li:hover {
+  cursor: grab;
+  //background-color: #C3DCF7;
+}
+h2#ejercicios ~ ul li.oculto {
+  list-style-image: url(../images/oculto.png);
+}
+h2#ejercicios ~ ul li.visible {
+  list-style-image: url(../images/visible.png);
+}
+h2#ejercicios ~ ul li.oculto p:first-child:after {
+  content: attr(data-content) " [ + ]";
+  color: cornflowerblue;
+  font-family: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
+}
+h2#ejercicios ~ ul li.visible p:first-child:after {
+  content: attr(data-content) " [ - ]";
+  color: cornflowerblue;
+  font-family: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
+}
+h2#ejercicios ~ ul li ul {
+  list-style: none;
+}
+h2#ejercicios ~ ul li ul li {
+  list-style: none;
+}
+h2#ejercicios ~ ul li ul li a{
+  text-align: center;
+  display:block;
+  margin: auto;
 }
 
 /*******************************************************************************
@@ -356,6 +405,8 @@ nav {
     li {
       padding: 5px 0px;
       line-height: 1.3em;
+      list-style: none;
+      list-style-image:none;
 
       &.tag-h1 {
         font-size: 1.2em;

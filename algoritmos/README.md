@@ -239,50 +239,214 @@ Son secuencias que también alteran el flujo del algoritmo, permitiendo repetir 
   La claúsula `Con Paso` se puede obviar, en cuyo caso el incremento será de 1.
 
 ## Ejercicios
+
+###### Sentencias secuenciales
+
 - **Asignar valor a una variable y mostrarlo**
 
   Diseñar un algoritmo que le asigne un valor cualquiera a una variable entera y lo muestre por pantalla.
 
-  [Descargar posible solución para el algoritmo **AsignarValor**](ejercicios/AsignarValor.psc)
+  - ![Diagrama de flujo para el algoritmo AsignarValor](ejercicios/diagramas/AsignarValor.png)
+    ~~~
+    Algoritmo AsignarValor
+
+    	//Declaración
+    	num Es Entero
+
+    	//Asignación
+    	num <- 5
+
+    	//Escritura
+    	Escribir "El valor de num es: ", num
+
+    FinAlgoritmo 
+    ~~~
+
+    [Descargar posible solución para el algoritmo **AsignarValor**](ejercicios/AsignarValor.psc)
 
 - **Lectura/Escritura de un número**
 
   Diseñar un algoritmo que lea un número por teclado y nos lo muestre por pantalla.
 
-  [Descargar posible solución para el algoritmo **LecturaEscritura**](ejercicios/LecturaEscritura.psc)
+  - ![Diagrama de flujo para el algoritmo LecturaEscritura](ejercicios/diagramas/LecturaEscritura.png)
+    ~~~
+    Algoritmo LecturaEscritura
+
+    	//Declaración
+    	num Es Entero
+
+    	//Lectura
+    	Escribir Sin Saltar "Introduce un número: "
+    	Leer num
+
+    	//Escritura
+    	Escribir "El número introducido es: ", num
+
+    FinAlgoritmo 
+    ~~~
+
+    [Descargar posible solución para el algoritmo **LecturaEscritura**](ejercicios/LecturaEscritura.psc)
 
 - **Mostrar el doble de un número**
 
   Diseñar un algoritmo que lea un número por teclado y muestre el doble del mismo por pantalla.
 
-  [Descargar posible solución para el algoritmo **Doble**](ejercicios/Doble.psc)
+  - ![Diagrama de flujo para el algoritmo Doble](ejercicios/diagramas/Doble.png)
+    ~~~
+    Algoritmo Doble
+
+    	// Declaración
+    	Definir num,dobleNum Como Entero
+
+    	// Entrada
+    	Escribir 'Introduce un número: ' Sin Saltar
+    	Leer num
+
+    	// Procesamiento
+    	dobleNum <- 2*num
+
+    	// Salida
+    	Escribir 'El doble del número ',num,' es: ',dobleNum
+
+    FinAlgoritmo
+    ~~~
+
+    [Descargar posible solución para el algoritmo **Doble**](ejercicios/Doble.psc)
 
 - **Mostrar el cuadrado de un número**
 
   Diseñar un algoritmo que lea un número por teclado y muestre el cuadrado del mismo por pantalla.
 
-  [Descargar posible solución para el algoritmo **Cuadrado**](ejercicios/Cuadrado.psc)
+  - ![Diagrama de flujo para el algoritmo Cuadrado](ejercicios/diagramas/Cuadrado.png)
+    ~~~
+    Algoritmo Cuadrado
+
+    	//Declaracion
+    	num, cuadradoNum Son Enteros
+
+    	//Lectura
+    	Escribir Sin Saltar "Introduce un número: "
+    	Leer num
+
+    	//Procesamiento
+    	cuadradoNum <- num*num
+
+    	//Salida
+    	Escribir "El cuadrado de " num " es: " cuadradoNum
+
+    FinAlgoritmo
+    ~~~
+
+    [Descargar posible solución para el algoritmo **Cuadrado**](ejercicios/Cuadrado.psc)
+
+###### Sentencias condicionales
 
 - **Valor absoluto de un número**
 
   Diseñar un algoritmo que lea un número por teclado y muestre el cuadrado del mismo por pantalla.
 
-  [Descargar posible solución para el algoritmo **ValorAbsoluto**](ejercicios/ValorAbsoluto.psc)
+  - ![Diagrama de flujo para el algoritmo Cuadrado](ejercicios/diagramas/ValorAbsoluto.png)
+    ~~~
+    Algoritmo ValorAbsoluto
+
+    	//Declaración
+    	num, valorAbs Son Enteros
+
+    	//Lectura
+    	Escribir Sin Saltar "Introduce un número: "
+    	Leer num
+
+    	//Procesamiento
+    	valorAbs <- num
+    	Si (num < 0) Entonces
+    		valorAbs <- -1 * num
+    	FinSi
+
+    	//Salida
+    	Escribir "El valor absoluto de " num " es: " valorAbs
+
+    FinAlgoritmo 
+    ~~~
+
+    [Descargar posible solución para el algoritmo **ValorAbsoluto**](ejercicios/ValorAbsoluto.psc)
 
 - **Número par o impar**
 
 	Diseñar un algoritmo que lea un número por teclado y nos indique si es par o impar.
 
-	[Descargar posible solución para el algoritmo **ParImpar**](ejercicios/ParImpar.psc)
+  - ![Diagrama de flujo para el algoritmo Cuadrado](ejercicios/diagramas/ParImpar.png)
+    ~~~
+    Algoritmo ParImpar
+
+    	//Declaración
+    	num Es Entero
+
+    	//Lectura
+    	Escribir Sin Saltar "Introduce un número: "
+    	Leer num
+
+    	//Procesamiento y escritura
+    	Si (num % 2 = 0)
+    		Escribir "El número: " num " es par"
+    	SiNo
+    		Escribir "El número: " num " es impar"
+    	FinSi
+
+    FinAlgoritmo 
+    ~~~
+
+  	[Descargar posible solución para el algoritmo **ParImpar**](ejercicios/ParImpar.psc)
 
 - **Número positivo o negativo**
 
   Diseñar un algoritmo que lea un número por teclado y nos indique si es positivo o negativo.
 
-  [Descargar posible solución para el algoritmo **PositivoNegativo**](ejercicios/PositivoNegativo.psc)
+  - ![Diagrama de flujo para el algoritmo Cuadrado](ejercicios/diagramas/PositivoNegativo.png)
+    ~~~
+    Algoritmo PositivoNegativo
+
+    	//Declaración
+    	num Es Entero
+
+    	//Entrada
+    	Escribir Sin Saltar "Introduce un número: "
+    	Leer num
+
+    	//Procesamiento y Salida
+    	Si (num < 0) Entonces
+    		Escribir "El número " num " es  negativo"
+    	SiNo
+    		Escribir "El número " num " es postivo"
+    	FinSi
+
+    FinAlgoritmo 
+    ~~~
+
+    [Descargar posible solución para el algoritmo **PositivoNegativo**](ejercicios/PositivoNegativo.psc)
 
 - **Número entre 0 y 100**
 
   Diseñar un algoritmo que lea un número por teclado y nos indique si éste se encuentra entre 0 y 100 ambos inclusive.
 
-  [Descargar posible solución para el algoritmo **CeroCien**](ejercicios/CeroCien.psc)
+  - ![Diagrama de flujo para el algoritmo Cuadrado](ejercicios/diagramas/CeroCien.png)
+    ~~~
+    Algoritmo CeroCien
+
+    	//Declaración
+    	num Es Entero
+
+    	//Lectura
+    	Escribir Sin Saltar "Introduce un número: "
+    	Leer num
+
+    	//Procesamiento y salida
+    	Si (num >= 0 Y num <= 100) Entonces
+    		Escribir "El número " num " está entre 0 y 100 ambos inclusive"
+    	SiNo
+    		Escribir "El número " num " NO está entre 0 y 100 ambos inclusive"
+    	FinSi
+
+    FinAlgoritmo 
+    ~~~
+
+    [Descargar posible solución para el algoritmo **CeroCien**](ejercicios/CeroCien.psc)

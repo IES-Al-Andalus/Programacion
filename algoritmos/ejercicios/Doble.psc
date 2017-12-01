@@ -1,16 +1,17 @@
 Algoritmo Doble
 	
-	//Declaración
-	num, dobleNum Son Enteros
+	// Declaración
+	Definir num,dobleNum Como Entero
 	
-	//Entrada
-	Escribir Sin Saltar "Introduce un número: "
+	// Entrada
+	Escribir 'Introduce un número: ' Sin Saltar
 	Leer num
 	
-	//Procesamiento
+	// Procesamiento
 	dobleNum <- 2*num
 	
-	//Salida
-	Escribir "El doble del número " num " es: " dobleNum
+	// Salida
+	Escribir 'El doble del número ',num,' es: ',dobleNum
 	
 FinAlgoritmo
+

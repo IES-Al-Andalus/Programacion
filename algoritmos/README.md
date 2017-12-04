@@ -130,8 +130,8 @@ Función|Significado
 `MAYUSCULAS(S)`|Devuelve una copia de la cadena S con todos sus caracteres en mayúsculas
 `MINUSCULAS(S)`|Devuelve una copia de la cadena S con todos sus caracteres en minúsculas
 `SUBCADENA(S,X,Y)`|Devuelve una nueva cadena que consiste en la parte de la cadena S que va desde la posición X hasta la posición Y (incluyendo ambos extremos). Las posiciones utilizan la misma base que los arreglos, por lo que la primer letra será la 0 o la 1 de acuerdo al perfil del lenguaje utilizado.
-`CONCATENAR(S1,S2)`|Devuelve una nueva cadena resulta de unir las cadenas S1 y S2.
-`CONVERTIRANUMERO(X)`|Devuelve una cadena de caracteres que contiene un número y devuelve una variable numérica con el mismo.
+`CONCATENAR(S1,S2)`|Devuelve una nueva cadena resultado de unir las cadenas S1 y S2.
+`CONVERTIRANUMERO(X)`|Recibe una cadena de caracteres que contiene un número y devuelve una variable numérica con el mismo.
 `CONVERTIRATEXTO(S)`|Recibe un real y devuelve una variable numérica con la representación como cadena de caracteres de dicho real.
 
 ## Sentencias secuenciales
@@ -287,9 +287,32 @@ Son secuencias que también alteran el flujo del algoritmo, permitiendo repetir 
 
     [Descargar posible solución para el algoritmo **LecturaEscritura**](ejercicios/LecturaEscritura.psc)
 
+- **Lectura/Escritura de una cadena**
+
+  Diseñar un algoritmo que lea tu nombre por teclado y te salude por pantalla.
+
+  - ![Diagrama de flujo para el algoritmo Saludo](ejercicios/diagramas/Saludo.png)
+    ~~~
+    Algoritmo Saludo
+
+    	//Declaración
+    	nombre Es Caracter
+
+    	//Entrada
+    	Escribir Sin Saltar "Dime tu nombre: "
+    	Leer nombre
+
+    	//Salida
+    	Escribir "Hola " nombre
+
+    FinAlgoritmo 
+    ~~~
+
+    [Descargar posible solución para el algoritmo **Saludo**](ejercicios/Saludo.psc)
+
 - **Mostrar el doble de un número**
 
-  Diseñar un algoritmo que lea un número por teclado y muestre el doble del mismo por pantalla.
+  Diseñar un algoritmo que lea un número entero por teclado y muestre el doble del mismo por pantalla.
 
   - ![Diagrama de flujo para el algoritmo Doble](ejercicios/diagramas/Doble.png)
     ~~~
@@ -315,7 +338,7 @@ Son secuencias que también alteran el flujo del algoritmo, permitiendo repetir 
 
 - **Mostrar el cuadrado de un número**
 
-  Diseñar un algoritmo que lea un número por teclado y muestre el cuadrado del mismo por pantalla.
+  Diseñar un algoritmo que lea un número entero por teclado y muestre el cuadrado del mismo por pantalla.
 
   - ![Diagrama de flujo para el algoritmo Cuadrado](ejercicios/diagramas/Cuadrado.png)
     ~~~
@@ -338,6 +361,60 @@ Son secuencias que también alteran el flujo del algoritmo, permitiendo repetir 
     ~~~
 
     [Descargar posible solución para el algoritmo **Cuadrado**](ejercicios/Cuadrado.psc)
+
+- **Hallar el perímetro de un rectángulo**
+
+  Diseñar un algoritmo que lea la base y la altura de un rectángulo por teclado y muestre el perímetro del mismo por pantalla.
+
+  - ![Diagrama de flujo para el algoritmo PerimetroRectangulo](ejercicios/diagramas/PerimetroRectangulo.png)
+    ~~~
+    Algoritmo PerimetroRectangulo
+
+    	//Declaración
+    	base, altura, perimetro Son Reales
+
+    	//Entrada
+    	Escribir Sin Saltar "Introduce la base del rectángulo: "
+    	Leer base
+    	Escribir Sin Saltar "Introduce la altura del triángulo: "
+    	Leer altura
+
+    	//Procesamiento
+    	perimetro <- 2 * base + 2 * altura
+
+    	//Salida
+    	Escribir "El perímetro del rectángulo es: " perimetro
+
+    FinAlgoritmo 
+    ~~~
+
+    [Descargar posible solución para el algoritmo **PerimetroRectangulo**](ejercicios/PerimetroRectangulo.psc)
+
+- **Calcular el área de un círculo**
+
+  Diseñar un algoritmo que lea el radio de un círculo por teclado y muestre el área del mismo por pantalla.
+
+  - ![Diagrama de flujo para el algoritmo AreaCirculo](ejercicios/diagramas/AreaCirculo.png)
+    ~~~
+    Algoritmo AreaCirculo
+
+    	//Declaración
+    	radio Es Real
+
+    	//Entrada
+    	Escribir Sin Saltar "Introduce el radio del círculo: "
+    	Leer radio
+
+    	//Procesamiento
+    	area <- PI * radio * radio
+
+    	//Salida
+    	Escribir "El área del círculo es: " area
+
+    FinAlgoritmo 
+    ~~~
+
+    [Descargar posible solución para el algoritmo **AreaCirculo**](ejercicios/AreaCirculo.psc)
 
 ###### Sentencias condicionales
 
@@ -450,3 +527,255 @@ Son secuencias que también alteran el flujo del algoritmo, permitiendo repetir 
     ~~~
 
     [Descargar posible solución para el algoritmo **CeroCien**](ejercicios/CeroCien.psc)
+
+- **Calificación obtenida**
+
+  Diseñar un algoritmo que lea una nota por teclado y muestre si estás aprobado o suspenso por pantalla.
+
+  - ![Diagrama de flujo para el algoritmo AprobadoSuspenso](ejercicios/diagramas/AprobadoSuspenso.png)
+    ~~~
+    Algoritmo AprobadoSuspenso
+
+    	//Declaración
+    	nota Es Real
+    	calificacion Es Caracter
+
+    	//Lectura
+    	Escribir Sin Saltar "Introduce tu nota: "
+    	Leer nota
+
+    	//Procesamiento
+    	Si (nota >= 5) Entonces
+    		calificacion = "aprobado"
+    	SiNo
+    		calificacion = "suspenso"
+    	FinSi
+
+    	//Escritura
+    	Escribir "Estás " calificacion
+
+    FinAlgoritmo 
+    ~~~
+
+    [Descargar posible solución para el algoritmo **AprobadoSuspenso**](ejercicios/AprobadoSuspenso.psc)
+
+- **Números iguales**
+
+  Diseñar un algoritmo que lea dos números por teclado y muestre si son iguales o no por pantalla.
+
+  - ![Diagrama de flujo para el algoritmo NumerosIguales](ejercicios/diagramas/NumerosIguales.png)
+    ~~~
+    Algoritmo NumerosIguales
+
+    	//Declaración
+    	num1, num2 Son Enteros
+
+    	//Lectura
+    	Escribir Sin Saltar "Introduce un número: "
+    	Leer num1
+    	Escribir Sin Saltar "Introduce otro número: "
+    	Leer num2
+
+    	//Procesamiento y Escritura
+    	Si (num1 = num2) Entonces
+    		Escribir "Los dos números son iguales"
+    	SiNo
+    		Escribir "Los dos números son diferentes"
+    	FinSi
+
+    FinAlgoritmo 
+    ~~~
+
+    [Descargar posible solución para el algoritmo **NumerosIguales**](ejercicios/NumerosIguales.psc)
+
+- **Ordenar dos números**
+
+  Diseñar un algoritmo que lea dos números por teclado y los muestre ordenados de menor a mayor por pantalla.
+
+  - ![Diagrama de flujo para el algoritmo OrdenarDosNumeros](ejercicios/diagramas/OrdenarDosNumeros.png)
+    ~~~
+    Algoritmo OrdenarDosNumeros
+
+    	//Declaración
+    	num1, num2 Son Enteros
+
+    	//Lectura
+    	Escribir Sin Saltar "Introduce un número: "
+    	Leer num1
+    	Escribir Sin Saltar "Introduce otro número: "
+    	Leer num2
+
+    	//Procesamiento y escritura
+    	Si (num1 < num2) Entonces
+    		Escribir "Ordenados de menor a mayor serían: " num1 ", " num2
+    	SiNo
+    		Escribir "Ordenados de menor a mayor serían: " num2 ", " num1
+    	FinSi
+
+    FinAlgoritmo 
+    ~~~
+
+    [Descargar posible solución para el algoritmo **OrdenarDosNumeros**](ejercicios/OrdenarDosNumeros.psc)
+
+- **Ordenar tres números**
+
+  Diseñar un algoritmo que lea tres números por teclado y los muestre ordenados de menor a mayor por pantalla.
+
+  - ![Diagrama de flujo para el algoritmo OrdenarTresNumeros](ejercicios/diagramas/OrdenarTresNumeros.png)
+    ~~~
+    Algoritmo OrdenarTresNumeros
+
+    	//Declaración
+    	num1, num2, num3 Son Enteros
+
+    	//Lectura
+    	Escribir Sin Saltar "Introduce el primer número: "
+    	Leer num1
+    	Escribir Sin Saltar "Introduce el segundo número: "
+    	Leer num2
+    	Escribir Sin Saltar "Introduce el tercer número: "
+    	Leer num3
+
+    	//Procesamiento y escritura
+    	Si (num1 < num2 Y num2 < num3) Entonces
+    		Escribir "Ordenados de menor a mayor serían: " num1 ", " num2 ", " num3
+    	SiNo
+    		Si (num1 < num3 Y num3 < num2) Entonces
+    			Escribir "Ordenados de menos a mayor serían: " num1 ", " num3 ", " num2
+    		SiNo
+    			Si (num2 < num1 Y num1 < num3) Entonces
+    				Escribir "Ordenados de menos a mayor serían: " num2 ", " num1 ", " num3
+    			SiNo
+    				Si (num2 < num3 Y num3 < num1) Entonces
+    					Escribir "Ordenados de menos a mayor serían: " num2 ", " num3 ", " num1
+    				SiNo
+    					Si (num3 < num1 Y num1 < num2) Entonces
+    						Escribir "Ordenados de menos a mayor serían: " num3 ", " num1 ", " num2
+    					SiNo
+    						Escribir "Ordenados de menos a mayor serían: " num3 ", " num2 ", " num1
+    					FinSi
+    				FinSi
+    			FinSi
+    		FinSi
+    	FinSi
+
+    FinAlgoritmo 
+    ~~~
+
+    [Descargar posible solución para el algoritmo **OrdenarTresNumeros**](ejercicios/OrdenarTresNumeros.psc)
+
+###### Sentencias repetitivas
+
+- **Tabla de multiplicar**
+
+  Diseñar un algoritmo que lea un número por teclado y muestre por pantalla la tabla de multiplicar de dicho número.
+
+  - ![Diagrama de flujo para el algoritmo TablaMultiplicar](ejercicios/diagramas/TablaMultiplicar.png)
+    ~~~
+    Algoritmo TablaMultiplicar
+
+    	//Declaración
+    	num Es Entero
+
+    	//Lectura
+    	Escribir Sin Saltar "Introduce un número: "
+    	Leer num
+
+    	//Procesamiento y escritura
+    	Para i <- 0 Hasta 10 Hacer
+    		Escribir num " x " i " = " num * i
+    	FinPara
+
+    FinAlgoritmo 
+    ~~~
+
+    [Descargar posible solución para el algoritmo **TablaMultiplicar**](ejercicios/TablaMultiplicar.psc)
+
+- **Número positivo**
+
+  Diseñar un algoritmo que lea un número positivo por teclado y lo muestre por pantalla.
+
+  - ![Diagrama de flujo para el algoritmo NumeroPositivo](ejercicios/diagramas/NumeroPositivo.png)
+    ~~~
+    Algoritmo NumeroPositivo
+
+    	//Declaración
+    	num Es Entero
+
+    	//Lectura validada
+    	Repetir
+    		Escribir Sin Saltar "Introduce un número positivo: "
+    		Leer num
+    	Mientras Que (num < 0)
+
+    	//Escritura
+    	Escribir "El número positivo introducido es: " num
+
+    FinAlgoritmo
+    ~~~
+
+    [Descargar posible solución para el algoritmo **NumeroPositivo**](ejercicios/NumeroPositivo.psc)
+
+- **Sumar números**
+
+  Diseñar un algoritmo que lea números por teclado hasta que se introduzca un cero y muestre por pantalla la suma de los mismos.
+
+  - ![Diagrama de flujo para el algoritmo SumarNumeros](ejercicios/diagramas/SumarNumeros.png)
+    ~~~
+    Algoritmo SumarNumeros
+
+    	//Declaración
+    	num, suma Es Entero
+
+    	//Incialización
+    	suma <- 0
+
+    	//Lectura y procesamiento
+    	Repetir
+    		Escribir Sin Saltar "Introduce un número: "
+    		Leer num
+    		suma <- suma + num
+    	Mientras Que (num <> 0)
+
+    	//Escritura
+    	Escribir "La suma de los números introducidos es: " suma
+
+    FinAlgoritmo 
+    ~~~
+
+    [Descargar posible solución para el algoritmo **SumarNumeros**](ejercicios/SumarNumeros.psc)
+
+- **Media números**
+
+  Diseñar un algoritmo que lea números por teclado hasta que se introduzca un cero y muestre por pantalla la media de los mismos.
+
+  - ![Diagrama de flujo para el algoritmo MediaNumeros](ejercicios/diagramas/MediaNumeros.png)
+    ~~~
+    Algoritmo MediaNumeros
+
+    	//Declaración
+    	num, suma, cantidadNumeros Son Enteros
+    	media Es Real
+
+    	//Incialización
+    	suma <- 0
+    	cantidadNumeros <- 0
+
+    	//Lectura y procesamiento
+    	Escribir Sin Saltar "Introduce un número: "
+    	Leer num
+    	Mientras (num <> 0) Hacer
+    		suma <- suma + num
+    		cantidadNumeros <- cantidadNumeros + 1
+    		Escribir Sin Saltar "Introduce un número: "
+    		Leer num
+    	FinMientras
+    	media <- suma / cantidadNumeros
+
+    	//Escritura
+    	Escribir "La media de los números introducidos es: " media
+
+    FinAlgoritmo 
+    ~~~
+
+    [Descargar posible solución para el algoritmo **MediaNumeros**](ejercicios/MediaNumeros.psc)

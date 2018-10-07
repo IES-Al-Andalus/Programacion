@@ -238,6 +238,12 @@ Son secuencias que también alteran el flujo del algoritmo, permitiendo repetir 
 
   La claúsula `Con Paso` se puede obviar, en cuyo caso el incremento será de 1.
 
+## Personalización del lenguaje
+
+Para que todos y todas utilicemos la misma sintaxis del lenguaje utilizado por PSeInt y que éste se asemeje lo máximo posible a como luego se comportará Java, hemos utilizado la siguiente personalización del lenguaje, por lo que os ruego que todos configuremos el programa PSeInt con dicha personalización.
+
+![Personalización del lenguaje](imagenes/personalizacionLenguaje.png)
+
 ## Ejercicios
 
 ###### Sentencias secuenciales

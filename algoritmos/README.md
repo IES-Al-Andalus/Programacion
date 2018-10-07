@@ -2,7 +2,7 @@
 
 En este apartado encontrarás teoría y ejercicios, con sus respectivas posibles soluciones, sobre la **resolución de problemas mediante algoritmos**.
 
-A la hora de escribir los algoritmos utilizaré la sintaxis propuesta en el programa [PSeInt](http://pseint.sourceforge.net/).
+A la hora de escribir los algoritmos utilizaré la sintaxis propuesta en el programa [PSeInt](http://pseint.sourceforge.net/). Esta documentación, además, está basada en la ayuda de dicho programa, aunque la idea principal es ir añadiendo ejercicios resueltos que te puedan ayudar en tu aprendizaje.
 
 **José Ramón Jiménez Reyes**
 
@@ -77,31 +77,31 @@ El lenguaje utilizado por PSeInt dispone de un conjunto básico de operadores qu
 
 Operador|Significado|Ejemplo
 ------------|--------------|------------
-\> | Mayor que|3>2
-<| Menor que |'Hola'<'hola'
-=| Igual que|4=3
-<=| Menor o igual que| 2<=2
-\>=| Mayor o igual que|  4>=5
-<>| Distinto que| 7<>8
+`>` | Mayor que|3>2
+`<`| Menor que |'Hola'<'hola'
+`=`| Igual que|4=3
+`<=`| Menor o igual que| 2<=2
+`>=`| Mayor o igual que|  4>=5
+`<>`| Distinto que| 7<>8
 
 **Operadores Lógicos**
 
 Operador|Significado|Ejemplo
 ------------|--------------|------------
-& ó Y| Conjunción (y) |(8>5) & (5=3) //falso
-\| ó O | Disyunción (o)| (8>5 \| 5=3) //verdadero
-~ ó NO| Negación (no)| 	  ~(8>5) //verdadero
+`&` ó `Y`| Conjunción (y) |(8>5) & (5=3) //falso
+`|` ó `O` | Disyunción (o)| (8>5 \| 5=3) //verdadero
+`~` ó `NO`| Negación (no)| 	  ~(8>5) //verdadero
 
 **Operadores Algebraicos**
 
 Operador|Significado|Ejemplo
 ------------|--------------|------------
-\+| Suma| suma <- op1 + op2
-\- |Resta| dif <- op1 - op2
-\*|Multiplicación|mult <- numero * 5
-/| División|porc <- 100 * parte / total  
-^|Potenciación| sup <- 3.41 * radio ^ 2
-% ó MOD| Módulo (resto de la división entera) | resto <- num MOD div
+`+`| Suma| suma <- op1 + op2
+`-` |Resta| dif <- op1 - op2
+`*`|Multiplicación|mult <- numero * 5
+`/`| División|porc <- 100 * parte / total  
+`^`|Potenciación| sup <- 3.41 * radio ^ 2
+`%` ó `MOD`| Módulo (resto de la división entera) | resto <- num MOD div
 
    La precedencia de los operadores matemáticos es igual a la del álgebra, aunque puede alterarse mediante el uso de paréntesis.
 
@@ -775,7 +775,46 @@ Son secuencias que también alteran el flujo del algoritmo, permitiendo repetir 
     	//Escritura
     	Escribir "La media de los números introducidos es: " media
 
-    FinAlgoritmo 
+    FinAlgoritmo
     ~~~
 
     [Descargar posible solución para el algoritmo **MediaNumeros**](ejercicios/MediaNumeros.psc)
+
+###### Ejemplos variados
+
+- **Contar vocales de una frase**
+
+  Diseñar un algoritmo que lea una frase por teclado y muestre por pantalla el número de vocales de dicha frase.
+
+  - ![Diagrama de flujo para el algoritmo ContarVocales](ejercicios/diagramas/ContarVocales.png)
+    ~~~
+    Algoritmo ContarVocales
+
+    	frase, vocales Es Caracter
+    	i, j, numVocales Es Entero
+
+    	// Entrada
+    	Escribir Sin Saltar 'Introduce una frase: ' Sin Saltar
+    	Leer frase
+
+    	// Procesamiento
+    	frase <- Minusculas(frase)
+    	vocales <- 'aeiouáéíóúü'
+    	numVocales <- 0
+
+    	Para i<-0 Hasta Longitud(frase) - 1 Hacer
+    		Para j<-0 Hasta Longitud(vocales) - 1 Hacer
+    			Si Subcadena(frase, i, i) = Subcadena(vocales, j, j) Entonces
+    				numVocales <- numVocales + 1
+    			FinSi
+    		FinPara
+    	FinPara
+
+    	// Salida
+    	Escribir 'La frase intrducida, pasada a minúsculas es: ' frase
+    	Escribir 'Dicha frase contiene ' numVocales ' vocales.'
+
+    FinAlgoritmo
+    ~~~
+
+    [Descargar posible solución para el algoritmo **ContarVocales**](ejercicios/ContarVocales.psc)

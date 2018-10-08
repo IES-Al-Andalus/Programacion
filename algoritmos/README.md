@@ -1005,9 +1005,9 @@ Para que todos y todas utilicemos la misma sintaxis del lenguaje utilizado por P
     ~~~
 
     [Descargar posible solución para el algoritmo **ReversoNumeroSinModificar**](ejercicios/ReversoNumeroSinModificar.psc)
-- **Comprobar si un número es capicua**
+- **Comprobar si un número es capicúa**
 
-  Diseñar un algoritmo que lea un número entero mayor que cero por teclado y nos indique si dicho número es capicua o no (un múmero es capicua si su reverso y él son iguales). Para ello sólo debes utilizar operaciones aritméticas.
+  Diseñar un algoritmo que lea un número entero mayor que cero por teclado y nos indique si dicho número es capicúa o no (un múmero es capicúa si su reverso y él son iguales). Para ello sólo debes utilizar operaciones aritméticas.
 
   - ![Diagrama de flujo para el algoritmo Capicua](ejercicios/diagramas/Capicua.png)
     ~~~
@@ -1031,9 +1031,9 @@ Para que todos y todas utilicemos la misma sintaxis del lenguaje utilizado por P
 
     	//Salida
     	Si (reves = num)
-    		Escribir "El número " num " es capicua"
+    		Escribir "El número " num " es capicúa"
     	SiNo
-    		Escribir "El número " num " NO es capicua"
+    		Escribir "El número " num " NO es capicúa"
     	FinSi
     FinAlgoritmo
     ~~~

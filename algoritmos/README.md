@@ -27,7 +27,7 @@ Un algoritmo no es más que un conjunto finito de instrucciones, expresado en un
 
 Para expresar un algoritmo podemos utilizar diferentes lenguajes o gráficos. Nosotros nos centraremos en la sintaxis del pseudocódigo utilizado por el programa didáctico [PSeInt](http://pseint.sourceforge.net/) que además también permite ver el diagrama de flujo para un algoritmo escrito utilizando su sintaxis.
 
-Dicho programa permite expresar un algoritmo en pseudocódigo utilizando diferentes variantes dependiendo de la sintaxis escogida, aunque nosotros utilizaremos su configuración por defecto y siempre intentaremos asemejar la sintaxis de nuestros algoritmos a la utilizada por java, en la medida de lo posible.
+Dicho programa permite expresar un algoritmo en pseudocódigo utilizando diferentes variantes dependiendo de la sintaxis escogida. Nosotros personalizaremos dicha sintaxis para intentar asemejar la sintaxis de nuestros algoritmos a la utilizada por java, en la medida de lo posible.
 
 ## Estructura de un algoritmo en pseudocódigo
 
@@ -198,7 +198,7 @@ Son sentencias que permiten alterar el flujo del algoritmo y ejecutar unas sente
   Opcionalmente, se puede agregar una opción final, denominada `De Otro Modo`, cuya secuencia de instrucciones asociada se ejecutará sólo si el valor almacenado en la variable no coincide con ninguna de las opciones anteriores.
 
 ## Sentencias repetitivas
-Son secuencias que también alteran el flujo del algoritmo, permitiendo repetir una secuencia de instrucciones mientras se de alguna condición. También son conocidas como bucles.
+Son sentencias que también alteran el flujo del algoritmo, permitiendo repetir una secuencia de instrucciones mientras se de alguna condición. También son conocidas como bucles.
 
 - **Mientras** Esta instrucción ejecuta una secuencia de instrucciones mientras se cumpla una condición.
 
@@ -786,7 +786,7 @@ Para que todos y todas utilicemos la misma sintaxis del lenguaje utilizado por P
 
     [Descargar posible solución para el algoritmo **MediaNumeros**](ejercicios/MediaNumeros.psc)
 
-###### Ejemplos variados
+###### Ejercicios variados
 
 - **Contar vocales de una frase**
 
@@ -824,3 +824,218 @@ Para que todos y todas utilicemos la misma sintaxis del lenguaje utilizado por P
     ~~~
 
     [Descargar posible solución para el algoritmo **ContarVocales**](ejercicios/ContarVocales.psc)
+
+- **Número perfecto**
+
+  Diseñar un algoritmo que lea un número entero mayor que cero por teclado y nos informe si dicho número es perfecto o no. Un número es perfecto si es igual a la suma de sus divisores.
+
+  - ![Diagrama de flujo para el algoritmo NumPerfecto](ejercicios/diagramas/NumPerfecto.png)
+    ~~~
+    Algoritmo NumPerfecto
+    	num, suma, i Son Enteros
+
+    	//Entrada y validación
+    	Repetir
+    		Escribir Sin Saltar 'Introduce un número entero mayor que cero: '
+    		Leer num
+    	Mientras Que (num < 1)
+
+    	//Procesamiento
+    	suma <- 0
+    	Para i <- 1 Hasta num - 1 Hacer
+    		Si (num MOD i = 0) Entonces
+    			suma <- suma + i
+    		FinSi
+    	FinPara
+
+    	//Salida
+    	Si (suma = num) Entonces
+    		Escribir 'El número ',num,' es perfecto'
+    	SiNo
+    		Escribir 'El número ',num,' NO es perfecto'
+    	FinSi
+    FinAlgoritmo
+    ~~~
+
+    [Descargar posible solución para el algoritmo **NumPerfecto**](ejercicios/NumPerfecto.psc)
+- **Cantidad de cifras de un número**
+
+  Diseñar un algoritmo que lea un número entero mayor que cero por teclado y nos informe de la cantidad de cifras que posee dicho número. Para ello sólo debes utilizar operaciones aritméticas.
+
+  - ![Diagrama de flujo para el algoritmo NumCifras](ejercicios/diagramas/NumCifras.png)
+    ~~~
+    Algoritmo NumCifras
+
+    	num, cifras Son Enteros
+
+    	//Entrada y validación
+    	Repetir
+    		Escribir Sin Saltar "Introduce un número entero mayor que cero: "
+    		Leer num
+    	Mientras Que (num <= 0)
+
+    	cifras <- 0
+
+    	//Procesamiento
+    	Mientras (num > 0)
+    		num <- trunc(num/10)
+    		cifras <- cifras + 1
+    	FinMientras
+
+    	//Salida
+    	Escribir "El número tenía " cifras " cifras"
+
+    FinAlgoritmo
+    ~~~
+
+    [Descargar posible solución para el algoritmo **NumCifras**](ejercicios/NumCifras.psc)
+- **Descomponer cifras de un número**
+
+  Diseñar un algoritmo que lea un número entero mayor que cero por teclado y nos muestre en cada línea las cifras del mismo en orden de izquierda a derecha. Para ello sólo debes utilizar operaciones aritméticas.
+
+  - ![Diagrama de flujo para el algoritmo DescomponerCifras](ejercicios/diagramas/DescomponerCifras.png)
+    ~~~
+    Algoritmo DescomponerCifras
+    	num, numCifras, i Es Entero
+
+    	//Lectura y validación
+    	Repetir
+    		Escribir Sin Saltar "Introduce un número entero mayor que cero: "
+    		Leer num
+    	Mientras Que (num <= 0)
+
+    	//Otra forma diferente al ejercicio anterior
+    	//para hayar la cantidad de cifras de un número
+    	numCifras <- trunc(LN(num) / LN(10)) + 1
+
+    	//Procesamiento y salida
+    	Para i <- numCifras - 1 Hasta 0 Con Paso -1 Hacer
+    		Escribir "El dígito que ocupa la posición " i " es: " trunc(num / 10 ^ i) % 10
+    	FinPara
+
+    FinAlgoritmo
+    ~~~
+
+    [Descargar posible solución para el algoritmo **DescomponerCifras**](ejercicios/DescomponerCifras.psc)
+- **Descomponer cifras en orden inverso de un número**
+
+  Diseñar un algoritmo que lea un número entero mayor que cero por teclado y nos muestre en cada línea las cifras del mismo en orden de derecha a izquierda. Para ello sólo debes utilizar operaciones aritméticas.
+
+  - ![Diagrama de flujo para el algoritmo DescomponerCifrasReverso](ejercicios/diagramas/DescomponerCifrasReverso.png)
+    ~~~
+    Algoritmo DescomponerCifrasReverso
+    	num, pos Es Entero
+
+    	//Lectura y validación
+    	Repetir
+    		Escribir Sin Saltar "Introduce un número entero mayor que cero: "
+    		Leer num
+    	Mientras Que (num <= 0)
+
+    	pos <- 0
+
+    	//Procesamiento y salida
+    	Mientras (num > 0)
+    		Escribir "El dígito que ocupa la posición " pos " es " num MOD 10
+    		pos <- pos + 1
+    		num <- trunc(num/10)
+    	FinMientras
+
+    FinAlgoritmo
+    ~~~
+
+    [Descargar posible solución para el algoritmo **DescomponerCifrasReverso**](ejercicios/DescomponerCifrasReverso.psc)
+- **Mostrar el reverso de un número**
+
+  Diseñar un algoritmo que lea un número entero mayor que cero por teclado y nos muestre el reverso del mismo. Para ello sólo debes utilizar operaciones aritméticas.
+
+  - ![Diagrama de flujo para el algoritmo ReversoNumero](ejercicios/diagramas/ReversoNumero.png)
+    ~~~
+    Algoritmo ReversoNumero
+    	num, reves Son Enteros
+
+    	//Lectura y validación
+    	Repetir
+    		Escribir Sin Saltar "Introduce un número entero mayor que cero: "
+    		Leer num
+    	Mientras Que (num <= 0)
+
+    	reves <- 0
+    	//Procesamiento
+    	Mientras (num > 0)
+    		reves <- reves * 10 + num MOD 10
+    		num <- trunc(num/10)
+    	FinMientras
+
+    	//Salida
+    	Escribir "El reverso es: " reves
+
+    FinAlgoritmo
+    ~~~
+
+    [Descargar posible solución para el algoritmo **ReversoNumero**](ejercicios/ReversoNumero.psc)
+- **Mostrar el reverso de un número sin modificarlo**
+
+  Diseñar un algoritmo que lea un número entero mayor que cero por teclado y nos muestre el reverso del mismo, pero sin modificar el número introducido. Para ello sólo debes utilizar operaciones aritméticas.
+
+  - ![Diagrama de flujo para el algoritmo ReversoNumeroSinModificar](ejercicios/diagramas/ReversoNumeroSinModificar.png)
+    ~~~
+    Algoritmo ReversoNumeroSinModificar
+    	num, reves, posicion Son Enteros
+
+    	//Lectura y validación
+    	Repetir
+    		Escribir Sin Saltar "Introduce un número entero mayor que cero: "
+    		Leer num
+    	Mientras Que (num <= 0)
+
+    	reves <- 0
+    	posicion <- 0
+
+    	//Procesamiento
+    	Mientras (trunc(num / 10 ^ posicion) > 0)
+    		reves <- reves * 10 + trunc(num / 10 ^ posicion) MOD 10
+    		posicion <- posicion + 1
+    	FinMientras
+
+    	//Salida
+    	Escribir "El reverso de : " num " es: " reves
+
+    FinAlgoritmo
+    ~~~
+
+    [Descargar posible solución para el algoritmo **ReversoNumeroSinModificar**](ejercicios/ReversoNumeroSinModificar.psc)
+- **Comprobar si un número es capicua**
+
+  Diseñar un algoritmo que lea un número entero mayor que cero por teclado y nos indique si dicho número es capicua o no (un múmero es capicua si su reverso y él son iguales). Para ello sólo debes utilizar operaciones aritméticas.
+
+  - ![Diagrama de flujo para el algoritmo Capicua](ejercicios/diagramas/Capicua.png)
+    ~~~
+    Algoritmo Capicua
+    	num, posicion, reves Son Enteros
+
+    	//Lectura y validación
+    	Repetir
+    		Escribir Sin Saltar "Introduce un número entero mayor que cero: "
+    		Leer num
+    	Mientras Que (num <= 0)
+
+    	posicion <- 0
+    	reves <- 0
+
+    	//Procesamiento
+    	Mientras (trunc(num / 10 ^ posicion) > 0)
+    		reves <- reves * 10 + trunc(num / 10 ^ posicion) MOD 10
+    		posicion <- posicion + 1
+    	FinMientras
+
+    	//Salida
+    	Si (reves = num)
+    		Escribir "El número " num " es capicua"
+    	SiNo
+    		Escribir "El número " num " NO es capicua"
+    	FinSi
+    FinAlgoritmo
+    ~~~
+
+    [Descargar posible solución para el algoritmo **Capicua**](ejercicios/Capicua.psc)

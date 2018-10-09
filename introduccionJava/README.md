@@ -96,11 +96,7 @@ Ambos IDEs permiten crear un proyecto Java nuevo, para luego añadir una nueva C
 
 Por ahora, lo único importante que debes saber es que el nombre de la Clase (el nombre que va justo después de la palabra reservada `class`) debe coincidir con el nombre del archivo `.java`. Aunque cuando el IDE te pregunta por el nombre de la clase, eso ya lo hace por tí.
 
-<<<<<<< HEAD
 A continuación te muestro un vídeo de cómo crear el programa `HolaMundo` en **Eclipse**.
-=======
-A continuación te muestro un vídeo de cómo crear el programa `HolaMundo` en Eclipse.
->>>>>>> 8546f1b1c95fd394cc57a32514a865ce3712ede7
 
 <div align="center">
 <video width="600" controls="controls">
@@ -108,7 +104,6 @@ A continuación te muestro un vídeo de cómo crear el programa `HolaMundo` en E
 </video>
 </div>
 
-<<<<<<< HEAD
 También te muestro un vídeo de cómo crear el programa `HolaMundo` en **Netbeans**.
 
 <div align="center">
@@ -119,8 +114,6 @@ También te muestro un vídeo de cómo crear el programa `HolaMundo` en **Netbea
 
 Como podéis apreciar, el proceso es muy sencillo y muy parecido en ambos IDEs. Ahora sólo nos queda empezar a programar!!!
 
-=======
->>>>>>> 8546f1b1c95fd394cc57a32514a865ce3712ede7
 ## Variables
 Una variable en un algoritmo es un identificador en el que podemos almacenar información. El valor almacenado en una variable puede ir variando a medida que el algoritmo avanza.
 

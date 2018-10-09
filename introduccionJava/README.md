@@ -1,6 +1,6 @@
 # Introducción a la programación en Java
 
-En este apartado encontrarás una **introducción a la programación en Java**. He pretendido hacer una introducción teórica que os ayude, a modo de resumen, para comprender los principales conceptos utilizados en Java. En este apartado no hablaremos de Programación Orientada a Objetos (todo esto en la medida de lo posible, pues Java es un lenguaje orientado a objetos y todo se basa en dichos conceptos), ya que dichos conceptos los veremos en otros apartados. El objetivo de este apartado es que creemos programas sencillos escritos en Java, utilizando sus características básicas.
+En este apartado encontrarás una **introducción a la programación en Java**. He pretendido hacer una introducción teórica que os ayude, a modo de resumen, a comprender los principales conceptos utilizados en Java. En este apartado no hablaremos de Programación Orientada a Objetos (todo esto en la medida de lo posible, pues Java es un lenguaje orientado a objetos y todo se basa en dichos conceptos), ya que dichos conceptos los veremos en otros apartados. El objetivo de este apartado es que creemos programas sencillos escritos en Java, utilizando sus características básicas.
 
 Al igual que en otros apartados, el objetivo principal es que tengáis una amplía gama de ejercicios, con sus respectivas posibles soluciones, sobre la **introducción a la programación en Java**.
 
@@ -13,8 +13,10 @@ Al igual que en otros apartados, el objetivo principal es que tengáis una ampl�
 ## Contenidos
 - [¿Qué es Java?](#qu-es-java)
 - [Primer programa en Java](#primer-programa-en-java)
-- [Variables](#variables)
+- [Identificadores](#identificadores)
 - [Tipos de datos](#tipos-de-datos)
+- [Literales](#literales)
+- [Variables](#variables)
 - [Operadores](#operadores)
 - [Funciones](#funciones)
 - [Sentencias secuenciales](#sentencias-secuenciales)
@@ -55,15 +57,15 @@ Para el desarrollo de aplicaciones en Java y su posterior ejecución disponemos 
 - **JDK**: Es el kit de desarrollo y en el que podemos encontrar, entre otros, el compilador de java que se encarga de traducir el código fuente a un código intermedio que posteriormente podrá ser ejecutado por la JVM (máquina virtual de Java) que tengamos instalada en nuestro sistema.
 - **JRE**: Es el entorno de ejecución de Java específico de cada plataforma y en el que simplemente vienen las librerías y la JVM para nuestra plataforma y que permite ejecutar las aplicaciones anteriormente compiladas con el kit de desarrollo (aunque el kit de desarrollo también contiene dicha JVM).
 
-Para poder instalar correctamente el JSE en nuestro sistema (elegiremos la descarga del JDK ya que es el componente que necesitaremos para poder desarrollar aplicaciones Java), no voy a profundizar y, simplemente os remito a la web oficial de Oracle donde poder descargarlo para cada plataforma y en la que viene la documentación para realizar dicha instalación en cada una de ellas. La versión que utilizaremos es la versión JSE 8. [Descargar JSE](https://www.oracle.com/technetwork/java/javase/downloads/index.html).
+Para poder instalar correctamente el JSE en nuestro sistema (elegiremos la descarga del JDK ya que es el componente que necesitaremos para poder desarrollar aplicaciones Java), no voy a profundizar y, simplemente os remito a la web oficial de Oracle donde poder descargarlo para cada plataforma y en la que también podéis encontrar la documentación para realizar dicha instalación en cada una de ellas. La versión que utilizaremos es la versión JSE 8. [Descargar JSE](https://www.oracle.com/technetwork/java/javase/downloads/index.html).
 
 
 ## Primer programa en Java
 
-Para realizar nuestro primer programa en java, necesitaremos tener instalado y correctamente configurado el JDK en nuestro SO y, por ahora, disponer de un editor de texto.
+Para realizar nuestro primer programa en java, necesitaremos tener instalado, correctamente configurado el JDK en nuestro SO y, por ahora, disponer de un editor de texto.
 
 Cuando empezamos a familiarizarnos con cualquier lenguaje de programación, nuestro primer programa es el famoso **Hola Mundo**. En nuestro caso no iba a ser menos. Por tanto, abriremos un editor de texto y copiaremos el siguiente código y lo guardaremos en una carpeta con el nombre `HolaMundo.java`.
-~~~
+~~~java
 public class HolaMundo {
 
     public static void main(String[] args) {
@@ -96,11 +98,7 @@ Ambos IDEs permiten crear un proyecto Java nuevo, para luego añadir una nueva C
 
 Por ahora, lo único importante que debes saber es que el nombre de la Clase (el nombre que va justo después de la palabra reservada `class`) debe coincidir con el nombre del archivo `.java`. Aunque cuando el IDE te pregunta por el nombre de la clase, eso ya lo hace por tí.
 
-<<<<<<< HEAD
 A continuación te muestro un vídeo de cómo crear el programa `HolaMundo` en **Eclipse**.
-=======
-A continuación te muestro un vídeo de cómo crear el programa `HolaMundo` en Eclipse.
->>>>>>> 8546f1b1c95fd394cc57a32514a865ce3712ede7
 
 <div align="center">
 <video width="600" controls="controls">
@@ -108,7 +106,6 @@ A continuación te muestro un vídeo de cómo crear el programa `HolaMundo` en E
 </video>
 </div>
 
-<<<<<<< HEAD
 También te muestro un vídeo de cómo crear el programa `HolaMundo` en **Netbeans**.
 
 <div align="center">
@@ -119,8 +116,78 @@ También te muestro un vídeo de cómo crear el programa `HolaMundo` en **Netbea
 
 Como podéis apreciar, el proceso es muy sencillo y muy parecido en ambos IDEs. Ahora sólo nos queda empezar a programar!!!
 
-=======
->>>>>>> 8546f1b1c95fd394cc57a32514a865ce3712ede7
+## Identificadores
+
+Los identificadores no son más que los nombres que les damos a algunos elementos de nuestro programa (variables, clases, métodos, etc) para poder referirnos a ellos fácilmente.
+
+Para nombrar un identificador debemos seguir las siguientes reglas:
+- No pueden ser una palabra reservada del lenguaje (que ahora veremos cuáles son).
+- El primer carácter de un identificador debe ser una letra, un número o los símbolos `_` o `$`.
+- Puede incluir números.
+- Se distingue entre mayúsculas y minúsculas.
+- Aunque no es obligatorio, no debemos utilizar tildes ni la `ñ`.
+
+Veamos ahora la lista de **palabras reservadas** que no podemos utilizar como identificador para evitar ambigüedades:
+
+|abstract|continue|for|new|swicth|
+|assert|default|goto|package|synchronized|
+|boolean|do|if|private|this|
+|break|double|implements|protected|throw|
+|byte|else|import|public|throws|
+|case|enum|instanceof|return|transient|
+|catch|extends|int|short|try|
+|char|final|interface|static|void|
+|class|finally|long|strictfp|volatile|
+|const|float|native|super|while|
+
+Anteriormente he mencionado las reglas para nombrar un identificador correctamente y que son de obligado cumplimiento. Sin embargo, en el mundo de java se sigue una convención para el nombrado de los diferentes elementos del lenguaje, que debemos seguir. Esta convención no es obligatoria pero sí es conveniente que la utilicemos y así con sólo ver un identificador sabremos a qué elemento se está refiriendo. En la siguiente tabla os muestro dicha convención para cada uno de los elementos (de los que hablaremos posteriormente).
+
+|Tipo de identificador|Convención|Ejemplo|
+|----------------------------------------|
+|Clase|Empieza por una lerta mayúscula y cóntinua por minúsculas. Si es la concatenación de varias palabras, cada una de ellas empieza también por letra mayúscula.|`Hola`, `HolaMundo`|
+|Variable o Método|Se nombra todo en minúsculas. Si es la concatenación de varias palabras, cada una de ellas empieza también por letra mayúscula.|`sueldo`, `numeroCaracteres`|
+|Constante|Se nombra todo en mayúsculas. Si es la concatenación de varias palabras, éstas se separan por el símbolo `_`|`PI`, `CANTIDAD_MAXIMA`|
+
+Ni que decir tiene que **los identificadores deben ser lo suficientemente significativos** para que nos transmitan el cometido de los mismos.
+
+## Tipos de datos
+
+En Java existen dos grandes categorías de tipos de datos:
+- **primitivos**: Son los tipos de datos básicos en java y serán los que veamos en este apartado. Este tipo de datos vienen definidos de forma implícita en java.
+- **referenciados**: Son los tipos de datos que refenrencia a un objeto y los arrays. A este tipo de datos nos referiremos en apartados posteriores.
+
+Un tipo de dato primitivo indica la cantidad de memoria que deberá reservar el compilador para almacenar una variable de ese tipo. Java es un lenguaje fuertemente tipado por lo que es necesario definir el tipo de dato de cada una de las variables.
+
+Los tipos de datos primitivos se pueden agrupar en: caracter, numérico, decimal y lógico. En la siguiente tabla se muestran los diferentes tipos de datos primitivos, su tamaño, rango y el valor por defecto de cada uno de ellos:
+
+|Tipo de dato|Tamaño|Rango|Valor por defecto|
+|-------------------------------------------|
+|`char`|2 bytes|\u0000 a \uFFFF|\u0000|
+|`byte`|1 byte|-128 a 127|0|
+|`short`|2 bytes|-32768 a 32767|0|
+|`int`|4 bytes|-2147483648 a -2147483647|0
+|`long`|8 bytes|-9223372036854775808 a -9223372036854775807|0|
+|`float`|4 bytes|<img src="https://latex.codecogs.com/svg.latex?\Large&space;\pm3.4*10^{-38}&space;a&space;\pm3.4*10^{38}"/>|0.0|
+|`double`|8 bytes|<img src="https://latex.codecogs.com/svg.latex?\Large&space;\pm1.8*10^{-308}&space;a&space;\pm1.8*10^{308}"/>|0.0|
+|'boolean'|1 byte|`true` o `false`|`false`|
+
+Aunque `String` no es un tipo de dato primitivo ya que es referenciado a un objeto de la clase `String`, simplemente lo nombro ya que a veces lo utilizaremos.
+
+## Literales
+
+Los literales son valores constantes que podemos utilizar para asignar a una variable. Cada tipo de dato tiene su forma para expresarlo. En la siguiente tabla muestro cómo expresar cada uno de ellos.
+
+|Tipo de dato| Representación|
+|----------------------------|
+|`char`|Encerrados entre `''`|
+|`byte`, `shor`, `int`|Se representan por los dígitos del número.|
+|`long`|Como los anteriores pero terminados en `l` o `L`|
+|`double`|Se representan por los dígitos del número. Para separar la parte entera de la decimal se utiliza el `.`. También se puede representar mediante su notación exponencial utilizando el símbolo `e`|
+|`float`|Como los anteriores pero terminados en `f` o `F`|
+|`boolean`|`true` o `false`|
+|`String`|Encerrados entre `""`|
+
+
 ## Variables
 Una variable en un algoritmo es un identificador en el que podemos almacenar información. El valor almacenado en una variable puede ir variando a medida que el algoritmo avanza.
 
@@ -135,14 +202,6 @@ El nombre o identificador de la variable debe comenzar con letras, y puede conte
   `numero Es Entero`
 
   `numero, numCifra Son Enteros`
-
-## Tipos de datos
-
- Nosotros utilizaremos tres tipos de datos básicos (aunque en PSeInt y en cualquier lenguaje de programación existen más):
-
- - **Numérico**: números, tanto enteros como reales. Para separar decimales se utiliza el punto. Ejemplos: `21` `453` `0` `-3.6` `3.14`
- - **Lógico**: solo puede tomar dos valores: `VERDADERO` o `FALSO`.
- - **Carácter**: caracteres o cadenas de caracteres encerrados entre comillas (pueden ser dobles o simples, aunque nos acostumbraremos a utilizar las dobles por su semejanza con java). Ejemplos `"hola"` `"hola mundo"` `"José Ramón"`
 
 ## Operadores
 

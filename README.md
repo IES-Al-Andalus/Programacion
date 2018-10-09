@@ -6,7 +6,7 @@ Este repositorio no pretende ser una obra exhaustiva sobre programación, ni sob
 
 ## Contenidos
 - [Resolución de problemas mediante algoritmos](algoritmos/README.md)
-- Introducción a la programación en java
+- [Introducción a la programación en java](introduccionJava/README.md)
 
 ## Autor
 

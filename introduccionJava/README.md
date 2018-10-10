@@ -18,7 +18,7 @@ Al igual que en otros apartados, el objetivo principal es que tengáis una ampl�
 - [Literales](#literales)
 - [Variables](#variables)
 - [Operadores](#operadores)
-- [Funciones](#funciones)
+- [Comentarios](#comentarios)
 - [Sentencias secuenciales](#sentencias-secuenciales)
 - [Sentencias condicionales](#sentencias-condicionales)
 - [Sentencias repetitivas](#sentencias-repetitivas)
@@ -171,9 +171,9 @@ Los tipos de datos primitivos se pueden agrupar en: caracter, numérico, decimal
 |`long`|8 bytes|-9223372036854775808 a -9223372036854775807|0|
 |`float`|4 bytes|<img src="https://latex.codecogs.com/svg.latex?\Large&space;\pm3.4*10^{-38}&space;a&space;\pm3.4*10^{38}"/>|0.0|
 |`double`|8 bytes|<img src="https://latex.codecogs.com/svg.latex?\Large&space;\pm1.8*10^{-308}&space;a&space;\pm1.8*10^{308}"/>|0.0|
-|'boolean'|1 byte|`true` o `false`|`false`|
+|`boolean`|1 byte|`true` o `false`|`false`|
 
-Aunque `String` no es un tipo de dato primitivo ya que es referenciado a un objeto de la clase `String`, simplemente lo nombro ya que a veces lo utilizaremos.
+Aunque `String` no es un tipo de dato primitivo ya que es una referencia a un objeto de la clase `String`, simplemente lo nombro ya que a veces lo utilizaremos.
 
 ## Literales
 
@@ -190,84 +190,130 @@ Los literales son valores constantes que podemos utilizar para asignar a una var
 |`String`|Encerrados entre `""`|
 
 ## Variables
-Una variable en un algoritmo es un identificador en el que podemos almacenar información. El valor almacenado en una variable puede ir variando a medida que el algoritmo avanza.
+Una variable en java es una posición de memoria en la que se almacenará un valor del tipo de dato de la misma. Se representa por su identificador y en el programa nos refererimos a ella mediante dicho identificador. El valor que contenga la variable podrá cambiar a lo largo de la vida del programa.
 
-El nombre o identificador de la variable debe comenzar con letras, y puede contener solo letras, números y el guión bajo.
+En java todas las variables deben ser declaradas antes de ser utilizadas. Para declarar una variable indicaremos su tipo y el identificador de la misma. También es posible declarar varias variables del mismo tipo en la misma sentencia, separando los identificadores de las mismas por coma. La declaración, al ser una sentencia como ya veremos, debe acabar con un `;`. Aquí muestro algunos ejemplos de declaración de variables.
+~~~java
+  int posicion;
+  double precision;
+  boolean esPrimo;
+  float x, y, distancia;
+~~~
 
-- Para acostumbrarnos, debe empezar en minúscula y si queremos utilizar varias palabras para nombrarla, las pondremos juntas y la segunda y restantes comenzarán en mayúscula: `numero`, `numCifras`, `fechaNacimiento`...
-- No debe coincidir con una palabra reservada o función del lenguaje, para no generar ambigüedad.
-- El nombre de una variable debe ser lo más explicativo posible y así nos ayudará a comprender su cometido.
-- Toda variable tiene un tipo de dato asociado y sólo podrá contener datos de ese tipo (aunque en algunos lenguajes de programación esta afirmación no es cierta).
-- Aunque en PSeInt no es obligatorio, debemos acostumbrarnos a definir la variable antes de utilizarla:
+Hasta que no declaramos una variable ésta no puede ser utilizada en nuestro programa. Al ser java un lenguaje fuertemente tipado no permite hacerlo y nos dará un error de compilación (o nos lo avisará nuestro IDE).
 
-  `numero Es Entero`
+Justo después de declarar una variable, ésta toma el valor por defecto del tipo asociado. También es posible asignar un valor a la hora de declarar una variable por medio del operador `=`. Aquí muestro un ejemplo de ello.
+~~~java
+  int numeroCartasRestantes = 40;
+  float irpf = 21f, retencion;
+~~~
 
-  `numero, numCifra Son Enteros`
+Cuando se declara una variable se reserva el espacio necesario para almacenar el tipo de dato de la misma y este espacio se libera cuando el programa sale del ámbito de la misma. Por ahora nuestros programas estarán todos contenidos dentro del método `main`. Por tanto, el ámbito de una variable será el bloque al que pertenece, es decir las llaves más cercanas entre las que está encerrada dicha variable. Esto quedará más claro cuando empecemos a hablar de sentencias, pero es importante que lo recordéis.
 
 ## Operadores
+Un operador es un símbolo utilizado para componer una expresión, relacionando uno, dos o tres operandos (en el caso de java). Por tanto, una primera clasificación de los operadores podría ser: **unarios**, **binarios** y **ternarios**. Los operandos podrán ser variables o literales. La expresión evaluará a un valor dependiendo del tipo de dato de los operandos y del operador en cuestión.
 
-El lenguaje utilizado por PSeInt dispone de un conjunto básico de operadores que pueden ser utilizados para la construcción de expresiones más o menos complejas los cuáles se muestran en las siguientes tablas:
+Otra clasificación de los operadores en java es la siguiente (sólo mostraré los que utilizaremos por ahora, para no liar):
 
 **Operadores relacionales**
 
-Operador|Significado|Ejemplo
-------------|--------------|------------
-`>` | Mayor que|3>2
-`<`| Menor que |'Hola'<'hola'
-`=`| Igual que|4=3
-`<=`| Menor o igual que| 2<=2
-`>=`| Mayor o igual que|  4>=5
-`<>`| Distinto que| 7<>8
+Operador|Significado
+------------|--------------
+`>` | Mayor que
+`<`| Menor que
+`==`| Igual que
+`<=`| Menor o igual que
+`>=`| Mayor o igual que
+`!=`| Distinto que
 
 **Operadores Lógicos**
 
-Operador|Significado|Ejemplo
-------------|--------------|------------
-`&` ó `Y`| Conjunción (y) |(8>5) & (5=3) //falso
-`|` ó `O` | Disyunción (o)| (8>5 \| 5=3) //verdadero
-`~` ó `NO`| Negación (no)| 	  ~(8>5) //verdadero
+Operador|Significado
+------------|--------------
+`&&` ó `&`| Conjunción (y)
+`||` ó `|` | Disyunción (o)
+`!` | Negación (no)
+
+La diferencia entre el operador `&&` y el operador `&` es que el primero evalúa en cortocircuito y el segundo no. Por lo que si el operando izquierdo evalúa a `false` ya no continúa evaluando ya que la expresión evaluará a `false`, evalúe a lo que evalúe el operando derecho. El segundo evalúa ambos operandos.
+
+La diferencia entre el operador `||` y el operador `|` es que el primero evalúa en cortocircuito y el segundo. Por lo que si el operando izquierdo evalúa a `true` ya no continúa evaluando ya que la expresión evaluará a `true`, evalúe a lo que evalúe el operando derecho. El segundo evalúa ambos operandos.
 
 **Operadores Algebraicos**
 
-Operador|Significado|Ejemplo
-------------|--------------|------------
-`+`| Suma| suma <- op1 + op2
-`-` |Resta| dif <- op1 - op2
-`*`|Multiplicación|mult <- numero * 5
-`/`| División|porc <- 100 * parte / total  
-`^`|Potenciación| sup <- 3.41 * radio ^ 2
-`%` ó `MOD`| Módulo (resto de la división entera) | resto <- num MOD div
+Operador|Significado
+------------|--------------
+`+`| Suma
+`-` |Resta
+`*`|Multiplicación
+`/`| División
+`^`|Potenciación
+`%`| Módulo (resto de la división entera)
+`++`|Incrementar una unidad
+`--`|Decrementar una unidad
 
-   La precedencia de los operadores matemáticos es igual a la del álgebra, aunque puede alterarse mediante el uso de paréntesis.
+La división realizará la división entera o real dependiendo del tipo de cada uno de los operandos. Para que realice la división entera ambos operandos deberán ser numéricos (`int` o `long`). Si uno de ellos no lo es realizará la división real.
 
-## Funciones
+Los operadores `++` y `--` pueden ser **prefijos** o **postfijos**. Esto quiere decir que realizará la operación de incremento o decremento antes de evaluar la expresión a la que pertenecen o después. Por ejemplo:
+~~~java
+  int x = 3;
+  boolean resultado;
+  resultado = ++x * 2 == 6  //resultado será false, x valdrá 4 después de la ejecución
+  resultado = x++ * 2 == 8  //resultado será true, x valdará 5 después de la ejecución
+~~~
+En las expresiones aritméticas debemos tener en cuenta que el compilador siempre intentará hacer una conversión implícita de los tipos de datos de los operadores y los intentará convertir al de mayor precisión:
+- Si hay un `double`, el otro lo convierte a `double`.
+- Si no, pero hay un `float`, el otro lo convierte a `float`.
+- Si no, pero hay un `long`, el otro lo convierte a `long`.
+- En caso contrario los ocnvierte a `int`.
 
-Las funciones en pseudocódigo son parecidas a las que se utilizan en el álgebra, por ejemplo para hallar el seno de un ángulo, aunque su sintaxis es algo diferente ya que los parámetros se encierran entre paréntesis. Se coloca su nombre seguido de los argumentos para la misma encerrados entre paréntesis (por ejemplo `sen(x)`). Se pueden utilizar dentro de cualquier expresión, y cuando se evalúe la misma, se reemplazará por el resultado correspondiente. Actualmente, todas la funciones disponibles en **PSeInt** son matemáticas o de cadena. A continuación se listan las funciones integradas en **PSeInt** disponibles:
+También podemos hacer conversiones explícitas mediante el uso del **casting**, que no es más que anteponer al operador o expresión el tipo de dato al que queremos convertir encerrado entre paréntesis. Esta conversión explícita o **casting** puede conllevar pérdida de información si estamos intentado hacer la conversión de un tipo de dato de mayor precisión a uno de menor.
+~~~java
+  int resultado, op1 = 2;
+  float op2 = 5f;
+  resultado = op1 / op2;  //Esta operación daría un error ya que no se puede llevar a cabo la conversión
+  resultado = op1 / (int)op2; //resultado sería 0 ya que haría la división entera
+~~~
 
+**Operadores de asignación**
 
-Función|Significado
--------|-----------
-`RAIZ(X)`|Raíz Cuadrada de X
-`ABS(X)`|Valor Absoluto de X
-`LN(X)`|Logaritmo Natural de X
-`EXP(X)`|Función Exponencial de X
-`SEN(X)`|Seno de X
-`COS(X)`|Coseno de X
-`TAN(X)`|Tangente de X
-`ASEN(X)`|Arcoseno de X
-`ACOS(X)`|Arcocoseno de X
-`ATAN(X)`|Arcotangente de X
-`TRUNC(X)`|Parte entera de X
-`REDON(X)`|Entero más cercano a X
-`AZAR(X)`|Entero aleatorio en el rango [0;x-1]
-`ALEATORIO(A,B)`|Entero aleatorio en el rango [A;B]
-`LONGITUD(S)`|Cantidad de caracteres de la cadena S
-`MAYUSCULAS(S)`|Devuelve una copia de la cadena S con todos sus caracteres en mayúsculas
-`MINUSCULAS(S)`|Devuelve una copia de la cadena S con todos sus caracteres en minúsculas
-`SUBCADENA(S,X,Y)`|Devuelve una nueva cadena que consiste en la parte de la cadena S que va desde la posición X hasta la posición Y (incluyendo ambos extremos). Las posiciones utilizan la misma base que los arreglos, por lo que la primer letra será la 0 o la 1 de acuerdo al perfil del lenguaje utilizado.
-`CONCATENAR(S1,S2)`|Devuelve una nueva cadena resultado de unir las cadenas S1 y S2.
-`CONVERTIRANUMERO(X)`|Recibe una cadena de caracteres que contiene un número y devuelve una variable numérica con el mismo.
-`CONVERTIRATEXTO(S)`|Recibe un real y devuelve una variable numérica con la representación como cadena de caracteres de dicho real.
+Operador|Significado
+--------|-----------
+`=`|Asignación
+`+=`|Sumar el valor y asignar
+`-=`|Restar el valor y asignar
+`*=`|Multiplicar por el valor y asignar
+`/=`|Dividir por el valor y asignar
+
+Los operadores de asignación para que tengan sentido deben tener una variable como operando izquierdo y lo que hacen es cambiar el valor de dicha variable.
+
+**Operador de concatenación de cadenas** `+`
+
+**Precedencia de evaluación**
+A la hora de evaluar una expresión debemos tener en cuenta:
+- Lo que esté encerrado entre paréntesis es lo primero que se evalúa.
+- Seguidamente evaluamos los operadores de mayor prioridad a menor prioridad.
+- A igual prioridad los operadores se evalúan de izquierda a derecha.
+- Los operadores de igualdad son los de menor prioridad.
+- La prioridad de los demás operadores, de mayor a menor es la que sigue:
+  - `++`, `--`, `!`, `+` (unario), `-` (unario)
+  - `*`, `/`, `%`
+  - `+`, `-`
+  - `<`, `<=`, `>`, `>=`
+  - `==`, `!=`
+  - `&`
+  - `^`
+  - `|`
+  - `&&`
+  - `||`
+
+## Comentarios
+
+Los comentarios son anotaciones que se hacen en los programas para aclarar algún tipo de funcionalidad y que son ignorados por el compilador, pero que a veces vienen bien para explicar algún detalle. Es imprescindible **no abusar de los comentarios** ya que hacen el código difícil de leer. Es más, a veces ponemos comentarios para explicar qué hace un fragmento de código y eso nos está indicando que ese comentario sobra y que ese fragmento de código habría que sustituirlo por un método con un nombre explicativo de dicha función y con ello nuestro código queda **autodocumentado**. El mismo caso es cuando utilizamos nombres apropiados a nuestras variables; hacen que aumente la legibilidad del mismo y no es necesario acompañarla de un comentario para explicar dicho cometido.
+
+En java existe tres tipos de comentarios:
+- De una sóla línea: El comentario se antecede de los caractes `//`.
+- De varias líneas: El comentario se encierra entre los caracteres `/*` y `*/`.
+- Javadoc: Son comentarios utilizados para generar documentación y el comentario se encierra entre los caracteres `/**` y `*/`. Por ahora, no utilizaremos este tipo de comentarios.
 
 ## Sentencias secuenciales
 

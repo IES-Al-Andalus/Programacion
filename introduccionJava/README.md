@@ -187,7 +187,6 @@ Los literales son valores constantes que podemos utilizar para asignar a una var
 |`boolean`|`true` o `false`|
 |`String`|Encerrados entre `""`|
 
-
 ## Variables
 Una variable en un algoritmo es un identificador en el que podemos almacenar información. El valor almacenado en una variable puede ir variando a medida que el algoritmo avanza.
 

@@ -116,6 +116,7 @@ También te muestro un vídeo de cómo crear el programa `HolaMundo` en **Netbea
 
 Como podéis apreciar, el proceso es muy sencillo y muy parecido en ambos IDEs. Ahora sólo nos queda empezar a programar!!!
 
+<<<<<<< HEAD
 ## Identificadores
 
 Los identificadores no son más que los nombres que les damos a algunos elementos de nuestro programa (variables, clases, métodos, etc) para poder referirnos a ellos fácilmente.
@@ -188,6 +189,8 @@ Los literales son valores constantes que podemos utilizar para asignar a una var
 |`String`|Encerrados entre `""`|
 
 
+=======
+>>>>>>> ac41b1b27319083a99984cf6e48d385c154ce765
 ## Variables
 Una variable en un algoritmo es un identificador en el que podemos almacenar información. El valor almacenado en una variable puede ir variando a medida que el algoritmo avanza.
 

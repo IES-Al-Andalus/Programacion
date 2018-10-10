@@ -116,6 +116,10 @@ También te muestro un vídeo de cómo crear el programa `HolaMundo` en **Netbea
 
 Como podéis apreciar, el proceso es muy sencillo y muy parecido en ambos IDEs. Ahora sólo nos queda empezar a programar!!!
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 03bf6195edb17ff335b467450dd8c77aa8131a1c
 ## Identificadores
 
 Los identificadores no son más que los nombres que les damos a algunos elementos de nuestro programa (variables, clases, métodos, etc) para poder referirnos a ellos fácilmente.

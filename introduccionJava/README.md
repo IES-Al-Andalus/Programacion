@@ -19,9 +19,7 @@ Al igual que en otros apartados, el objetivo principal es que tengáis una ampl�
 - [Variables](#variables)
 - [Operadores](#operadores)
 - [Comentarios](#comentarios)
-- [Sentencias secuenciales](#sentencias-secuenciales)
-- [Sentencias condicionales](#sentencias-condicionales)
-- [Sentencias repetitivas](#sentencias-repetitivas)
+- [Sentencias](#sentencia)
 - [Ejercicios](#ejercicios)
 
 ## ¿Qué es Java?
@@ -319,19 +317,19 @@ En java existe tres tipos de comentarios:
 
 En java, como en todos los lenguajes de programación, podemos encontrar tres grandes grupos de sentencias (esta clasificación es según mi parecer y para adecuarla a lo que hemos visto en el apartado sobre pseudocódigo, aunque otros autores o autoras hacen otras clasificaciones): **secuenciales**, **condicionales** y **repetitivas**.
 
-Todas las sentencias de acabar con el símbolo `;`. Un sentencia no es más que una orden específica que da el programa para realizar una determinada acción.
+Todas las sentencias deben acabar con el símbolo `;`. Una sentencia no es más que una orden específica que da el programa para realizar una determinada acción.
 
 Vamos a verlas una a una:
 
-### Sentencias secuenciales
+##### Sentencias secuenciales
 
 - **Asignación**: Como su nombre indica sirve para asignar valores a una variable. Utiliza cualquier operador de asignación de los vistos hasta el momento.
 
-  Para realizar la asignación, primero se evalúa la expresión de la derecha y luego se asigna el resultado.
+  Para realizar la asignación, primero se evalúa la expresión de la derecha y luego se asigna el resultado de dicha evaluación a la variable de la izquierda.
 
-- **Declaración**: Como ya hemos dicho en java es necesario declarar cualquier variable que vayamos a utilizar. Ya hablamos de cómo se declaraban las variables. Simplemente comentar que una variable se puede declarar en cualquier punto del programa, pero que antes de utilizarla es necesario declararla.
+- **Declaración**: Como ya hemos dicho, en java es necesario declarar cualquier variable que vayamos a utilizar. Ya hablamos de cómo se declaraban las variables. Simplemente comentar que una variable se puede declarar en cualquier punto del programa, pero que antes de utilizarla es necesario declararla.
 
-- **Expresión**: Una expresión por si misma puede que no tenga sentido si no va ligada a una asignación. Pero hay casos en los que eso no es del todo cierto, ya que por ejemplo la sentencia `posiion++;` ya tiene un efecto sobre la variable `posicion`. Sin embargo, la sentencia, por poner un ejemplo, `posicion > 0;` por sí misma no tiene sentido, aunque es válida.
+- **Expresión**: Una expresión por si misma puede que no tenga sentido si no va ligada a una asignación. Pero hay casos en los que eso no es del todo cierto, ya que por ejemplo la sentencia `posiion++;` tiene un efecto sobre la variable `posicion`. Sin embargo, la sentencia, por poner un ejemplo, `posicion > 0;` por sí misma no tiene sentido, aunque es válida.
 
 - **Bloque de sentencias**: Un bloque de sentencias es una agrupación de sentencias que se comportan como una unidad. Los bloques de sentencias se definen encerrando la sentencia o sentencias entre los caracteres `{` y `}`. Además los bloques de sentencias se pueden anidar uno dentro de otro, como se muestra en el siguiente ejemplo:
   ~~~java
@@ -359,7 +357,7 @@ Vamos a verlas una a una:
       - `System.out.println(cadena)`: Imprime en la consola la cadena `cadena` y un salto de línea.
       - `System.out.print(cadena)`; Hace lo mismo pero no imprime el salto de línea.
 
-    Como ya os comenté, en este apartado a veces nos va a hacer falta trabajar con cadenas (`String`), aunque no sean un tipo primitivo. Ya comentamos que los literales tipo cadena iban encerrados entre `""` y que podíamos concatenar (unir) cadenas mediante el operador `+`. Además, siempre que utilicemos el operador `+` con al menos un operando de tipo `String`, java convertirá el otro operando a otra cadena. Por lo que los siguientes ejemplos sería válidos:
+    Como ya os comenté, en este apartado a veces nos va a hacer falta trabajar con cadenas (`String`), aunque no sean un tipo primitivo. Ya comentamos que los literales tipo cadena iban encerrados entre `""` y que podíamos concatenar (unir) cadenas mediante el operador `+`. Además, siempre que utilicemos el operador `+` con al menos un operando de tipo `String`, java convertirá el otro operando a otra cadena. Por lo que los siguientes ejemplos serían válidos:
     ~~~java
       int posicion = 0;
       String miCadena = "Hola";
@@ -369,9 +367,9 @@ Vamos a verlas una a una:
       System.out.println("La posición ocupada es: " + posicion) //Imprime "La posición ocupada es: 0"
     ~~~
 
-  - **Lectura**: Para realizar la lectura desde teclado en java hay que tener conocimientos más avanzados y que ahora no vamos a detallar ya que podrían hacer perdernos en los detalles. Por ello he desarrolla una librería que os facilitará la vida y podréis llevarla a cabo por medio de una sóla sentencia y evitando tener en cuenta todos los detalles asociados.
+  - **Lectura**: Para realizar la lectura desde teclado en java hay que tener conocimientos más avanzados y que ahora no vamos a detallar ya que podrían hacer perdernos en los detalles. Por ello he desarrollado una librería que os facilitará la vida y podréis llevarla a cabo por medio de una sóla sentencia, evitando tener en cuenta todos los detalles asociados.
 
-    La clase que he realizado se llama `Entrada` y la he metido dentro de un paquete llamado `utilidades`. Para poder utilizarla, simplemente tenéis que copiar el paquete (que para que nos entendamos en un directorio) al directorio `src` de vuestro proyecto.
+    La clase que he realizado se llama `Entrada` y la he metido dentro de un paquete llamado `utilidades`. Para poder utilizarla, simplemente tenéis que copiar el paquete (que para que nos entendamos, es un directorio) al directorio `src` de vuestro proyecto.
 
     En el siguiente vídeo podrás ver como integrar dicha clase en tu proyecto en Eclipse
 
@@ -391,7 +389,7 @@ Vamos a verlas una a una:
 
     En el siguiente enlace adjunto el fichero `.zip` correspondiente al paquete `utilidades` que simplemente deberás descomprimir y copiar el directorio generado a tu IDE como ya hemos visto en los vídeos anteriores. [Descargar paquete utilidades](archivos/utilidades.zip)
 
-    La clase `Entrada` nos ofrece los siguientes métodos para leer algunos de los tipos primitivos vistos en este apartado y que podemos utilizar de la siguiente forma (he mostrado la declaración y la asignación juntas para recalcar el tipo de dato al que podemos hacer la asignación, pero podría estar divida en dos sentencias separadas):
+    La clase `Entrada` nos ofrece los siguientes métodos para leer algunos de los tipos primitivos vistos en este apartado y que podemos utilizar de la siguiente forma (he mostrado la declaración y la asignación juntas para recalcar el tipo de dato al que podemos hacer la asignación, pero podría estar dividida en dos sentencias separadas):
 
     - `char caracter = Entrada.char();`
     - `String cadena = Entrada.cadena();`
@@ -400,7 +398,7 @@ Vamos a verlas una a una:
     - `float real = Entero.real();`
     - `double realLargo = Entero.realDoble();`
 
-## Sentencias condicionales
+##### Sentencias condicionales
 Son sentencias que permiten alterar el flujo del algoritmo y ejecutar unas sentencias u otras dependiendo del valor de una condición.
 
 - **Condicional** Permite evaluar una condición y ejecutar una serie de sentencias si dicha condición es verdadera u otras si es falsa.
@@ -437,7 +435,7 @@ Son sentencias que permiten alterar el flujo del algoritmo y ejecutar unas sente
 
   Opcionalmente, se puede agregar una opción final, denominada `De Otro Modo`, cuya secuencia de instrucciones asociada se ejecutará sólo si el valor almacenado en la variable no coincide con ninguna de las opciones anteriores.
 
-## Sentencias repetitivas
+##### Sentencias repetitivas
 Son sentencias que también alteran el flujo del algoritmo, permitiendo repetir una secuencia de instrucciones mientras se de alguna condición. También son conocidas como bucles.
 
 - **Mientras** Esta instrucción ejecuta una secuencia de instrucciones mientras se cumpla una condición.
@@ -477,12 +475,6 @@ Son sentencias que también alteran el flujo del algoritmo, permitiendo repetir 
   La variable toma el valor `<inicial>` y se ejecuta la secuencia de intrucciones. Se incrementa la variable el valor de `<paso>` y se comprueba si la variable ha superado el valor `<final>`. Si no lo ha superado, se vuelve a ejecutar la secuencia de sentencias y se repite el proceso hasta que la variable supera el valor `<final>`.
 
   La claúsula `Con Paso` se puede obviar, en cuyo caso el incremento será de 1.
-
-## Personalización del lenguaje
-
-Para que todos y todas utilicemos la misma sintaxis del lenguaje utilizado por PSeInt y que éste se asemeje lo máximo posible a como luego se comportará Java, hemos utilizado la siguiente personalización del lenguaje, por lo que os ruego que todos configuremos el programa PSeInt con dicha personalización.
-
-![Personalización del lenguaje](imagenes/personalizacionLenguaje.png)
 
 ## Ejercicios
 

@@ -76,6 +76,7 @@ public class HolaMundo {
 
 }
 ~~~
+
 Una vez guardado con el nombre `HolaMundo.java`, simplemente deberemos compilarlo mediante el comando `javac`, pasando como argumento el nombre del archivo, que nos generará el archivo `HolaMundo.class`. Este archivo corresponde con nuestro programa compilado pasado a bytecodes y será el archivo que podremos pasar a cualquier sistema que tenga instalada la JVM para poder ejecutarlo.
 
 Para ejecutarlo, simplemente ejecutaremos el comando `java` pasando como argumento el nombre del archivo (sin la extensión `.class`).

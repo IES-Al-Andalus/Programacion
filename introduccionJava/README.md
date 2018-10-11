@@ -66,11 +66,9 @@ Cuando empezamos a familiarizarnos con cualquier lenguaje de programación, nues
 ~~~java
 public class HolaMundo {
 
-    public static void main(String[] args) {
-
-       System.out.println("Hola mundo!!!");
-
-    }
+	public static void main(String[] args) {
+		System.out.println("Hola mundo!!!");
+	}
 
 }
 ~~~
@@ -340,17 +338,17 @@ Son las sentencias que se ejecutan una detrás de otra, secuencialmente. Por lo 
 
 - **Bloque de sentencias**: Un bloque de sentencias es una agrupación de sentencias que se comportan como una unidad. Los bloques de sentencias se definen encerrando la sentencia o sentencias entre los caracteres `{` y `}`. Además los bloques de sentencias se pueden anidar uno dentro de otro, como se muestra en el siguiente ejemplo:
   ~~~java
-    ...
-    {
-      int numero = 5;
-      ...
-      {
-        int posicion = -1;
-        ...
-      }
-      ...
-    }
-    ...
+	...
+	{
+		int numero = 5;
+		...
+		{
+			int posicion = -1;
+			...
+		}
+		...
+	}
+	...
   ~~~
   Como se puede apreciar hay un bloque dentro de otro. Si os acordáis, ya hablamos del ámbito de las variables. Pues en este ejemplo podemos apreciar que el ámbito de la variable `numero` es el bloque externo y el ámbito de la variable `posicion` es el bloque interno. Por lo que la variable `posicion` se creará al declararla en el bloque interno y se destruirá al salir de dicho bloque, por lo que fuera del mismo no nos podremos referir a ella. Sin embargo el ámbito de la variable `numero` es el bloque externo, por lo que dentro del bloque interno también podremos referirnos a ella ya que todavía sigue existiendo.
 
@@ -415,11 +413,11 @@ Son sentencias que permiten alterar el flujo del algoritmo y ejecutar unas sente
 - **Condicional**: Permite evaluar una condición y ejecutar una serie de sentencias si dicha condición es verdadera u otras si es falsa.
 
   ~~~java
-    if <condicion> {
-    <sentenciasV>
-  } else {
-    <sentenciasF>
-  }
+	if <condicion> {
+		<sentenciasV>
+	} else {
+		<sentenciasF>
+	}
   ~~~
 
   Evalúa la condición y si es verdadera ejecutará `<sentenciasV>` y si es falsa ejecuturá `<sentenciasF>`
@@ -432,14 +430,14 @@ Son sentencias que permiten alterar el flujo del algoritmo y ejecutar unas sente
   ~~~java
     ...
     if (numero > 0) {
-      if (numero % 2 == 0) {
-        System.out.println("El número es par");
-      }
-      if (numero % 3 == 0) {   
-        System.out.println("El número es divisible por 3");
-      } else {    //Este else va asociado al if (numero % 3 == 0)
-        System.out.println("El número no es divisible por 3");
-      }
+	    if (numero % 2 == 0) {
+	     	System.out.println("El número es par");
+	    }
+	    if (numero % 3 == 0) {   
+	     	System.out.println("El número es divisible por 3");
+	    } else {    //Este else va asociado al if (numero % 3 == 0)
+	     	System.out.println("El número no es divisible por 3");
+	    }
     }
     ...
   ~~~
@@ -447,11 +445,11 @@ Son sentencias que permiten alterar el flujo del algoritmo y ejecutar unas sente
   ~~~java
     ...
     if (numero % 2 == 0) {
-      System.out.println("El número es par");
+    	System.out.println("El número es par");
     } else if (numero % 3 == 0) {
-      System.out.println("El número no es par, pero es divisible por 3");
+    	System.out.println("El número no es par, pero es divisible por 3");
     } else {
-      System.out.println("El número no es par ni divisible por 3");
+    	System.out.println("El número no es par ni divisible por 3");
     }
     ...
   ~~~
@@ -476,17 +474,17 @@ Son sentencias que permiten alterar el flujo del algoritmo y ejecutar unas sente
 - **Selección múltiple**: En este caso se nos permite seleccionar las instrucciones a ejecutar dependiendo del valor de una expresión entera, caracter o cadena.
 
   ~~~java
-  swicth (<expresion>) {
-    case <valor1>:
-      <sentencias1>
-      break;
-    case <valor2>, <valor3>:
-      <sentencias23>
-      break;
-    <...>
-    [ default:
-      <otrasSentencias> ]
-  }
+	swicth (<expresion>) {
+		case <valor1>:
+			<sentencias1>
+			break;
+		case <valor2>, <valor3>:
+			<sentencias23>
+			break;
+		<...>
+		[ default:
+			<otrasSentencias> ]
+	}
   ~~~
 
   Al ejecutarse, se evalúa la expresión y se ejecuta la secuencia de instrucciones asociada con el valor correspondiente.
@@ -505,9 +503,9 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
 - **while**: Esta sentencia ejecuta otras sentencias mientras se cumpla una condición.
 
   ~~~java
-  while <condicion> {
-    <sentencias>
-  }
+	while <condicion> {
+		<sentencias>
+	}
   ~~~
 
   Se evalúa la condición y si es verdadera se ejecuta la secuencia de sentencias. En cada paso se vuelve a repetir el proceso.
@@ -522,9 +520,9 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
     System.out.print("Introduce un número entre 0 y 10 (ambos inclusive): ");
     numero = Entrada.entero();
     while (numero < 0 || numero > 10) {
-      System.out.println("ERROR: El número debe estar comprendido entre 0 y 10 (ambos inclusive)");
-      System.out.print("Por favor vuelve a introducir un número válido: ");
-      numero = Entrada.entero();
+	    System.out.println("ERROR: El número debe estar comprendido entre 0 y 10 (ambos inclusive)");
+	    System.out.print("Por favor vuelve a introducir un número válido: ");
+	    numero = Entrada.entero();
     }
     System.out.println("El número introducido es: " + numero);
     ...
@@ -533,9 +531,9 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
 - **do-while**: Esta sentencia ejecuta un conjunto de sentencias también mientras una condición sea verdadera, pero esta condición se evalúa al final del bucle. Su sintaxis es la siguiente:
 
   ~~~java
-    do {
-      <sentencias>
-    } while <condicion>;
+	do {
+		<sentencias>
+	} while <condicion>;
   ~~~
 
   La secuencia de sentencias siempre se ejecuta al menos una vez, al contrario que en el bucle anterior. Notar la condición termina con un ';'.
@@ -546,8 +544,8 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
     ...
     int numero;
     do  {
-      System.out.print("Introduce un número entre 0 y 10 (ambos inclusive): ");
-      numero = Entrada.entero();
+	    System.out.print("Introduce un número entre 0 y 10 (ambos inclusive): ");
+	    numero = Entrada.entero();
     } while (numero < 0 || numero > 10);
     System.out.println("El número introducido es: " + numero);
     ...
@@ -556,9 +554,9 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
 - **for**: Este tipo de bucle se utiliza para repetir una secuencia de sentencias un número determinado de veces, en su formato más general. Pero, como veremos, también se puede utilizar para otros menesteres, aunque para ello os aconsejo utilizar uno de los anteriores. Su sintaxis es:
 
   ~~~java
-    for (<expresionInicializacion> ; <expresionCondicinal> ; <expresionIncremento>) {
-      <sentencias>
-    }
+	for (<expresionInicializacion> ; <expresionCondicinal> ; <expresionIncremento>) {
+		<sentencias>
+	}
   ~~~
 
   Primero se evalúa `expresionInicializacion`. Esta expresión es opcional. En su formato más genérico, aquí inicializaremos la variable de control del bucle. También puede haber varias expresiones separadas por `,`.
@@ -568,11 +566,11 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
   Cuando se haya terminado de ejecutar la secuencia de sentencias, se evalúa `expresionIncremento` y se vuelve a evaluar `expresionCondicional` para volver a ejecutar o no la secuencia de sentencias. `expresionIncremento` también es opcional y también podría haber varias expresiones separadas por `,`.
 
   ~~~java
-    ...
-    for (int i = 1; i <= 10; i++) {
-      System.out.println("2 * " + i + " = " + 2 * i);
-    }
-    ...
+	...
+	for (int i = 1; i <= 10; i++) {
+		System.out.println("2 * " + i + " = " + 2 * i);
+	}
+	...
   ~~~
 
   ~~~java
@@ -581,9 +579,9 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
     System.out.print("Introduce un número entre 0 y 10 (ambos inclusive): ");
     numero = Entrada.entero();
     for (; numero < 0 || numero > 10;) {
-      System.out.println("ERROR: El número debe estar comprendido entre 0 y 10 (ambos inclusive)");
-      System.out.print("Por favor vuelve a introducir un número válido: ");
-      numero = Entrada.entero();
+	    System.out.println("ERROR: El número debe estar comprendido entre 0 y 10 (ambos inclusive)");
+	    System.out.print("Por favor vuelve a introducir un número válido: ");
+	    numero = Entrada.entero();
     }
     System.out.println("El número introducido es: " + numero);
     ...
@@ -600,22 +598,19 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
 
 - **Asignar valor a una variable y mostrarlo**
 
-  Diseñar un algoritmo que le asigne un valor cualquiera a una variable entera y lo muestre por pantalla.
+  Escribir un programa java que le asigne un valor cualquiera a una variable entera y lo muestre por pantalla.
 
-  - ![Diagrama de flujo para el algoritmo AsignarValor](ejercicios/diagramas/AsignarValor.png)
-    ~~~
-    Algoritmo AsignarValor
+  - Posible solución
+    ~~~java
+		public class AsignarValor {
 
-    	//Declaración
-    	num Es Entero
+			public static void main(String[] args) {
+				int numero;
+			    numero = 10;
+			    System.out.println("El valor del número  es: " + numero);
+			}
 
-    	//Asignación
-    	num <- 5
-
-    	//Escritura
-    	Escribir "El valor de num es: ", num
-
-    FinAlgoritmo 
+		}
     ~~~
 
-    [Descargar posible solución para el algoritmo **AsignarValor**](ejercicios/AsignarValor.psc)
+    [Descargar posible solución para el programa **AsignarValor**](ejercicios/AsignarValor.java)

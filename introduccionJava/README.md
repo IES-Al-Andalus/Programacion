@@ -594,7 +594,6 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
 
   - **Sentencias de control de errores**: Son sentencias que permiten controlar si se ha producido un error inesperado en el programa y actuar en consecuencia para que el programa no termine de forma inesperada. Es a lo que se llama **excepciones** en java y que veremos con detalle en otro apartado.
 
-
 ## Ejercicios
 
 ###### Sentencias secuenciales

@@ -415,7 +415,7 @@ Son sentencias que permiten alterar el flujo del algoritmo y ejecutar unas sente
 - **Condicional**: Permite evaluar una condición y ejecutar una serie de sentencias si dicha condición es verdadera u otras si es falsa.
 
   ~~~java
-  if <condicion> {
+    if <condicion> {
     <sentenciasV>
   } else {
     <sentenciasF>
@@ -456,7 +456,7 @@ Son sentencias que permiten alterar el flujo del algoritmo y ejecutar unas sente
     ...
   ~~~
 
-- **Operador ternario**: Cuando hemos hablado de los operadores, no he querido hablaros del operador **ternario** para no liaros. Pero, llegados a este punto, toca hablar de él. Este operador ternario no es una sentencia de control de flujo como tal, pero evalúa a un determindo valor dependiendo de una condición. Se suele utilizar en las asignaciones, aunque también se puede utilizar en otras ocasiones en las que no me detendré ya que aún no hemos visto.
+- **Operador ternario**: Cuando hemos hablado de los operadores, no he querido hablaros del operador **ternario** para no liaros. Pero, llegados a este punto, toca hablar de él. Este operador ternario no es una sentencia de control de flujo como tal, pero evalúa a un determindo valor dependiendo de una condición. Se suele utilizar en las asignaciones, aunque también se puede utilizar en otras ocasiones que no me detendré ya que aún no hemos visto.
 
   La sintaxis es la siguiente: `<condicion> ? <expresionV> : <expresionF>`. Su funcionamiento es el siguiente:
     - Si la condición es verdadera, entonces evalúa a `expresionV`.
@@ -538,7 +538,7 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
     } while <condicion>;
   ~~~
 
-  La secuencia de sentencias siempre se ejecuta al menos una vez, al contrario que en el bucle anterior. Notar que la condición termina con un ';'.
+  La secuencia de sentencias siempre se ejecuta al menos una vez, al contrario que en el bucle anterior. Notar la condición termina con un ';'.
 
   También debemos modificar las variables que afectan a la condición en la secuencia de sentencias del cuerpo del bucle o de lo contrario se puede entrar en un bucle infinito.
 
@@ -561,9 +561,9 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
     }
   ~~~
 
-  Primero se evalúa `expresionInicializacion`. Esta expresión es opcional. En su formato más genérico, aquí inicializaremos la variable de control del bucle. También puede haber varias expresiones separadas por `,`;
+  Primero se evalúa `expresionInicializacion`. Esta expresión es opcional. En su formato más genérico, aquí inicializaremos la variable de control del bucle. También puede haber varias expresiones separadas por `,`.
 
-  Luego se evalúa `expresionCondicinal` que debe ser una expresión lógica. Si evalúa a falso el bucle termina y en caso contrario se ejecutan la secuencia de sentencias. También es opcional y si no existiese sería como si evaluase a `true` y estaríamos hablando de un bucle infinito.
+  Luego se evalúa `expresionCondicinal` que debe ser una expresión lógica. Si evalúa a falso el bucle termina y en caso contrario se ejecutan la secuencia de sentencias. También es opcional y si no existiese sería como evaluase a `true` y estaríamos hablando de un bucle infinito.
 
   Cuando se haya terminado de ejecutar la secuencia de sentencias, se evalúa `expresionIncremento` y se vuelve a evaluar `expresionCondicional` para volver a ejecutar o no la secuencia de sentencias. `expresionIncremento` también es opcional y también podría haber varias expresiones separadas por `,`.
 

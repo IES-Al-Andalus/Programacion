@@ -382,7 +382,11 @@ Son las sentencias que se ejecutan una detrás de otra, secuencialmente. Por lo 
 
     La clase que he realizado se llama `Entrada` y la he metido dentro de un paquete llamado `utilidades`. Para poder utilizarla, simplemente tenéis que copiar el paquete (que para que nos entendamos, es un directorio) al directorio `src` de vuestro proyecto.
 
+<<<<<<< HEAD
     En el siguiente vídeo podrás ver cómo integrar dicha clase en tu proyecto en **Eclipse**.
+=======
+    En el siguiente vídeo podrás ver como integrar dicha clase en tu proyecto en **Eclipse**.
+>>>>>>> 463f832efba24ed5471c69f179fa8d44033ee7d8
 
     <div align="center">
     <video width="600" controls="controls">
@@ -416,15 +420,22 @@ Son sentencias que permiten alterar el flujo del algoritmo y ejecutar unas sente
 
   ~~~java
   if <condicion> {
+<<<<<<< HEAD
     <sentenciasV>
   } else {
     <sentenciasF>
+=======
+    <instruccionesV>
+  } else {
+    <instruccionesF>
+>>>>>>> 463f832efba24ed5471c69f179fa8d44033ee7d8
   }
   ~~~
 
   Evalúa la condición y si es verdadera ejecutará `<sentenciasV>` y si es falsa ejecuturá `<sentenciasF>`
 
   El bloque `else` no es obligatorio y en ese caso (la condición es falsa) no se ejecuta ninguna sentencia y se continúa por la sentencia después del bloque `if`.
+<<<<<<< HEAD
 
   Si la condición es verdadera y en ese caso sólo queremos ejecutar una sóla sentencia, podríamos prescindir del bloque y eliminar los caracteres `{}`. Aunque esto no te lo aconsejo y es mejor que te acostumbres a poner las llaves. Esto también es aplicable a la parte `else`.
 
@@ -472,6 +483,52 @@ Son sentencias que permiten alterar el flujo del algoritmo y ejecutar unas sente
     System.out.println(mensaje);
     ...
   ~~~
+=======
+
+  Si la condición es verdadera y en ese caso sólo queremos ejecutar una sóla sentencia, podríamos prescindir del bloque y eliminar los caracteres `{}`. Aunque esto no te lo aconsejo y es mejor que te acostumbres a poner las llaves. Esto también es aplicable a la parte `else`.
+
+  Dentro de cada uno de los bloques, se podría utilizar otra sentencia `if` y es a lo que llamamos **if anidados**. Hay que tener en cuenta que cada `else` va asociado a su `if` más cercano que no tenga ya asociada una sentencia `if`.
+  ~~~java
+    ...
+    if (numero > 0) {
+      if (numero % 2 == 0) {
+        System.out.println("El número es par");
+      }
+      if (numero % 3 == 0) {   
+        System.out.println("El número es divisible por 3");
+      } else {    //Este else va asociado al if (numero % 3 == 0)
+        System.out.println("El número no es divisible por 3");
+      }
+    }
+  ~~~
+  Otra construcción común es utilizar sentencias del tipo `if-else-if` como se puede ver en este otro ejemplo.
+  ~~~java
+    ...
+    if (numero % 2 == 0) {
+      System.out.println("El número es par");
+    } else if (numero % 3 == 0) {
+      System.out.println("El número no es par, pero es divisible por 3");
+    } else {
+      System.out.println("El número no es par ni divisible por 3");
+    }
+  ~~~
+
+- **Operador ternario**: Cuando hemos hablado de los operadores, no he querido hablaros del operador **ternario** para no liaros. Pero, llegados a este punto, toca hablar de él. Este operador ternario no es una sentencia de control de flujo como tal, pero evalúa a un determindo valor dependiendo de una condición. Se suele utilizar en las asignaciones, aunque también se puede utilizar en otras ocasiones que no me detendré ya que aún no hemos visto.
+
+  La sintaxis es la siguiente: `<condicion> ? <expresionV> : <expresionF>`. Su funcionamiento es el siguiente:
+    - Si la condición es verdadera, entonces evalúa a `expresionV`.
+    - Si la condicion es falsa, entonces evalúa a `expresionF`
+
+  ~~~java
+    ...
+    String mensaje;
+    int numero;
+    System.out.print("Introduce un número: ");
+    numero = Entrada.entero();
+    mensaje = (numero % 2 == 0) ? "El número es par" : "El número es impar";
+    System.out.println(mensaje);
+  ~~~
+>>>>>>> 463f832efba24ed5471c69f179fa8d44033ee7d8
 
 - **Selección múltiple**: En este caso se nos permite seleccionar las instrucciones a ejecutar dependiendo del valor de una expresión entera, caracter o cadena.
 
@@ -513,6 +570,7 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
   Se evalúa la condición y si es verdadera se ejecuta la secuencia de sentencias. En cada paso se vuelve a repetir el proceso.
 
   La secuencia de sentencias no tiene por qué ejecutarse ni una sola vez, si al principio la condición es falsa.
+<<<<<<< HEAD
 
   Si la condición siempre es verdadera entraremos en un bucle infinito debido a que la secuencia de sentencias no hace que la condición llegue a ser falsa.
 
@@ -587,6 +645,65 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
     }
     System.out.println("El número introducido es: " + numero);
     ...
+=======
+
+  Si la condición siempre es verdadera entraremos en un bucle infinito debido a que la secuencia de sentencias no hace que la condición llegue a ser falsa.
+
+  ~~~java
+    ...
+    int numero;
+    System.out.print("Introduce un número entre 0 y 10 (ambos inclusive): ");
+    numero = Entrada.entero();
+    while (numero < 0 || numero > 10) {
+      System.out.println("ERROR: El número debe estar comprendido entre 0 y 10 (ambos inclusive)");
+      System.out.print("Por favor vuelve a introducir un número válido: ");
+      entero = Entrada.entero();
+    }
+    System.out.println("El número introducido es: " + numero);
+  ~~~
+
+- **do-while**: Esta sentencia ejecuta un conjunto de sentencias también mientras una condición sea verdadera, pero esta condición se evalúa al final del bucle. Su sintaxis es la siguiente:
+
+  ~~~java
+    do {
+      <sentencias>
+    while <condicion>;
+  ~~~
+
+  La secuencia de sentencias siempre se ejecuta al menos una vez, al contrario que en el bucle anterior. Notar la condición termina con un ';'.
+
+  También debemos modificar las variables que afectan a la condición en la secuencia de sentencias del cuerpo del bucle o de lo contrario se puede entrar en un bucle infinito.
+
+  ~~~java
+    ...
+    int numero;
+    do  {
+      System.out.print("Introduce un número entre 0 y 10 (ambos inclusive): ");
+      numero = Entrada.entero();
+    } while (numero < 0 || numero > 10);
+    System.out.println("El número introducido es: " + numero);
+  ~~~
+
+- **for**: Este tipo de bucle se utiliza para repetir una secuencia de sentencias un número determinado de veces, en su formato más general. Pero, como veremos, también se puede utilizar para otros menesteres, aunque para ello os aconsejo utilizar uno de los anteriores. Su sintaxis es:
+
+  ~~~java
+    for (<expresionInicializacion> ; <expresionCondicinal> ; <expresionIncremento>) {
+      <sentencias>
+    }
+  ~~~
+
+  Primero se evalúa `expresionInicializacion`. Esta expresión es opcional. En su formato más genérico, aquí inicializaremos la variable de control del bucle. También puede haber varias expresiones separadas por `,`;
+
+  Luego se evalúa `expresionCondicinal` que debe ser una expresión lógica. Si evalúa a falso el bucle termina y en caso contrario se ejecutan la secuencia de sentencias. También es opcional y si no existiese sería como evaluase a `true` y estaríamos hablando de un bucle infinito.
+
+  Cuando se haya terminado de ejecutar la secuencia de sentencias, se evalúa `expresionIncremento` y se vuelve a evaluar `expresionCondicional` para volver a ejecutar o no la secuencia de sentencias. `expresionIncremento` también es opcional y también podría haber varias expresiones separadas por `,`.
+
+  ~~~java
+    ...
+    for (int i = 1; i <= 10; i++) {
+      System.out.println("2 * " + i + " = " + 2 * i);
+    }
+>>>>>>> 463f832efba24ed5471c69f179fa8d44033ee7d8
   ~~~
 
 ##### Sentencias que rompen el flujo del programa

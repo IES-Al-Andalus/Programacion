@@ -224,7 +224,7 @@ Operador|Significado
 `>=`| Mayor o igual que
 `!=`| Distinto que
 
-**Operadores Lógicos**
+**Operadores lógicos**
 
 Operador|Significado
 ------------|--------------
@@ -236,7 +236,7 @@ La diferencia entre el operador `&&` y el operador `&` es que el primero evalúa
 
 La diferencia entre el operador `||` y el operador `|` es que el primero evalúa en cortocircuito y el segundo. Por lo que si el operando izquierdo evalúa a `true` ya no continúa evaluando ya que la expresión evaluará a `true`, evalúe a lo que evalúe el operando derecho. El segundo evalúa ambos operandos.
 
-**Operadores Algebraicos**
+**Operadores algebraicos**
 
 Operador|Significado
 ------------|--------------
@@ -287,6 +287,7 @@ Los operadores de asignación para que tengan sentido deben tener una variable c
 **Operador de concatenación de cadenas** `+`
 
 **Precedencia de evaluación**
+
 A la hora de evaluar una expresión debemos tener en cuenta:
 - Lo que esté encerrado entre paréntesis es lo primero que se evalúa.
 - Seguidamente evaluamos los operadores de mayor prioridad a menor prioridad.
@@ -315,7 +316,7 @@ En java existe tres tipos de comentarios:
 
 ## Sentencias
 
-En java, como en todos los lenguajes de programación, podemos encontrar tres grandes grupos de sentencias (esta clasificación es según mi parecer y para adecuarla a lo que hemos visto en el apartado sobre pseudocódigo, aunque otros autores o autoras hacen otras clasificaciones): **secuenciales**, **condicionales** y **repetitivas**.
+En java, como en todos los lenguajes de programación, podemos encontrar tres grandes grupos de sentencias (esta clasificación es según mi parecer y para adecuarla a lo que hemos visto en el apartado sobre pseudocódigo, aunque otros programadores o programadoras hacen otras clasificaciones): **secuenciales**, **condicionales** y **repetitivas**. También hablaré escuentamente de las sentencias **que rompen el flujo de un programa**.
 
 Todas las sentencias deben acabar con el símbolo `;`. Una sentencia no es más que una orden específica que da el programa para realizar una determinada acción.
 
@@ -323,9 +324,11 @@ Vamos a verlas una a una:
 
 ##### Sentencias secuenciales
 
+Son las sentencias que se ejecutan una detrás de otra, secuencialmente. Por lo que el flujo del programa es lineal.
+
 - **Asignación**: Como su nombre indica sirve para asignar valores a una variable. Utiliza cualquier operador de asignación de los vistos hasta el momento.
 
-  Para realizar la asignación, primero se evalúa la expresión de la derecha y luego se asigna el resultado de dicha evaluación a la variable de la izquierda.
+  Para realizar la asignación, primero se evalúa la expresión de la derecha y luego se asigna el resultado de dicha evaluación a la variable de la izquierda. La parte izquierda de la asignación debe ser una variable del mismo tipo de dato del resultante de la evaluación de la parte derecha.
 
 - **Declaración**: Como ya hemos dicho, en java es necesario declarar cualquier variable que vayamos a utilizar. Ya hablamos de cómo se declaraban las variables. Simplemente comentar que una variable se puede declarar en cualquier punto del programa, pero que antes de utilizarla es necesario declararla.
 
@@ -346,16 +349,18 @@ Vamos a verlas una a una:
   ~~~
   Como se puede apreciar hay un bloque dentro de otro. Si os acordáis, ya hablamos del ámbito de las variables. Pues en este ejemplo podemos apreciar que el ámbito de la variable `numero` es el bloque externo y el ámbito de la variable `posicion` es el bloque interno. Por lo que la variable `posicion` se creará al declararla en el bloque interno y se destruirá al salir de dicho bloque, por lo que fuera del mismo no nos podremos referir a ella. Sin embargo el ámbito de la variable `numero` es el bloque externo, por lo que dentro del bloque interno también podremos referirnos a ella ya que todavía sigue existiendo.
 
+  En todo el programa es imprescindible respetar la indentación correcta, para que la legibilidad del código sea adecuada. Esto cobra vital importancia cuando hablamos de bloques y bloques anidadas, ya que si no nos será muy difícil distinguir qué sentencia pertenece a qué bloque.
+
 - **Sentencia nula**: Aunque el caracter `;` es el terminador de sentencias, también se puede considerar como la sentencia nula, al igual que se podría considerar un bloque de sentencias vacío `{}`. Hay que tener cuidado con esto y, si se utiliza, hacerlo con cautela. En los ejercicios veremos algunos ejemplos del peligro que puede conllevar un mal uso de la misma.
 
 - **Llamadas a métodos**: Una llamada a un método no es más que la instrucción que indica que se ejecute el código asociado a dicho método. No me quiero parar en esto ahora, pero ya hemos realizado una llamada a un método sin saberlo en nuestro primer programa: `System.out.println("Hola Mundo!!!")`. Como ya dije, esto es hacer un acto de fe, pero simplemente estamos ejecutando el método llamado `println`, perteneciente a la clase `System`, asociado a un miembro de dicha clase llamado `out`. Todo esto quedará más claro cuando hablemos de los conceptos relativos a la Orientación a Objetos.
 
-  Dentro de esta categoría querría destacar los métodos encargados a la Entrada / Salida.
+  Dentro de esta categoría querría destacar los métodos encargados de la Entrada / Salida.
 
   - **Salida**: Para realizar una salida por consola podemos utilizar las siguientes sentencias (en otros apartados comprenderemos su significado):
 
       - `System.out.println(cadena)`: Imprime en la consola la cadena `cadena` y un salto de línea.
-      - `System.out.print(cadena)`; Hace lo mismo pero no imprime el salto de línea.
+      - `System.out.print(cadena)`: Hace lo mismo pero no imprime el salto de línea.
 
     Como ya os comenté, en este apartado a veces nos va a hacer falta trabajar con cadenas (`String`), aunque no sean un tipo primitivo. Ya comentamos que los literales tipo cadena iban encerrados entre `""` y que podíamos concatenar (unir) cadenas mediante el operador `+`. Además, siempre que utilicemos el operador `+` con al menos un operando de tipo `String`, java convertirá el otro operando a otra cadena. Por lo que los siguientes ejemplos serían válidos:
     ~~~java
@@ -367,11 +372,11 @@ Vamos a verlas una a una:
       System.out.println("La posición ocupada es: " + posicion) //Imprime "La posición ocupada es: 0"
     ~~~
 
-  - **Lectura**: Para realizar la lectura desde teclado en java hay que tener conocimientos más avanzados y que ahora no vamos a detallar ya que podrían hacer perdernos en los detalles. Por ello he desarrollado una librería que os facilitará la vida y podréis llevarla a cabo por medio de una sóla sentencia, evitando tener en cuenta todos los detalles asociados.
+  - **Lectura**: Para realizar la lectura desde teclado en java hay que tener conocimientos más avanzados y que ahora no vamos a detallar ya que podrían hacer perdernos en los detalles. Por ello he desarrollado una librería que os facilitará la vida y podréis llevarla a cabo por medio de una sola sentencia, evitando tener en cuenta todos los detalles asociados.
 
     La clase que he realizado se llama `Entrada` y la he metido dentro de un paquete llamado `utilidades`. Para poder utilizarla, simplemente tenéis que copiar el paquete (que para que nos entendamos, es un directorio) al directorio `src` de vuestro proyecto.
 
-    En el siguiente vídeo podrás ver como integrar dicha clase en tu proyecto en Eclipse
+    En el siguiente vídeo podrás ver como integrar dicha clase en tu proyecto en **Eclipse**.
 
     <div align="center">
     <video width="600" controls="controls">
@@ -379,7 +384,7 @@ Vamos a verlas una a una:
     </video>
     </div>
 
-    En este otro hago lo mismo pero para NetBeans.
+    En este otro hago lo mismo pero para **NetBeans**.
 
     <div align="center">
     <video width="600" controls="controls">
@@ -401,80 +406,168 @@ Vamos a verlas una a una:
 ##### Sentencias condicionales
 Son sentencias que permiten alterar el flujo del algoritmo y ejecutar unas sentencias u otras dependiendo del valor de una condición.
 
-- **Condicional** Permite evaluar una condición y ejecutar una serie de sentencias si dicha condición es verdadera u otras si es falsa.
+- **Condicional**: Permite evaluar una condición y ejecutar una serie de sentencias si dicha condición es verdadera u otras si es falsa.
 
-  ~~~
-  Si <condicion> Entonces
+  ~~~java
+  if <condicion> {
     <instruccionesV>
-  SiNo
+  } else {
     <instruccionesF>
-  FinSi
+  }
   ~~~
 
   Evalúa la condición y si es verdadera ejecutará `<sentenciasV>` y si es falsa ejecuturá `<sentenciasF>`
 
-  El bloque `SiNo` no es obligatorio y en ese caso (la condición es falsa) no se ejecuta ninguna sentencia y se continúa por la sentencia después del `FinSi`
+  El bloque `else` no es obligatorio y en ese caso (la condición es falsa) no se ejecuta ninguna sentencia y se continúa por la sentencia después del bloque `if`.
 
-- **Selección múltiple** En este caso nos permite seleccionar las instrucciones a ejecutar dependiendo del valor de una variable numérica.
+  Si la condición es verdadera y en ese caso sólo queremos ejecutar una sóla sentencia, podríamos prescindir del bloque y eliminar los caracteres `{}`. Aunque esto no te lo aconsejo y es mejor que te acostumbres a poner las llaves. Esto también es aplicable a la parte `else`.
 
+  Dentro de cada uno de los bloques, se podría utilizar otra sentencia `if` y es a lo que llamamos **if anidados**. Hay que tener en cuenta que cada `else` va asociado a su `if` más cercano que no tenga ya asociada una sentencia `if`.
+  ~~~java
+    ...
+    if (numero > 0) {
+      if (numero % 2 == 0) {
+        System.out.println("El número es par");
+      }
+      if (numero % 3 == 0) {   
+        System.out.println("El número es divisible por 3");
+      } else {    //Este else va asociado al if (numero % 3 == 0)
+        System.out.println("El número no es divisible por 3");
+      }
+    }
   ~~~
-  Segun <variable> Hacer
-    <número1>:
-      <instrucciones1>
-    <número2>,<número3>:
-      <instrucciones23>
+  Otra construcción común es utilizar sentencias del tipo `if-else-if` como se puede ver en este otro ejemplo.
+  ~~~java
+    ...
+    if (numero % 2 == 0) {
+      System.out.println("El número es par");
+    } else if (numero % 3 == 0) {
+      System.out.println("El número no es par, pero es divisible por 3");
+    } else {
+      System.out.println("El número no es par ni divisible por 3");
+    }
+  ~~~
+
+- **Operador ternario**: Cuando hemos hablado de los operadores, no he querido hablaros del operador **ternario** para no liaros. Pero, llegados a este punto, toca hablar de él. Este operador ternario no es una sentencia de control de flujo como tal, pero evalúa a un determindo valor dependiendo de una condición. Se suele utilizar en las asignaciones, aunque también se puede utilizar en otras ocasiones que no me detendré ya que aún no hemos visto.
+
+  La sintaxis es la siguiente: `<condicion> ? <expresionV> : <expresionF>`. Su funcionamiento es el siguiente:
+    - Si la condición es verdadera, entonces evalúa a `expresionV`.
+    - Si la condicion es falsa, entonces evalúa a `expresionF`
+
+  ~~~java
+    ...
+    String mensaje;
+    int numero;
+    System.out.print("Introduce un número: ");
+    numero = Entrada.entero();
+    mensaje = (numero % 2 == 0) ? "El número es par" : "El número es impar";
+    System.out.println(mensaje);
+  ~~~
+
+- **Selección múltiple**: En este caso se nos permite seleccionar las instrucciones a ejecutar dependiendo del valor de una expresión entera, caracter o cadena.
+
+  ~~~java
+  swicth (<expresion>) {
+    case <valor1>:
+      <sentencias1>
+      break;
+    case <valor2>, <valor3>:
+      <sentencias23>
+      break;
     <...>
-    De Otro Modo:
-      <instrucciones>
-  FinSegun
+    [ default:
+      <otrasSentencias> ]
+  }
   ~~~
 
-  Al ejecutarse, se evalúa el contenido de la variable y se ejecuta la secuencia de instrucciones asociada con dicho valor.
+  Al ejecutarse, se evalúa la expresión y se ejecuta la secuencia de instrucciones asociada con el valor correspondiente.
 
-  Si una opción incluye varios números, la secuencia de instrucciones asociada se debe ejecutar cuando el valor de la variable es uno de esos números.
+  Si una clausula `case` incluye varios valores, la secuencia de instrucciones asociada se debe ejecutar cuando la expresión evalúe a uno de esos valores.
 
-  Opcionalmente, se puede agregar una opción final, denominada `De Otro Modo`, cuya secuencia de instrucciones asociada se ejecutará sólo si el valor almacenado en la variable no coincide con ninguna de las opciones anteriores.
+  Opcionalmente, se puede agregar una opción final, denominada `default`, cuya secuencia de instrucciones asociada se ejecutará sólo si el valor almacenado en la variable no coincide con ninguna de las opciones anteriores. Esta clausula es opcional y se puede omitir.
+
+  La sentencia `break` hace que no se siga haciendo comprobaciones.
+
+  Para cada grupo de sentencias no es necesario utilizar los caracteres `{}` para delimitar los bloques de cada opción ya que en esta construcción cada bloque está perfectamente delimitado.
 
 ##### Sentencias repetitivas
-Son sentencias que también alteran el flujo del algoritmo, permitiendo repetir una secuencia de instrucciones mientras se de alguna condición. También son conocidas como bucles.
+Son sentencias que también alteran el flujo de un programa, permitiendo repetir una secuencia de instrucciones mientras se cumpla alguna condición. También son conocidas como bucles.
 
-- **Mientras** Esta instrucción ejecuta una secuencia de instrucciones mientras se cumpla una condición.
+- **while**: Esta sentencia ejecuta otras sentencias mientras se cumpla una condición.
 
-  ~~~
-  Mientras <condicion> Hacer
-    <instrucciones>
-  FinMientras
+  ~~~java
+  while <condicion> {
+    <sentencias>
+  }
   ~~~
 
   Se evalúa la condición y si es verdadera se ejecuta la secuencia de sentencias. En cada paso se vuelve a repetir el proceso.
 
-  La secuencia de instrucciones no tiene por qué ejecutarse ni una sola vez, si al principio la condición es falsa.
+  La secuencia de sentencias no tiene por qué ejecutarse ni una sola vez, si al principio la condición es falsa.
 
-  Si la condición siempre es verdadera entraremos en un bucle infinito debido a que la secuencia de instrucciones no hace que la condición llegue a ser falsa.
+  Si la condición siempre es verdadera entraremos en un bucle infinito debido a que la secuencia de sentencias no hace que la condición llegue a ser falsa.
 
-- **Repetir** Esta sentencia ejecuta un conjunto de instrucciones también mientras una condición sea verdadera, pero esta condición se evalúa al final del bucle. PSeInt tiene otras sentencias `Repetir` pero nosotros utilizaremos la siguiente por su similitud con java.
-
-  ~~~
-  Repetir
-    <instrucciones>
-  Mientras Que <condicion>
-  ~~~
-
-  La secuencia de instrucciones siempre se ejecuta al menos una vez, al contrario que en el bucle anterior.
-
-  También debemos modificar las variables que afectan a la condición en la secuencia de instrucciones del cuerpo del bucle o de lo contrario se puede entrar en un bucle infinito.
-
-- **Para** Este tipo de bucles se utiliza para repetir una secuencia de instrucciones un número determinado de veces.
-
-  ~~~
-  Para <variable> <- <inicial> Hasta <final> Con Paso <paso> Hacer
-    <instrucciones>
-  FinPara
+  ~~~java
+    ...
+    int numero;
+    System.out.print("Introduce un número entre 0 y 10 (ambos inclusive): ");
+    numero = Entrada.entero();
+    while (numero < 0 || numero > 10) {
+      System.out.println("ERROR: El número debe estar comprendido entre 0 y 10 (ambos inclusive)");
+      System.out.print("Por favor vuelve a introducir un número válido: ");
+      entero = Entrada.entero();
+    }
+    System.out.println("El número introducido es: " + numero);
   ~~~
 
-  La variable toma el valor `<inicial>` y se ejecuta la secuencia de intrucciones. Se incrementa la variable el valor de `<paso>` y se comprueba si la variable ha superado el valor `<final>`. Si no lo ha superado, se vuelve a ejecutar la secuencia de sentencias y se repite el proceso hasta que la variable supera el valor `<final>`.
+- **do-while**: Esta sentencia ejecuta un conjunto de sentencias también mientras una condición sea verdadera, pero esta condición se evalúa al final del bucle. Su sintaxis es la siguiente:
 
-  La claúsula `Con Paso` se puede obviar, en cuyo caso el incremento será de 1.
+  ~~~java
+    do {
+      <sentencias>
+    while <condicion>;
+  ~~~
+
+  La secuencia de sentencias siempre se ejecuta al menos una vez, al contrario que en el bucle anterior. Notar la condición termina con un ';'.
+
+  También debemos modificar las variables que afectan a la condición en la secuencia de sentencias del cuerpo del bucle o de lo contrario se puede entrar en un bucle infinito.
+
+  ~~~java
+    ...
+    int numero;
+    do  {
+      System.out.print("Introduce un número entre 0 y 10 (ambos inclusive): ");
+      numero = Entrada.entero();
+    } while (numero < 0 || numero > 10);
+    System.out.println("El número introducido es: " + numero);
+  ~~~
+
+- **for**: Este tipo de bucle se utiliza para repetir una secuencia de sentencias un número determinado de veces, en su formato más general. Pero, como veremos, también se puede utilizar para otros menesteres, aunque para ello os aconsejo utilizar uno de los anteriores. Su sintaxis es:
+
+  ~~~java
+    for (<expresionInicializacion> ; <expresionCondicinal> ; <expresionIncremento>) {
+      <sentencias>
+    }
+  ~~~
+
+  Primero se evalúa `expresionInicializacion`. Esta expresión es opcional. En su formato más genérico, aquí inicializaremos la variable de control del bucle. También puede haber varias expresiones separadas por `,`;
+
+  Luego se evalúa `expresionCondicinal` que debe ser una expresión lógica. Si evalúa a falso el bucle termina y en caso contrario se ejecutan la secuencia de sentencias. También es opcional y si no existiese sería como evaluase a `true` y estaríamos hablando de un bucle infinito.
+
+  Cuando se haya terminado de ejecutar la secuencia de sentencias, se evalúa `expresionIncremento` y se vuelve a evaluar `expresionCondicional` para volver a ejecutar o no la secuencia de sentencias. `expresionIncremento` también es opcional y también podría haber varias expresiones separadas por `,`.
+
+  ~~~java
+    ...
+    for (int i = 1; i <= 10; i++) {
+      System.out.println("2 * " + i + " = " + 2 * i);
+    }
+  ~~~
+
+##### Sentencias que rompen el flujo del programa
+  - `continue`, `break`, `goto`: Son sentencias que **no se deben utilizar** ya que rompen el flujo del programa de una forma inadecuada y que se pueden evitar mediante otros métodos más ortodoxos. La excepción a lo dicho, sería el uso de `break` en una sentencia `case`. Por tanto, no hablaré ni siquiera de ellas.
+
+  - **Sentencias de control de errores**: Son sentencias que permiten controlar si se ha producido un error inesperado en el programa y actuar en consecuencia para que el programa no termine de forma inesperada. Es a lo que se llama **excepciones** en java y que veremos con detalle en otro apartado.
+
 
 ## Ejercicios
 

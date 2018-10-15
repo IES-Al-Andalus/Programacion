@@ -614,3 +614,406 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
     ~~~
 
     [Descargar posible solución para el programa **AsignarValor**](ejercicios/AsignarValor.java)
+
+- **Lectura/Escritura de un número entero**
+
+  Escribir un programa java que lea un número entero por teclado y nos lo muestre por pantalla.
+
+  - Posible solución
+    ~~~java
+		import utilidades.Entrada;
+
+		public class LecturaEscritura {
+
+			public static void main(String[] args) {
+				int numero;
+				System.out.print("Introduce un número: ");
+				numero = Entrada.entero();
+				System.out.println("El número introducido es: " + numero);
+			}
+
+		}
+    ~~~
+
+    [Descargar posible solución para el programa **LecturaEscritura**](ejercicios/LecturaEscritura.java)
+
+- **Mostrar el doble de un número real**
+
+  Escribir un programa java que lea un número real por teclado y nos muestre por pantalla el doble del mismo.
+
+  - Posible solución
+    ~~~java
+		import utilidades.Entrada;
+
+		public class Doble {
+
+			public static void main(String[] args) {
+				float numero;
+				System.out.print("Introduce un número real: ");
+				numero = Entrada.real();
+				System.out.println("El doble del número: " + numero + " es: " + 2 * numero);
+			}
+
+		}
+    ~~~
+
+    [Descargar posible solución para el programa **Doble**](ejercicios/Doble.java)
+
+- **Mostrar el cuadrado de un número real doble**
+
+  Escribir un programa java que lea un número real doble por teclado y nos muestre por pantalla el cuadrado del mismo.
+
+  - Posible solución
+    ~~~java
+		import utilidades.Entrada;
+
+		public class Cuadrado {
+
+			public static void main(String[] args) {
+				double numero;
+				System.out.print("Introduce un número real doble: ");
+				numero = Entrada.realDoble();
+				System.out.println("El cuadrado del número: " + numero + " es: " + numero * numero);
+			}
+
+		}
+    ~~~
+
+    [Descargar posible solución para el programa **Cuadrado**](ejercicios/Cuadrado.java)
+
+- **Hallar el perímetro de un rectángulo**
+
+  Escribir un programa java que lea por teclado la base y la altura de un rectángulo y nos muestre por pantalla el perímetro del mismo.
+
+  - Posible solución, aunque lo correcto hubiese sido validar que **la base y la altura fuesen mayores que cero**, pero eso lo veremos en ejercicios posteriores.
+    ~~~java
+		import utilidades.Entrada;
+
+		public class PerimetroRectangulo {
+
+			public static void main(String[] args) {
+				float base, altura;
+				System.out.print("Introduce la base del rectángulo: ");
+				base = Entrada.real();
+				System.out.print("Introduce la altura del rectángulo: ");
+				altura = Entrada.real();
+				float perimetro = 2 * base + 2 * altura;
+				System.out.println("El perímetro del rectángulo es: " + perimetro);
+			}
+
+		}
+    ~~~
+
+    [Descargar posible solución para el programa **PerimetroRectangulo**](ejercicios/PerimetroRectangulo.java)
+
+- **Calcular el área de un círculo**
+
+  Escribir un programa java que lea por teclado el radio de un círculo y nos muestre por pantalla el área del mismo.
+
+  - Posible solución, aunque lo correcto hubiese sido validar que el **radio fuese mayor que cero**, pero eso lo veremos en ejercicios posteriores.
+    ~~~java
+		import utilidades.Entrada;
+
+		public class AreaCirculo {
+
+			public static void main(String[] args) {
+				double radio;
+				System.out.print("Introduce el radio del círculo: ");
+				radio = Entrada.realDoble();
+				double area = Math.PI * radio * radio;
+				System.out.println("El área del círculo es: " + area);
+			}
+
+		}
+    ~~~
+
+    [Descargar posible solución para el programa **AreaCirculo**](ejercicios/AreaCirculo.java)
+
+###### Sentencias condicionales
+
+- **Valor absoluto de un número**
+
+  Escribir un programa java que lea por teclado un número y nos muestre por pantalla el valor absoluto del mismo.
+
+  - Posible solución
+    ~~~java
+		import utilidades.Entrada;
+
+		public class ValorAbsoluto {
+
+			public static void main(String[] args) {
+				int numero;
+				System.out.print("Introduce un número: ");
+				numero = Entrada.entero();
+				int valorAbsoluto;
+				valorAbsoluto = (numero < 0) ? -numero : numero;
+				System.out.println("El valor absoluto de: " + numero + " es: " + valorAbsoluto);
+			}
+
+		}
+    ~~~
+
+    [Descargar posible solución para el programa **ValorAbsoluto**](ejercicios/ValorAbsoluto.java)
+
+- **Número par o impar**
+
+  Escribir un programa java que lea por teclado un número y nos indique por pantalla si es par o impar.
+
+  - Posible solución
+    ~~~java
+		import utilidades.Entrada;
+
+		public class ParImpar {
+
+			public static void main(String[] args) {
+				int numero;
+				System.out.print("Introduce un número: ");
+				numero = Entrada.entero();
+				if (numero % 2 == 0) {
+					System.out.println("El número: " + numero + " es par");
+				} else {
+					System.out.println("El número: " + numero + " es impar");
+				}
+			}
+
+		}
+    ~~~
+
+    [Descargar posible solución para el programa **ParImpar**](ejercicios/ParImpar.java)
+
+- **Número positivo o negativo**
+
+  Escribir un programa java que lea por teclado un número y nos indique por pantalla si es positivo o negativo.
+
+  - Posible solución
+    ~~~java
+		import utilidades.Entrada;
+
+		public class PositivoNegativo {
+
+			public static void main(String[] args) {
+				int numero;
+				System.out.print("Introduce un número: ");
+				numero = Entrada.entero();
+				if (numero >= 0) {
+					System.out.println("El número: " + numero + " es positivo");
+				} else {
+					System.out.println("El número: " + numero + " es negativo");
+				}
+			}
+
+		}
+    ~~~
+
+    [Descargar posible solución para el programa **PositivoNegativo**](ejercicios/PositivoNegativo.java)
+
+- **Número entre 0 y 100**
+
+  Escribir un programa java que lea por teclado un número real y nos indique por pantalla si éste se encuentra entre 0 y 100, ambos inclusive.
+
+  - Posible solución
+    ~~~java
+		import utilidades.Entrada;
+
+		public class CeroCien {
+
+			public static void main(String[] args) {
+				float numero;
+				System.out.print("Introduce un número: ");
+				numero = Entrada.real();
+				if (numero >= 0 && numero <= 100) {
+					System.out.println("El número: " + numero + " está comprendido entre 0 y 100");
+				} else {
+					System.out.println("El número: " + numero + " no está comprendido entre 0 y 100");
+				}
+			}
+
+		}
+    ~~~
+
+    [Descargar posible solución para el programa **CeroCien**](ejercicios/CeroCien.java)
+
+- **Calificación obtenida**
+
+  Escribir un programa java que lea por teclado una calificación y nos indique si estamos aprobados o suspensos o si la calificación no es una calificación correcta.
+
+  - Posible solución
+    ~~~java
+		import utilidades.Entrada;
+
+		public class AprobadoSuspenso {
+
+			public static void main(String[] args) {
+				float calificacion;
+				System.out.print("Introduce una calificación: ");
+				calificacion = Entrada.real();
+				if (calificacion < 0 || calificacion > 10) {
+					System.out.println("La calificación introducida no es una calificación correcta.");
+				} else if (calificacion >= 5) {
+					System.out.println("Enhorabuena!!! Estás aprobado.");
+				} else {
+					System.out.println("Lo siento, pero estás suspenso.");
+				}
+			}
+
+		}
+    ~~~
+
+    [Descargar posible solución para el programa **AprobadoSuspenso**](ejercicios/AprobadoSuspenso.java)
+
+- **Números iguales**
+
+  Escribir un programa java que lea por teclado dos números enteros y nos indique si son iguales o no.
+
+  - Posible solución
+    ~~~java
+		import utilidades.Entrada;
+
+		public class NumerosIguales {
+
+			public static void main(String[] args) {
+				int numero1, numero2;
+				System.out.print("Introduce el primer número: ");
+				numero1 = Entrada.entero();
+				System.out.print("Introduce el segundo número: ");
+				numero2 = Entrada.entero();
+				if (numero1 == numero2) {
+					System.out.println("Los números introducidos son iguales.");
+				} else {
+					System.out.println("Los números introducidos no son iguales.");
+				}
+			}
+
+		}
+    ~~~
+
+    [Descargar posible solución para el programa **NumerosIguales**](ejercicios/NumerosIguales.java)
+
+- **Ordenar dos números**
+
+  Escribir un programa java que lea por teclado dos números reales y nos los muestre ordenados de mayor a menor.
+
+  - Posible solución
+    ~~~java
+		import utilidades.Entrada;
+
+		public class OrdenarDosNumeros {
+
+			public static void main(String[] args) {
+				float numero1, numero2;
+				System.out.print("Introduce el primer número: ");
+				numero1 = Entrada.real();
+				System.out.print("Introduce el segundo número: ");
+				numero2 = Entrada.real();
+				if (numero1 >= numero2) {
+					System.out.println("Los números ordenados de mayor a menor: " + numero1 + ", " + numero2);
+				} else {
+					System.out.println("Los números ordenados de mayor a menor: " + numero2 + ", " + numero1);
+				}
+			}
+
+		}
+    ~~~
+
+    [Descargar posible solución para el programa **OrdenarDosNumeros**](ejercicios/OrdenarDosNumeros.java)
+
+- **Ordenar tres números**
+
+  Escribir un programa java que lea por teclado tres números reales y nos los muestre ordenados de mayor a menor.
+
+  - Posible solución
+    ~~~java
+		import utilidades.Entrada;
+
+		public class OrdenarTresNumeros {
+
+			public static void main(String[] args) {
+				float numero1, numero2, numero3, mayor, medio, menor;
+				System.out.print("Introduce el primer número: ");
+				numero1 = Entrada.real();
+				System.out.print("Introduce el segundo número: ");
+				numero2 = Entrada.real();
+				System.out.print("Introduce el tercer número: ");
+				numero3 = Entrada.real();
+				if (numero1 >= numero2 && numero2 >= numero3) {
+					mayor = numero1;
+					medio = numero2;
+					menor = numero3;
+				} else if (numero1 >= numero3 && numero3 >= numero2){
+					mayor = numero1;
+					medio = numero3;
+					menor = numero2;
+				} else if (numero2 >= numero1 && numero1 >= numero3) {
+					mayor = numero2;
+					medio = numero1;
+					menor = numero3;
+				} else if (numero2 >= numero3 && numero3 >= numero1) {
+					mayor = numero2;
+					medio = numero3;
+					menor = numero1;
+				} else if (numero3 >= numero1 && numero1 >= numero2) {
+					mayor = numero3;
+					medio = numero1;
+					menor = numero2;
+				} else {
+					mayor = numero3;
+					medio = numero2;
+					menor = numero1;
+				}
+				System.out.println("Los números ordenados de mayora a menor: " + mayor + ", " + medio + ", " + menor);
+			}
+
+		}
+    ~~~
+
+    [Descargar posible solución para el programa **OrdenarTresNumeros**](ejercicios/OrdenarTresNumeros.java)
+
+###### Sentencias repetitivas
+
+- **Tabla de multiplicar**
+
+  Escribir un programa java que lea por teclado un número entero y nos muestre la tabla de multiplicar de dicho número.
+
+  - Posible solución
+    ~~~java
+		import utilidades.Entrada;
+
+		public class TablaMultiplicar {
+
+			public static void main(String[] args) {
+				int numero;
+				System.out.print("Introduce un número: ");
+				numero = Entrada.entero();
+				for (int i = 1; i <= 10; i++) {
+					System.out.println(numero + " * " + i + " = " + numero * i);
+				}
+			}
+
+		}
+    ~~~
+
+    [Descargar posible solución para el programa **TablaMultiplicar**](ejercicios/TablaMultiplicar.java)
+
+- **Numero positivo**
+
+  Escribir un programa java que lea por teclado un número entero positivo y nos lo muestre.
+
+  - Posible solución
+    ~~~java
+		import utilidades.Entrada;
+
+		public class NumeroPositivo {
+
+			public static void main(String[] args) {
+				int numero;
+				do {
+					System.out.print("Introduce un número positivo: ");
+					numero = Entrada.entero();
+				} while (numero < 0);
+				System.out.println("El número positivo introducido es: " + numero);
+			}
+
+		}
+    ~~~
+
+    [Descargar posible solución para el programa **NumeroPositivo**](ejercicios/NumeroPositivo.java)

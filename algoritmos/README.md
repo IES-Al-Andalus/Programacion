@@ -426,7 +426,7 @@ Para que todos y todas utilicemos la misma sintaxis del lenguaje utilizado por P
 
 - **Valor absoluto de un número**
 
-  Diseñar un algoritmo que lea un número por teclado y muestre el cuadrado del mismo por pantalla.
+  Diseñar un algoritmo que lea un número por teclado y muestre el valor absoluto del mismo por pantalla.
 
   - ![Diagrama de flujo para el algoritmo Cuadrado](ejercicios/diagramas/ValorAbsoluto.png)
     ~~~

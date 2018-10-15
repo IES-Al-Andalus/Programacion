@@ -681,19 +681,11 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
 
     [Descargar posible solución para el programa **Cuadrado**](ejercicios/Cuadrado.java)
 
-<<<<<<< HEAD
 - **Hallar el perímetro de un rectángulo**
 
   Escribir un programa java que lea por teclado la base y la altura de un rectángulo y nos muestre por pantalla el perímetro del mismo.
 
   - Posible solución, aunque lo correcto hubiese sido validar que **la base y la altura fuesen mayores que cero**, pero eso lo veremos en ejercicios posteriores.
-=======
-- **Hallar el perímetro de un triángulo**
-
-  Escribir un programa java que lea por teclado la base y la altura de un rectángulo y nos muestre por pantalla el perímetro del mismo.
-
-  - Posible solución
->>>>>>> d30de56d056071b22167494341b424fd7c6f7d50
     ~~~java
 		import utilidades.Entrada;
 
@@ -718,11 +710,7 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
 
   Escribir un programa java que lea por teclado el radio de un círculo y nos muestre por pantalla el área del mismo.
 
-<<<<<<< HEAD
   - Posible solución, aunque lo correcto hubiese sido validar que el **radio fuese mayor que cero**, pero eso lo veremos en ejercicios posteriores.
-=======
-  - Posible solución
->>>>>>> d30de56d056071b22167494341b424fd7c6f7d50
     ~~~java
 		import utilidades.Entrada;
 
@@ -740,7 +728,6 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
     ~~~
 
     [Descargar posible solución para el programa **AreaCirculo**](ejercicios/AreaCirculo.java)
-<<<<<<< HEAD
 
 ###### Sentencias condicionales
 
@@ -1030,5 +1017,3 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
     ~~~
 
     [Descargar posible solución para el programa **NumeroPositivo**](ejercicios/NumeroPositivo.java)
-=======
->>>>>>> d30de56d056071b22167494341b424fd7c6f7d50

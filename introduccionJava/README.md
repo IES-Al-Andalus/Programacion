@@ -614,3 +614,117 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
     ~~~
 
     [Descargar posible solución para el programa **AsignarValor**](ejercicios/AsignarValor.java)
+
+- **Lectura/Escritura de un número entero**
+
+  Escribir un programa java que lea un número entero por teclado y nos lo muestre por pantalla.
+
+  - Posible solución
+    ~~~java
+		import utilidades.Entrada;
+
+		public class LecturaEscritura {
+
+			public static void main(String[] args) {
+				int numero;
+				System.out.print("Introduce un número: ");
+				numero = Entrada.entero();
+				System.out.println("El número introducido es: " + numero);
+			}
+
+		}
+    ~~~
+
+    [Descargar posible solución para el programa **LecturaEscritura**](ejercicios/LecturaEscritura.java)
+
+- **Mostrar el doble de un número real**
+
+  Escribir un programa java que lea un número real por teclado y nos muestre por pantalla el doble del mismo.
+
+  - Posible solución
+    ~~~java
+		import utilidades.Entrada;
+
+		public class Doble {
+
+			public static void main(String[] args) {
+				float numero;
+				System.out.print("Introduce un número real: ");
+				numero = Entrada.real();
+				System.out.println("El doble del número: " + numero + " es: " + 2 * numero);
+			}
+
+		}
+    ~~~
+
+    [Descargar posible solución para el programa **Doble**](ejercicios/Doble.java)
+
+- **Mostrar el cuadrado de un número real doble**
+
+  Escribir un programa java que lea un número real doble por teclado y nos muestre por pantalla el cuadrado del mismo.
+
+  - Posible solución
+    ~~~java
+		import utilidades.Entrada;
+
+		public class Cuadrado {
+
+			public static void main(String[] args) {
+				double numero;
+				System.out.print("Introduce un número real doble: ");
+				numero = Entrada.realDoble();
+				System.out.println("El cuadrado del número: " + numero + " es: " + numero * numero);
+			}
+
+		}
+    ~~~
+
+    [Descargar posible solución para el programa **Cuadrado**](ejercicios/Cuadrado.java)
+
+- **Hallar el perímetro de un triángulo**
+
+  Escribir un programa java que lea por teclado la base y la altura de un rectángulo y nos muestre por pantalla el perímetro del mismo.
+
+  - Posible solución
+    ~~~java
+		import utilidades.Entrada;
+
+		public class PerimetroRectangulo {
+
+			public static void main(String[] args) {
+				float base, altura;
+				System.out.print("Introduce la base del rectángulo: ");
+				base = Entrada.real();
+				System.out.print("Introduce la altura del rectángulo: ");
+				altura = Entrada.real();
+				float perimetro = 2 * base + 2 * altura;
+				System.out.println("El perímetro del rectángulo es: " + perimetro);
+			}
+
+		}
+    ~~~
+
+    [Descargar posible solución para el programa **PerimetroRectangulo**](ejercicios/PerimetroRectangulo.java)
+
+- **Calcular el área de un círculo**
+
+  Escribir un programa java que lea por teclado el radio de un círculo y nos muestre por pantalla el área del mismo.
+
+  - Posible solución
+    ~~~java
+		import utilidades.Entrada;
+
+		public class AreaCirculo {
+
+			public static void main(String[] args) {
+				double radio;
+				System.out.print("Introduce el radio del círculo: ");
+				radio = Entrada.realDoble();
+				double area = Math.PI * radio * radio;
+				System.out.println("El área del círculo es: " + area);
+			}
+
+		}
+    ~~~
+
+    [Descargar posible solución para el programa **AreaCirculo**](ejercicios/AreaCirculo.java)

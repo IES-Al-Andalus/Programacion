@@ -163,8 +163,8 @@ Los tipos de datos primitivos se pueden agrupar en: caracter, numérico, decimal
 |`char`|2 bytes|\u0000 a \uFFFF|\u0000|
 |`byte`|1 byte|-128 a 127|0|
 |`short`|2 bytes|-32768 a 32767|0|
-|`int`|4 bytes|-2147483648 a -2147483647|0
-|`long`|8 bytes|-9223372036854775808 a -9223372036854775807|0|
+|`int`|4 bytes|-2147483648 a 2147483647|0
+|`long`|8 bytes|-9223372036854775808 a 9223372036854775807|0|
 |`float`|4 bytes|<img src="https://latex.codecogs.com/svg.latex?\Large&space;\pm3.4*10^{-38}&space;a&space;\pm3.4*10^{38}"/>|0.0|
 |`double`|8 bytes|<img src="https://latex.codecogs.com/svg.latex?\Large&space;\pm1.8*10^{-308}&space;a&space;\pm1.8*10^{308}"/>|0.0|
 |`boolean`|1 byte|`true` o `false`|`false`|
@@ -403,12 +403,12 @@ Son las sentencias que se ejecutan una detrás de otra, secuencialmente. Por lo 
     - `char caracter = Entrada.caracter();`
     - `String cadena = Entrada.cadena();`
     - `int entero = Entrada.entero();`
-    - `long largo = Entero.enteroLargo();`
-    - `float real = Entero.real();`
-    - `double realDoble = Entero.realDoble();`
+    - `long largo = Entrada.enteroLargo();`
+    - `float real = Entrada.real();`
+    - `double realDoble = Entrada.realDoble();`
 
 ##### Sentencias condicionales
-Son sentencias que permiten alterar el flujo del algoritmo y ejecutar unas sentencias u otras dependiendo del valor de una condición.
+Son sentencias que permiten alterar el flujo del programa y ejecutar unas sentencias u otras dependiendo del valor de una condición.
 
 - **Condicional**: Permite evaluar una condición y ejecutar una serie de sentencias si dicha condición es verdadera u otras si es falsa.
 
@@ -536,7 +536,7 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
 	} while <condicion>;
   ~~~
 
-  La secuencia de sentencias siempre se ejecuta al menos una vez, al contrario que en el bucle anterior. Notar la condición termina con un ';'.
+  La secuencia de sentencias siempre se ejecuta al menos una vez, al contrario que en el bucle anterior. Notar que la condición termina con un ';'.
 
   También debemos modificar las variables que afectan a la condición en la secuencia de sentencias del cuerpo del bucle o de lo contrario se puede entrar en un bucle infinito.
 
@@ -561,7 +561,7 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
 
   Primero se evalúa `expresionInicializacion`. Esta expresión es opcional. En su formato más genérico, aquí inicializaremos la variable de control del bucle. También puede haber varias expresiones separadas por `,`.
 
-  Luego se evalúa `expresionCondicinal` que debe ser una expresión lógica. Si evalúa a falso el bucle termina y en caso contrario se ejecutan la secuencia de sentencias. También es opcional y si no existiese sería como evaluase a `true` y estaríamos hablando de un bucle infinito.
+  Luego se evalúa `expresionCondicinal` que debe ser una expresión lógica. Si evalúa a falso el bucle termina y en caso contrario se ejecutan la secuencia de sentencias. También es opcional y si no existiese sería como si evaluase a `true` y estaríamos hablando de un bucle infinito.
 
   Cuando se haya terminado de ejecutar la secuencia de sentencias, se evalúa `expresionIncremento` y se vuelve a evaluar `expresionCondicional` para volver a ejecutar o no la secuencia de sentencias. `expresionIncremento` también es opcional y también podría haber varias expresiones separadas por `,`.
 

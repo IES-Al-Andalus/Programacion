@@ -681,19 +681,11 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
 
     [Descargar posible solución para el programa **Cuadrado**](ejercicios/Cuadrado.java)
 
-<<<<<<< HEAD
 - **Hallar el perímetro de un rectángulo**
 
   Escribir un programa java que lea por teclado la base y la altura de un rectángulo y nos muestre por pantalla el perímetro del mismo.
 
   - Posible solución, aunque lo correcto hubiese sido validar que **la base y la altura fuesen mayores que cero**, pero eso lo veremos en ejercicios posteriores.
-=======
-- **Hallar el perímetro de un triángulo**
-
-  Escribir un programa java que lea por teclado la base y la altura de un rectángulo y nos muestre por pantalla el perímetro del mismo.
-
-  - Posible solución
->>>>>>> d30de56d056071b22167494341b424fd7c6f7d50
     ~~~java
 		import utilidades.Entrada;
 
@@ -718,11 +710,7 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
 
   Escribir un programa java que lea por teclado el radio de un círculo y nos muestre por pantalla el área del mismo.
 
-<<<<<<< HEAD
   - Posible solución, aunque lo correcto hubiese sido validar que el **radio fuese mayor que cero**, pero eso lo veremos en ejercicios posteriores.
-=======
-  - Posible solución
->>>>>>> d30de56d056071b22167494341b424fd7c6f7d50
     ~~~java
 		import utilidades.Entrada;
 
@@ -740,7 +728,6 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
     ~~~
 
     [Descargar posible solución para el programa **AreaCirculo**](ejercicios/AreaCirculo.java)
-<<<<<<< HEAD
 
 ###### Sentencias condicionales
 
@@ -1030,5 +1017,92 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
     ~~~
 
     [Descargar posible solución para el programa **NumeroPositivo**](ejercicios/NumeroPositivo.java)
-=======
->>>>>>> d30de56d056071b22167494341b424fd7c6f7d50
+
+- **Sumar números**
+
+  Escribir un programa java que lea por teclado números enteros hasta que se introduzca un cero muestre por pantalla la suma de los mismos.
+
+  - Posible solución
+    ~~~java
+		import utilidades.Entrada;
+
+		public class SumaNumeros {
+
+			public static void main(String[] args) {
+				int numero, suma = 0;
+				do {
+					System.out.print("Introduce un número: ");
+					numero = Entrada.entero();
+					if (numero != 0) {
+						suma += numero;
+					}
+				} while (numero != 0);
+				System.out.println("La suma de los números introducidos es: " + suma);
+			}
+
+		}
+    ~~~
+
+    [Descargar posible solución para el programa **SumaNumeros**](ejercicios/SumaNumeros.java)
+
+- **Media números**
+
+  Escribir un programa java que lea por teclado números enteros hasta que se introduzca un cero muestre por pantalla la media de los mismos.
+
+  - Posible solución
+    ~~~java
+		import utilidades.Entrada;
+
+		public class MediaNumeros {
+
+			public static void main(String[] args) {
+				int numero, suma = 0, cantidadNumeros = 0;
+				do {
+					System.out.print("Introduce un número: ");
+					numero = Entrada.entero();
+					if (numero != 0) {
+						suma += numero;
+						cantidadNumeros++;
+					}
+				} while (numero != 0);
+				if (cantidadNumeros < 0) {
+					System.out.println("La media de los números introducidos es: " + (float)suma / cantidadNumeros);
+				}
+			}
+
+		}
+    ~~~
+
+    [Descargar posible solución para el programa **MediaNumeros**](ejercicios/MediaNumeros.java)
+
+###### Ejercicios variados
+
+- **Número perfecto**
+
+  Escribir un programa java que lea un número entero mayor que cero por teclado y nos informe si dicho número es perfecto o no. Un número es perfecto si es igual a la suma de sus divisores.
+
+  - Posible solución
+    ~~~java
+		import utilidades.Entrada;
+
+		public class NumeroPerfecto {
+
+			public static void main(String[] args) {
+				int numero, suma = 0;
+				do {
+					System.out.print("Introduce un número: ");
+					numero = Entrada.entero();
+				} while (numero <= 0);
+				for (int i = 1; i < numero; i++) {
+					if (numero % i == 0) {
+						suma += i;
+					}
+				}
+				String mensaje = (suma == numero) ? " SÍ" : " NO";
+				System.out.println("El número: " + numero + mensaje + " es perfecto.");
+			}
+
+		}
+    ~~~
+
+    [Descargar posible solución para el programa **NumeroPerfecto**](ejercicios/NumeroPerfecto.java)

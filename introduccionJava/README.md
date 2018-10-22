@@ -1106,3 +1106,34 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
     ~~~
 
     [Descargar posible solución para el programa **NumeroPerfecto**](ejercicios/NumeroPerfecto.java)
+
+- **Número cifras**
+
+  Escribir un programa java que lea un número entero mayor que cero por teclado y nos informe de la cantidad de cifras que posee dicho número. Para ello sólo debes utilizar operaciones aritméticas.
+
+  - Posible solución
+    ~~~java
+		import utilidades.Entrada;
+
+		public class NumCifras {
+
+	    public static void main(String[] args) {
+				int numero;
+				do {
+					System.out.print("Introduce un número entero: ");
+					numero = Entrada.entero();
+				} while (numero <= 0);
+				int cifras = 0;
+				//Si cambiamos el while por este comentado, podriamos evitar la sentencia numero /= 10 y así no modificar numero
+				//while (numero / (int)Math.pow(10,cifras) != 0) {
+				while (numero != 0) {
+					numero /= 10;
+					cifras++;
+				}
+				System.out.println("Tiene " + cifras + " cifras");
+			}
+
+		}
+    ~~~
+
+    [Descargar posible solución para el programa **NumCifras**](ejercicios/NumCifras.java)

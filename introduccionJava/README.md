@@ -1117,7 +1117,7 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
 
 		public class NumCifras {
 
-	    public static void main(String[] args) {
+			public static void main(String[] args) {
 				int numero;
 				do {
 					System.out.print("Introduce un número entero: ");
@@ -1137,3 +1137,299 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
     ~~~
 
     [Descargar posible solución para el programa **NumCifras**](ejercicios/NumCifras.java)
+
+- **Descomponer cifras**
+
+  Escribir un programa java que lea un número entero mayor que cero por teclado y nos muestre en cada línea las cifras del mismo en orden de izquierda a derecha. Para ello sólo debes utilizar operaciones aritméticas.
+
+  - Posible solución
+    ~~~java
+		import utilidades.Entrada;
+
+		public class DescomponerCifras {
+
+			public static void main(String[] args) {
+				int numero;
+				do {
+					System.out.print("Introduce un número entero: ");
+					numero = Entrada.entero();
+				} while (numero <= 0);
+				int cifras = (int) Math.log10(numero);
+				do {
+					System.out.println(numero / (int) Math.pow(10, cifras));
+					numero = numero % (int) Math.pow(10, cifras);
+					cifras--;
+				} while (cifras >= 0);
+			}
+
+		}
+    ~~~
+
+    [Descargar posible solución para el programa **DescomponerCifras**](ejercicios/DescomponerCifras.java)
+
+- **Descomponer cifras reverso**
+
+  Escribir un programa java que lea un número entero mayor que cero por teclado y nos muestre en cada línea las cifras del mismo en orden de derecha a izquierda. Para ello sólo debes utilizar operaciones aritméticas.
+
+  - Posible solución
+    ~~~java
+		import utilidades.Entrada;
+
+		public class DescomponerCifrasReverso {
+
+			public static void main(String[] args) {
+				int numero;
+				do {
+					System.out.print("Introduce un número: ");
+					numero = Entrada.entero();
+				} while (numero <= 0);
+				while (numero > 0) {
+					System.out.println(numero % 10);
+					numero /= 10;
+				}
+			}
+
+		}
+    ~~~
+
+    [Descargar posible solución para el programa **DescomponerCifrasReverso**](ejercicios/DescomponerCifrasReverso.java)
+
+- **Mostrar reverso**
+
+  Escribir un programa java que lea un número entero mayor que cero por teclado y nos muestre el reverso del mismo. Para ello sólo debes utilizar operaciones aritméticas.
+
+  - Posible solución
+    ~~~java
+		import utilidades.Entrada;
+
+		public class Reverso {
+
+			public static void main(String[] args) {
+				int numero, reverso = 0;
+				do {
+					System.out.print("Introduce un número entero: ");
+					numero = Entrada.entero();
+				} while (numero <= 0);
+				while (numero > 0) {
+					reverso = reverso * 10 + numero % 10;
+					numero /= 10;
+				}
+				System.out.println("El reverso es: " + reverso);
+			}
+
+		}
+    ~~~
+
+    [Descargar posible solución para el programa **Reverso**](ejercicios/Reverso.java)
+
+- **Mostrar reverso sin modificar**
+
+  Escribir un programa java que lea un número entero mayor que cero por teclado y nos muestre el reverso del mismo, pero sin modificar el número introducido. Para ello sólo debes utilizar operaciones aritméticas.
+
+  - Posible solución
+    ~~~java
+		import utilidades.Entrada;
+
+		public class ReversoSinModificar {
+
+			public static void main(String[] args) {
+				int numero, reverso = 0, posicionCifra = 0;
+				do {
+					System.out.print("Introduce un número entero: ");
+					numero = Entrada.entero();
+				} while (numero <= 0);
+				while (numero / (int) Math.pow(10, posicionCifra) > 0) {
+					reverso = reverso * 10 + numero / (int) Math.pow(10, posicionCifra) % 10;
+					posicionCifra++;
+				}
+				System.out.println("El reverso de " + numero + " es: " + reverso);
+			}
+
+		}
+    ~~~
+
+    [Descargar posible solución para el programa **ReversoSinModificar**](ejercicios/ReversoSinModificar.java)
+
+- **Capicúa**
+
+  Escribir un programa java que lea un número entero mayor que cero por teclado y nos indique si dicho número es capicúa o no (un múmero es capicúa si su reverso y él son iguales). Para ello sólo debes utilizar operaciones aritméticas.
+
+  - Posible solución
+    ~~~java
+		import utilidades.Entrada;
+
+		public class Capicua {
+
+			public static void main(String[] args) {
+				int numero, reverso = 0, posicionCifra = 0;
+				do {
+					System.out.print("Introduce un número entero: ");
+					numero = Entrada.entero();
+				} while (numero <= 0);
+				while (numero / (int) Math.pow(10, posicionCifra) > 0) {
+					reverso = reverso * 10 + numero / (int) Math.pow(10, posicionCifra) % 10;
+					posicionCifra++;
+				}
+				String mensaje = (reverso == numero) ? " SÍ" : " NO";
+				System.out.println("El numero: " + numero + mensaje +" es capicúa.");
+			}
+
+		}
+    ~~~
+
+    [Descargar posible solución para el programa **Capicua**](ejercicios/Capicua.java)
+
+- **Menú**
+
+  Escribir un programa java que muestre un menú con tres opciones (Abrir, Cerrar y Salir) y una última para salir. Nos pida que elijamos una opción correcta y nos informe de la opción elegida.
+
+  - Posible solución
+    ~~~java
+		import utilidades.Entrada;
+
+		public class Menu {
+
+			public static void main(String[] args) {
+				int opcion;
+				System.out.println("1.- Abrir.");
+				System.out.println("2.- Cerrar.");
+				System.out.println("3.- Mostrar.");
+				System.out.println("0.- Salir.");
+				do {
+					System.out.print("Elija una opción valida: ");
+					opcion = Entrada.entero();
+				} while (opcion < 0 || opcion > 3);
+				switch (opcion) {
+				case 0:
+					System.out.println("Hasta luego Lucas!!!");
+					break;
+				case 1:
+					System.out.println("Ha elegido la opción abrir.");
+					break;
+				case 2:
+					System.out.println("Ha elegido la opción cerrar.");
+					break;
+				case 3:
+					System.out.println("Ha elegido la opción mostrar.");
+					break;
+				}
+			}
+		}
+    ~~~
+
+    [Descargar posible solución para el programa **Menu**](ejercicios/Menu.java)
+
+- **Sumar5Restar2**
+
+  Escribir un programa java que lea 2 números enteros entre 0 y 50 (ambos inclusive). Al menor comenzará a sumarle 5 y al mayor comenzará a restarle 2. Los resultados los irá mostrando en pantalla hasta que el menor sea mayor que el mayor.
+
+  - Posible solución
+    ~~~java
+		import utilidades.Entrada;
+
+		public class Sumar5Restar2 {
+			public static void main(String[] args) {
+				int numero1, numero2, aux;
+				do {
+					System.out.print("Introduce el primer numero entre 0 y 50: ");
+					numero1 = Entrada.entero();
+				} while (numero1 < 0 || numero1 > 50);
+				do {
+					System.out.print("Introduce el segundo número entre 0 y 50: ");
+					numero2 = Entrada.entero();
+				} while (numero2 < 0 || numero2 > 50);
+				if (numero1 > numero2) {
+					aux = numero1;
+					numero1 = numero2;
+					numero2 = aux;
+				}
+				while (numero1 < numero2) {
+					System.out.println("N1: " + numero1 + ", N2: " + numero2);
+					numero1 += 5;
+					numero2 -= 2;
+				}
+			}
+		}
+    ~~~
+
+    [Descargar posible solución para el programa **Sumar5Restar2**](ejercicios/Sumar5Restar2.java)
+
+- **Sumar5Restar2**
+
+  Escribir un programa java que simule la tirada de dos monedas. El programa pedirá por teclado el número de veces a tirar las monedas (entre 1 y 50). Mostrará el resultado de cada tirada y luego nos informará del número de caras, del número de cruces, de el número máximo de caras dobles consecutivas y del número máximo de cruces dobles consecutivas, que han salido.
+
+  - Posible solución
+    ~~~java
+		import utilidades.Entrada;
+
+		public class TiradasMoneda {
+
+			public static void main(String[] args) {
+
+				int moneda1, moneda2;
+				int contadorCaras = 0, contadorCruces = 0, numTiradas;
+				int contadorCarasDoblesConsecutivas = 0, contadorCrucesDoblesConsecutivas = 0;
+				int maximoCarasDoblesConsecutivas = 0, maximoCrucesDoblesConsecutivas = 0;
+				boolean esCruzDoble = false, esCaraDoble = false;
+
+				do {
+					System.out.print("Introduce el número de veces que se van a lanzar las monedas (max 50): ");
+					numTiradas = Entrada.entero();
+				} while (numTiradas < 1 || numTiradas > 50);
+
+				for (int i = 0; i < numTiradas; i++) {
+					moneda1 = (int) (Math.random() * 2);
+					moneda2 = (int) (Math.random() * 2);
+					System.out.println("Moneda 1: " + moneda1 + ", Moneda 2: " + moneda2);
+					if (moneda1 == 0) {
+						contadorCaras++;
+					} else {
+						contadorCruces++;
+					}
+					if (moneda2 == 0) {
+						contadorCaras++;
+					} else {
+						contadorCruces++;
+					}
+
+					if (moneda1 == moneda2) {
+						if (moneda1 == 0) {
+							esCaraDoble = true;
+							esCruzDoble = false;
+						} else {
+							esCaraDoble = false;
+							esCruzDoble = true;
+						}
+					} else {
+						esCaraDoble = false;
+						esCruzDoble = false;
+					}
+
+					if (esCaraDoble) {
+						contadorCarasDoblesConsecutivas++;
+						if (contadorCarasDoblesConsecutivas > maximoCarasDoblesConsecutivas) {
+							maximoCarasDoblesConsecutivas = contadorCarasDoblesConsecutivas;
+						}
+					} else {
+						contadorCarasDoblesConsecutivas = 0;
+					}
+
+					if (esCruzDoble) {
+						contadorCrucesDoblesConsecutivas++;
+						if (contadorCrucesDoblesConsecutivas > maximoCrucesDoblesConsecutivas) {
+							maximoCrucesDoblesConsecutivas = contadorCrucesDoblesConsecutivas;
+						}
+					} else {
+						contadorCrucesDoblesConsecutivas = 0;
+					}
+				}
+
+				System.out.println("Caras: " + contadorCaras + ", Cruces: " + contadorCruces);
+				System.out.println("Maximo de caras sobles consecutivas: " + maximoCarasDoblesConsecutivas);
+				System.out.println("Maximo de cruces dobles consecutivas: " + maximoCrucesDoblesConsecutivas);
+			}
+		}
+
+    ~~~
+
+    [Descargar posible solución para el programa **TiradasMoneda**](ejercicios/TiradasMoneda.java)

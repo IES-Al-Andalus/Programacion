@@ -10,7 +10,8 @@ A la hora de escribir los algoritmos utilizaré la sintaxis propuesta en el prog
 
  > ![joseramon.jimenez@iesalandalus.org](../assets/images/mail.png) joseramon.jimenez@iesalandalus.org
 
-## Contenidos
+### Contenidos
+---
 - [Algoritmo](#algoritmo)
 - [Estructura de un algoritmo en pseudocódigo](#estructura-de-un-algoritmo-en-pseudocódigo)
 - [Variables](#variables)

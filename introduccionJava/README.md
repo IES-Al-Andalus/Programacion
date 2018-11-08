@@ -10,7 +10,8 @@ Al igual que en otros apartados, el objetivo principal es que tengáis una ampl�
 
  > ![joseramon.jimenez@iesalandalus.org](../assets/images/mail.png) joseramon.jimenez@iesalandalus.org
 
-## Contenidos
+### Contenidos
+---
 - [¿Qué es Java?](#qu-es-java)
 - [Primer programa en Java](#primer-programa-en-java)
 - [Identificadores](#identificadores)

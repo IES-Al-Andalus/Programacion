@@ -5,8 +5,9 @@ En este repositorio iré colgando teoría y diferentes ejercicios, con sus respe
 Este repositorio no pretende ser una obra exhaustiva sobre programación, ni sobre java. Más bien pretende ser una guía con las construcciones básicas y sobre todo un repositorio de ejercicios resueltos. La idea es servir a cualquiera que se esté iniciando en programación y java para ejercitar sus avances por medio de los ejercicios resueltos, que poco a poco iré ampliando, y ser una referencia rápida para su repaso.
 
 ## Contenidos
-- [Resolución de problemas mediante algoritmos](algoritmos/README.md)
-- [Introducción a la programación en java](introduccionJava/README.md)
+- [Resolución de problemas mediante algoritmos](algoritmos/)
+- [Introducción a la programación en java](introduccionJava/)
+- [Introducción a la programación orientada a objetos en java](introduccionPOO/)
 
 ## Autor
 

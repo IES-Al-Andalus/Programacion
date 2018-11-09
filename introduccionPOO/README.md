@@ -206,7 +206,7 @@ Son aquellos métodos que nos permiten consultar y/o establecer el valor de los 
 
 Los métodos de consulta se nombran como `getNombre` donde `Nombre` es el nombre del atributo que queremos consultar. En el caso de que sea un atributo de tipo `boolean` se utiliza `isNombre` para realizar la consulta.
 
-Los métodos de modificación se nombran como `putNombre` donde `Nombre` es el nombre del atributo que queremos modificar.
+Los métodos de modificación se nombran como `setNombre` donde `Nombre` es el nombre del atributo que queremos modificar.
 
 Cierto es que estos métodos podrían tener el nombre que quisiéramos, pero por convención utilizaremos estos nombres.
 
@@ -532,7 +532,7 @@ Cuando asignamos una referencia a otra, no estamos copiando el contenido de una 
 Por ejemplo, cuando nosotros ejecutamos el siguiente código:
 ~~~java
 	...
-	Posicion posicion1 = new Posicion(10, 10);
+	Posicion posicion1 = new Posicion();
 	Posicion posicion2;
 	posicion2 = posicion1;
 ~~~
@@ -913,6 +913,9 @@ public class Posicion {
 	}
 
 	public Posicion(Posicion posicion) {
+		if (posicion == null) {
+			throw new IllegalArgumentException("No se puede copiar una posición nula");
+		}
 		this.x = posicion.getX();
 		this.y = posicion.getY();
 	}
@@ -1013,10 +1016,14 @@ public class Personaje {
 	}
 
 	public Personaje(Personaje personaje) {
+		if (personaje == null) {
+			throw new IllegalArgumentException("No se puede copiar un personaje nulo.");
+		}
 		nombre = personaje.getNombre();
 		energia = personaje.getEnergia();
 		color = personaje.getColor();
 		posicion = new Posicion(personaje.getPosicion());
+		numPersonajes++;
 	}
 
 	public String getNombre() {
@@ -1219,6 +1226,9 @@ public class Posicion {
 	}
 
 	public Posicion(Posicion posicion) {
+		if (posicion == null) {
+			throw new IllegalArgumentException("No se puede copiar una posición nula");
+		}
 		this.x = posicion.getX();
 		this.y = posicion.getY();
 	}
@@ -1323,10 +1333,14 @@ public class Personaje {
 	}
 
 	public Personaje(Personaje personaje) {
+		if (personaje == null) {
+			throw new IllegalArgumentException("No se puede copiar un personaje nulo.");
+		}
 		nombre = personaje.getNombre();
 		energia = personaje.getEnergia();
 		color = personaje.getColor();
 		posicion = new Posicion(personaje.getPosicion());
+		numPersonajes++;
 	}
 
 	public String getNombre() {
@@ -1376,6 +1390,9 @@ public class Personaje {
 	}
 
 	public void mover(Direccion direccion, int pasos) throws OperationNotSupportedException {
+		if (direccion == null) {
+			throw new IllegalArgumentException("La dirección no puede ser nula.");
+		}
 		if (pasos <= 0) {
 			throw new IllegalArgumentException("El número de pasos debe ser mayor que cero.");
 		}

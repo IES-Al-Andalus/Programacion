@@ -8,6 +8,7 @@ Este repositorio no pretende ser una obra exhaustiva sobre programación, ni sob
 - [Resolución de problemas mediante algoritmos](algoritmos/)
 - [Introducción a la programación en java](introduccionJava/)
 - [Introducción a la programación orientada a objetos en java](introduccionPOO/)
+- [Algunas clases interesantes en java](clasesInteresantesJava/)
 
 ## Autor
 

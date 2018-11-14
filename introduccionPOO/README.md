@@ -18,6 +18,7 @@ Al igual que en otros apartados, el objetivo principal es que tengáis una ampl�
 - [Excepciones](#excepciones)
 - [Paquetes](#paquetes)
 - [Enumerados](#enumerados)
+- [Ejercicios](#ejercicios)
 
 
 ## Programación orientada a objetos

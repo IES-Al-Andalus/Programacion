@@ -26,7 +26,7 @@ Un array en java no es más que una estructura de memoria capaz de almacenar obj
 <img alt="Array" src="imagenes/array.png"/>
 </div>
 
-Como he comentado, un array es un objeto en java. Por tanto, primeros deberemos declarar una referencia a dicho array, después crear el array y posteriormente inicializar su contenido. Veamos cómo se lleva a cabo cada una de estas operaciones.
+Como he comentado, un array es un objeto en java. Por tanto, primero deberemos declarar una referencia a dicho array, después crear el array y posteriormente inicializar su contenido. Veamos cómo se lleva a cabo cada una de estas operaciones.
 
 Para **declarar** una referencia a un array utilizaremos la siguiente nomenclatura: `tipo[] nombre`, donde `tipo` puede ser un tipo primitivo, una clase de la API de java o una clase definida por nosotros mismos. Los corchetes indican que estamos declarando un array. Y `nombre` será el identificador que le damos a nuestra referencia al array.
 
@@ -62,7 +62,7 @@ En este caso la longitud del array se determina por el número de elementos espe
 
 Los arrays, al tratarse de objetos, tienen algunos miembros que podemos utilizar. Uno de los más utilizados es el atributo `length` que nos devuelve la longitud de dicho array.
 
-Para **recorrer** un array podemos utilizar un bucle. Es muy importante que controlemos que no nos salimos de los límites del array, tanto por abajo como por arriba (`0` ... `length - 1`), o de lo contrario nos saltará una excepción en tiempo de ejecución indicando que nos hemos salido de los límites del array (`ArrayIndexOutOfBound`).
+Para **recorrer** un array podemos utilizar un bucle. Es muy importante que controlemos que no nos salimos de los límites del array, tanto por abajo como por arriba (`0` ... `length - 1`), o de lo contrario nos saltará una excepción en tiempo de ejecución indicando que nos hemos salido de los límites del array (`IndexOutOfBoundsException`).
 
 ~~~java
 	...
@@ -123,6 +123,25 @@ Para acceder a los elementos de un array multidimensional deberemos utilizar tan
 	cruzigrama[1][0] = 'b';
 	...
 	cruzigrama[4][4] = 'l';
+~~~
+
+Veamos cómo recorrer el array multidimensional primero para asignarle valores a sus elementos y luego para mostrarlos.
+
+~~~java
+	...
+	char[][] cruzigrama;
+	cruzigrama = new char[5][5];
+	char letra = 'a';
+	for (int i = 0; i < cruzigrama.length; i++) {
+		for (int j = 0; j < cruzigrama[i].length; j++) {
+			cruzigrama[i][j] = letra++;
+		}
+	}
+	for (int i = 0; i < cruzigrama.length; i++) {
+		for (int j = 0; j < cruzigrama[i].length; j++) {
+			System.out.println("Elemento [" + i + ", " + j + "] = " + cruzigrama[i][j]);
+		}
+	}
 ~~~
 
 ###### Arrays de objetos
@@ -195,7 +214,7 @@ public class ArrayObjetos {
 
 ###### Copiando arrays
 
-A la hora de copiar un array debemos tener cuidado con lo que de verdad pretendemos.
+A la hora de copiar un array debemos tener cuidado con lo que de verdad pretendemos. Aunque voy a hablar de copiar, el caso sería el mismo para devolverlo por un método o asignarlo a un atributo.
 
 La primera idea sería asignar un array a otro, pero como ya sabemos lo que en verdad sucede es que se están copiando las referencias, por lo que cualquier modificación que hagamos en cualquiera de los arrays afectaría al otro.
 
@@ -239,11 +258,11 @@ Hay otros métodos que también permiten hacer una copia de un array como el mé
 			+ arrayDestino[0]); //Muestra Punto[x=2, x=1], Punto[x=2, y=1]
 ~~~
 
-Por último, existen dos métodos de la clase `java.util.Arrays` cuyo identificadores son: `copyOf` que acepta como parámetros el array de origen y la longitud a copiar y devuelve la copia de dicho fragmento del array copiado; y `copyOfRange` que acepta como parámetros el array origen, el índice desde el que va a copiar y el índice donde termina la copiar (sin incluirlo) y devuelve el fragmento de array copiado. Pero ambos métodos se comportan exactamente igual que en el caso anterior.
+Por último, existen dos métodos de la clase `java.util.Arrays` cuyos identificadores son: `copyOf` que acepta como parámetros el array de origen y la longitud a copiar y devuelve la copia de dicho fragmento del array copiado; y `copyOfRange` que acepta como parámetros el array origen, el índice desde el que va a copiar y el índice donde termina de copiar (sin incluirlo) y devuelve el fragmento de array copiado. Pero ambos métodos se comportan exactamente igual que en el caso anterior.
 
-Podemos comprobar que las técnicas utilizadas para realizar una copia de un array, simplemente realizan una **copia superficial** del array (exceptuando `clone` que simplemente iguala las referencias).
+Podemos comprobar que las técnicas utilizadas para realizar una copia de un array, simplemente realizan una **copia superficial** del array (exceptuando el operador `=` que simplemente iguala las referencias).
 
-Si lo que pretendemos es realizar una **copia profunda** del array lo que deberemos hacer es: crear un constructor copia de la clase que almacena el array (y de sus clases cliente, es decir, que realice una copia profunda de dicha clase) y recorrer el array creando nuevas instancias de cada uno de los elementos.
+Si lo que pretendemos es realizar una **copia profunda** del array, lo que deberemos hacer es: crear un constructor copia de la clase que almacena el array (y de sus clases cliente, es decir, que realice una copia profunda de dicha clase) y recorrer el array creando nuevas instancias de cada uno de los elementos.
 
 ~~~java
 	...
@@ -268,6 +287,75 @@ La clase `java.util.Arrays` nos ofrece algunos otros métodos (además de los vi
 - `binarySearch`: utiliza el algoritmo de búsqueda binaria para buscar un elemento en el array y devuelve la posición + 1 (en negativo) de dicho elemento. El requisito para que este método funcione correctamente es que el array esté previamente ordenado. Al igual que en el caso anterior, este método funciona correctamente con tipos primitivos pero si hablamos de objetos, la clase debe implementar la interfaz `Comparator` o que le pasemos el método para comparar.
 
 ## Cadenas de caracteres
+
+La clase `String` representa una cadena de caracteres. Internamente podríamos verla como un array de caracteres.
+
+Dado que el uso de cadenas de caracteres es muy común en los lenguajes de programación, en java la clase `String` está a medio camino entre un tipo primitivo y una clase. Debido a su amplio uso, su declaración e inicialización se parecen más a un tipo primitivo que a un objeto de una clase. Además, es importante mencionar que es un **objeto inmutable**, es decir, que una vez creado no puede cambiar su contenido.
+
+Para crear una cadena, podemos utilizar dos formas:
+- **Implícita**: Asignamos la referencia al objeto `String` a un literal del tipo cadena que se delimita por `""`. `String nombre = "José Ramón";`.
+- **Explícita**: Se crea como cualquier otra referencia a un objeto de una clase. `String nombre = new String("José Ramón");`.
+
+La diferencia entre crear una cadena de una forma u otra es, en principio la sencillez y comodidad de utilizar la forma implícita. Pero, además, existe otra diferencia: por cuestiones de eficiencia, cuando creamos una cadena utilizando la forma implícita, java almacenará los literales en una zona especial e intentará reutilizar todos los literales iguales. Sin embargo, cuando utilizamos la forma explícita se comportará como con cualquier otro objeto y los almacenará en el heap de memoria.
+
+~~~java
+	String nombre1 = "José Ramón";
+	String nombre2 = "José Ramón";
+	String nombre3 = new String("José Ramón");
+	String nombre4 = new String("José Ramón");
+	System.out.println(nombre1 == nombre2);		//Muestra true
+	System.out.println(nombre3 == nombre4);		//Muestra false
+~~~
+
+<div align="center">
+<img alt="Cadenas" src="imagenes/string.png"/>
+</div>
+
+Como hemos comentado anteriormente, las cadenas son objetos inmutables, por lo que cualquier operación que hagamos sobre ella, que implique una modificación, lo que hará es crear una nueva cadena, ya que los objetos inmutables no se pueden modificar.
+
+Debido al amplio uso de las cadenas, también existe un operador especial para concatenar cadenas: `+`.
+~~~java
+	String nombre = "José Ramón";
+	System.out.println("Hola " + nombre);		//Muestra: Hola José Ramón
+~~~
+
+Vistas las peculiaridades de las cadenas, veamos los principales métodos que nos ofrece la clase `String` para su manipulación y uso.
+
+|------|-----------|
+|Método|Explicación|
+|------|-----------|
+|`char charAt(int index)`|Devuelve el carácter especificado por el índice. El índice debe estar entre `0` y `length() - 1` o de lo contrario lanzará la excepción `IndexOutOfBoundsException`.|
+|`boolean equals(Object obj)`|Compara si el contenido de la cadena actual y la pasada por paŕametro es el mismo.|
+|`boolean equalsIgnoreCase(String string)`|Compara si el contenido de la cadena actual y la pasada por paŕametro es el mismo, ignorando mayúsculas y minúsculas.|
+|`int compareTo()`|Compara la cadena actual con la pasada por parámetro y devuelve -1, 0 o 1, dependiendo de si la pasada es menor, igual o mayor.|
+|`int compareToIgnoreCase()`|Igual que el anterior, pero ignorando mayúsculas y minúsculas.|
+|`boolean startsWith(String prefix, inf offset)`|Devuelve `true` si la cadena actual empieza por la cadena `prefix` en índice `offset`.|
+|`boolean startsWith(String prefix)`|Devuelve `true` si la cadena actual comienza por la cadena `prefix`.|
+|`boolean endsWith(String suffix)`|Devuelve `true` si la cadena actual termina con el sufijo `suffix`.|
+|`int indexOf(char ch)`|Devuelve el índice de la primera ocurrencia del carácter `ch` o -1 si no existe.|
+|`int indexOf(char ch, int fromIndex)`|Igual que la anterior, pero comienza la búsqueda a partir del índice `fromIndex`.|
+|`int indexOf(String str)`|Devuelve el índice de la primera ocurrencia de la subcadena `str`.|
+|`int lastIndexOf(char ch)`||
+|`int lastIndexOf(char ch, int fromIndex)`||
+|`int lastIndexOf(String str)`||
+|`String substring(int beginIndex)`||
+|`String substring(int beginIndex, int endIndex)`||
+|`String concat(String str)`||
+|`String replace(char oldChar, char newChar)`||
+|`boolean contains(CharSequence s)`||
+|`String toUpperCase()`||
+|`String toLowerCase()`||
+|`boolean isEmpty()`||
+|`String replaceFirst(String regex, String replacement)`||
+|`String replaceAll(String regex, String replacement)`||
+|`String[] split(String regex)`||
+|`static String format(String format, Object... args)`||
+|`String trim()`||
+|`static String valueOf(...)`||
+|`boolean matches(String regex)`||
+|`int length()`||
+
+Para consultar la lista completa de métodos, os recomiendo consultar la [documentación de la API de java](https://docs.oracle.com/javase/8/docs/api/java/lang/String.html).
 
 ## Expresiones regulares
 

@@ -87,16 +87,22 @@ Los arrays multidimensionales son arrays de varias dimensiones, aunque pasar de 
 Lo más normal es la utilización de arrays de dos dimensiones, también llamados matrices. Son arrays de arrays. Para declararlos utilizaremos tantos corchetes como dimensiones queramos declarar.
 
 ~~~java
-	char[][] cruzigrama;
+	char[][] crucigrama;
 ~~~
 
 Al igual que ocurría con los arrays unidimensionales de objetos, una vez declarada la referencia hay que crear los diferentes elementos del array que en este caso también son arrays. Esto podemos hacerlo directamente con el operador `new`.
 ~~~java
-	cruzigrama = new char[5][5];
+	crucigrama = new char[5][5];
 ~~~
 
 <div align="center">
-<img alt="Array multidimensional" src="imagenes/cruzigrama.png"/>
+<img alt="Array multidimensional" src="imagenes/crucigrama.png"/>
+</div>
+
+La forma de representación anterior no sería la más correcta, ya que en verdad, en java un array multidimensional es un array de arrays, por lo que la representación correcta sería la siguiente (aunque por simplicidad utilizaremos la anterior).
+
+<div align="center">
+<img alt="Array multidimensional" src="imagenes/crucigrama1.png"/>
 </div>
 
 También es posible que un array multidimensional tuviese diferentes dimensiones en cada una de las posiciones;
@@ -117,29 +123,29 @@ Esto simplemente os lo comento para que lo sepáis, aunque no es muy normal util
 
 Para acceder a los elementos de un array multidimensional deberemos utilizar tantos índices como dimensiones tenga el array.
 ~~~java
-	cruzigrama[0][0] = 'a';
-	cruzigrama[0][1] = 'n';
+	crucigrama[0][0] = 'a';
+	crucigrama[0][1] = 'n';
 	...
-	cruzigrama[1][0] = 'b';
+	crucigrama[1][0] = 'b';
 	...
-	cruzigrama[4][4] = 'l';
+	crucigrama[4][4] = 'l';
 ~~~
 
 Veamos cómo recorrer el array multidimensional primero para asignarle valores a sus elementos y luego para mostrarlos.
 
 ~~~java
 	...
-	char[][] cruzigrama;
-	cruzigrama = new char[5][5];
+	char[][] crucigrama;
+	crucigrama = new char[5][5];
 	char letra = 'a';
-	for (int i = 0; i < cruzigrama.length; i++) {
-		for (int j = 0; j < cruzigrama[i].length; j++) {
-			cruzigrama[i][j] = letra++;
+	for (int i = 0; i < crucigrama.length; i++) {
+		for (int j = 0; j < crucigrama[i].length; j++) {
+			crucigrama[i][j] = letra++;
 		}
 	}
-	for (int i = 0; i < cruzigrama.length; i++) {
-		for (int j = 0; j < cruzigrama[i].length; j++) {
-			System.out.println("Elemento [" + i + ", " + j + "] = " + cruzigrama[i][j]);
+	for (int i = 0; i < crucigrama.length; i++) {
+		for (int j = 0; j < crucigrama[i].length; j++) {
+			System.out.println("Elemento [" + i + ", " + j + "] = " + crucigrama[i][j]);
 		}
 	}
 ~~~
@@ -325,35 +331,35 @@ Vistas las peculiaridades de las cadenas, veamos los principales métodos que no
 |Método|Explicación|
 |------|-----------|
 |`char charAt(int index)`|Devuelve el carácter especificado por el índice. El índice debe estar entre `0` y `length() - 1` o de lo contrario lanzará la excepción `IndexOutOfBoundsException`.|
-|`boolean equals(Object obj)`|Compara si el contenido de la cadena actual y la pasada por paŕametro es el mismo.|
-|`boolean equalsIgnoreCase(String string)`|Compara si el contenido de la cadena actual y la pasada por paŕametro es el mismo, ignorando mayúsculas y minúsculas.|
+|`String concat(String str)`||
+|`boolean contains(CharSequence s)`||
 |`int compareTo()`|Compara la cadena actual con la pasada por parámetro y devuelve -1, 0 o 1, dependiendo de si la pasada es menor, igual o mayor.|
 |`int compareToIgnoreCase()`|Igual que el anterior, pero ignorando mayúsculas y minúsculas.|
-|`boolean startsWith(String prefix, inf offset)`|Devuelve `true` si la cadena actual empieza por la cadena `prefix` en índice `offset`.|
-|`boolean startsWith(String prefix)`|Devuelve `true` si la cadena actual comienza por la cadena `prefix`.|
 |`boolean endsWith(String suffix)`|Devuelve `true` si la cadena actual termina con el sufijo `suffix`.|
+|`boolean equals(Object obj)`|Compara si el contenido de la cadena actual y la pasada por paŕametro es el mismo.|
+|`boolean equalsIgnoreCase(String string)`|Compara si el contenido de la cadena actual y la pasada por paŕametro es el mismo, ignorando mayúsculas y minúsculas.|
+|`static String format(String format, Object... args)`||
 |`int indexOf(char ch)`|Devuelve el índice de la primera ocurrencia del carácter `ch` o -1 si no existe.|
 |`int indexOf(char ch, int fromIndex)`|Igual que la anterior, pero comienza la búsqueda a partir del índice `fromIndex`.|
 |`int indexOf(String str)`|Devuelve el índice de la primera ocurrencia de la subcadena `str`.|
+|`boolean isEmpty()`||
 |`int lastIndexOf(char ch)`||
 |`int lastIndexOf(char ch, int fromIndex)`||
 |`int lastIndexOf(String str)`||
+|`int length()`||
+|`boolean matches(String regex)`||
+|`String replace(char oldChar, char newChar)`||
+|`String replaceAll(String regex, String replacement)`||
+|`String replaceFirst(String regex, String replacement)`||
+|`String[] split(String regex)`||
+|`boolean startsWith(String prefix, inf offset)`|Devuelve `true` si la cadena actual empieza por la cadena `prefix` en índice `offset`.|
+|`boolean startsWith(String prefix)`|Devuelve `true` si la cadena actual comienza por la cadena `prefix`.|
 |`String substring(int beginIndex)`||
 |`String substring(int beginIndex, int endIndex)`||
-|`String concat(String str)`||
-|`String replace(char oldChar, char newChar)`||
-|`boolean contains(CharSequence s)`||
 |`String toUpperCase()`||
 |`String toLowerCase()`||
-|`boolean isEmpty()`||
-|`String replaceFirst(String regex, String replacement)`||
-|`String replaceAll(String regex, String replacement)`||
-|`String[] split(String regex)`||
-|`static String format(String format, Object... args)`||
 |`String trim()`||
 |`static String valueOf(...)`||
-|`boolean matches(String regex)`||
-|`int length()`||
 
 Para consultar la lista completa de métodos, os recomiendo consultar la [documentación de la API de java](https://docs.oracle.com/javase/8/docs/api/java/lang/String.html).
 

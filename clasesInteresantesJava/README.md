@@ -449,7 +449,7 @@ Para consultar la lista completa de métodos, os recomiendo consultar la [docume
 
 - **Media**
 
-	Escribe un programa java que lea por teclado la cantidad de números a generar, que deberá ser al menos 3. Cree un array de dicho tamaño y los genere aleatoriamente entre 0 y 100. Debe calcular la media de los mismos como entero y contar la cantidad de números que hay por encima, por debajo y los que son iguales a la media. También debe anotar las posiciones en las que se encuentran los números iguales a la media. Para ello ve almacenando sus posiciones en un `StringBuffer` separados por comas y lo muestre sólo en el caso que haya números iguales. Si solo hay uno no debe mostrar la coma final.
+	Escribir un programa java que lea por teclado la cantidad de números a generar, que deberá ser al menos 3. Cree un array de dicho tamaño y los genere aleatoriamente entre 0 y 100. Debe calcular la media de los mismos como entero y contar la cantidad de números que hay por encima, por debajo y los que son iguales a la media. También debe anotar las posiciones en las que se encuentran los números iguales a la media. Para ello ve almacenando sus posiciones en un `StringBuffer` separados por comas y lo muestre sólo en el caso que haya números iguales. Si solo hay uno no debe mostrar la coma final.
 
 	- Posible solución
 		~~~java
@@ -504,7 +504,7 @@ Para consultar la lista completa de métodos, os recomiendo consultar la [docume
 
 - **Tablero de ajedrez**
 
-	Crea un programa en java que muestre por pantalla un tablero de ajedrez, en el que las casillas blancas estarán representadas por el caracter ' ' y las negras por el caracter 'X'. Para ello primero inicializará el tablero al declararlo y lo mostrará. Luego inicializará el tablero en tiempo de ejecución y lo mostrará.
+	Escribir un programa en java que muestre por pantalla un tablero de ajedrez, en el que las casillas blancas estarán representadas por el caracter ' ' y las negras por el caracter 'X'. Para ello primero inicializará el tablero al declararlo y lo mostrará. Luego inicializará el tablero en tiempo de ejecución y lo mostrará.
 
 	- Posible solución
 		~~~java
@@ -570,7 +570,7 @@ Para consultar la lista completa de métodos, os recomiendo consultar la [docume
 
 	Escribir un programa java que lea el IMC de una cantidad mayor que 2 de sujetos y nos muestre la media del IMC de dichos sujetos, el nombre del sujeto (o de uno de los sujetos) con mayor IMC y con menor IMC, la cantidad de sujetos con IMC por encima de la media y por debajo. El IMC de un sujeto se calcula como la división de su peso en kg. entre el cuadrado de su altura en cm.
 
-	- **Posible solución**: 
+	- **Posible solución**:
 		SujetoEstudio.java
 		~~~java
 		package clasesdominio;
@@ -712,3 +712,72 @@ Para consultar la lista completa de métodos, os recomiendo consultar la [docume
 
 		~~~
 		[Descargar clase **CalculoIMC.java**](ejercicios/arrays/CalculoIMC.java)
+
+###### Expresiones regulares
+
+- **Reconocimiento DNI**
+
+	Escribir un programa que pida por teclado un DNI mientras éste no sea válido. Luego mostrará el número por un lado y la letra por otra. Todo ello lo debe hacer utilizando expresiones regulares y grupos en las mismas.
+
+	- Posible solución
+		~~~java
+		package expresionesregulares;
+
+		import java.util.regex.Matcher;
+		import java.util.regex.Pattern;
+
+		import utilidades.Entrada;
+
+		public class ReconoceDni {
+
+			private static final String ER_DNI = "([0-9]{8})([A-Za-z])";
+
+			public static void main(String[] args) {
+				String dni;
+				Pattern patron;
+				Matcher emparejador;
+
+				patron = Pattern.compile(ER_DNI);
+				do {
+					System.out.print("Introduce un DNI: ");
+					dni = Entrada.cadena();
+					emparejador = patron.matcher(dni);
+				} while (!emparejador.matches());
+
+				System.out.printf("Número: %s%n", emparejador.group(1));
+				System.out.printf("Letra NIF: %s%n", emparejador.group(2));
+			}
+
+		}
+		~~~
+		[Descargar clase **ReconoceDni.java**](ejercicios/expresionesregulares/ReconoceDni.java)
+
+- **Valida teléfono**
+
+	Escribir un programa en java que valide un teléfono utilizando una expresión regular pero usada en métodos de la clase `String`.
+
+	- Posible solución
+		~~~java
+		package expresionesregulares;
+
+		import utilidades.Entrada;
+
+		public class ValidaTelefono {
+
+			private static final String ER_TELEFONO = "[96]?[0-9]{8}";
+
+			public static void main(String[] args) {
+				String telefono;
+
+				do {
+					System.out.print("Introduce un telefono: ");
+					telefono = Entrada.cadena();
+				} while (!telefono.matches(ER_TELEFONO));
+
+				System.out.printf("Teléfono válido: %s%n", telefono);
+
+			}
+
+		}
+		~~~
+		[Descargar clase **ValidaTelefono.java**](ejercicios/expresionesregulares/ValidaTelefono.java)

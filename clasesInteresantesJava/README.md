@@ -368,3 +368,347 @@ Para consultar la lista completa de métodos, os recomiendo consultar la [docume
 ## Fechas y horas
 
 ## Ejercicios
+
+###### Arrays
+
+- **Letra del DNI**
+
+  Escribir un programa java que lea el número de tu DNI y te muestra la letra correspondiente al mismo. Las letras del DNI se calculan quedándonos con el resto del numero de DNI entre 23 y aplicando esta correspondencia:
+	~~~
+		 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22
+		 T R W A G M Y F P D X  B  N  J  Z  S  Q  V  H  L  C  K  E
+	~~~
+	Para ello, inicializa un array con estos valores y calcula la letra de un dni dado.
+
+  - Posible solución
+		~~~java
+		package arrays;
+
+		import utilidades.Entrada;
+
+		public class LetraDni {
+
+			private static final char[] LETRAS_DNI = {'T','R','W','A','G','M','Y','F','P','D','X','B','N','J','Z','S','Q','V','H','L','C','K','E'};
+
+			public static void main(String[] args) {
+				int dni;
+				do {
+					System.out.print("Dime el número de tu DNI: ");
+					dni = Entrada.entero();
+				} while (dni < 1 || dni > 99999999);
+				System.out.println("La letra de tu DNI es: " + LETRAS_DNI[dni % 23]);
+			}
+
+		}
+		~~~
+		[Descargar posible solución para el programa **LetraDni**](ejercicios/arrays/LetraDni.java)
+
+- **Mayor y menor**
+
+	Escribir un programa en java que pida por teclado el número enteros a generar, que deberá ser al menos dos. Cree un array de enteros de ese tamaño y lo rellene con números aleatorios entre 0 y 1000. Finalmente nos mostrará cuál es el mayor, cuál es el menor y la posición que ocupan.
+
+	- Posible solución
+		~~~java
+		package arrays;
+
+		import utilidades.Entrada;
+
+		public class MayorMenor {
+
+			public static void main(String[] args) {
+				int cantidadNumeros;
+				do {
+					System.out.print("Inroduce la cantidad de números a generar: ");
+					cantidadNumeros = Entrada.entero();
+				} while (cantidadNumeros < 2);
+				int[] numeros = new int[cantidadNumeros];
+				for (int i = 0; i < numeros.length; i++) {
+					numeros[i] = (int) (Math.random() * 1000);
+				}
+				int mayor = 0;
+				int menor = 1000;
+				int posMayor = -1;
+				int posMenor = -1;
+				for (int i = 0; i < numeros.length; i++) {
+					if (numeros[i] > mayor) {
+						mayor = numeros[i];
+						posMayor = i;
+					}
+					if (numeros[i] < menor) {
+						menor = numeros[i];
+						posMenor = i;
+					}
+				}
+				System.out.printf("El número mayor es: %d y ocupa la posición: %d%n", mayor, posMayor);
+				System.out.printf("El número menor es: %d y ocupa la posición: %d%n", menor, posMenor);
+			}
+
+		}
+		~~~
+		[Descargar posible solución para el programa **MayorMenor**](ejercicios/arrays/MayorMenor.java)
+
+- **Media**
+
+	Escribe un programa java que lea por teclado la cantidad de números a generar, que deberá ser al menos 3. Cree un array de dicho tamaño y los genere aleatoriamente entre 0 y 100. Debe calcular la media de los mismos como entero y contar la cantidad de números que hay por encima, por debajo y los que son iguales a la media. También debe anotar las posiciones en las que se encuentran los números iguales a la media. Para ello ve almacenando sus posiciones en un `StringBuffer` separados por comas y lo muestre sólo en el caso que haya números iguales. Si solo hay uno no debe mostrar la coma final.
+
+	- Posible solución
+		~~~java
+		package arrays;
+
+		import utilidades.Entrada;
+
+		public class Media {
+
+			public static void main(String[] args) {
+				int cantidadNumeros;
+				do {
+					System.out.print("Introduce la cantidad de números a generar: ");
+					cantidadNumeros = Entrada.entero();
+				} while (cantidadNumeros < 3);
+				int[] numeros =  new int[cantidadNumeros];
+				for (int i = 0; i < numeros.length; i++) {
+					numeros[i] = (int) (Math.random() * 100);
+				}
+				int suma = 0;
+				for (int i = 0; i < numeros.length; i++) {
+					suma += numeros[i];
+				}
+				int media = suma / cantidadNumeros;
+				int encimaMedia = 0;
+				int debajoMedia = 0;
+				int igualesMedia = 0;
+				StringBuilder posicionesIgualesMedia = new StringBuilder();
+				for (int i = 0; i < numeros.length; i++) {
+					if (numeros[i] > media)
+						encimaMedia++;
+					else if (numeros[i] < media)
+						debajoMedia++;
+					else {
+						igualesMedia++;
+						posicionesIgualesMedia.append(posicionesIgualesMedia.toString().equals("") ? "" : ", ");
+						posicionesIgualesMedia.append(i);
+					}
+				}
+				System.out.printf("La media de todos los números es: %d%n", media);
+				System.out.printf("Hay %d números por encima.%n", encimaMedia);
+				System.out.printf("Hay %d números por debajo.%n", debajoMedia);
+				System.out.printf("Hay %d números iguales.%n", igualesMedia);
+				if (posicionesIgualesMedia.length() > 0) {
+					System.out.printf("Las posiciones que ocupaban los elementos iguales era: %s", posicionesIgualesMedia);
+				}
+			}
+
+		}
+		~~~
+		[Descargar posible solución para el programa **Media**](ejercicios/arrays/Media.java)
+
+- **Tablero de ajedrez**
+
+	Crea un programa en java que muestre por pantalla un tablero de ajedrez, en el que las casillas blancas estarán representadas por el caracter ' ' y las negras por el caracter 'X'. Para ello primero inicializará el tablero al declararlo y lo mostrará. Luego inicializará el tablero en tiempo de ejecución y lo mostrará.
+
+	- Posible solución
+		~~~java
+		package arrays;
+
+		public class Tablero {
+
+			public static void main(String[] args) {
+				char[][] tablero;
+
+				tablero = inicializarTableroDeclaracion();
+				imprimeTablero(tablero);
+				System.out.println();
+				tablero = inicializarTableroEjecucion();
+				imprimeTablero(tablero);
+			}
+
+			private static char[][] inicializarTableroDeclaracion() {
+				char[][] tablero = {
+						{' ', 'X', ' ', 'X', ' ', 'X', ' ', 'X'},
+						{'X', ' ', 'X', ' ', 'X', ' ', 'X', ' '},
+						{' ', 'X', ' ', 'X', ' ', 'X', ' ', 'X'},
+						{'X', ' ', 'X', ' ', 'X', ' ', 'X', ' '},
+						{' ', 'X', ' ', 'X', ' ', 'X', ' ', 'X'},
+						{'X', ' ', 'X', ' ', 'X', ' ', 'X', ' '},
+						{' ', 'X', ' ', 'X', ' ', 'X', ' ', 'X'},
+						{'X', ' ', 'X', ' ', 'X', ' ', 'X', ' '}};
+				System.out.println("Tablero inicializado al declarlo");
+				return tablero;
+			}
+
+			private static char[][] inicializarTableroEjecucion() {
+				char[][] tablero;
+				tablero = new char[8][8];
+				for (int i = 0; i < tablero.length; i++) {
+					for (int j = 0; j < tablero[i].length; j++) {
+						if (i % 2 == 0) {
+							tablero[i][j] = (j % 2 == 0) ? ' ' : 'X';
+						} else {
+							tablero[i][j] = (j % 2 != 0) ? ' ' : 'X';
+						}
+					}
+
+				}
+				System.out.println("Tablero inicializado en tiempo de ejecución");
+				return tablero;
+			}
+
+			private static void imprimeTablero(char[][] tablero) {
+				for (int i = 0; i < tablero.length; i++) {
+					for (int j = 0; j < tablero[i].length; j++) {
+						System.out.print(tablero[i][j]);
+					}
+					System.out.println();
+				}
+			}
+
+		}
+		~~~
+		[Descargar posible solución para el programa **Tablero**](ejercicios/arrays/Tablero.java)
+
+- **Estudio estadístico IMC**
+
+	Escribir un programa java que lea el IMC de una cantidad mayor que 2 de sujetos y nos muestre la media del IMC de dichos sujetos, el nombre del sujeto (o de uno de los sujetos) con mayor IMC y con menor IMC, la cantidad de sujetos con IMC por encima de la media y por debajo. El IMC de un sujeto se calcula como la división de su peso en kg. entre el cuadrado de su altura en cm.
+
+	- **Posible solución**: 
+		SujetoEstudio.java
+		~~~java
+		package clasesdominio;
+
+		public class SujetoEstudio {
+			private String nombre;
+			private double peso;
+			private double altura;
+
+			public SujetoEstudio(String nombre, double peso, double altura) {
+				setNombre(nombre);
+				setPeso(peso);
+				setAltura(altura);
+			}
+
+			public String getNombre() {
+				return nombre;
+			}
+
+			private void setNombre(String nombre) {
+				if (nombre == null) {
+					throw new IllegalArgumentException("El nombre de un sujeto no puede ser nulo.");
+				}
+				if (nombre.equals("")) {
+					throw new IllegalArgumentException("El nombre de un sujeto no puede estar vacío.");
+				}
+				this.nombre = nombre;
+			}
+
+			public double getPeso() {
+				return peso;
+			}
+
+			private void setPeso(double peso) {
+				if (peso <= 0) {
+					throw new IllegalArgumentException("El peso del sujeto debe ser mayor que cero");
+				}
+				this.peso = peso;
+			}
+
+			public double getAltura() {
+				return altura;
+			}
+
+			private void setAltura(double altura) {
+				if (altura <= 0) {
+					throw new IllegalArgumentException("La altura del sujeto debe ser mayor que cero");
+				}
+				this.altura = altura;
+			}
+
+			public double getIMC() {
+				return peso / (altura*altura);
+			}
+
+		}
+		~~~
+		[Descargar clase **SujetoEstudio.java**](ejercicios/clasesdominio/SujetoEstudio.java)
+
+		CalculoIMC.java
+
+		~~~java
+		package arrays;
+
+		import clasesdominio.SujetoEstudio;
+		import utilidades.Entrada;
+
+		public class CalculoIMC {
+
+			public static void main(String[] args) {
+
+				double maximoImc = 0;
+				double minimoImc = Double.MAX_VALUE;
+				double sumaImcs = 0;
+				double mediaImcs;
+				int posicionMinimoImc = 0;
+				int posicionMaximoImc = 0;
+				int sujetosPorEncimaMedia = 0;
+				int sujetosPorDebajoMedia = 0;
+
+				int cantidadSujetos;
+				do {
+					System.out.print("Introduce la cantidad de sujetos a estudiar: ");
+					cantidadSujetos = Entrada.entero();
+				} while (cantidadSujetos < 3);
+
+				SujetoEstudio[] sujetos = new SujetoEstudio[cantidadSujetos];
+				double[] imcs = new double[cantidadSujetos];
+
+				for (int i = 0; i < cantidadSujetos; i++) {
+					sujetos[i] = leerSujeto(i + 1);
+					imcs[i] = sujetos[i].getIMC();
+					if (imcs[i] < minimoImc) {
+						minimoImc = imcs[i];
+						posicionMinimoImc = i;
+					}
+					if (imcs[i] > maximoImc) {
+						maximoImc = imcs[i];
+						posicionMaximoImc = i;
+					}
+					sumaImcs += imcs[i];
+				}
+				mediaImcs = sumaImcs / cantidadSujetos;
+
+				for (int i = 0; i < imcs.length; i++) {
+					if (imcs[i] < mediaImcs) sujetosPorEncimaMedia++;
+					if (imcs[i] > mediaImcs) sujetosPorDebajoMedia++;
+				}
+
+				System.out.printf("%nResultados del estudio%n");
+				System.out.printf("----------------------%n");
+				System.out.printf("El sujeto con mayor IMC es: %s%n", sujetos[posicionMaximoImc].getNombre());
+				System.out.printf("El sujeto con menor IMC es: %s%n", sujetos[posicionMinimoImc].getNombre());
+				System.out.printf("La media de IMCs es: %f%n", mediaImcs);
+				System.out.printf("Hay %d sujetos por encima de la media.%n", sujetosPorEncimaMedia);
+				System.out.printf("Hay %d sujetos por debajo de la media.%n", sujetosPorDebajoMedia);
+			}
+
+			private static SujetoEstudio leerSujeto(int numero) {
+				String nombre;
+				do {
+					System.out.printf("Introduce el nombre del sujeto nº %d: ", numero);
+					nombre = Entrada.cadena();
+				} while (nombre.equals(""));
+				double peso;
+				do {
+					System.out.printf("Introduce el peso en kg. del sujeto nº %d: ", numero);
+					peso = Entrada.realDoble();
+				} while (peso <= 0);
+				double altura;
+				do {
+					System.out.printf("Introduce la altura en cm. del sujeto nº %d: ", numero);
+					altura = Entrada.realDoble();
+				} while (altura <= 0);
+				return new SujetoEstudio(nombre, peso, altura);
+			}
+
+		}
+
+		~~~
+		[Descargar clase **CalculoIMC.java**](ejercicios/arrays/CalculoIMC.java)

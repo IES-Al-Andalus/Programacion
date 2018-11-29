@@ -12,17 +12,17 @@ public class ReconoceDni {
 	public static void main(String[] args) {
 		String dni;
 		Pattern patron;
-		Matcher emparejador;
+		Matcher comparador;
 		
 		patron = Pattern.compile(ER_DNI);
 		do {
 			System.out.print("Introduce un DNI: ");
 			dni = Entrada.cadena();
-			emparejador = patron.matcher(dni);
-		} while (!emparejador.matches());
+			comparador = patron.matcher(dni);
+		} while (!comparador.matches());
 		
-		System.out.printf("Número: %s%n", emparejador.group(1));
-		System.out.printf("Letra NIF: %s%n", emparejador.group(2));
+		System.out.printf("Número: %s%n", comparador.group(1));
+		System.out.printf("Letra NIF: %s%n", comparador.group(2));
 	}
 
 }

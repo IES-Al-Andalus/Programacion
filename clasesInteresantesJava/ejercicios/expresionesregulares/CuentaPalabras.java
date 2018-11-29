@@ -12,7 +12,7 @@ public class CuentaPalabras {
 	public static void main(String[] args) {
 		String frase;
 		Pattern patron;
-		Matcher emparejador;
+		Matcher comparador;
 		
 		do {
 			System.out.print("Introduce una frase: ");
@@ -20,11 +20,11 @@ public class CuentaPalabras {
 		} while (frase.equals(""));
 			
 		patron = Pattern.compile(ER_PALABRA, Pattern.UNICODE_CASE + Pattern.CASE_INSENSITIVE);
-		emparejador = patron.matcher(frase);
+		comparador = patron.matcher(frase);
 		int numPalabras = 0;
-		while (emparejador.find())
+		while (comparador.find())
 		{
-			System.out.println("Palabra encontrada:" + emparejador.group());
+			System.out.println("Palabra encontrada:" + comparador.group());
 			numPalabras++;
 		}
 		System.out.printf("La frase contenía %d palabras.", numPalabras);

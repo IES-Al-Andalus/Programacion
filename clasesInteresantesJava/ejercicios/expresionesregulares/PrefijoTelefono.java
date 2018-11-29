@@ -11,7 +11,7 @@ public class PrefijoTelefono {
 	
 	public static void main(String[] args) {
 		Pattern patron;
-		Matcher emparejador;
+		Matcher comparador;
 		
 		patron = Pattern.compile(ER_TELEFONO);
 		String telefono;
@@ -19,11 +19,11 @@ public class PrefijoTelefono {
 			System.out.print("Introduce un teléfono español valido \n"
 					+ "(separa el prefijo nacional -lo puedes obviar-, el provincial o de capital y el teléfono por espacios): ");
 			telefono = Entrada.cadena();
-			emparejador = patron.matcher(telefono);
-		} while (!emparejador.matches());
+			comparador = patron.matcher(telefono);
+		} while (!comparador.matches());
 
-		String prefijo = (emparejador.group(1)!=null) ? emparejador.group(1) : emparejador.group(2);
-		String nombrePrefijo = (emparejador.group(1)!=null) ? "provincia" : "capital";
+		String prefijo = (comparador.group(1)!=null) ? comparador.group(1) : comparador.group(2);
+		String nombrePrefijo = (comparador.group(1)!=null) ? "provincia" : "capital";
 		System.out.printf("Teléfono fijo español válido y el prefijo de %s es: %s%n", nombrePrefijo, prefijo);
 	}
 

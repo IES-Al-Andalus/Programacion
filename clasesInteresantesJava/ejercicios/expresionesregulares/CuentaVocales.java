@@ -11,7 +11,7 @@ public class CuentaVocales {
 	public static void main(String[] args) {
 		String frase;
 		Pattern patron;
-		Matcher emparejador;
+		Matcher comparador;
 
 		do {
 			System.out.print("Introduce una frase: ");
@@ -19,9 +19,9 @@ public class CuentaVocales {
 		} while (frase.equals(""));
 			
 		patron = Pattern.compile(ER_VOCALES, Pattern.UNICODE_CASE + Pattern.CASE_INSENSITIVE);
-		emparejador = patron.matcher(frase);
+		comparador = patron.matcher(frase);
 		int numVocales = 0;
-		while (emparejador.find())
+		while (comparador.find())
 		{
 			numVocales++;
 		}

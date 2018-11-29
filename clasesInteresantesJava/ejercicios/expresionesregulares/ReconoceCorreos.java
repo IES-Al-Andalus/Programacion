@@ -9,16 +9,16 @@ public class ReconoceCorreos {
 	
 	public static void main(String[] args) {
 		Pattern patron;
-		Matcher emparejador;
+		Matcher comparador;
 		
 		String posiblesCorreos = "Hola@mundo.ab miCorreo@gmail.com.mialias correoFalso95@yahoo.es "
 				+ "jose.ramon@midominio.com JoSeRaMoN@miAarroba jose.ramon@kk.com";
 
 		patron = Pattern.compile(ER_CORREO);
-		emparejador = patron.matcher(posiblesCorreos);
+		comparador = patron.matcher(posiblesCorreos);
 
-		while (emparejador.find()) {
-			System.out.printf("Correo reconocido: %s%n", emparejador.group());
+		while (comparador.find()) {
+			System.out.printf("Correo reconocido: %s%n", comparador.group());
 		}
 	}
 

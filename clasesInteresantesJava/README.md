@@ -735,17 +735,17 @@ Para consultar la lista completa de métodos, os recomiendo consultar la [docume
 			public static void main(String[] args) {
 				String dni;
 				Pattern patron;
-				Matcher emparejador;
+				Matcher comparador;
 
 				patron = Pattern.compile(ER_DNI);
 				do {
 					System.out.print("Introduce un DNI: ");
 					dni = Entrada.cadena();
-					emparejador = patron.matcher(dni);
-				} while (!emparejador.matches());
+					comparador = patron.matcher(dni);
+				} while (!comparador.matches());
 
-				System.out.printf("Número: %s%n", emparejador.group(1));
-				System.out.printf("Letra NIF: %s%n", emparejador.group(2));
+				System.out.printf("Número: %s%n", comparador.group(1));
+				System.out.printf("Letra NIF: %s%n", comparador.group(2));
 			}
 
 		}
@@ -800,7 +800,7 @@ Para consultar la lista completa de métodos, os recomiendo consultar la [docume
 
 			public static void main(String[] args) {
 				Pattern patron;
-				Matcher emparejador;
+				Matcher comparador;
 
 				patron = Pattern.compile(ER_TELEFONO);
 				String telefono;
@@ -808,11 +808,11 @@ Para consultar la lista completa de métodos, os recomiendo consultar la [docume
 					System.out.print("Introduce un teléfono español valido \n"
 							+ "(separa el prefijo nacional -lo puedes obviar-, el provincial o de capital y el teléfono por espacios): ");
 					telefono = Entrada.cadena();
-					emparejador = patron.matcher(telefono);
-				} while (!emparejador.matches());
+					comparador = patron.matcher(telefono);
+				} while (!comparador.matches());
 
-				String prefijo = (emparejador.group(1)!=null) ? emparejador.group(1) : emparejador.group(2);
-				String nombrePrefijo = (emparejador.group(1)!=null) ? "provincia" : "capital";
+				String prefijo = (comparador.group(1)!=null) ? comparador.group(1) : comparador.group(2);
+				String nombrePrefijo = (comparador.group(1)!=null) ? "provincia" : "capital";
 				System.out.printf("Teléfono fijo español válido y el prefijo de %s es: %s%n", nombrePrefijo, prefijo);
 			}
 
@@ -837,16 +837,16 @@ Para consultar la lista completa de métodos, os recomiendo consultar la [docume
 
 			public static void main(String[] args) {
 				Pattern patron;
-				Matcher emparejador;
+				Matcher comparador;
 
 				String posiblesCorreos = "Hola@mundo.ab miCorreo@gmail.com.mialias correoFalso95@yahoo.es "
 						+ "jose.ramon@midominio.com JoSeRaMoN@miAarroba jose.ramon@kk.com";
 
 				patron = Pattern.compile(ER_CORREO);
-				emparejador = patron.matcher(posiblesCorreos);
+				comparador = patron.matcher(posiblesCorreos);
 
-				while (emparejador.find()) {
-					System.out.printf("Correo reconocido: %s%n", emparejador.group());
+				while (comparador.find()) {
+					System.out.printf("Correo reconocido: %s%n", comparador.group());
 				}
 			}
 
@@ -874,7 +874,7 @@ Para consultar la lista completa de métodos, os recomiendo consultar la [docume
 			public static void main(String[] args) {
 				String frase;
 				Pattern patron;
-				Matcher emparejador;
+				Matcher comparador;
 
 				do {
 					System.out.print("Introduce una frase: ");
@@ -882,11 +882,11 @@ Para consultar la lista completa de métodos, os recomiendo consultar la [docume
 				} while (frase.equals(""));
 
 				patron = Pattern.compile(ER_PALABRA, Pattern.UNICODE_CASE + Pattern.CASE_INSENSITIVE);
-				emparejador = patron.matcher(frase);
+				comparador = patron.matcher(frase);
 				int numPalabras = 0;
-				while (emparejador.find())
+				while (comparador.find())
 				{
-					System.out.println("Palabra encontrada:" + emparejador.group());
+					System.out.println("Palabra encontrada:" + comparador.group());
 					numPalabras++;
 				}
 				System.out.printf("La frase contenía %d palabras.", numPalabras);
@@ -915,7 +915,7 @@ Para consultar la lista completa de métodos, os recomiendo consultar la [docume
 			public static void main(String[] args) {
 				String frase;
 				Pattern patron;
-				Matcher emparejador;
+				Matcher comparador;
 
 				do {
 					System.out.print("Introduce una frase: ");
@@ -923,9 +923,9 @@ Para consultar la lista completa de métodos, os recomiendo consultar la [docume
 				} while (frase.equals(""));
 
 				patron = Pattern.compile(ER_VOCALES, Pattern.UNICODE_CASE + Pattern.CASE_INSENSITIVE);
-				emparejador = patron.matcher(frase);
+				comparador = patron.matcher(frase);
 				int numVocales = 0;
-				while (emparejador.find())
+				while (comparador.find())
 				{
 					numVocales++;
 				}

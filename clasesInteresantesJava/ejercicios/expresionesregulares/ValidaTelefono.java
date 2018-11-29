@@ -15,7 +15,6 @@ public class ValidaTelefono {
 		} while (!telefono.matches(ER_TELEFONO));
 		
 		System.out.printf("Teléfono válido: %s%n", telefono);
-
 	}
 
 }

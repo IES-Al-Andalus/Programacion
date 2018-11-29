@@ -775,9 +775,164 @@ Para consultar la lista completa de métodos, os recomiendo consultar la [docume
 				} while (!telefono.matches(ER_TELEFONO));
 
 				System.out.printf("Teléfono válido: %s%n", telefono);
-
 			}
 
 		}
 		~~~
 		[Descargar clase **ValidaTelefono.java**](ejercicios/expresionesregulares/ValidaTelefono.java)
+
+- **Prefijos telefónicos**
+
+	Escribir un programa java que valide si un teléfono introducido cumple el formato de un teléfono español. Puede llevar el prefijo internacional o no. Será válido si su prefijo provincial es de tres cifras y el número de teléfono de 6 cifras o el prefijo de capital es dos cifras y el número de teléfono de 7 cifras. Cada campo irá separado por espacios. Finalmente mostrará o el prefijo de provincia o el prefijo de capital.
+
+	- Posible solución
+		~~~java
+		package expresionesregulares;
+
+		import java.util.regex.Matcher;
+		import java.util.regex.Pattern;
+
+		import utilidades.Entrada;
+
+		public class PrefijoTelefono {
+
+			private static final String ER_TELEFONO = "(?:\\+34 )?(?:(?:(9\\d{2}) \\d{6})|(?:(9\\d) \\d{7}))";
+
+			public static void main(String[] args) {
+				Pattern patron;
+				Matcher emparejador;
+
+				patron = Pattern.compile(ER_TELEFONO);
+				String telefono;
+				do {
+					System.out.print("Introduce un teléfono español valido \n"
+							+ "(separa el prefijo nacional -lo puedes obviar-, el provincial o de capital y el teléfono por espacios): ");
+					telefono = Entrada.cadena();
+					emparejador = patron.matcher(telefono);
+				} while (!emparejador.matches());
+
+				String prefijo = (emparejador.group(1)!=null) ? emparejador.group(1) : emparejador.group(2);
+				String nombrePrefijo = (emparejador.group(1)!=null) ? "provincia" : "capital";
+				System.out.printf("Teléfono fijo español válido y el prefijo de %s es: %s%n", nombrePrefijo, prefijo);
+			}
+
+		}
+		~~~
+		[Descargar clase **PrefijoTelefono.java**](ejercicios/expresionesregulares/PrefijoTelefono.java)
+
+- **Reconocer correos en un texto**
+
+	Escribir un programa en java que reconozca todos los correos electrónicos encontrados en un texto dado y muestre todos aquellos que haya reconocido.
+
+	- Posible solución
+		~~~java
+		package expresionesregulares;
+
+		import java.util.regex.Matcher;
+		import java.util.regex.Pattern;
+
+		public class ReconoceCorreos {
+
+			private static final String ER_CORREO = "\\w+[\\.\\w]*@\\w+[\\.\\w]*\\.\\w{2,5}\\b\\s?";
+
+			public static void main(String[] args) {
+				Pattern patron;
+				Matcher emparejador;
+
+				String posiblesCorreos = "Hola@mundo.ab miCorreo@gmail.com.mialias correoFalso95@yahoo.es "
+						+ "jose.ramon@midominio.com JoSeRaMoN@miAarroba jose.ramon@kk.com";
+
+				patron = Pattern.compile(ER_CORREO);
+				emparejador = patron.matcher(posiblesCorreos);
+
+				while (emparejador.find()) {
+					System.out.printf("Correo reconocido: %s%n", emparejador.group());
+				}
+			}
+
+		}
+		~~~
+		[Descargar clase **ReconoceCorreos.java**](ejercicios/expresionesregulares/ReconoceCorreos.java)
+
+- **Cuenta palabras**
+
+	Escribir un programa en java que cuente las palabras que hay en una frase introducida por teclado.
+
+	- Posible solución
+		~~~java
+		package expresionesregulares;
+
+		import java.util.regex.Matcher;
+		import java.util.regex.Pattern;
+
+		import utilidades.Entrada;
+
+		public class CuentaPalabras {
+
+			public static final String ER_PALABRA = "[A-Za-zÁÉÍÓÚáéíóúüÜ]+";
+
+			public static void main(String[] args) {
+				String frase;
+				Pattern patron;
+				Matcher emparejador;
+
+				do {
+					System.out.print("Introduce una frase: ");
+					frase = Entrada.cadena();
+				} while (frase.equals(""));
+
+				patron = Pattern.compile(ER_PALABRA);
+				emparejador = patron.matcher(frase);
+				int numPalabras = 0;
+				while (emparejador.find())
+				{
+					System.out.println("Palabra encontrada:" + emparejador.group());
+					numPalabras++;
+				}
+				System.out.printf("La frase contenía %d palabras.", numPalabras);
+			}
+
+		}
+		~~~
+		[Descargar clase **CuentaPalabras.java**](ejercicios/expresionesregulares/CuentaPalabras.java)
+
+- **Cuenta vocales**
+
+	Escribir un programa java que cuente las vocales existentes en una frase introducida por teclado, ignorando mayúsculas y minúsculas.
+
+	- Posible solución
+		~~~java
+		package expresionesregulares;
+
+		import java.util.regex.Matcher;
+		import java.util.regex.Pattern;
+
+		import utilidades.Entrada;
+
+		public class CuentaVocales {
+
+			private static final String ER_VOCALES = "[aeiouáéíúüÁÉÍÓÚÜ]";
+			public static void main(String[] args) {
+				String frase;
+				Pattern patron;
+				Matcher emparejador;
+
+				do {
+					System.out.print("Introduce una frase: ");
+					frase = Entrada.cadena();
+				} while (frase.equals(""));
+
+				patron = Pattern.compile(ER_VOCALES, Pattern.CASE_INSENSITIVE);
+				emparejador = patron.matcher(frase);
+				int numVocales = 0;
+				while (emparejador.find())
+				{
+					numVocales++;
+				}
+
+				System.out.printf("La frase contenía %d vocales.", numVocales);
+			}
+
+		}
+		~~~
+		[Descargar clase **CuentaVocales.java**](ejercicios/expresionesregulares/CuentaVocales.java)

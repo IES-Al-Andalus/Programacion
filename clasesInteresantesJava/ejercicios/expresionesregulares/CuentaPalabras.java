@@ -7,7 +7,7 @@ import utilidades.Entrada;
 
 public class CuentaPalabras {
 
-	public static final String ER_PALABRA = "[A-Za-zÁÉÍÓÚáéíóúüÜ]+";
+	public static final String ER_PALABRA = "[A-Za-záéíóúü]+";
 	
 	public static void main(String[] args) {
 		String frase;
@@ -19,7 +19,7 @@ public class CuentaPalabras {
 			frase = Entrada.cadena();
 		} while (frase.equals(""));
 			
-		patron = Pattern.compile(ER_PALABRA);
+		patron = Pattern.compile(ER_PALABRA, Pattern.UNICODE_CASE + Pattern.CASE_INSENSITIVE);
 		emparejador = patron.matcher(frase);
 		int numPalabras = 0;
 		while (emparejador.find())

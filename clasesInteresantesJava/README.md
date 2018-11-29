@@ -869,7 +869,7 @@ Para consultar la lista completa de métodos, os recomiendo consultar la [docume
 
 		public class CuentaPalabras {
 
-			public static final String ER_PALABRA = "[A-Za-zÁÉÍÓÚáéíóúüÜ]+";
+			public static final String ER_PALABRA = "[A-Za-záéíóúü]+";
 
 			public static void main(String[] args) {
 				String frase;
@@ -881,7 +881,7 @@ Para consultar la lista completa de métodos, os recomiendo consultar la [docume
 					frase = Entrada.cadena();
 				} while (frase.equals(""));
 
-				patron = Pattern.compile(ER_PALABRA);
+				patron = Pattern.compile(ER_PALABRA, Pattern.UNICODE_CASE + Pattern.CASE_INSENSITIVE);
 				emparejador = patron.matcher(frase);
 				int numPalabras = 0;
 				while (emparejador.find())
@@ -911,7 +911,7 @@ Para consultar la lista completa de métodos, os recomiendo consultar la [docume
 
 		public class CuentaVocales {
 
-			private static final String ER_VOCALES = "[aeiouáéíúüÁÉÍÓÚÜ]";
+			private static final String ER_VOCALES = "[aeiouáéíóúü]";
 			public static void main(String[] args) {
 				String frase;
 				Pattern patron;
@@ -922,7 +922,7 @@ Para consultar la lista completa de métodos, os recomiendo consultar la [docume
 					frase = Entrada.cadena();
 				} while (frase.equals(""));
 
-				patron = Pattern.compile(ER_VOCALES, Pattern.CASE_INSENSITIVE);
+				patron = Pattern.compile(ER_VOCALES, Pattern.UNICODE_CASE + Pattern.CASE_INSENSITIVE);
 				emparejador = patron.matcher(frase);
 				int numVocales = 0;
 				while (emparejador.find())

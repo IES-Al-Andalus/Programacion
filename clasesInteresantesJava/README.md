@@ -365,6 +365,32 @@ Para consultar la lista completa de métodos, os recomiendo consultar la [docume
 
 ## Expresiones regulares
 
+Una expresión regular no es más que un patrón que empareja con una serie de cadenas. Una expresión regular puede utilizarse para contar cuántas veces se repite un patrón en una cadena, comprobar si una cadena cumple con un determinado patrón, reemplazar un patrón en un texto por otra cadena, etc. La principal utilidad, bajo mi punto de vista, será comprobar que los datos introducidos por un usuario cumplen con un determinado patrón y así evitar errores futuros.
+
+Las expresiones regulares ya se venían utilizando en muchos otros lenguajes e incluso formaban parte de comandos del SO UNIX (tales como sed, awk). Es más, tú sin saberlo las has utilizado cuando haces un listado desde la terminal de los ficheros que tengan tal extensión.
+
+En este apartado veremos cómo definimos las expresiones regulares, es decir, cómo construimos el patrón para que empareje con las cadenas que queremos reconocer. Una vez hecho esto, veremos cómo utilizarlas en java.
+
+#### Construcción de expresiones regulares
+
+Pasemos a ver cómo podemos construir expresiones regulares, pero sin profundizar mucho ya que de este tema se podría hacer un sólo libro como ya los hay: [Mastering Regular Expressions, 3nd Edition, Jeffrey E. F. Friedl, O'Reilly and Associates, 2006](http://www.oreilly.com/catalog/regex3/).
+
+###### Caracteres
+
+En las expresiones regulares podemos utilizar caracteres alfanuméricos que emparejan con ellos mismos y caracteres especiales que hay que escribirlos escapados. Los más comunes son los siguientes:
+
+|Cararacter|Con qué empareja|
+|----------|-----------|
+| \\\\ |Con el caracter \\ |
+|\\n|Con un salto de línea|
+|\\r|Con el retorno de carro|
+|\\t|Con el tabulador|
+
+Además para construir expresiones regulares también se utilizan algunos caracteres que tienen un significado especial y que, por tanto, también debemos escapar.
+
+En java el caracter de escape se representa por la doble barra `\\` por lo que si queremos emparejar con el caracter `\`, en la expresión regular en java deberemos escribir `\\\\`.
+
+
 ## Fechas y horas
 
 ## Ejercicios
@@ -936,3 +962,77 @@ Para consultar la lista completa de métodos, os recomiendo consultar la [docume
 		}
 		~~~
 		[Descargar clase **CuentaVocales.java**](ejercicios/expresionesregulares/CuentaVocales.java)
+
+###### Ejercicios variados
+
+- **Baraja de cartas**
+
+	Debes crear un programa que modele una baraja de cartas y simule que intercambias cartas de posiciones aleatorias n veces y muestre cuántas se han quedado en la misma posición inicial y el resultado final de la baraja. Para ello te propongo el siguiente diagrama de clases:
+
+	<div align="center">
+	<img src="imagenes/baraja.png"/>
+	</div>
+
+	- Posible solución
+
+		Una posible solución a este ejercicio la puedes encontrar en el siguiente repositorio:
+
+		[Repostiorio con la posible solución para la baraja de cartas](https://github.com/JRJimenezReyes/Baraja)
+
+- **Juego de dados**
+
+	Debes crear un programa en java que simule un juego de dados. El juego de dados consiste en que entre 2 y 10 jugadores lanzarán un dado 5 veces y ganará o ganarán los que su puntuación haya sido la más alta.
+
+	Un dado simplemente se podrá lanzar y en su lanzamiento devolverá un número entero entre 1 y 6, ambos inclusive.
+
+	Un jugador tendrá un nombre que no puede estar vacío, sabrá jugar (es decir, sabrá lanzar el dado 5 veces), llevará apuntado el resultado de cada tirada y sabrá sumar sus tiradas para mostrar su puntuación total obtenido. Además un jugador se mostrará indicando su nombre, sus tiradas y su puntuación total.
+
+	El juego de dados tendrá un conjunto de jugadores entre 2 y 10, se podrá jugar lo que hará que cada jugador comience el juego y será capaz de informar de la puntuación ganadora y de los jugadores que han obtenido dicha puntuación. Un juego de dados se representa, representando cada uno de los jugadores (su nombre, tiradas y puntuación total), la puntuación ganadora y los jugadores que han obtenido dicha puntuación.
+
+	El programa principal preguntará cuántos jugadores quieren jugar, leerá los nombres de cada uno de los jugadores, comenzará la partida y mostrará los resultados. Para ello debes implementar el diseño que se expone en el siguiente diagrama de clases:
+
+	<div align="center">
+	<img src="imagenes/juegoDados.png"/>
+	</div>
+
+	- Posible solución
+
+		Una posible solución a este ejercicio la puedes encontrar en el siguiente repositorio:
+
+		[Repostiorio con la posible solución para el juego de dados](https://github.com/JRJimenezReyes/JuegoDados)
+
+- **Gestión de clientes**
+
+	Debes crear un programa para la gestión de clientes de una empresa.
+
+	Una dirección postal constará de una dirección, una localidad y un código postal.
+
+	Los datos de contacto de un cliente constarán de un teléfono, un correo y una dirección postal.
+
+	Los datos personales de un cliente tendrán un nombre, unos apellidos y un dni.
+
+	Los datos de un cliente se compondrán de sus datos personales y sus datos de contacto.
+
+	Un cliente será igual a otro si su dni es el mismo.
+
+	Deberemos podemos añadir clientes, borrar clientes, buscar clientes, obtener todos los clientes y listar los clientes existentes.
+
+	Nunca devolveremos una referencia o nos adueñaremos de la misma en nuestra clase.
+
+	Para ello, por ahora debe utilizar arrays.
+
+	El programa principal mostrará un menú que nos permitirá realizar todas estas acciones.
+
+	Aunque aún no estamos utilizando el patrón MVC, deberás estruturar las clases en una vista y un modelo.
+
+	Para todo ello te propongo el siguiente diagrama de clases:
+
+	<div align="center">
+	<img src="imagenes/gestionClientes.png"/>
+	</div>
+
+	- Posible solución
+
+		Una posible solución a este ejercicio la puedes encontrar en el siguiente repositorio:
+
+		[Repostiorio con la posible solución para la gestión de clientes](https://github.com/JRJimenezReyes/GestionClientes)

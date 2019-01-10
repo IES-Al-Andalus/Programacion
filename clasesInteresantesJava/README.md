@@ -331,37 +331,215 @@ Vistas las peculiaridades de las cadenas, veamos los principales métodos que no
 |Método|Explicación|
 |------|-----------|
 |`char charAt(int index)`|Devuelve el carácter especificado por el índice. El índice debe estar entre `0` y `length() - 1` o de lo contrario lanzará la excepción `IndexOutOfBoundsException`.|
-|`String concat(String str)`||
-|`boolean contains(CharSequence s)`||
+|`String concat(String str)`|Devuelve la concatenación de la cadena actual con la pasada por parámetro.|
+|`boolean contains(CharSequence s)`|Devuelve `true` si la cadena contiene la secuencia de caracteres pasada por parámetro.|
 |`int compareTo()`|Compara la cadena actual con la pasada por parámetro y devuelve -1, 0 o 1, dependiendo de si la pasada es menor, igual o mayor.|
 |`int compareToIgnoreCase()`|Igual que el anterior, pero ignorando mayúsculas y minúsculas.|
 |`boolean endsWith(String suffix)`|Devuelve `true` si la cadena actual termina con el sufijo `suffix`.|
 |`boolean equals(Object obj)`|Compara si el contenido de la cadena actual y la pasada por paŕametro es el mismo.|
 |`boolean equalsIgnoreCase(String string)`|Compara si el contenido de la cadena actual y la pasada por paŕametro es el mismo, ignorando mayúsculas y minúsculas.|
-|`static String format(String format, Object... args)`||
 |`int indexOf(char ch)`|Devuelve el índice de la primera ocurrencia del carácter `ch` o -1 si no existe.|
 |`int indexOf(char ch, int fromIndex)`|Igual que la anterior, pero comienza la búsqueda a partir del índice `fromIndex`.|
 |`int indexOf(String str)`|Devuelve el índice de la primera ocurrencia de la subcadena `str`.|
-|`boolean isEmpty()`||
-|`int lastIndexOf(char ch)`||
-|`int lastIndexOf(char ch, int fromIndex)`||
-|`int lastIndexOf(String str)`||
-|`int length()`||
-|`boolean matches(String regex)`||
-|`String replace(char oldChar, char newChar)`||
-|`String replaceAll(String regex, String replacement)`||
-|`String replaceFirst(String regex, String replacement)`||
-|`String[] split(String regex)`||
-|`boolean startsWith(String prefix, inf offset)`|Devuelve `true` si la cadena actual empieza por la cadena `prefix` en índice `offset`.|
+|`boolean isEmpty()`|Devuelve `true` si la longitud de la cadena es igual a 0.|
+|`int lastIndexOf(char ch)`|Devuelve el índice que ocupa la última ocurrencia del caracter. Este método está sobrecargado para que también se le pueda pasar una cadena en vez de un caracter.|
+|`int lastIndexOf(char ch, int fromIndex)`|Lo mismo que la anterior, pero comienza la búsqueda desde el índice `fromIndex` hacia atrás. Al igual que el anterior, este método también está sobrecargado para que se le pueda pasar una cadena en vez de un caracter.|
+|`int length()`|Devuelve la longitud de la cadena.|
 |`boolean startsWith(String prefix)`|Devuelve `true` si la cadena actual comienza por la cadena `prefix`.|
-|`String substring(int beginIndex)`||
-|`String substring(int beginIndex, int endIndex)`||
-|`String toUpperCase()`||
-|`String toLowerCase()`||
-|`String trim()`||
-|`static String valueOf(...)`||
+|`boolean startsWith(String prefix, inf offset)`|Devuelve `true` si la cadena actual empieza por la cadena `prefix` empezando en el índice `offset`.|
+|`String substring(int beginIndex)`|Devuelve la subcadena de la cadena actual, empezando en `beginIndex` hasta el final.|
+|`String substring(int beginIndex, int endIndex)`|Devuelve la subcadena de la cadena actual, empezando en `beginIndex` hasta `endIndex - 1`.|
+|`String toUpperCase()`|Devuelve la cadena en mayúsculas.|
+|`String toLowerCase()`|Devuelve la cadena en minúsculas.|
+|`String trim()`|Devuelve la cadena eliminando los espacios en blanco iniciales y finales.|
 
 Para consultar la lista completa de métodos, os recomiendo consultar la [documentación de la API de java](https://docs.oracle.com/javase/8/docs/api/java/lang/String.html).
+
+###### Formateando cadenas
+
+Hay veces que nos interesa dar formato a una cadena o incluso convertir un tipo a cadena pero con un determinado formato.
+
+Para este menester podemos utilizar el método `format` de clase `String`. A este método se le pasa una cadena con el formato deseado y una lista variable de argumentos. Esta lista variable de argumentos dependerá de la cadena de formato pasada como primer argumento, es decir, de los especificadores de formato utilizados en la misma. De esta misma forma podemos formatear la salida por consola (o por el error) mediante el método `printf` del objeto `out` de la clase `System`. Como luego podréis observar, uno de los principales beneficios es evitar el uso de múltiples concatenaciones a la hora de imprimir por consola (además de hacerlo con el formato deseado).
+
+Primero os voy a mostrar los tipos de conversión de formato más comunes y luego veremos algunos ejemplos de sus usos.
+
+|Tipo de conversión|Tipo al que se aplica|Salida|
+|-------------|---------------------|------|
+|%a|Números reales|El número real expresado en hexadecimal|
+|%b|Cualquier tipo|`true` si no es nulo y `false` en caso contrario|
+|%c|caracter|El caracter|
+|%d|Enteros|El número entero|
+|%e|Números reales|El número real expresado en notación científica|
+|%f|Números reales|El número real|
+|%n|Nada|Un separador de línea dependiente de la plataforma|
+|%o|Enteros|El número entero expresado en octal|
+|%s|Cualquier tipo|Su representación como cadena|
+|%x|Enteros|El número entero expresado en notación hexadecimal|
+
+Veamos un primer ejemplo de cómo utilizarlos y luego los explicaremos más detalladamente.
+~~~java
+	String nombre = "José Ramón";
+	int edad = 18;
+	String salida = String.format("Mi nombre es %s y tengo %d años.", nombre, edad);
+	System.out.println(salida);
+	//Salida: Mi nombre es José Ramón y tengo 18 años.
+	System.out.printf("Mi nombre es %s y tengo %d años.", nombre, edad);
+	//Salida: Mi nombre es José Ramón y tengo 18 años.
+~~~
+
+Un especificador de formato, además puede ir acompañado de otros modificadores de formato que son opcionales. Veamos cuál es la sintaxis:
+~~~java
+	%[indice_argumento$][modificador][anchura][.precision]tipo_conversion
+~~~
+Como se puede apreciar sólo es obligatorio el símbolo `%` acompañado del tipo de conversión. El índice de argumento se utiliza para referirnos a un parámetro en cuestión. El modificador se utiliza para cambiar el formato de salida. La anchura se utiliza para limitar el número de caractares a mostrar. La precisión se utiliza para limitar el número de caracteres a mostrar dependiendo del tipo de conversión.
+
+En el siguiente ejemplo utilizo los **índices** para hacer lo mismo que en el primer ejemplo.
+~~~java
+	System.out.printf("Mi nombre es: %2$s y tengo %1$d años.", edad, nombre);
+~~~
+
+En el siguiente ejemplo vamos a ver cómo formatear **números enteros**.
+~~~java
+	int numero = 1234;
+	System.out.printf("|%d|%n", numero);	//Mostramos el número sin más
+	System.out.printf("|%10d|%n", numero);	//Mostramos el número  especificando su longitud
+	System.out.printf("|%-10d|%n", numero);	//Mostramos el número especificando su longitud y justificado a la izquierda
+	System.out.printf("|%010d|%n", numero);	//Mostramos el número especificando su longitud y rellenamos de 0`s el tamaño no ocupado
+	System.out.printf("|%,10d|%n", numero);	//Mostramos el número especificando su longitud y utilizando de separador de miles el separador local
+~~~
+La salida será la siguiente:
+~~~
+|1234|
+|      1234|
+|1234      |
+|0000001234|
+|     1.234|
+~~~
+
+En el siguiente ejemplo vamos a ver cómo formatear **números reales**
+~~~java
+	double q = 1.0 / 3.0;
+	System.out.printf("1.0/3.0 = %5.3f %n", q);
+	System.out.printf("1.0/3.0 = %7.5f %n", q);
+	q = 1.0 / 2.0;
+	System.out.printf("1.0/2.0 = %09.3f %n", q);
+~~~
+Su salida sería:
+~~~
+1.0/3.0 = 0,333
+1.0/3.0 = 0,33333
+1.0/2.0 = 00000,500
+~~~
+
+En el siguiente ejemplo vamos a ver cómo formatear **cadenas**
+~~~java
+	String nombre = "José Ramón";
+	System.out.printf("Nombre: |%s|%n", nombre);
+	System.out.printf("Nombre: |%15s|%n", nombre);		//Especifico anchura
+	System.out.printf("Nombre: |%-15s|%n", nombre);		//Especifico anchura y justificación izquierda
+	System.out.printf("Nombre: |%.5s|%n", nombre);		//Especifico máximo de caracteres a mostrar
+	System.out.printf("Nombre: |%15.5s|%n", nombre);	//Especifico anchura y número máximo de caracteres a mostrar
+~~~
+Su salida sería:
+~~~
+Nombre: |José Ramón|
+Nombre: |     José Ramón|
+Nombre: |José Ramón     |
+Nombre: |José |
+Nombre: |          José |
+~~~
+
+###### Cadenas de caracteres mutables
+Como ya mencioné, un objeto de la clase `String` es un objeto inmutable, lo que quiere decir que no puede cambiar una vez creados. Cualquier operación sobre dicho objeto que conlleve una modificación del mismo lo que hace es crear un nuevo objeto. Por ejemplo, el siguiente código:
+~~~java
+	String nombre = "José";
+	nombre += " ";
+	nombre += "Ramón";
+~~~
+Este código crea tres objetos. El primero en la inicialización y uno por cada concatenación. Cuando trabajamos con pocas de estas operaciones no importa, pero si realizamos muchas de ellas si puede penalizar en recursos y/o tiempo.
+
+Para solventar este problema java nos ofrece dos clases `StringBuilder` y `StringBuffer`. Su interfaz es exactamente la misma (los métodos que nos ofrecen) y con la única diferencia que la primera clase no está sincronizada y la segunda sí. Por tanto, lo recomendable sería utilizar `StringBuilder` en entornos con un solo hilo y `StringBuffer` en entornos multi-hilo.
+
+Los objetos de dichas clases son estructuras dinámicas que pueden crecer cuando lo necesiten. Además de su longitud, tienen un atributo que indica su capacidad (que siempre será mayor o igual que la longitud). Dicha capacidad puede crecer se así es necesario.
+
+Un objeto `String` puede convertirse fácilmente en un objeto de una de las clases anteriores simplemente pasando el objeto `String` a la hora de crear el objeto. A la inversa, simplemente debemos utilizar el método `toString`.
+
+~~~java
+	String nombre = "José Ramón";
+	StringBuilder nombreSB = new StringBuilder(nombre);
+	String otroNombre = nombreSB.toString();
+~~~
+
+Los principales métodos que nos ofrecen estas clases son:
+
+|Método|Explicación|
+|------|-----------|
+|append(...)|Añade al final la cadena o la representación en forma de cadena del objeto primitivo o cadena pasados|
+|delete(int inicio, int final)|Borra los caracteres comprendidos entre `inicio` y `final` - 1|
+|deleteCharAt(int indice)|Borra el caracter que ocupa el índice `indice`|
+|insert(int indice, ...)|Inserta en la posición `indice` la cadena o la representación en forma de cadena del objeto primitivo o cadena pasados|
+|replace(int inicio, int final, String str)|Reemplaza los caracteres comprendidos entre `inicio` y `final - 1` por la cadena pasada|
+|setCharAt(int indice, char c)|Reemplaza el caracter que ocupa el índice `indice` por el caracter `c`|
+|reverse|Invierte el contenido|
+
+Por lo dicho hasta ahora, utilizaremos `String` cuando no vayamos a realizar muchas operaciones con las mismas o estas no vayan a cambiar y en caso contrario `StringBuilder` o `StringBuffer`.
+
+Para mostrar la diferencia en rendimiento veamos la salida del siguiente programa:
+~~~java
+	final int TAMANO = 100000;
+	long inicio, tiempoConsumido;
+
+	String cadena = "";
+	char ch = 'a';
+	inicio = System.nanoTime();
+	for (int n = 0; n < TAMANO; ++n) {
+		cadena += ch;
+		++ch;
+		if (ch > 'z') {
+			ch = 'a';
+		}
+	}
+	tiempoConsumido = System.nanoTime() - inicio;
+
+	System.out.printf("Tiempo: %d s. en la construcción de un String de tamaño %d caracteres%n", tiempoConsumido / 1000, TAMANO);
+
+	StringBuilder cadenaSB = new StringBuilder();
+	ch = 'a';
+	inicio = System.nanoTime();
+	for (int n = 0; n < TAMANO; ++n) {
+		cadenaSB.append(ch);
+		++ch;
+		if (ch > 'z') {
+			ch = 'a';
+		}
+	}
+	tiempoConsumido = System.nanoTime() - inicio;
+
+	System.out.printf("Tiempo: %d s. en la construcción de un StringBuilder de tamaño %d caracteres%n", tiempoConsumido / 1000, TAMANO);
+
+	StringBuilder cadenaSBf = new StringBuilder();
+	ch = 'a';
+	inicio = System.nanoTime();
+	for (int n = 0; n < TAMANO; ++n) {
+		cadenaSBf.append(ch);
+		++ch;
+		if (ch > 'z') {
+			ch = 'a';
+		}
+	}
+	tiempoConsumido = System.nanoTime() - inicio;
+
+	System.out.printf("Tiempo: %d s. en la construcción de un StringBuffer de tamaño %d caracteres%n", tiempoConsumido / 1000, TAMANO);
+~~~
+
+El programa crea una cadena por concatenación de `TAMANO` caracteres y mide el tiempo empleado en ello y lo muestra. Hace lo mismo para un `StringBuilder` y un `StringBuffer`.
+
+La salida del mismo, en mi ordenador, es la siguiente, que creo que habla por ella misma (aunque los tiempos mostrados varían de una ejecución a otra, lo que no varía es la magnitud de la diferencia).
+~~~
+Tiempo: 3549781 s. en la construcción de un String de tamaño 100000 caracteres
+Tiempo: 1863 s. en la construcción de un StringBuilder de tamaño 100000 caracteres
+Tiempo: 2817 s. en la construcción de un StringBuffer de tamaño 100000 caracteres
+~~~
 
 ## Expresiones regulares
 
@@ -389,6 +567,63 @@ En las expresiones regulares podemos utilizar caracteres alfanuméricos que empa
 Además para construir expresiones regulares también se utilizan algunos caracteres que tienen un significado especial y que, por tanto, también debemos escapar.
 
 En java el caracter de escape se representa por la doble barra `\\` por lo que si queremos emparejar con el caracter `\`, en la expresión regular en java deberemos escribir `\\\\`.
+
+###### Clases de caracteres
+Las clases de caracteres definen cuál será el contenido de un patrón. Veamos las principales:
+
+|Representación|Significado|
+|--------------|-----------|
+|[abc]|Coincide con sólo uno de los caracteres encerrados entre corchetes|
+|[^abc]|Negación. Coincide con sólo uno de los caracteres que no esté encerrado entre corchetes|
+|[a-z]|Coincide con sólo uno de los caracteres que representa el rango|
+|[^a-z]|Coincide con sólo uno de los caracteres que no esté representado por el rango|
+|.|Coincide con cualquier caracter excepto con el salto de línea|
+|\\w|Coincide con cualquier caracter alfanumérico y el símbolo de subrayado. Equivale a [a-zA-Z0-9_]|
+|\\W|Coincide con cualquier caracter no alfanumérico|
+|\\d|Coincide con cualquier dígito. Equivale a [0-9]|
+|\\D|Coincide con cualquier caracter que no sea un dígito|
+|\\s|Coincide con cualquier caracter de espacio o salto de línea. Equivale a [\t\r\n\v\f]|
+|\\S|Coincide con cualquier caracter que no sea un espacio o salto de línea|
+
+###### Operadores lógicos
+Nos permiten combinar caracteres o clases de caracteres para formar nuevas expresiones regulares.
+
+|Operador|Significado|
+|--------|-----------|
+|AB|Coincide con la expresión regular A seguida por la B|
+|A\|B|Coincide con la expresión regular A o con la expresión regular B|
+
+###### Cuantificadores
+Nos permiten indicar el número de veces que debe aparecer un elemento en una expresión regular.
+
+|Cuantificador|Significado|
+|-------------|-----------|
+|A{n}|Coincide con la repetición de la expresión regular A n veces|
+|A{n,}|Coincide con la repetición de la expresión regular A n veces o más|
+|A{n,l}|Coincide con la repetición de la expresión regular A entre n y l veces|
+|A?|Coincide con la aparición de la expresión regular A 0 o 1 vez|
+|A*|Coincide con la aparición de la expresión regular A 0 o más veces (es decir, que A podría no aparecer)|
+|A+|Coincide con la aparición de la expresión regular A al menos una vez|
+
+###### Agrupamientos
+Podemos agrupar elementos para tratarlos como una sola unidad mediante su agrupamiento. Además, un grupo puede ser luego consultado. Para agrupar una serie de elementos utilizamos los paréntesis `()`. Para referirnos a cada grupo lo haremos por su número de orden, sabiendo que se agrupa de grupos más externos a más internos. Por ejemplo, la expresión `((A)(B))` contiene tres grupos. El primer grupos sería `((A)(B))`, el segundo `(A)` y el tercero `(B)`. También hay un grupo especial al que nos referimos por el orden 0 que representa la expresión completa.
+
+También podemos agrupar elementos pero sin capturarlos mediante el uso de los paréntesis y comenzando por `?:`. Por ejemplo: `(?:ABC)`.
+
+###### Ejemplos
+Es conveniente que practiques con las expresiones regulares ya que son muy utilizadas sobre todo para llevar a cabo validaciones. Para ello te recomiendo que visites la siguiente página [Expresiones regulares](https://regexr.com/) en la que puedes probar las expresiones regulares, consultar la documentación y además te explica qué hace cada elemento, etc.
+
+Veamos algunos ejemplos, aunque luego en los ejercicios veremos más.
+
+- Expresión regular que se ajuste a un código postal: `\d{5}`
+- Expresión regular que coincida con un número de teléfono: `\d{9}`
+- Expresión regular que coincida con números del 0 al 49: `[0-4]?\d`
+- Expresión regular que coincida con números hexadecimales: `[\da-fA-F]*`
+- Expresión regular que se ajuste a un número hexadecimal pero en el que no podamos mezclar mayúsculas y minúsculas (utilizamos unas u otras): `(?:[\dA-F]*)|(?:[\da-f]*)`
+- Expresión regular que se ajuste a números de tres cifras del 000 al 255: `(?:[0-1]\d{2})|(?:2[0-4]\d)|(?:25[0-5])`
+
+###### Expresiones regulares en java
+
 
 
 ## Fechas y horas

@@ -628,6 +628,61 @@ Veamos algunos ejemplos, aunque luego en los ejercicios veremos más.
 
 ## Fechas y horas
 
+En las versiones anteriores de java, trabajar con fechas y horas era muy tedioso y a veces se podía convertir en una locura. Pero en la versión 8 de java se han esmerado en hacer que trabajar con fechas y horas sea sencillo. Lo primero que han hecho es unificar los nombres de los métodos, por lo que trabajar con fechas o trabajar con horas es casi idéntico y, por tanto, su aprendizaje se hace mucho más sencillo.
+
+En este apartado veremos cómo trabajar con ellas haciendo uso de los métodos más comunes y útiles, aunque para una completa explicación te recomiendo que le eches un vistazo a la documentación de la API.
+
+- [API LocalDate](https://docs.oracle.com/javase/8/docs/api/java/time/LocalDate.html)
+- [API LocalTime](https://docs.oracle.com/javase/8/docs/api/java/time/LocalTime.html)
+- [API LocalDateTime](https://docs.oracle.com/javase/8/docs/api/java/time/LocalDateTime.html)
+- [API Instant](https://docs.oracle.com/javase/8/docs/api/java/time/Instant.html)
+- [API Duration](https://docs.oracle.com/javase/8/docs/api/java/time/Duration.html)
+- [API Period](https://docs.oracle.com/javase/8/docs/api/java/time/Period.html)
+- [API DateTimeFormatter](https://docs.oracle.com/javase/8/docs/api/java/time/format/DateTimeFormatter.html)
+- [API ChronoField](https://docs.oracle.com/javase/8/docs/api/java/time/temporal/ChronoField.html)
+
+###### Fechas
+
+La clase para trabajar con fechas es `LocalDate` que pertenece al paquete `java.time`. Con esta clase podremos trabajar con fechas de forma sencilla. Veamos algunos ejemplos.
+
+El método que nos permite obtener la fecha actual es el método estático `now()`.
+~~~java
+	LocalDate hoy = LocalDate.now();
+	System.out.println("La fecha de hoy es: " + hoy); //Imprime la fecha de hoy, aunque en formato inglés
+~~~
+
+Como hemos visto en el ejemplo anterior, la salida por consola no se adecua al formato que a lo mejor esperábamos. Para ello, podemos utilizar la clase `DateTimeFormatter`. Esta clase tiene muchos patrones para elegir, tanto para fechas como para horas Para utilizarlos usaremos el método `ofPattern` de la clase anterior para construir el patrón. Luego pasaremos el patrón al método `format` del objeto fecha. Veamos un ejemplo, partiendo del anterior.
+~~~java
+	DateTimeFormatter formatoCorto = DateTimeFormatter.ofPattern("d/M/yy");
+	DateTimeFormatter formatoLargo = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	DateTimeFormatter formatoTextoLargo = DateTimeFormatter.ofPattern("cccc, d 'de' MMMM 'de' yyyy");
+	DateTimeFormatter formatoTextoCorto = DateTimeFormatter.ofPattern("ccc, d 'de' MMM 'de' yyyy");
+	System.out.println("La fecha de hoy en formato corto se expresa como: " + hoy.format(formatoCorto));
+	System.out.println("La fecha de hoy en formato largo se expresa como: " + hoy.format(formatoLargo));
+	System.out.println("La fecha de hoy expresada en texto corto es: " + hoy.format(formatoTextoCorto));
+	System.out.println("La fecha de hoy expresada en texto largo es: " + hoy.format(formatoTextoLargo));
+~~~
+
+También podemos crear una fecha concreta pasándole el día, mes y año mediante el método estático `of`.
+~~~java
+	LocalDate anoNuevo = LocalDate.of(2018, 1, 1);
+	System.out.println("Año nuevo: " + anoNuevo.format(formatoTextoLargo));
+~~~
+
+Nos ofrece métodos para consultar datos de la fecha, como conocer el año `getYear`, el mes `getMonthValue` (el método `getMonth` nos devuelve un enumerado representado dicho mes), el día del año `getDayOfYear`, el día del mes `getDayOfMonth`, el día de la semana `getDayOfWeek`. Podemos consultar también si el año de una fecha fue bisiesto `isLeapYear` o saber el número de días del mes `lengthOfMonth`.
+
+Dada una fecha también podemos manipularla: cambiar el año `withYear`, cambiar el mes `withMonth`, cambiar el día `withDayOfMonth` o cambiar lo que queramos mediante el método `with` que como primer parámetro se le pasa un enumerado `ChronoField` que contiene una gran cantidad de constantes.
+
+Nos permite realizar operaciones con una fecha dada: añadir años `plusYears`, añadir meses `plusMonths`, añadir días `plusDays` o añadir lo que queramos mediante `plus` y el uso de `ChronoField`. Lo mismo nos permite restar mediante los métodos `minus*`.
+
+Los métodos `equals` y `compareTo` nos permiten comparar fechas. También podemos utilizar los métodos `isBefore`, `isAfter` y `isEqual`
+
+Por último, podemos crear fechas a partir de cadenas (sería el proceso inverso al formateo) mediante el método `parse` de la clase `DateTimeFormatter`.
+~~~java
+	String liberacionJava8 = "18/03/2014";
+	LocalDate fechaLiberacionJava8 = LocalDate.parse(liberacionJava8, formatoLargo);
+	System.out.println("Fecha de liberación de Java 8: " + fechaLiberacionJava8.format(formatoTextoLargo));
+~~~
 ## Ejercicios
 
 ###### Arrays

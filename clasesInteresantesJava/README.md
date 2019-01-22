@@ -15,7 +15,7 @@ Al igual que en otros apartados, el objetivo principal es que tengáis una ampl�
 - [Arrays](#arrays)
 - [Cadenas de caracteres](#cadenas-de-caracteres)
 - [Expresiones regulares](#expresiones-regulares)
-- [Fechas y horas](#fechas-y-horas)
+- [Fechas y tiempos](#fechas-y-tiempos)
 - [Ejercicios](#ejercicios)
 
 ## Arrays
@@ -626,9 +626,9 @@ Veamos algunos ejemplos, aunque luego en los ejercicios veremos más.
 
 
 
-## Fechas y horas
+## Fechas y tiempos
 
-En las versiones anteriores de java, trabajar con fechas y horas era muy tedioso y a veces se podía convertir en una locura. Pero en la versión 8 de java se han esmerado en hacer que trabajar con fechas y horas sea sencillo. Lo primero que han hecho es unificar los nombres de los métodos, por lo que trabajar con fechas o trabajar con horas es casi idéntico y, por tanto, su aprendizaje se hace mucho más sencillo.
+En las versiones anteriores de java, trabajar con fechas y horas era muy tedioso y a veces se podía convertir en una locura. Pero en la versión 8 de java se han esmerado en hacer que trabajar con fechas y horas sea sencillo. Lo primero que han hecho es unificar los nombres de los métodos, por lo que trabajar con fechas o trabajar con horas es casi idéntico y, por tanto, su aprendizaje se hace mucho más sencillo. Todas las clases que veremos son inmutables (al igual que ocurría con la clase `String`) y eso es importante que lo tengas en cuenta ya que, como sabes, esto quiere decir que dichos objetos no se pueden modificar.
 
 En este apartado veremos cómo trabajar con ellas haciendo uso de los métodos más comunes y útiles, aunque para una completa explicación te recomiendo que le eches un vistazo a la documentación de la API.
 
@@ -671,18 +671,65 @@ También podemos crear una fecha concreta pasándole el día, mes y año mediant
 
 Nos ofrece métodos para consultar datos de la fecha, como conocer el año `getYear`, el mes `getMonthValue` (el método `getMonth` nos devuelve un enumerado representado dicho mes), el día del año `getDayOfYear`, el día del mes `getDayOfMonth`, el día de la semana `getDayOfWeek`. Podemos consultar también si el año de una fecha fue bisiesto `isLeapYear` o saber el número de días del mes `lengthOfMonth`.
 
-Dada una fecha también podemos manipularla: cambiar el año `withYear`, cambiar el mes `withMonth`, cambiar el día `withDayOfMonth` o cambiar lo que queramos mediante el método `with` que como primer parámetro se le pasa un enumerado `ChronoField` que contiene una gran cantidad de constantes.
+Dada una fecha también podemos manipularla: cambiar el año `withYear`, cambiar el mes `withMonth`, cambiar el día `withDayOfMonth` o cambiar lo que queramos mediante el método `with` que como primer parámetro se le pasa un enumerado `ChronoField` que contiene una gran cantidad de constantes. Ten en cuenta que estos métodos no modifican el objeto sobre que el actúan ya que estos objetos son **inmutables** y lo que hacen es devolver una nueva fecha con el resultado de dicha manipulación.
 
 Nos permite realizar operaciones con una fecha dada: añadir años `plusYears`, añadir meses `plusMonths`, añadir días `plusDays` o añadir lo que queramos mediante `plus` y el uso de `ChronoField`. Lo mismo nos permite restar mediante los métodos `minus*`.
 
 Los métodos `equals` y `compareTo` nos permiten comparar fechas. También podemos utilizar los métodos `isBefore`, `isAfter` y `isEqual`
 
-Por último, podemos crear fechas a partir de cadenas (sería el proceso inverso al formateo) mediante el método `parse` de la clase `DateTimeFormatter`.
+Por último, podemos crear fechas a partir de cadenas (sería el proceso inverso al formateo) mediante el método `parse`.
 ~~~java
 	String liberacionJava8 = "18/03/2014";
 	LocalDate fechaLiberacionJava8 = LocalDate.parse(liberacionJava8, formatoLargo);
 	System.out.println("Fecha de liberación de Java 8: " + fechaLiberacionJava8.format(formatoTextoLargo));
 ~~~
+
+###### Tiempo
+La clase para trabajar con tiempos en java 8 es la clase `LocalTime`. Esta clase representa la hora, minutos, segundos y nanosegundos de un tiempo dado. Su uso es muy parecido al de las fechas.
+
+Para obtener el tiempo actual se utiliza el método `now`.
+~~~java
+	LocalTime ahora = LocalTime.now();
+	System.out.println("Son las: " + ahora);
+~~~
+
+Como ocurría con las fechas, el formato de salida a lo mejor no es el esperado. Para personalizar el formato de salida utilizaremos la clase `DateTimeFormatter` con el patrón adecuado. El proceso a seguir es el mismo que para una fecha.
+~~~java
+	DateTimeFormatter formatoCortoAMPM = DateTimeFormatter.ofPattern("h:m:s");
+	DateTimeFormatter formatoLargoAMPM = DateTimeFormatter.ofPattern("hh:mm:ss");
+	DateTimeFormatter formatoCorto24h = DateTimeFormatter.ofPattern("H:m:s");
+	DateTimeFormatter formatoLargo24h = DateTimeFormatter.ofPattern("HH:mm:ss");
+	DateTimeFormatter formatoTexto = DateTimeFormatter.ofPattern("h 'horas' m 'minutos' s 'segundos' a");
+	System.out.println("La hora actual en formato corto AM/PM se expresa como: " + ahora.format(formatoCortoAMPM));
+	System.out.println("La hora actual en formato largo AM/PM se expresa como: " + ahora.format(formatoLargoAMPM));
+	System.out.println("La hora actual en formato corto 24h se expresa como: " + ahora.format(formatoCorto24h));
+	System.out.println("La hora actual en formato largo 24h se expresa como: " + ahora.format(formatoLargo24h));
+	System.out.println("La hora actual expresada en texto es: " + ahora.format(formatoTexto));
+~~~
+
+También podemos crear un tiempo concreto pasándole la hora, los minutos, los segundos ... mediante el método estático `of`.
+~~~java
+	LocalTime mediaNoche = LocalTime.of(0, 0, 0);
+	System.out.println("Media noche: " + mediaNoche.format(formatoLargoAMPM));
+~~~
+
+También posee métodos para consultar la hora `getHour`, los minutos `getMinute`, los segundos `getMinute` y los nanosegundos `getNano`.
+
+Ofrece métodos para manipular un tiempo: cambiar la hora `withHour`, cambiar los minutos `withMinute`, cambiar los segundos `withSecond`, añadir o restar horas `plusHour` y `minusHour`, añadir o restar minutos `plusMinutes` y `minusMinutes`, añadir o restar segundos `plusSeconds` y `minusSecond` y añadir o restar nanosegundos `plusNano` y `minusNano`. Recordar que estos métodos no modifican el objeto fecha sobre el que actúa ya que dichos objetos son **inmutables** y lo que hacen es devolver una copia con dicho objeto modificado.
+
+Los métodos `equals` y `compareTo` nos permiten comparar tiempos. También se pueden utilizar los métodos `isBefore`, `isAfter` y `isEquals`.
+
+También podemos crear tiempos a partir de cadenas (proceso inverso al formateo) mediante el método `parse`.
+~~~java
+	String mediaNocheString = "00:00:00";
+	mediaNoche = LocalTime.parse(mediaNocheString, formatoLargo24h);
+	System.out.println("Media noche desde cadena: " + mediaNoche.format(formatoTexto));
+~~~
+
+###### Fechas y tiempos agrupados
+En java 8 también podemos representar en un solo objeto la fecha y el tiempo juntos mediante la clase `LocalDateTime`. Su uso es una combinación de las dos clases vistas anteriormente. Por tanto no nos detendremos en más detalles.
+
+
 ## Ejercicios
 
 ###### Arrays
@@ -1299,7 +1346,7 @@ Por último, podemos crear fechas a partir de cadenas (sería el proceso inverso
 
 	Los datos de contacto de un cliente constarán de un teléfono, un correo y una dirección postal.
 
-	Los datos personales de un cliente tendrán un nombre, unos apellidos y un dni.
+	Los datos personales de un cliente tendrán un nombre, unos apellidos, un dni y una fecha de nacimiento.
 
 	Los datos de un cliente se compondrán de sus datos personales y sus datos de contacto.
 

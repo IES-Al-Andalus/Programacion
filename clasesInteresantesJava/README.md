@@ -1385,6 +1385,7 @@ En java 8 también podemos representar en un solo objeto la fecha y el tiempo ju
 		}
 		~~~
 
+<<<<<<< HEAD
 - **Fecha nacimiento y cumpleaños**
 	Crea un programa que nos pida la fecha de nacimiento como cadena en un formato válido mientras esta no sea válida. Nos muestre dicha fecha por pantalla, nos diga qué día de la semana era y nos diga los días que faltan para el mismo, los que han pasado o si hoy es nuestro cumpleaños en cuyo caso nos felicitará y nos dirá los años que cumplimos.
 
@@ -1435,6 +1436,8 @@ En java 8 también podemos representar en un solo objeto la fecha y el tiempo ju
 		}
 		~~~
 
+=======
+>>>>>>> 861b08bfa0578b5fb67176fda7fbbabd82610d8c
 ###### Ejercicios variados
 
 - **Baraja de cartas**

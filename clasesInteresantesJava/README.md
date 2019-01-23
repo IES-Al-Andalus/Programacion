@@ -1300,6 +1300,91 @@ En java 8 también podemos representar en un solo objeto la fecha y el tiempo ju
 		~~~
 		[Descargar clase **CuentaVocales.java**](ejercicios/expresionesregulares/CuentaVocales.java)
 
+###### Ejercicios fechas y tiempos
+
+- **Ejemplo básico de fechas**
+
+	Crea un programa que imprima la fecha actual en diferentes formatos (corto, largo, de texto, ...), que cree un objeto fecha con la fecha de año nuevo del año pasado mediante el método `of` y la muestre por pantalla y que cree un objeto con la fecha de liberación de java 8 (18/03/2004) mediante una cadena utilizando el método `parse` y posteriormente la muestre por pantalla.
+
+	- Posible solución
+
+		Una posible solución podría ser el siguiente código.
+
+		~~~java
+		package org.iesalandalus.programacion.fechashoras;
+
+		import java.time.*;
+		import java.time.format.DateTimeFormatter;
+
+		public class Fechas {
+
+			public static void main(String[] args) {
+				LocalDate hoy = LocalDate.now();
+				System.out.println("La fecha de hoy es: " + hoy);
+
+				DateTimeFormatter formatoCorto = DateTimeFormatter.ofPattern("d/M/yy");
+				DateTimeFormatter formatoLargo = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+				DateTimeFormatter formatoTextoLargo = DateTimeFormatter.ofPattern("cccc, d 'de' MMMM 'de' yyyy");
+				DateTimeFormatter formatoTextoCorto = DateTimeFormatter.ofPattern("ccc, d 'de' MMM 'de' yyyy");
+				System.out.println("La fecha de hoy en formato corto se expresa como: " + hoy.format(formatoCorto));
+				System.out.println("La fecha de hoy en formato largo se expresa como: " + hoy.format(formatoLargo));
+				System.out.println("La fecha de hoy expresada en texto corto es: " + hoy.format(formatoTextoCorto));
+				System.out.println("La fecha de hoy expresada en texto largo es: " + hoy.format(formatoTextoLargo));
+
+				LocalDate anoNuevo = LocalDate.of(2018, 1, 1);
+				System.out.println("Año nuevo: " + anoNuevo.format(formatoTextoLargo));
+
+				String liberacionJava8 = "18/03/2014";
+				LocalDate fechaLiberacionJava8 = LocalDate.parse(liberacionJava8, formatoLargo);
+				System.out.println("Fecha de liberación de Java 8: " + fechaLiberacionJava8.format(formatoTextoLargo));
+			}
+
+		}
+		~~~
+
+- **Ejemplo básico de fechas**
+
+	Crea un programa que imprima la hora actual en diferentes formatos (corto, largo, de texto, ...), que cree un objeto tiempo con la hora del mediodía mediante el método `of` y la muestre por pantalla y que cree un objeto con la hora de la medianoche mediante una cadena utilizando el método `parse` y posteriormente la muestre por pantalla.
+
+	- Posible solución
+
+		Una posible solución podría ser el siguiente código.
+
+		~~~java
+		package org.iesalandalus.programacion.fechashoras;
+
+		import java.time.*;
+		import java.time.format.DateTimeFormatter;
+
+		public class Horas {
+
+			public static void main(String[] args) {
+				LocalTime ahora = LocalTime.now();
+				System.out.println("Son las: " + ahora);
+
+				DateTimeFormatter formatoCortoAMPM = DateTimeFormatter.ofPattern("h:m:s");
+				DateTimeFormatter formatoLargoAMPM = DateTimeFormatter.ofPattern("hh:mm:ss");
+				DateTimeFormatter formatoCorto24h = DateTimeFormatter.ofPattern("H:m:s");
+				DateTimeFormatter formatoLargo24h = DateTimeFormatter.ofPattern("HH:mm:ss");
+				DateTimeFormatter formatoTexto = DateTimeFormatter.ofPattern("h 'horas' m 'minutos' s 'segundos' a");
+				System.out.println("La hora actual en formato corto AM/PM se expresa como: " + ahora.format(formatoCortoAMPM));
+				System.out.println("La hora actual en formato largo AM/PM se expresa como: " + ahora.format(formatoLargoAMPM));
+				System.out.println("La hora actual en formato corto 24h se expresa como: " + ahora.format(formatoCorto24h));
+				System.out.println("La hora actual en formato largo 24h se expresa como: " + ahora.format(formatoLargo24h));
+				System.out.println("La hora actual expresada en texto es: " + ahora.format(formatoTexto));
+
+
+				LocalTime medioDia = LocalTime.of(12, 0, 0);
+				System.out.println("Media día: " + medioDia.format(formatoLargo24h));
+
+				String mediaNocheString = "00:00:00";
+				LocalTime mediaNoche = LocalTime.parse(mediaNocheString, formatoLargo24h);
+				System.out.println("Media noche desde cadena: " + mediaNoche.format(formatoTexto));
+			}
+
+		}
+		~~~
+
 ###### Ejercicios variados
 
 - **Baraja de cartas**

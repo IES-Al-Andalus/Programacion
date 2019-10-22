@@ -1121,15 +1121,16 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
 			public static void main(String[] args) {
 				int numero;
 				do {
-					System.out.print("Introduce un número entero: ");
-					numero = Entrada.entero();
+				    System.out.print("Introduce un número mayor que cero: ");
+				    numero = Entrada.entero();
 				} while (numero <= 0);
 				int cifras = 0;
-				//Si cambiamos el while por este comentado, podriamos evitar la sentencia numero /= 10 y así no modificar numero
+				//Si cambiamos el while por este comentado,
 				//while (numero / (int)Math.pow(10,cifras) != 0) {
+				//podriamos evitar la sentencia numero /= 10 y así no modificar numero
 				while (numero != 0) {
 					numero /= 10;
-					cifras++;
+				    cifras++;
 				}
 				System.out.println("Tiene " + cifras + " cifras");
 			}
@@ -1151,16 +1152,16 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
 
 			public static void main(String[] args) {
 				int numero;
-				do {
-					System.out.print("Introduce un número entero: ");
-					numero = Entrada.entero();
-				} while (numero <= 0);
-				int cifras = (int) Math.log10(numero);
-				do {
-					System.out.println(numero / (int) Math.pow(10, cifras));
-					numero = numero % (int) Math.pow(10, cifras);
-					cifras--;
-				} while (cifras >= 0);
+			    do {
+			    	System.out.print("Introduce un número mayor que cero: ");
+			    	numero = Entrada.entero();
+			    } while (numero <= 0);
+			    int posicionCifra = (int) Math.log10(numero);
+			    while (posicionCifra >= 0) {
+			        System.out.println(numero / (int) Math.pow(10, posicionCifra));
+			        numero = numero % (int) Math.pow(10, posicionCifra);
+			        posicionCifra--;
+			    }
 			}
 
 		}
@@ -1181,7 +1182,7 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
 			public static void main(String[] args) {
 				int numero;
 				do {
-					System.out.print("Introduce un número: ");
+					System.out.print("Introduce un número mayor que cero: ");
 					numero = Entrada.entero();
 				} while (numero <= 0);
 				while (numero > 0) {
@@ -1208,7 +1209,7 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
 			public static void main(String[] args) {
 				int numero, reverso = 0;
 				do {
-					System.out.print("Introduce un número entero: ");
+					System.out.print("Introduce un número mayor que cero: ");
 					numero = Entrada.entero();
 				} while (numero <= 0);
 				while (numero > 0) {
@@ -1236,7 +1237,7 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
 			public static void main(String[] args) {
 				int numero, reverso = 0, posicionCifra = 0;
 				do {
-					System.out.print("Introduce un número entero: ");
+					System.out.print("Introduce un número mayor que cero: ");
 					numero = Entrada.entero();
 				} while (numero <= 0);
 				while (numero / (int) Math.pow(10, posicionCifra) > 0) {
@@ -1264,7 +1265,7 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
 			public static void main(String[] args) {
 				int numero, reverso = 0, posicionCifra = 0;
 				do {
-					System.out.print("Introduce un número entero: ");
+					System.out.print("Introduce un número mayor que cero: ");
 					numero = Entrada.entero();
 				} while (numero <= 0);
 				while (numero / (int) Math.pow(10, posicionCifra) > 0) {

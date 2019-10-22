@@ -5,7 +5,7 @@ public class Reverso {
 	public static void main(String[] args) {
 		int numero, reverso = 0;
 		do {
-			System.out.print("Introduce un número entero: ");
+			System.out.print("Introduce un número mayor que cero: ");
 			numero = Entrada.entero();
 		} while (numero <= 0);
 		while (numero > 0) {

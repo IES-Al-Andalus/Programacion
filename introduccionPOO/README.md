@@ -514,7 +514,7 @@ Generalmente, nos convendrá que a la hora de realizar esta operación se muestr
 	...
 	@Override
 	public String toString() {
-		return "Posicion [x=" + x + ", y=" + y + "]";
+		return "x=" + x + ", y=" + y;
 	}
 ~~~
 
@@ -523,7 +523,7 @@ Generalmente, nos convendrá que a la hora de realizar esta operación se muestr
 ~~~java
 	...
 	Posicion miPosicion = new Posicion();
-	System.out.println(miPosicion);		//Imprime: Posicion [x=0, y=0]
+	System.out.println(miPosicion);		//Imprime: x=0, y=0
 ~~~
 
 ##### Referencias
@@ -659,17 +659,8 @@ public class Posicion {
 	}
 
 	@Override
-	public String toString() {
-		return "Posicion [x=" + x + ", y=" + y + "]";
-	}
-
-	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + x;
-		result = prime * result + y;
-		return result;
+		return Objects.hash(x, y);
 	}
 
 	@Override
@@ -677,20 +668,16 @@ public class Posicion {
 		if (this == obj) {
 			return true;
 		}
-		if (obj == null) {
-			return false;
-		}
 		if (!(obj instanceof Posicion)) {
 			return false;
 		}
 		Posicion other = (Posicion) obj;
-		if (x != other.x) {
-			return false;
-		}
-		if (y != other.y) {
-			return false;
-		}
-		return true;
+		return x == other.x && y == other.y;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("x=%s, y=%s", x, y);
 	}
 
 }
@@ -770,20 +757,8 @@ public class Personaje {
 	}
 
 	@Override
-	public String toString() {
-		return "Personaje [nombre=" + nombre + ", energia=" + energia +
-				", color=" + color + ", posicion=" + posicion + "]";
-	}
-
-	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((color == null) ? 0 : color.hashCode());
-		result = prime * result + energia;
-		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
-		result = prime * result + ((posicion == null) ? 0 : posicion.hashCode());
-		return result;
+		return Objects.hash(color, energia, nombre, posicion);
 	}
 
 	@Override
@@ -791,38 +766,17 @@ public class Personaje {
 		if (this == obj) {
 			return true;
 		}
-		if (obj == null) {
-			return false;
-		}
 		if (!(obj instanceof Personaje)) {
 			return false;
 		}
 		Personaje other = (Personaje) obj;
-		if (color == null) {
-			if (other.color != null) {
-				return false;
-			}
-		} else if (!color.equals(other.color)) {
-			return false;
-		}
-		if (energia != other.energia) {
-			return false;
-		}
-		if (nombre == null) {
-			if (other.nombre != null) {
-				return false;
-			}
-		} else if (!nombre.equals(other.nombre)) {
-			return false;
-		}
-		if (posicion == null) {
-			if (other.posicion != null) {
-				return false;
-			}
-		} else if (!posicion.equals(other.posicion)) {
-			return false;
-		}
-		return true;
+		return color == other.color && energia == other.energia && Objects.equals(nombre, other.nombre)
+				&& Objects.equals(posicion, other.posicion);
+	}
+
+	@Override
+	public String toString() {
+		return String.format("nombre=%s, energia=%s, color=%s, posicion=%s", nombre, energia, color, posicion);
 	}
 
 }
@@ -838,6 +792,7 @@ Imaginaos, por ejemplo, que queremos transferir un archivo por la red y lo quere
 - Que el pendrive está lleno y no tiene espacio para almacenar dicho fichero.
 - Que en medio de la escritura del fichero, alguien saca el pendrive.
 - Que no tenemos permiso de escritura en el pendrive.
+- Etc.
 
 En java las excepciones están representadas por una clase. Las excepciones, al igual que toda clase, siguen una jerarquía de clases, que no voy a mostrar ya que ni siquiera hemos hablado de herencia, aún. Uno de los métodos más comunes de las excepciones es el método `getMessage` que devuelve una cadena con un mensaje explicativo sobre la causa de dicha excepción.
 
@@ -850,7 +805,7 @@ Dentro de estas situaciones anómalas podemos distinguir tres categorías:
 ##### Tratamiento de una excepción
 Cuando vamos a llamar a un método que pueda lanzar una excepción, encerraremos dicha llamada al método en un `try`. Seguida a este bloque, puede haber uno o varios bloques `catch`. Y podemos terminar con un bloque `finally`. Veamos que significa todo esto:
 - En el bloque `try` se ejecuta la sentencia que puede lanzar una o varias excepciones. Si se lanza una excepción, el flujo se detendrá y pasaremos a los bloques `catch`.
-- En cada uno de los bloques `catch` capturamos un tipo de excepción que se ha podido lanzar en el bloque `try` e indicamos cómo reaccionar ante dicha situación. Cada sentencia `catch` va seguida por la el nombre de la excepción ante la que queremos reaccionar.
+- En cada uno de los bloques `catch` capturamos un tipo de excepción que se ha podido lanzar en el bloque `try` e indicamos cómo reaccionar ante dicha situación. Cada sentencia `catch` va seguida por el nombre de la excepción ante la que queremos reaccionar.
 - El bloque `finally` es un bloque opcional que se ejecuta siempre, se haya producido alguna excepción o no. Se suele utilizar para cerrar recursos abiertos. A partir de java SE 7, este bloque perdió su sentido original debido a la introducción de la sentencia `try-with-resources` que ya veremos en otros apartados.
 
 ~~~java
@@ -915,7 +870,7 @@ public class Posicion {
 
 	public Posicion(Posicion posicion) {
 		if (posicion == null) {
-			throw new IllegalArgumentException("No se puede copiar una posición nula");
+			throw new NullPointerException("No se puede copiar una posición nula");
 		}
 		this.x = posicion.getX();
 		this.y = posicion.getY();
@@ -946,17 +901,8 @@ public class Posicion {
 	}
 
 	@Override
-	public String toString() {
-		return "Posicion [x=" + x + ", y=" + y + "]";
-	}
-
-	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + x;
-		result = prime * result + y;
-		return result;
+		return Objects.hash(x, y);
 	}
 
 	@Override
@@ -964,20 +910,16 @@ public class Posicion {
 		if (this == obj) {
 			return true;
 		}
-		if (obj == null) {
-			return false;
-		}
 		if (!(obj instanceof Posicion)) {
 			return false;
 		}
 		Posicion other = (Posicion) obj;
-		if (x != other.x) {
-			return false;
-		}
-		if (y != other.y) {
-			return false;
-		}
-		return true;
+		return x == other.x && y == other.y;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("x=%s, y=%s", x, y);
 	}
 
 }
@@ -1018,7 +960,7 @@ public class Personaje {
 
 	public Personaje(Personaje personaje) {
 		if (personaje == null) {
-			throw new IllegalArgumentException("No se puede copiar un personaje nulo.");
+			throw new NullPointerException("No se puede copiar un personaje nulo.");
 		}
 		nombre = personaje.getNombre();
 		energia = personaje.getEnergia();
@@ -1033,7 +975,7 @@ public class Personaje {
 
 	private void setNombre(String nombre) {
 		if (nombre == null || nombre.equals("")) {
-			throw new IllegalArgumentException("El nombre no puede ser nulo ni vacío.");
+			throw new NullPointerException("El nombre no puede ser nulo ni vacío.");
 		} else {
 			this.nombre = nombre;
 		}
@@ -1049,7 +991,7 @@ public class Personaje {
 
 	public void setColor(String color) {
 		if (color == null || color.equals("")) {
-			throw new IllegalArgumentException("El color no puede ser nulo o vacío.");
+			throw new NullPointerException("El color no puede ser nulo o vacío.");
 		}
 		this.color = color;
 	}
@@ -1060,7 +1002,7 @@ public class Personaje {
 
 	private void setPosicion(Posicion posicion) {
 		if (posicion == null) {
-			throw new IllegalArgumentException("La posición no puede ser nula.");
+			throw new NullPointerException("La posición no puede ser nula.");
 		}
 		this.posicion = new Posicion(posicion);
 	}
@@ -1074,20 +1016,8 @@ public class Personaje {
 	}
 
 	@Override
-	public String toString() {
-		return "Personaje [nombre=" + nombre + ", energia=" + energia +
-				", color=" + color + ", posicion=" + posicion + "]";
-	}
-
-	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((color == null) ? 0 : color.hashCode());
-		result = prime * result + energia;
-		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
-		result = prime * result + ((posicion == null) ? 0 : posicion.hashCode());
-		return result;
+		return Objects.hash(color, energia, nombre, posicion);
 	}
 
 	@Override
@@ -1095,38 +1025,17 @@ public class Personaje {
 		if (this == obj) {
 			return true;
 		}
-		if (obj == null) {
-			return false;
-		}
 		if (!(obj instanceof Personaje)) {
 			return false;
 		}
 		Personaje other = (Personaje) obj;
-		if (color == null) {
-			if (other.color != null) {
-				return false;
-			}
-		} else if (!color.equals(other.color)) {
-			return false;
-		}
-		if (energia != other.energia) {
-			return false;
-		}
-		if (nombre == null) {
-			if (other.nombre != null) {
-				return false;
-			}
-		} else if (!nombre.equals(other.nombre)) {
-			return false;
-		}
-		if (posicion == null) {
-			if (other.posicion != null) {
-				return false;
-			}
-		} else if (!posicion.equals(other.posicion)) {
-			return false;
-		}
-		return true;
+		return color == other.color && energia == other.energia && Objects.equals(nombre, other.nombre)
+				&& Objects.equals(posicion, other.posicion);
+	}
+
+	@Override
+	public String toString() {
+		return String.format("nombre=%s, energia=%s, color=%s, posicion=%s", nombre, energia, color, posicion);
 	}
 
 }

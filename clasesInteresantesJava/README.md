@@ -517,7 +517,7 @@ Para mostrar la diferencia en rendimiento veamos la salida del siguiente program
 
 	System.out.printf("Tiempo: %d s. en la construcción de un StringBuilder de tamaño %d caracteres%n", tiempoConsumido / 1000, TAMANO);
 
-	StringBuilder cadenaSBf = new StringBuilder();
+	StringBuffer cadenaSBf = new StringBuffer();
 	ch = 'a';
 	inicio = System.nanoTime();
 	for (int n = 0; n < TAMANO; ++n) {

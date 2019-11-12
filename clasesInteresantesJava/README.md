@@ -738,12 +738,12 @@ En java 8 también podemos representar en un solo objeto la fecha y el tiempo ju
 
   Escribir un programa java que lea el número de tu DNI y te muestra la letra correspondiente al mismo. Las letras del DNI se calculan quedándonos con el resto del numero de DNI entre 23 y aplicando esta correspondencia:
 	~~~
-		 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22
-		 T R W A G M Y F P D X  B  N  J  Z  S  Q  V  H  L  C  K  E
+	0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22
+	T R W A G M Y F P D X  B  N  J  Z  S  Q  V  H  L  C  K  E
 	~~~
 	Para ello, inicializa un array con estos valores y calcula la letra de un dni dado.
 
-  - Posible solución
+	- Posible solución
 		~~~java
 		package arrays;
 

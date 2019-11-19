@@ -16,6 +16,7 @@ Al igual que en otros apartados, el objetivo principal es que tengáis una ampl�
 - [Cadenas de caracteres](#cadenas-de-caracteres)
 - [Expresiones regulares](#expresiones-regulares)
 - [Fechas y tiempos](#fechas-y-tiempos)
+- [Generación de números aleatorios en java](#generacin-de-nmeros-aleatorios-en-java)
 - [Ejercicios](#ejercicios)
 
 ## Arrays
@@ -729,6 +730,53 @@ También podemos crear tiempos a partir de cadenas (proceso inverso al formateo)
 ###### Fechas y tiempos agrupados
 En java 8 también podemos representar en un solo objeto la fecha y el tiempo juntos mediante la clase `LocalDateTime`. Su uso es una combinación de las dos clases vistas anteriormente. Por tanto no nos detendremos en más detalles.
 
+## Generación de números aleatorios en java
+
+###### `Math.random()`
+
+En la clase `Math` existe el método estático `random` que genera números aleatorios comprendidos en el siguiente intervalo: [0, 1), es decir entre cero (inclusive) hasta el uno (exclusive).
+
+Si nosotros queremos generar números aleatorios comprendidos en un intervalo dado [x, y] ambos inclusive, debemos utilizar la siguiente sentencia:
+~~~java
+	int x = 100;
+	int y = 200;
+	double numeroAleatorio = Math.random() * (y - x + 1) + x;
+~~~
+Si además queremos que estos números sean enteros podremos realizar un casting a entero o bien utilizar el método `Math.floor`:
+~~~java
+	int x = 100;
+	int y = 200;
+	int aleatorio1 = (int) (Math.random() * (y - x + 1) + x);
+	int aleatorio2 = Math.floor(Math.random() * (y - x + 1) + x);
+~~~
+
+###### Clase `Random`
+La clase `Random` pertenece al paquete `java.util` y nos ofrece más posibilidades y es la forma más recomendada (aunque si queremos podemos utilizar `SecureRandom` que genera números aleatorios criptográficamente más seguros).
+
+Para hacer uso de esta clase debemos generar una instancia de la misma y luego utilizar el método `nextDouble` que genera números en el intervalo [0, 1).
+
+Sin embargo, dicha clase también posee el método `nextInt(int)` que genera números enteros aleatorios en el intervalo [0, int - 1]. Por tanto, si queremos generar números enteros en el intervalo [x, y] debemos utilizar el siguiente código:
+~~~java
+	Random generador = new Random();
+	int numeroAleatorio = generador.nextInt(y - x + 1) + x;
+~~~
+
+Desde java 8, la clase `Random` posee varios métodos sobrecargados que nos permiten generar un `IntStream` que es un flujo de números aleatorios. Por ejemplo, si queremos simular que tiramos un dado 15 veces podríamos utilizar el siguiente código:
+~~~java
+	Random generador = new Random();
+	IntStream flujoNumerosAleatorios = generador.ints(15, 1, 7);
+	Iterator<Integer> iterador = flujoNumerosAleatorios.iterator();
+	while (iterador.hasNext()) {
+		System.out.println(iterador.next());
+	}
+~~~
+
+Otra forma sería hacerlo con las funciones lambda de java 8:
+~~~java
+	Random generador = new Random();
+	IntStream flujoNumerosAleatorios = generador.ints(15, 1, 7);
+	flujoNumerosAleatorios.forEach(tirada -> System.out.println(tirada));
+~~~
 
 ## Ejercicios
 
@@ -1431,6 +1479,8 @@ En java 8 también podemos representar en un solo objeto la fecha y el tiempo ju
 				} else {
 					System.out.printf("FELICIDADES!!!! Hoy es tu cumpleaños y cumples %d años.%n", hoy.getYear() - fechaNacimiento.getYear());
 				}
+				Period edad = Period.between(fechaNacimiento, hoy);
+				System.out.printf("Tienes: %d años, %d meses y %d días.", edad.getYears(), edad.getMonths(), edad.getDays());
 			}
 		}
 		~~~

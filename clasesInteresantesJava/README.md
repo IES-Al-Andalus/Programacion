@@ -619,8 +619,8 @@ Veamos algunos ejemplos, aunque luego en los ejercicios veremos más.
 - Expresión regular que se ajuste a un código postal: `\d{5}`
 - Expresión regular que coincida con un número de teléfono: `\d{9}`
 - Expresión regular que coincida con números del 0 al 49: `[0-4]?\d`
-- Expresión regular que coincida con números hexadecimales: `[\da-fA-F]*`
-- Expresión regular que se ajuste a un número hexadecimal pero en el que no podamos mezclar mayúsculas y minúsculas (utilizamos unas u otras): `(?:[\dA-F]*)|(?:[\da-f]*)`
+- Expresión regular que coincida con números hexadecimales: `[\da-fA-F]+`
+- Expresión regular que se ajuste a un número hexadecimal pero en el que no podamos mezclar mayúsculas y minúsculas (utilizamos unas u otras): `(?:[\dA-F]+)|(?:[\da-f]+)`
 - Expresión regular que se ajuste a números de tres cifras del 000 al 255: `(?:[0-1]\d{2})|(?:2[0-4]\d)|(?:25[0-5])`
 
 ###### Expresiones regulares en java
@@ -736,13 +736,7 @@ En java 8 también podemos representar en un solo objeto la fecha y el tiempo ju
 
 En la clase `Math` existe el método estático `random` que genera números aleatorios comprendidos en el siguiente intervalo: [0, 1), es decir entre cero (inclusive) hasta el uno (exclusive).
 
-Si nosotros queremos generar números aleatorios comprendidos en un intervalo dado [x, y] ambos inclusive, debemos utilizar la siguiente sentencia:
-~~~java
-	int x = 100;
-	int y = 200;
-	double numeroAleatorio = Math.random() * (y - x + 1) + x;
-~~~
-Si además queremos que estos números sean enteros podremos realizar un casting a entero o bien utilizar el método `Math.floor`:
+Si nosotros queremos generar números enteros aleatorios comprendidos en un intervalo dado [x, y] ambos inclusive, debemos utilizar la siguiente sentencia, en la que podremos realizar un casting a entero o bien utilizar el método `Math.floor`:
 ~~~java
 	int x = 100;
 	int y = 200;
@@ -1207,7 +1201,7 @@ Otra forma sería hacerlo con las funciones lambda de java 8:
 
 		public class PrefijoTelefono {
 
-			private static final String ER_TELEFONO = "(?:\\+34 )?(?:(?:(9\\d{2}) \\d{6})|(?:(9\\d) \\d{7}))";
+			private static final String ER_TELEFONO = "(?:\\+34 )?(9\\d{2}) \\d{6}|(9\\d) \\d{7}";
 
 			public static void main(String[] args) {
 				Pattern patron;

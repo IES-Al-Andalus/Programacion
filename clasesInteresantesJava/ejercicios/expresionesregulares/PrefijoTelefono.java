@@ -7,7 +7,7 @@ import utilidades.Entrada;
 
 public class PrefijoTelefono {
 
-	private static final String ER_TELEFONO = "(?:\\+34 )?(?:(?:(9\\d{2}) \\d{6})|(?:(9\\d) \\d{7}))";
+	private static final String ER_TELEFONO = "(?:\\+34 )?(9\\d{2}) \\d{6}|(9\\d) \\d{7}";
 	
 	public static void main(String[] args) {
 		Pattern patron;

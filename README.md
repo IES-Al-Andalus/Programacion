@@ -9,6 +9,7 @@ Este repositorio no pretende ser una obra exhaustiva sobre programación, ni sob
 - [Introducción a la programación en java](introduccionJava/)
 - [Introducción a la programación orientada a objetos en java](introduccionPOO/)
 - [Algunas clases interesantes en java](clasesInteresantesJava/)
+- [Estructuras dinámicas en java](estructurasDinamicasJava/)
 
 ## Autor
 

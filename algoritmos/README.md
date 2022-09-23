@@ -91,7 +91,7 @@ Operador|Significado|Ejemplo
 ------------|--------------|------------
 `&` ó `Y`| Conjunción (y) |(8>5) & (5=3) //falso
 `|` ó `O` | Disyunción (o)| (8>5 \| 5=3) //verdadero
-`~` ó `NO`| Negación (no)| 	  ~(8>5) //verdadero
+`~` ó `NO`| Negación (no)| 	  ~(8>5) //falso
 
 **Operadores Algebraicos**
 

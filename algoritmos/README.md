@@ -36,7 +36,7 @@ Todo algoritmo en pseudocódigo tiene la siguiente estructura general:
 ~~~
      Algoritmo SinTitulo
           instruccion 1;
-          insturccion 1;
+          instruccion 1;
                .
                .
                .

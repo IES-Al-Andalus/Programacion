@@ -1,4 +1,4 @@
-import utilidades.Entrada;
+import org.iesalandalus.programacion.utilidades.Entrada;
 
 public class Sumar5Restar2 {
 	public static void main(String[] args) {

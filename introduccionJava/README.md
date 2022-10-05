@@ -49,6 +49,7 @@ Desde que surgió Java hasta el día de hoy podemos encontrar diferentes version
 - **JSE 6**: Se elimina el 2 del nombre. Se da soporte para lenguajes de scripting, se vuelve a mejorar el rendimiento y se añade soporte para JDBC 4.0.
 - **JSE 7**: Se añade soporte para múltiples lenguajes. Se añaden cambios en el lenguaje como el uso de String en la sentencia swicth, try with resouces, etc.
 - **JSE 8**: Se añade el soporte de las funciones lambda (entre otras) para soportar la programación funcional.
+- ...
 
 Java es un lenguaje interpretado, o también llamado precompilado. Partiendo de un archivo fuente `.java`, lo compilamos para obtener un fichero `.class`, que es un archivo que aún no es ejecutable por el SO pero que sí entiende la Máquina Virtual de Java (JVM). Ese fichero `.class` ahora ya podemos ejecutarlo en cualquier SO o plataforma que tenga instalada una JVM, que será la que lea el fichero `.class` y lo vaya interpretando para ser ejecutado.
 
@@ -56,7 +57,9 @@ Para el desarrollo de aplicaciones en Java y su posterior ejecución disponemos 
 - **JDK**: Es el kit de desarrollo y en el que podemos encontrar, entre otros, el compilador de java que se encarga de traducir el código fuente a un código intermedio que posteriormente podrá ser ejecutado por la JVM (máquina virtual de Java) que tengamos instalada en nuestro sistema.
 - **JRE**: Es el entorno de ejecución de Java específico de cada plataforma y en el que simplemente vienen las librerías y la JVM para nuestra plataforma y que permite ejecutar las aplicaciones anteriormente compiladas con el kit de desarrollo (aunque el kit de desarrollo también contiene dicha JVM).
 
-Para poder instalar correctamente el JSE en nuestro sistema (elegiremos la descarga del JDK ya que es el componente que necesitaremos para poder desarrollar aplicaciones Java), no voy a profundizar y, simplemente os remito a la web oficial de Oracle donde poder descargarlo para cada plataforma y en la que también podéis encontrar la documentación para realizar dicha instalación en cada una de ellas. La versión que utilizaremos es la versión JSE 8. [Descargar JSE](https://www.oracle.com/technetwork/java/javase/downloads/index.html).
+Últimamente ha habido un pequeño lío con la licencia de la máquina virtual ya que en 2018 Oracle anunció que a partir de enero de 2019 (Java 11) cobraría una licencia comercial para que pudiese ser utilizado. A partir de septiembre de 2021 Oracle anunció que Java se distribuirá bajo licencia **Oracle No-Fee Terms and Conditions (NFTC)** que permitiría el uso gratuito. [Nota de prensa con el anuncio](https://blogs.oracle.com/oracle-latinoamerica/post/presentacion-de-la-licencia-gratuita-de-java){:target="_blank"}
+
+Aún así, hay una implementación libre con versión **GNU GPLv2** de Java llamada **OpenJDK**, en la que diferentes empresas y fundaciones contibuyen. Esta implementación libre será la que nosotros utilizaremos. Podemos encontrar los binarios compilados para los diferentes SOs en la [página del proyecto **Eclipse Temurim**](https://adoptium.net/es/temurin/releases/){:target="_blank"} y trabajaremos con la última versión LTS, que a día de hoy es la versión 17.
 
 
 ## Primer programa en Java
@@ -86,9 +89,9 @@ En la siguiente imagen se muestra cómo comprobar la versión que tenemos instal
 
 Puede ser que te haya resultado algo engorroso y que seguramente estés pensando que si siempre hay que hacerlo así, que cuando sea un programa más complejo eso es imposible, etc. Pero la buena noticia es que esto no es así ya que afortunadamente hoy existen los llamados Entornos de Desarrollo Integrados (IDE) que nos facilitan la tarea. Gracias a estos IDEs la escritura de un programa es muy sencilla ya que te van haciendo sugerencias a la hora de escribir, tiene atajos de teclado para sentencias muy comunes, la compilación es automática cada vez que se guarda, nos permite depurar nuestros programas mediante la ejecución paso a paso, permiten la refactorización del código, etc, etc.
 
-Los entornos más populares para el desarrollo de aplicaciones java son:
-- **Netbeans** desarrollado por Oracle, aunque actualmente pertenece a la Fundación Apache. [Descargar Netbeans](https://netbeans.org/).
-- **Eclipse** desarrollado por la fundación Eclipse. [Descargar Eclipse](https://www.eclipse.org/).
+Los entornos más populares para el desarrollo de aplicaciones java son (aunque exsiten otros muchos):
+- **Netbeans** desarrollado por Oracle, aunque actualmente pertenece a la Fundación Apache. [Descargar Netbeans](https://netbeans.apache.org/download/){:target="_blank"}.
+- **Eclipse** desarrollado por la fundación Eclipse. [Descargar Eclipse](https://www.eclipse.org/downloads/){:target="_blank"}.
 
 Ambos entornos de desarrollo son multiplaforma por lo que podemos ejecutarlos en nuestro SO preferido y son muy parecidos. Las prestaciones de ambos son muy similares y ambos poseen una gran cantidad de añadidos que podemos utilizar. Yo, personalmente, prefiero Eclipse, pero para gustos colores.
 
@@ -104,15 +107,7 @@ A continuación te muestro un vídeo de cómo crear el programa `HolaMundo` en *
 </video>
 </div>
 
-También te muestro un vídeo de cómo crear el programa `HolaMundo` en **Netbeans**.
-
-<div align="center">
-<video width="600" controls="controls">
-<source type="video/mp4" src="videos/HolaMundoNetBeans.mp4"></source>
-</video>
-</div>
-
-Como podéis apreciar, el proceso es muy sencillo y muy parecido en ambos IDEs. Ahora sólo nos queda empezar a programar!!!
+Como podéis apreciar, el proceso es muy sencillo. Ahora sólo nos queda empezar a programar!!!
 
 
 ## Identificadores
@@ -243,7 +238,6 @@ Operador|Significado
 `-` |Resta
 `*`|Multiplicación
 `/`| División
-`^`|Potenciación
 `%`| Módulo (resto de la división entera)
 `++`|Incrementar una unidad
 `--`|Decrementar una unidad
@@ -377,27 +371,35 @@ Son las sentencias que se ejecutan una detrás de otra, secuencialmente. Por lo 
       ...
     ~~~
 
-  - **Lectura**: Para realizar la lectura desde teclado en java hay que tener conocimientos más avanzados y que ahora no vamos a detallar ya que podrían hacer perdernos en los detalles. Por ello he desarrollado una librería que os facilitará la vida y podréis llevarla a cabo por medio de una sola sentencia, evitando tener en cuenta todos los detalles asociados.
+  - **Lectura**: Para realizar la lectura desde teclado en java hay que tener conocimientos más avanzados, que ahora no vamos a detallar ya que podrían hacer perdernos en los detalles. Por ello he desarrollado una librería que os facilitará la vida y podréis llevarla a cabo por medio de una sola sentencia, evitando tener en cuenta todos los detalles asociados.
 
-    La clase que he realizado se llama `Entrada` y la he metido dentro de un paquete llamado `utilidades`. Para poder utilizarla, simplemente tenéis que copiar el paquete (que para que nos entendamos, es un directorio) al directorio `src` de vuestro proyecto.
+    He creado una librería que empaqueta la clase `Entrada` que es la que contine los diferentes métodos de lectura. Para poder utilizarla, simplemente tenéis descargaros la última versión de la misma de mi [repositorio](https://github.com/JRJimenezReyes/entrada/releases){:target="_blank"}. En la siguiente imagen se puede ver cómo poder descargar la última versión a día de hoy (el archivo `entrada-1.0.3.jar` en este caso).
 
-    En el siguiente vídeo podrás ver cómo integrar dicha clase en tu proyecto en **Eclipse**.
+	<div align="center">
+	<img alt="Descarga de la última versión de la librería" src="imagenes/versionesLibrería.png"/>
+	</div>
 
-    <div align="center">
-    <video width="600" controls="controls">
-    <source type="video/mp4" src="videos/utilidadesEclipse.mp4"></source>
-    </video>
-    </div>
-
-    En este otro hago lo mismo pero para **NetBeans**.
+    En el siguiente vídeo podrás ver cómo integrar dicha librería en tu proyecto en **Eclipse**.
 
     <div align="center">
     <video width="600" controls="controls">
-    <source type="video/mp4" src="videos/utilidadesNetBeans.mp4"></source>
+    <source type="video/mp4" src="videos/usoLibreriaEntrada.mp4"></source>
     </video>
     </div>
 
-    En el siguiente enlace adjunto el fichero `.zip` correspondiente al paquete `utilidades` que simplemente deberás descomprimir y copiar el directorio generado a tu IDE como ya hemos visto en los vídeos anteriores. [Descargar paquete utilidades](archivos/utilidades.zip)
+    Si por el contrario utilizas **Gradle** para gestionar tus dependencias, simplemente desbes incluir en tu fichero `build.gradle`lo siguiente:
+
+	~~~gradle
+	repositories {
+        ...
+	    maven { url 'https://jitpack.io' }
+	}
+
+	dependencies {
+        ...
+		api 'com.github.JRJimenezReyes:entrada:1.0.3'
+	}
+	~~~
 
     La clase `Entrada` nos ofrece los siguientes métodos para leer algunos de los tipos primitivos vistos en este apartado y que podemos utilizar de la siguiente forma (he mostrado la declaración y la asignación juntas para recalcar el tipo de dato al que podemos hacer la asignación, pero podría estar dividida en dos sentencias separadas):
 
@@ -622,7 +624,7 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
 
   - Posible solución
     ~~~java
-		import utilidades.Entrada;
+		import org.iesalandalus.programacion.utilidades.Entrada;
 
 		public class LecturaEscritura {
 
@@ -644,7 +646,7 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
 
   - Posible solución
     ~~~java
-		import utilidades.Entrada;
+		import org.iesalandalus.programacion.utilidades.Entrada;
 
 		public class Doble {
 
@@ -666,7 +668,7 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
 
   - Posible solución
     ~~~java
-		import utilidades.Entrada;
+		import org.iesalandalus.programacion.utilidades.Entrada;
 
 		public class Cuadrado {
 
@@ -688,7 +690,7 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
 
   - Posible solución, aunque lo correcto hubiese sido validar que **la base y la altura fuesen mayores que cero**, pero eso lo veremos en ejercicios posteriores.
     ~~~java
-		import utilidades.Entrada;
+		import org.iesalandalus.programacion.utilidades.Entrada;
 
 		public class PerimetroRectangulo {
 
@@ -713,7 +715,7 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
 
   - Posible solución, aunque lo correcto hubiese sido validar que el **radio fuese mayor que cero**, pero eso lo veremos en ejercicios posteriores.
     ~~~java
-		import utilidades.Entrada;
+		import org.iesalandalus.programacion.utilidades.Entrada;
 
 		public class AreaCirculo {
 
@@ -738,7 +740,7 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
 
   - Posible solución
     ~~~java
-		import utilidades.Entrada;
+		import org.iesalandalus.programacion.utilidades.Entrada;
 
 		public class ValorAbsoluto {
 
@@ -762,7 +764,7 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
 
   - Posible solución
     ~~~java
-		import utilidades.Entrada;
+		import org.iesalandalus.programacion.utilidades.Entrada;
 
 		public class ParImpar {
 
@@ -788,7 +790,7 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
 
   - Posible solución
     ~~~java
-		import utilidades.Entrada;
+		import org.iesalandalus.programacion.utilidades.Entrada;
 
 		public class PositivoNegativo {
 
@@ -814,7 +816,7 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
 
   - Posible solución
     ~~~java
-		import utilidades.Entrada;
+		import org.iesalandalus.programacion.utilidades.Entrada;
 
 		public class CeroCien {
 
@@ -840,7 +842,7 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
 
   - Posible solución
     ~~~java
-		import utilidades.Entrada;
+		import org.iesalandalus.programacion.utilidades.Entrada;
 
 		public class AprobadoSuspenso {
 
@@ -868,7 +870,7 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
 
   - Posible solución
     ~~~java
-		import utilidades.Entrada;
+		import org.iesalandalus.programacion.utilidades.Entrada;
 
 		public class NumerosIguales {
 
@@ -896,7 +898,7 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
 
   - Posible solución
     ~~~java
-		import utilidades.Entrada;
+		import org.iesalandalus.programacion.utilidades.Entrada;
 
 		public class OrdenarDosNumeros {
 
@@ -924,7 +926,7 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
 
   - Posible solución
     ~~~java
-		import utilidades.Entrada;
+		import org.iesalandalus.programacion.utilidades.Entrada;
 
 		public class OrdenarTresNumeros {
 
@@ -977,7 +979,7 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
 
   - Posible solución
     ~~~java
-		import utilidades.Entrada;
+		import org.iesalandalus.programacion.utilidades.Entrada;
 
 		public class TablaMultiplicar {
 
@@ -1001,7 +1003,7 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
 
   - Posible solución
     ~~~java
-		import utilidades.Entrada;
+		import org.iesalandalus.programacion.utilidades.Entrada;
 
 		public class NumeroPositivo {
 
@@ -1025,7 +1027,7 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
 
   - Posible solución
     ~~~java
-		import utilidades.Entrada;
+		import org.iesalandalus.programacion.utilidades.Entrada;
 
 		public class SumaNumeros {
 
@@ -1052,7 +1054,7 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
 
   - Posible solución
     ~~~java
-		import utilidades.Entrada;
+		import org.iesalandalus.programacion.utilidades.Entrada;
 
 		public class MediaNumeros {
 
@@ -1084,7 +1086,7 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
 
   - Posible solución
     ~~~java
-		import utilidades.Entrada;
+		import org.iesalandalus.programacion.utilidades.Entrada;
 
 		public class NumeroPerfecto {
 
@@ -1114,7 +1116,7 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
 
   - Posible solución
     ~~~java
-		import utilidades.Entrada;
+		import org.iesalandalus.programacion.utilidades.Entrada;
 
 		public class NumCifras {
 
@@ -1146,7 +1148,7 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
 
   - Posible solución
     ~~~java
-		import utilidades.Entrada;
+		import org.iesalandalus.programacion.utilidades.Entrada;
 
 		public class DescomponerCifras {
 
@@ -1175,7 +1177,7 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
 
   - Posible solución
     ~~~java
-		import utilidades.Entrada;
+		import org.iesalandalus.programacion.utilidades.Entrada;
 
 		public class DescomponerCifrasReverso {
 
@@ -1202,7 +1204,7 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
 
   - Posible solución
     ~~~java
-		import utilidades.Entrada;
+		import org.iesalandalus.programacion.utilidades.Entrada;
 
 		public class Reverso {
 
@@ -1230,7 +1232,7 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
 
   - Posible solución
     ~~~java
-		import utilidades.Entrada;
+		import org.iesalandalus.programacion.utilidades.Entrada;
 
 		public class ReversoSinModificar {
 
@@ -1258,7 +1260,7 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
 
   - Posible solución
     ~~~java
-		import utilidades.Entrada;
+		import org.iesalandalus.programacion.utilidades.Entrada;
 
 		public class Capicua {
 
@@ -1287,7 +1289,7 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
 
   - Posible solución
     ~~~java
-		import utilidades.Entrada;
+		import org.iesalandalus.programacion.utilidades.Entrada;
 
 		public class Menu {
 
@@ -1327,7 +1329,7 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
 
   - Posible solución
     ~~~java
-		import utilidades.Entrada;
+		import org.iesalandalus.programacion.utilidades.Entrada;
 
 		public class Sumar5Restar2 {
 			public static void main(String[] args) {
@@ -1362,7 +1364,7 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
 
   - Posible solución
     ~~~java
-		import utilidades.Entrada;
+		import org.iesalandalus.programacion.utilidades.Entrada;
 
 		public class TiradasMoneda {
 

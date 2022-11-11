@@ -290,15 +290,15 @@ Es común declarar **clases de utilidades** que sólo tienen métodos de clase y
 ~~~java
 public class Personaje {
 
-	private String nombre;
-	private int energia;
-	private String color;
-
-	private static int numPersonajes = 0;
-
 	private static final int ENERGIA_INICIAL = 100;
 	private static final String COLOR_INICIAL = "Rojo";
 	private static final String PREFIJO_NOMBRE = "Personaje";
+
+	private static int numPersonajes = 0;
+
+	private String nombre;
+	private int energia;
+	private String color;
 
 	public Personaje() {
 		numPersonajes++;
@@ -355,7 +355,7 @@ Más adelante hablaremos del problema del **aliasing** que debemos tener muy en 
 
 También hacer notar que en los diagramas de clase, estos atributos cuyo tipo son de otra clase no aparecen como tal en la lista de atributos. La relación de cliente se expresa en estos diagramas mediante una flecha desde una clase a la otra. La flecha se etiqueta con el nombre del atributo y la cardinalidad, que por ahora será `0..1` ya que se trata de un atributo simple y no es un array o una colección, en cuyo caso podría poner el límite superior del array o `*` si es que no tiene límite superior.
 
-> Imaginemos que ahora nos dicen que nuestro personaje ocupará una posición dentro la pantalla, que podrá ir cambiando conforme se vaya moviendo. Podríamos añadir dos atributos nuevos a nuestra clase que indiquen la posición X e Y de nuestro personaje. Sin embargo, otra solución más acertada sería crear una clase llamada `Posicion` que contendrá como atributos la posición X e Y y luego hacer que nuestra clase `Personaje` sea cliente de la clase `Posicion`. Aunque en principio deberíamos hacer algunas comprobaciones más, eso lo dejamos para corregirlo cuando veamos las excepciones. Veamos cómo quedaría el diagrama de clases y el código de ambas clases.
+> Imaginemos que ahora nos dicen que nuestro personaje ocupará una posición dentro la pantalla, que podrá ir cambiando conforme se vaya moviendo. Podríamos añadir dos atributos nuevos a nuestra clase que indiquen la posición X e Y de nuestro personaje. Sin embargo, otra solución más acertada sería crear una clase llamada `Posicion` que contendrá como atributos la posición X e Y y luego hacer que nuestra clase `Personaje` sea cliente de la clase `Posicion`. Como queremos que nuestro personaje se pueda mover, permitiremos modificar la posición en X y en Y, por lo que haremos que los métodos de modificación sean públicos para poder modificar dichas coordenas desde fuera de la clase (además esto lo hacemos por motivos didácticos para luego ejemplificar algunos problemas que pueden surgir de este diseño). Para que nuestro personaje se pueda mover debemos implementar un método llamado `mover` que recibirá como parámetros el incremento en la coordenada X y el incremento en la coordenada Y, y que modifique la posición de nuestro personaje en consecuencia. Tendremos unas constantes que marcarán los límites de la coordenada X y la Y y si intentamos asignar un valor que no esté dentro de esos límites, no lo permitirá y le asignará el valor mínimo, aunque en principio no deberíamos dejar hacerlo, pero eso lo dejamos para corregirlo cuando veamos las excepciones. Veamos cómo quedaría el diagrama de clases y el código de ambas clases.
 > <div align="center">
 > <img alt="Diagramas de clases del Personaje" src="imagenes/personaje3.png"/>
 > </div>
@@ -364,13 +364,13 @@ También hacer notar que en los diagramas de clase, estos atributos cuyo tipo so
 ~~~java
 public class Posicion {
 
-	private int x;
-	private int y;
-
 	private static final int MIN_X = 0;
 	private static final int MAX_X = 100;
 	private static final int MIN_Y = 0;
 	private static final int MAX_Y = 100;
+
+	private int x;
+	private int y;
 
 	public Posicion() {
 		x = MIN_X;
@@ -382,12 +382,17 @@ public class Posicion {
 		setY(y);
 	}
 
+	public Posicion(Posicion posicion) {
+		setX(posicion.getX());
+		setY(posicion.getY());
+	}
+
 	public int getX() {
 		return x;
 	}
 
 	public void setX(int x) {
-		if (x < MIN_X || x > MAX_X) {
+		if (x < MIN_X || x> MAX_X) {
 			this.x = MIN_X;
 		} else {
 			this.x = x;
@@ -413,16 +418,16 @@ public class Posicion {
 ~~~java
 public class Personaje {
 
+	private static final int ENERGIA_INICIAL = 100;
+	private static final String COLOR_INICIAL = "Rojo";
+	private static final String PREFIJO_NOMBRE = "Personaje";
+
+	private static int numPersonajes = 0;
+
 	private String nombre;
 	private int energia;
 	private String color;
 	private Posicion posicion;
-
-	private static int numPersonajes = 0;
-
-	private static final int ENERGIA_INICIAL = 100;
-	private static final String COLOR_INICIAL = "Rojo";
-	private static final String PREFIJO_NOMBRE = "Personaje";
 
 	public Personaje() {
 		numPersonajes++;
@@ -462,16 +467,17 @@ public class Personaje {
 		return posicion;
 	}
 
-	public void setPosicion(Posicion posicion) {
-		this.posicion = posicion;
-	}
-
 	public void chocar(int posiblePerdida) {
 		energia -= posiblePerdida;
 	}
 
 	public void charlar(int posibleGanancia) {
 		energia += posibleGanancia;
+	}
+
+	public void mover(int x, int y) {
+		posicion.setX(posicion.getX() + x);
+		posicion.setY(posicion.getY() + y);
 	}
 
 }
@@ -514,7 +520,7 @@ Generalmente, nos convendrá que a la hora de realizar esta operación se muestr
 	...
 	@Override
 	public String toString() {
-		return "x=" + x + ", y=" + y;
+		return String.format("x=%s, y=%s", x, y);
 	}
 ~~~
 
@@ -523,7 +529,7 @@ Generalmente, nos convendrá que a la hora de realizar esta operación se muestr
 ~~~java
 	...
 	Posicion miPosicion = new Posicion();
-	System.out.println(miPosicion);		//Imprime: x=0, y=0
+	System.out.println(miPosicion);		//Muestra: x=0, y=0
 ~~~
 
 ##### Referencias
@@ -550,21 +556,23 @@ Veamos en qué consiste este problema, analizando el siguiente código:
 	Posicion posicion1 = new Posicion(10, 10);
 	Posicion posicion2;
 	posicion2 = posicion1;
-	System.out.println(posicion1);		//Muestra: Posicion [x=10, y=10]
+	System.out.println(posicion1);		//Muestra: x=10, y=10
 	posicion2.setX(20);
-	System.out.println(posicion1);		//Muestra: Posicion [x=20, y=10]
+	System.out.println(posicion1);		//Muestra: x=20, y=10
 ~~~
 
 Como se puede apreciar, simplemente hemos modificado la coordenada `x` de la referencia `posicion2`, pero dicha modificación también ha afectado a la referencia `posicion1`. Si lo pensamos, es normal ya que ambas referencias apuntan al mismo objeto y cualquier modificación afectará a ambas referencias.
 
-Esto tenemos que tenerlo muy en cuenta ya que a veces podemos tener efectos no deseados. Por ejemplo, si un método de acceso de una clase, que accede a un atributo que es una referencia a otro objeto, si devolvemos la referencia estaremos comprometiendo la integridad ya que desde fuera se podrían cambiar los valores del objeto al que apunta. Veámoslo con un ejemplo:
+El aliasing ocurre cuando estamos trabajando con clases mutables, es decir, se puede modificar su estado. Esto no ocurriría si la clase `Posicion` fuese inmutable y eso se podría conseguir haciendo que sus método `setX` no fuesen públicos (o no estuviesen implementados).
+
+Dado que en nuestro ejemplo, la clase `Posicion` es mutable, debemos tenerlo muy en cuenta ya que a veces podemos tener efectos no deseados. Por ejemplo, en un método de acceso de una clase, que accede a un atributo que es una referencia a otro objeto, si devolvemos la referencia estaremos comprometiendo la integridad ya que desde fuera se podrían cambiar los valores del objeto al que apunta. Veámoslo con un ejemplo:
 ~~~java
 	...
 	Personaje miPersonaje = new Personaje("Calamardo");
 	Posicion miPosicion = miPersonaje.getPosicion();
-	System.out.println(miPersonaje.getPosicion());		//Muestra: Posicion [x=0, y=0]
+	System.out.println(miPersonaje.getPosicion());		//Muestra: x=0, y=0
 	miPosicion.setX(10);
-	System.out.println(miPersonaje.getPosicion());		//Muestra: Posicion [x=10, y=0]
+	System.out.println(miPersonaje.getPosicion());		//Muestra: x=10, y=0
 ~~~
 
 Este mismo caso se puede dar cuando pasamos una referencia al constructor o a un método de modificación y simplemente igualamos la referencia.
@@ -572,14 +580,14 @@ Este mismo caso se puede dar cuando pasamos una referencia al constructor o a un
 	...
 	Posicion miPosicion = new Posicion(10, 10);
 	Personaje miPersonaje = new Personaje("Calamardo", miPosicion);
-	System.out.println(miPosicion);	//Muestra: Posicion [x=10, y=10]
-	miPersonaje.mover(10, 0);	//Aunque este método no lo hemos implementado, modifica la posicion en x e y
-	System.out.println(miPosicion);	//Muestra: Posicion [x=20, y=10]
+	System.out.println(miPosicion);	//Muestra: x=10, y=10
+	miPersonaje.mover(10, 0);
+	System.out.println(miPosicion);	//Muestra: x=20, y=10
 ~~~
 
 Por tanto, aunque depende del problema a resolver, lo normal es que creemos nuevas instancias partiendo de la pasada o que las devolvamos (esto siempre que las referencias no sean a objetos inmutables, como es el caso de la clase `String`). Para ello, es muy común utilizar el constructor copia de la clase, del que hemos hablado muy por encima.
 
-El constructor copia lo que hará es crear un nuevo objeto con los valores de los atributos igualados a los de la referencia del objeto pasado como argumento. Si simplemente copiamos los valores, estaremos creando lo que se llama **copia superficial** y si la clase es cliente de otra podríamos encontrarnos con este problema.
+El constructor copia lo que hará es crear un nuevo objeto con los valores de los atributos igualados a los de la referencia del objeto pasado como argumento. Si simplemente copiamos los valores, estaremos creando lo que se llama **copia superficial** y si la clase es cliente de otra clase mutable, podríamos encontrarnos con este problema.
 ~~~java
 	public Personaje(Personaje personaje) {
 		nombre = personaje.getNombre();
@@ -596,11 +604,11 @@ Para solucionarlo, utilizaremos la **copia profunda** que en vez de igualar refe
 		nombre = personaje.getNombre();
 		energia = personaje.getEnergia();
 		color = personaje.getColor();
-		posicion = new Posicion(personaje.getPosicion().getX(), personaje.getPosicion().getY());
+		posicion = new Posicion(personaje.posicion);
 	}
 ~~~
 
-Con esto habríamos solucionado el problema, pero seguimos devolviendo la referencia de la posición en el método de consulta y eso deberíamos arreglarlo.
+Con esto habríamos solucionado el problema, pero seguimos devolviendo la referencia de la posición en el método de consulta y nos quedamos con la referencia en el metodo de establecimiento, y eso deberíamos arreglarlo.
 
 Por todo lo comentado anteriormente, si nosotros utilizamos el operado `==` para comparar la igualdad de dos referencias, nos devolverá `true` si ambas apuntan al mismo objeto y `false` si apuntan a objetos diferentes aunque el estado de ambos sea idéntico.
 
@@ -609,15 +617,17 @@ Para solucionar este otro problema debemos utilizar el método `equals`. Lo norm
 Ahora os muestro el código de ambas clases con los problemas de **aliasing** corregidos y con la implementación de `equals` y `hashCode`.
 ###### Posicion.java
 ~~~java
-public class Posicion {
+import java.util.Objects;
 
-	private int x;
-	private int y;
+public class Posicion {
 
 	private static final int MIN_X = 0;
 	private static final int MAX_X = 100;
 	private static final int MIN_Y = 0;
 	private static final int MAX_Y = 100;
+
+	private int x;
+	private int y;
 
 	public Posicion() {
 		x = MIN_X;
@@ -630,8 +640,8 @@ public class Posicion {
 	}
 
 	public Posicion(Posicion posicion) {
-		this.x = posicion.getX();
-		this.y = posicion.getY();
+		setX(posicion.getX());
+		setY(posicion.getY());
 	}
 
 	public int getX() {
@@ -684,20 +694,20 @@ public class Posicion {
 ~~~
 ###### Personaje.java
 ~~~java
-package videojuego;
+import java.util.Objects;
 
 public class Personaje {
+
+	private static final int ENERGIA_INICIAL = 100;
+	private static final String COLOR_INICIAL = "Rojo";
+	private static final String PREFIJO_NOMBRE = "Personaje";
+
+	private static int numPersonajes = 0;
 
 	private String nombre;
 	private int energia;
 	private String color;
 	private Posicion posicion;
-
-	private static int numPersonajes = 0;
-
-	private static final int ENERGIA_INICIAL = 100;
-	private static final String COLOR_INICIAL = "Rojo";
-	private static final String PREFIJO_NOMBRE = "Personaje";
 
 	public Personaje() {
 		numPersonajes++;
@@ -714,14 +724,14 @@ public class Personaje {
 
 	public Personaje(String nombre, Posicion posicion) {
 		this(nombre);
-		this.posicion = new Posicion(posicion);
+		setPosicion(posicion);
 	}
 
 	public Personaje(Personaje personaje) {
 		nombre = personaje.getNombre();
 		energia = personaje.getEnergia();
 		color = personaje.getColor();
-		posicion = new Posicion(personaje.getPosicion());
+		posicion = new Posicion(personaje.posicion);
 	}
 
 	public String getNombre() {
@@ -744,7 +754,7 @@ public class Personaje {
 		return new Posicion(posicion);
 	}
 
-	public void setPosicion(Posicion posicion) {
+	private void setPosicion(Posicion posicion) {
 		this.posicion = new Posicion(posicion);
 	}
 
@@ -756,6 +766,11 @@ public class Personaje {
 		energia += posibleGanancia;
 	}
 
+	public void mover(int x, int y) {
+		posicion.setX(posicion.getX() + x);
+		posicion.setY(posicion.getY() + y);
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(color, energia, nombre, posicion);
@@ -763,20 +778,20 @@ public class Personaje {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
+		if (this == obj)
 			return true;
-		}
-		if (!(obj instanceof Personaje)) {
+		if (obj == null)
 			return false;
-		}
+		if (getClass() != obj.getClass())
+			return false;
 		Personaje other = (Personaje) obj;
-		return color == other.color && energia == other.energia && Objects.equals(nombre, other.nombre)
+		return Objects.equals(color, other.color) && energia == other.energia && Objects.equals(nombre, other.nombre)
 				&& Objects.equals(posicion, other.posicion);
 	}
 
 	@Override
 	public String toString() {
-		return String.format("nombre=%s, energia=%s, color=%s, posicion=%s", nombre, energia, color, posicion);
+		return String.format("nombre=%s, energia=%s, color=%s, posicion=(%s)", nombre, energia, color, posicion);
 	}
 
 }
@@ -799,7 +814,7 @@ En java las excepciones están representadas por una clase. Las excepciones, al 
 Dentro de estas situaciones anómalas podemos distinguir tres categorías:
 - **Errores**: son situaciones ante las que nosotros poco podemos hacer. Este tipo de situaciones quedan fuera de nuestro alcance y terminarán el programa. Por ejemplo, que la JVM se queda sin memoria. Ante esto poco podemos hacer (además de revisar nuestro código para ver si podemos reducir el uso de memoria de alguna forma). Por ello, no se consideran excepciones propiamente dichas. Todos los errores heredan de la clase `Error`.
 - **Excepciones comprobadas**: son situaciones que son típicas que ocurran al tratar con ciertos recursos como disco, red, etc. Estas excepciones debemos tratarlas para evitar que nuestro programa termine abruptamente. Además, estamos obligados a tratarlas ya que si no, tendremos un error en tiempo de compilación. Todas las excepciones comprobadas heredan de la clase `Exception`, pero no de `RuntimeException`. Este tipo de excepciones es obligatorio tratarlas.
-- **Excepciones no comprobadas**: son situaciones que ocurren debido a errores que cometemos en la programación: intentar acceder a una posición de un array que no existe, intentar trabajar con un objeto nulo, pasar un argumento no válido a un método, etc. Todas estas excepciones heredan de
+- **Excepciones no comprobadas**: son situaciones que ocurren debido a errores que cometemos en la programación: intentar acceder a una posición de un array que no existe (`IndexOutOfBoundsException`), intentar trabajar con un objeto nulo (`NullPointerException`), pasar un argumento no válido a un método (`IllegalArgumentException`), etc. Todas estas excepciones heredan de
 `RuntimeException`. Este tipo de excepciones podemos tratarlas o no, según sea la situación.
 
 ##### Tratamiento de una excepción
@@ -844,19 +859,24 @@ Para lanzar una excepción, simplemente tendremos que crear un nuevo objeto del 
 	}
 ~~~
 
-> Ahora que hemos visto el tratamiento de excepciones, queremos que nuestra clase Personaje pueda informar si se ha pasado algún valor incorrecto a los métodos. Además, como os comenté también utilizaré métodos modificadores privados que se encargarán de realizar la comprobación y que se llamarán en el constructor.
+> Ahora que hemos visto el tratamiento de excepciones, queremos que nuestra clase Personaje pueda informar si se ha pasado algún valor incorrecto a los métodos. Además, como os comenté también utilizaré métodos modificadores privados que se encargarán de realizar la comprobación y que se llamarán en el constructor. Además queremos que el método `mover` lance una excepción comprobada `OperationNotSupportedException` cuando estemos intentando mover la posición de nuestro personaje y éste sobrepase los límites establecidos.
+> <div align="center">
+> <img alt="Diagramas de clases del Personaje" src="imagenes/personaje5.png"/>
+> </div>
 
 ###### Posicion.java
 ~~~java
-public class Posicion {
+import java.util.Objects;
 
-	private int x;
-	private int y;
+public class Posicion {
 
 	private static final int MIN_X = 0;
 	private static final int MAX_X = 100;
 	private static final int MIN_Y = 0;
 	private static final int MAX_Y = 100;
+
+	private int x;
+	private int y;
 
 	public Posicion() {
 		x = MIN_X;
@@ -870,10 +890,10 @@ public class Posicion {
 
 	public Posicion(Posicion posicion) {
 		if (posicion == null) {
-			throw new NullPointerException("No se puede copiar una posición nula");
+			throw new NullPointerException("No puedo copiar una posición nula.");
 		}
-		this.x = posicion.getX();
-		this.y = posicion.getY();
+		setX(posicion.getX());
+		setY(posicion.getY());
 	}
 
 	public int getX() {
@@ -881,11 +901,12 @@ public class Posicion {
 	}
 
 	public void setX(int x) {
-		if (x < MIN_X || x > MAX_X) {
-			throw new IllegalArgumentException("El valor de x no es correcto.");
-		} else {
-			this.x = x;
+		if (x < MIN_X) {
+			throw new IllegalArgumentException("El valor de la x es menor que el mínimo permitido.");
+		} else if (x > MAX_X) {
+			throw new IllegalArgumentException("El valor de la x es mayor que el máximo permitido.");
 		}
+		this.x = x;
 	}
 
 	public int getY() {
@@ -893,11 +914,12 @@ public class Posicion {
 	}
 
 	public void setY(int y) {
-		if (y < MIN_Y || y > MAX_Y) {
-			throw new IllegalArgumentException("El valor de y no es correcto.");
-		} else {
-			this.y = y;
+		if (y < MIN_Y) {
+			throw new IllegalArgumentException("El valor de la y es menor que el mínimo permitido.");
+		} else if (y > MAX_Y) {
+			throw new IllegalArgumentException("El valor de la y es mayor que el máximo permitido.");
 		}
+		this.y = y;
 	}
 
 	@Override
@@ -907,12 +929,12 @@ public class Posicion {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
+		if (this == obj)
 			return true;
-		}
-		if (!(obj instanceof Posicion)) {
+		if (obj == null)
 			return false;
-		}
+		if (getClass() != obj.getClass())
+			return false;
 		Posicion other = (Posicion) obj;
 		return x == other.x && y == other.y;
 	}
@@ -927,18 +949,24 @@ public class Posicion {
 
 ###### Personaje.java
 ~~~java
+import java.util.Objects;
+
+import javax.naming.OperationNotSupportedException;
+
 public class Personaje {
+
+	private static final String PREFIJO_NOMBRE = "Personaje ";
+	private static final int ENERGIA_INICIAL = 100;
+	private static final String COLOR_INICIAL = "Rojo";
+	private static final int MIN_ENERGIA = 0;
+	private static final int MAX_ENERGIA = 100;
+
+	private static int numPersonajes = 0;
 
 	private String nombre;
 	private int energia;
 	private String color;
 	private Posicion posicion;
-
-	private static int numPersonajes = 0;
-
-	private static final int ENERGIA_INICIAL = 100;
-	private static final String COLOR_INICIAL = "Rojo";
-	private static final String PREFIJO_NOMBRE = "Personaje";
 
 	public Personaje() {
 		numPersonajes++;
@@ -953,20 +981,23 @@ public class Personaje {
 		setNombre(nombre);
 	}
 
-	public Personaje(String nombre, Posicion posicion) {
-		this(nombre);
+	public Personaje(String nombre, int energia, String color, Posicion posicion) {
+		this();
+		setNombre(nombre);
+		setEnergia(energia);
+		setColor(color);
 		setPosicion(posicion);
 	}
 
 	public Personaje(Personaje personaje) {
+		this();
 		if (personaje == null) {
-			throw new NullPointerException("No se puede copiar un personaje nulo.");
+			throw new NullPointerException("No puedo copiar un personaje nulo.");
 		}
 		nombre = personaje.getNombre();
 		energia = personaje.getEnergia();
 		color = personaje.getColor();
-		posicion = new Posicion(personaje.getPosicion());
-		numPersonajes++;
+		posicion = new Posicion(personaje.posicion);
 	}
 
 	public String getNombre() {
@@ -974,15 +1005,23 @@ public class Personaje {
 	}
 
 	private void setNombre(String nombre) {
-		if (nombre == null || nombre.equals("")) {
-			throw new NullPointerException("El nombre no puede ser nulo ni vacío.");
-		} else {
-			this.nombre = nombre;
+		if (nombre == null) {
+			throw new NullPointerException("El nombre del personaje no puede ser nulo.");
 		}
+		this.nombre = nombre;
 	}
 
 	public int getEnergia() {
 		return energia;
+	}
+
+	private void setEnergia(int energia) {
+		if (energia < MIN_ENERGIA) {
+			throw new IllegalArgumentException("El valor de la energia no puede ser menor que el mínimo establecido.");
+		} else if (energia > MAX_ENERGIA) {
+			throw new IllegalArgumentException("El valor de la energia no puede ser mayor que el máximo establecido.");
+		}
+		this.energia = energia;
 	}
 
 	public String getColor() {
@@ -990,29 +1029,38 @@ public class Personaje {
 	}
 
 	public void setColor(String color) {
-		if (color == null || color.equals("")) {
-			throw new NullPointerException("El color no puede ser nulo o vacío.");
+		if (color == null) {
+			throw new NullPointerException("El color del personaje no puede ser nulo.");
 		}
 		this.color = color;
 	}
 
 	public Posicion getPosicion() {
-		return new Posicion(posicion);
+		return posicion;
 	}
 
-	private void setPosicion(Posicion posicion) {
+	public void setPosicion(Posicion posicion) {
 		if (posicion == null) {
-			throw new NullPointerException("La posición no puede ser nula.");
+			throw new NullPointerException("La posición del personaje no puede ser nula.");
 		}
-		this.posicion = new Posicion(posicion);
+		this.posicion = posicion;
 	}
 
-	public void chocar(int posiblePerdida) {
-		energia -= posiblePerdida;
+		public void chocar(int posiblePerdida) {
+		setEnergia(energia - posiblePerdida);
 	}
 
 	public void charlar(int posibleGanancia) {
-		energia += posibleGanancia;
+		setEnergia(energia + posibleGanancia);
+	}
+
+	public void mover(int x, int y) throws OperationNotSupportedException {
+		try {
+			posicion.setX(posicion.getX() + x);
+			posicion.setY(posicion.getY() + y);
+		} catch (IllegalArgumentException e) {
+			throw new OperationNotSupportedException("Movimiento no válido: " + e.getMessage());
+		}
 	}
 
 	@Override
@@ -1022,20 +1070,20 @@ public class Personaje {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
+		if (this == obj)
 			return true;
-		}
-		if (!(obj instanceof Personaje)) {
+		if (obj == null)
 			return false;
-		}
+		if (getClass() != obj.getClass())
+			return false;
 		Personaje other = (Personaje) obj;
-		return color == other.color && energia == other.energia && Objects.equals(nombre, other.nombre)
+		return Objects.equals(color, other.color) && energia == other.energia && Objects.equals(nombre, other.nombre)
 				&& Objects.equals(posicion, other.posicion);
 	}
 
 	@Override
 	public String toString() {
-		return String.format("nombre=%s, energia=%s, color=%s, posicion=%s", nombre, energia, color, posicion);
+		return String.format("nombre=%s, energia=%s, color=%s, posicion=(%s)", nombre, energia, color, posicion);
 	}
 
 }
@@ -1043,7 +1091,7 @@ public class Personaje {
 
 ## Paquetes
 
-Hasta ahora, los programas que has realizado constaban de una sola clase. En este apartado hemos visto como poco a poco va creciendo el número de clases a utilizar por un programa. Por lo que se necesita una forma de estructurar nuestras clases.
+Hasta ahora, los programas que has realizado constaban de una sola clase o muy pocas. En este apartado hemos visto como poco a poco va creciendo el número de clases a utilizar por un programa. Por lo que se necesita una forma de estructurar nuestras clases.
 
 Para ello existen los paquetes, que no son más que agrupaciones de clases relacionadas. Al fin y al cabo esto no es más que diferentes directorios con sus clases. Pero para que una clase pertenezca a un paquete no basta con colocarla en un determinado directorio, sino que la primera instrucción del fichero `.java` debe indicar el paquete al que pertenece.
 
@@ -1054,22 +1102,22 @@ package videojuego;
 ...
 ~~~
 
-Para poder hacer referencia a una clase dentro de otra, debemos utilizar su nombre cualificado que es el nombre de la clase precedido por la ruta de los diferentes paquetes a los que pertenece, separados por `.`.
+Para poder hacer referencia a una clase dentro de otra, debemos utilizar su nombre cualificado que es el nombre de la clase precedido por la ruta de los diferentes paquetes a los que pertenece (comenzamos en la raíz de la jerarquía y vamos descendiendo), separados por `.`.
 ~~~java
 	...
-	int i = utilidades.Entrada.entero();
+	int i = org.iesalandalus.programacion.utilidades.Entrada.entero();
 ~~~
 
 Pero esta nomenclatura es muy engorrosa. Además si tenemos muchos paquetes, unos dentro de otros y demás, como es el caso, por ejemplo, del API de java, esto es inviable. Para poder omitir esta ruta, se utiliza la sentencia `import` que irá justo después de la sentencia `package` y antes de la definición de la clase. Podemos utilizar tantas sentencias `import` como necesitemos (una debajo de otra). Además, podemos utilizar el comodín `*` para indicar que queremos importar todas las clases de un paquete. Con el uso del `*` importamos todas las clases de ese paquete, pero no las clases que hayan en sus subpaquetes, para ello deberíamos utilizar diferentes sentencias `import`. El uso del `*` no tiene ningún inconveniente y no hace que nuestra clase vaya a ocupar más o se ejecute más lenta, ni nada de eso. Es más, el uso del `*` está recomendado.
 ~~~java
-	import utilidades.*;
+	import org.iesalandalus.programacion.utilidades.*;
 	...
 	int i = Entrada.entero();
 ~~~
 
 Pero para clases que contienen miembros estáticos, podemos utilizar la sentencia `import static` seguido por el nombre de los miembros que queremos importar o usando el `*` para importarlos todos y así evitar anteponer al miembro el nombre de la clase.
 ~~~java
-	import static utilidades.Entrada.*;
+	import static org.iesalandalus.programacion.utilidades.Entrada.*;
 	import static java.lang.Math.*;
 	...
 	double radio = entero();
@@ -1078,21 +1126,108 @@ Pero para clases que contienen miembros estáticos, podemos utilizar la sentenci
 
 ## Enumerados
 
-Los enumerados son clases especiales cuyos objetos se definen en la definición del enumerado. Para cada valor del enumerado se le asigna una constante, llamada `ordinal` empezando en 0. También contiene métodos como: `values()` que devuelve todos los valores del enumerado, `valueOf(String)` que nos devuelve el valor del enumerado representado por dicha cadena y `toString` que nos devuelve la representación del valor.
-
-Los enumerados también pueden tener atributos, constructores que deben ser privados, métodos, etc pero todo eso lo veremos más adelante.
+Los enumerados son clases especiales cuyos objetos se definen en la definición del enumerado, es decir, son conocidos en tiempo de compilación. Para declararlos utilizamos la palabra reservada `enum` seguida del identifcador del enumerado y entre las llaves encerramos los objetos, separados por comas. En su forma más sencilla sería almacenar constantes relacionadas.
 
 ~~~java
-	public enum Direccion { ARRIBA, ABAJO, DERECHA, IZQUIERDA; }
+	public enum Direccion {
+		ARRIBA,
+		ABAJO,
+		DERECHA,
+		IZQUIERDA;
+	}
+~~~
+
+Su implementación utilizando una clase, podría ser como sigue (los enumerados existen a partir de la versión 5):
+~~~java
+	public class Direccion {
+		public static final Direccion ARRIBA = new Direccion();
+		public static final Direccion ABAJO = new Direccion();
+		public static final Direccion DERECHA = new Direccion();
+		public static final Direccion IZQUIERDA = new Direccion();
+
+		private Direccion() {}
+	}
+~~~
+
+Para cada valor del enumerado se le asigna una constante, llamada `ordinal` empezando en 0. También contiene métodos como: `values()` que devuelve todos los valores del enumerado, `valueOf(String)` que nos devuelve el valor del enumerado representado por dicha cadena y `toString` que nos devuelve la representación del valor. Los enumerados tamibén se pueden utilizar en sentencias `switch`.
+
+Por ejemplo, el siguiente código recorrería los valores del enumerado y mostraría su ordinal y su representación como cadena. El bucle que hemos utilizado para recorrer los valores del ordinal es un bucle `for-each` que se utiliza para recorrer colecciones y en el que en cada iteración la variable toma un valor, pero que veremos más adelante cuando hablemos de colecciones.
+~~~java
 	...
 	for (Direccion direccion : Direccion.values()) {
 		System.out.println("Ordinal: " + direccion.ordinal() + ", nombre: " + direccion);
 	}
+	...
 ~~~
 
-> Por último nos dicen que los personajes sólo aceptarán tres colores: rojo, verde y azul. Además nos comentan que quieren que nuestro personaje pueda moverse en una determinada dirección: arriba, abajo, derecha e izquierda, y un determinado número de pasos. También nos comentan que quieren que metamos todo en un paquete llamado `videojuego`. Pues el resultado final de nuestro diagrama de clases y el código final de todas nuestras clases sería el siguiente:
+Su salida sería la que se muestra a continuación:
+~~~
+Ordinal: 0, nombre: ARRIBA
+Ordinal: 1, nombre: ABAJO
+Ordinal: 2, nombre: DERECHA
+Ordinal: 3, nombre: IZQUIERDA
+~~~
+
+Los enumerados también pueden tener atributos, constructores que deben ser privados, métodos, etc.
+
+Veamos un ejemplo de uso con su constructor y unos atributos.
+~~~java
+	public enum Mes {
+		ENERO("Enero", 31),
+		FEBRERO("Febrero", 28),
+		MARZO("Marzo", 31),
+		ABRIL("Abril", 30),
+		MAYO("Mayo", 31),
+		JUNIO("Junio", 30),
+		JULIO("Julio", 31),
+		AGOSTO("Agosto", 31),
+		SEPTIEMBRE("Septiembre", 30),
+		OCTUBRE("Octubre", 31),
+		NOVIEMBRE("Noviembre", 30),
+		DICIEMBRE("Diciembre", 31);
+
+		private String cadenaAMostrar;
+		private int numeroDias;
+
+		private Mes(String cadenaAMostrar, int numeroDias) {
+			this.cadenaAMostrar = cadenaAMostrar;
+			this.numeroDias = numeroDias;
+		}
+
+		public int getNumeroDias() {
+			return numeroDias;
+		}
+
+		@Override
+		public String toString() {
+			return cadenaAMostrar;
+		}
+	}
+	...
+	for (Mes mes : Mes.values()) {
+		System.out.println(mes + " tiene " + mes.getNumeroDias() + " días.");
+	}
+~~~
+
+Daría como salida:
+~~~
+Enero tiene 31 días.
+Febrero tiene 28 días.
+Marzo tiene 31 días.
+Abril tiene 30 días.
+Mayo tiene 31 días.
+Junio tiene 30 días.
+Julio tiene 31 días.
+Agosto tiene 31 días.
+Septiembre tiene 30 días.
+Octubre tiene 31 días.
+Noviembre tiene 30 días.
+Diciembre tiene 31 días.
+~~~
+
+> Por último nos dicen que los personajes sólo aceptarán tres colores: rojo, verde y azul (queremos que su representación como cadena sea su nombre con la primera letra en mayúsculas y lo demás en minúsculas). Además nos comentan que quieren que nuestro personaje pueda moverse en una determinada dirección: arriba, abajo, derecha e izquierda, y un determinado número de pasos  (además de como se podía mover anteriormente). También nos comentan que quieren que metamos todo en un paquete llamado `videojuego`. Pues el resultado final de nuestro diagrama de clases y el código final de todas nuestras clases sería el siguiente (debemos tener en cuenta que el diagrama de clases no me permite mostrar sus atributos o métodos, por lo que para el enumerado `Color` lo anotado junto a su representación para que quede claro):
 > <div align="center">
-> <img alt="Diagramas de clases del Personaje" src="imagenes/personaje4.png"/>
+> <img alt="Diagramas de clases del Personaje" src="imagenes/personaje6.png"/>
 > </div>
 
 ###### Direccion.java
@@ -1100,7 +1235,10 @@ Los enumerados también pueden tener atributos, constructores que deben ser priv
 package videojuego;
 
 public enum Direccion {
-	ARRIBA, ABAJO, DERECHA, IZQUIERDA;
+	ARRIBA,
+	ABAJO,
+	DERECHA,
+	IZQUIERDA;
 }
 ~~~
 ###### Color.java
@@ -1108,22 +1246,37 @@ public enum Direccion {
 package videojuego;
 
 public enum Color {
-	ROJO, VERDE, AZUL;
+	ROJO("Rojo"),
+	VERDE("Verde"),
+	AZUL("Azul");
+
+	private String cadenaAMostrar;
+
+	private Color(String cadenaAMostrar) {
+		this.cadenaAMostrar = cadenaAMostrar;
+	}
+
+	@Override
+	public String toString() {
+		return cadenaAMostrar;
+	}
 }
 ~~~
 ###### Posicion.java
 ~~~java
 package videojuego;
 
-public class Posicion {
+import java.util.Objects;
 
-	private int x;
-	private int y;
+public class Posicion {
 
 	private static final int MIN_X = 0;
 	private static final int MAX_X = 100;
 	private static final int MIN_Y = 0;
 	private static final int MAX_Y = 100;
+
+	private int x;
+	private int y;
 
 	public Posicion() {
 		x = MIN_X;
@@ -1137,10 +1290,10 @@ public class Posicion {
 
 	public Posicion(Posicion posicion) {
 		if (posicion == null) {
-			throw new IllegalArgumentException("No se puede copiar una posición nula");
+			throw new NullPointerException("No puedo copiar una posición nula.");
 		}
-		this.x = posicion.getX();
-		this.y = posicion.getY();
+		setX(posicion.getX());
+		setY(posicion.getY());
 	}
 
 	public int getX() {
@@ -1148,11 +1301,12 @@ public class Posicion {
 	}
 
 	public void setX(int x) {
-		if (x < MIN_X || x > MAX_X) {
-			throw new IllegalArgumentException("El valor de x no es correcto.");
-		} else {
-			this.x = x;
+		if (x < MIN_X) {
+			throw new IllegalArgumentException("El valor de la x es menor que el mínimo permitido.");
+		} else if (x > MAX_X) {
+			throw new IllegalArgumentException("El valor de la x es mayor que el máximo permitido.");
 		}
+		this.x = x;
 	}
 
 	public int getY() {
@@ -1160,46 +1314,34 @@ public class Posicion {
 	}
 
 	public void setY(int y) {
-		if (y < MIN_Y || y > MAX_Y) {
-			throw new IllegalArgumentException("El valor de y no es correcto.");
-		} else {
-			this.y = y;
+		if (y < MIN_Y) {
+			throw new IllegalArgumentException("El valor de la y es menor que el mínimo permitido.");
+		} else if (y > MAX_Y) {
+			throw new IllegalArgumentException("El valor de la y es mayor que el máximo permitido.");
 		}
-	}
-
-	@Override
-	public String toString() {
-		return "Posicion [x=" + x + ", y=" + y + "]";
+		this.y = y;
 	}
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + x;
-		result = prime * result + y;
-		return result;
+		return Objects.hash(x, y);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
+		if (this == obj)
 			return true;
-		}
-		if (obj == null) {
+		if (obj == null)
 			return false;
-		}
-		if (!(obj instanceof Posicion)) {
+		if (getClass() != obj.getClass())
 			return false;
-		}
 		Posicion other = (Posicion) obj;
-		if (x != other.x) {
-			return false;
-		}
-		if (y != other.y) {
-			return false;
-		}
-		return true;
+		return x == other.x && y == other.y;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("x=%s, y=%s", x, y);
 	}
 
 }
@@ -1208,21 +1350,24 @@ public class Posicion {
 ~~~java
 package videojuego;
 
+import java.util.Objects;
+
 import javax.naming.OperationNotSupportedException;
 
 public class Personaje {
+
+	private static final String PREFIJO_NOMBRE = "Personaje ";
+	private static final int ENERGIA_INICIAL = 100;
+	private static final Color COLOR_INICIAL = Color.ROJO;
+	private static final int MIN_ENERGIA = 0;
+	private static final int MAX_ENERGIA = 100;
+
+	private static int numPersonajes = 0;
 
 	private String nombre;
 	private int energia;
 	private Color color;
 	private Posicion posicion;
-
-	private static int numPersonajes = 0;
-
-	private static final int ENERGIA_INICIAL = 100;
-	private static final Color COLOR_INICIAL = Color.ROJO;
-	private static final String PREFIJO_NOMBRE = "Personaje";
-	private static final String ERROR_MOVIMIENTO = "Movimiento no permitido: ";
 
 	public Personaje() {
 		numPersonajes++;
@@ -1237,20 +1382,23 @@ public class Personaje {
 		setNombre(nombre);
 	}
 
-	public Personaje(String nombre, Posicion posicion) {
-		this(nombre);
+	public Personaje(String nombre, int energia, Color color, Posicion posicion) {
+		this();
+		setNombre(nombre);
+		setEnergia(energia);
+		setColor(color);
 		setPosicion(posicion);
 	}
 
 	public Personaje(Personaje personaje) {
+		this();
 		if (personaje == null) {
-			throw new IllegalArgumentException("No se puede copiar un personaje nulo.");
+			throw new NullPointerException("No puedo copiar un personaje nulo.");
 		}
 		nombre = personaje.getNombre();
 		energia = personaje.getEnergia();
 		color = personaje.getColor();
-		posicion = new Posicion(personaje.getPosicion());
-		numPersonajes++;
+		posicion = new Posicion(personaje.posicion);
 	}
 
 	public String getNombre() {
@@ -1258,15 +1406,23 @@ public class Personaje {
 	}
 
 	private void setNombre(String nombre) {
-		if (nombre == null || nombre.equals("")) {
-			throw new IllegalArgumentException("El nombre no puede ser nulo ni vacío.");
-		} else {
-			this.nombre = nombre;
+		if (nombre == null) {
+			throw new NullPointerException("El nombre del personaje no puede ser nulo.");
 		}
+		this.nombre = nombre;
 	}
 
 	public int getEnergia() {
 		return energia;
+	}
+
+	private void setEnergia(int energia) {
+		if (energia < MIN_ENERGIA) {
+			throw new IllegalArgumentException("El valor de la energia no puede ser menor que el mínimo establecido.");
+		} else if (energia > MAX_ENERGIA) {
+			throw new IllegalArgumentException("El valor de la energia no puede ser mayor que el máximo establecido.");
+		}
+		this.energia = energia;
 	}
 
 	public Color getColor() {
@@ -1275,28 +1431,37 @@ public class Personaje {
 
 	public void setColor(Color color) {
 		if (color == null) {
-			throw new IllegalArgumentException("El color no puede ser nulo.");
+			throw new NullPointerException("El color del personaje no puede ser nulo.");
 		}
 		this.color = color;
 	}
 
 	public Posicion getPosicion() {
-		return new Posicion(posicion);
+		return posicion;
 	}
 
 	private void setPosicion(Posicion posicion) {
 		if (posicion == null) {
-			throw new IllegalArgumentException("La posición no puede ser nula.");
+			throw new NullPointerException("La posición del personaje no puede ser nula.");
 		}
-		this.posicion = new Posicion(posicion);
+		this.posicion = posicion;
 	}
 
 	public void chocar(int posiblePerdida) {
-		energia -= posiblePerdida;
+		setEnergia(energia - posiblePerdida);
 	}
 
 	public void charlar(int posibleGanancia) {
-		energia += posibleGanancia;
+		setEnergia(energia + posibleGanancia);
+	}
+
+	public void mover(int x, int y) throws OperationNotSupportedException{
+		try {
+			posicion.setX(posicion.getX() + x);
+			posicion.setY(posicion.getY() + y);
+		} catch (IllegalArgumentException e) {
+			throw new OperationNotSupportedException("Movimiento no válido: " + e.getMessage());
+		}
 	}
 
 	public void mover(Direccion direccion, int pasos) throws OperationNotSupportedException {
@@ -1306,33 +1471,34 @@ public class Personaje {
 		if (pasos <= 0) {
 			throw new IllegalArgumentException("El número de pasos debe ser mayor que cero.");
 		}
+		String movimientoNoValido = "Movimiento no válido: ";
 		switch (direccion) {
 			case ARRIBA:
 				try {
 					posicion.setX(posicion.getY() + pasos);
 				} catch (IllegalArgumentException e) {
-					throw new OperationNotSupportedException(ERROR_MOVIMIENTO + e.getMessage());
+					throw new OperationNotSupportedException(movimientoNoValido + e.getMessage());
 				}
 				break;
 			case ABAJO:
 				try {
 					posicion.setX(posicion.getY() - pasos);
 				} catch (IllegalArgumentException e) {
-					throw new OperationNotSupportedException(ERROR_MOVIMIENTO + e.getMessage());
+					throw new OperationNotSupportedException(movimientoNoValido + e.getMessage());
 				}
 				break;
 			case DERECHA:
 				try {
 					posicion.setX(posicion.getX() + pasos);
 				} catch (IllegalArgumentException e) {
-					throw new OperationNotSupportedException(ERROR_MOVIMIENTO + e.getMessage());
+					throw new OperationNotSupportedException(movimientoNoValido + e.getMessage());
 				}
 				break;
 			case IZQUIERDA:
 				try {
 					posicion.setX(posicion.getX() - pasos);
 				} catch (IllegalArgumentException e) {
-					throw new OperationNotSupportedException(ERROR_MOVIMIENTO + e.getMessage());
+					throw new OperationNotSupportedException(movimientoNoValido + e.getMessage());
 				}
 				break;
 			default:
@@ -1341,62 +1507,562 @@ public class Personaje {
 	}
 
 	@Override
-	public String toString() {
-		return "Personaje [nombre=" + nombre + ", energia=" + energia +
-				", color=" + color + ", posicion=" + posicion + "]";
-	}
-
-	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((color == null) ? 0 : color.hashCode());
-		result = prime * result + energia;
-		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
-		result = prime * result + ((posicion == null) ? 0 : posicion.hashCode());
-		return result;
+		return Objects.hash(color, energia, nombre, posicion);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
+		if (this == obj)
 			return true;
-		}
-		if (obj == null) {
+		if (obj == null)
 			return false;
-		}
-		if (!(obj instanceof Personaje)) {
+		if (getClass() != obj.getClass())
 			return false;
-		}
 		Personaje other = (Personaje) obj;
-		if (color == null) {
-			if (other.color != null) {
-				return false;
-			}
-		} else if (!color.equals(other.color)) {
-			return false;
-		}
-		if (energia != other.energia) {
-			return false;
-		}
-		if (nombre == null) {
-			if (other.nombre != null) {
-				return false;
-			}
-		} else if (!nombre.equals(other.nombre)) {
-			return false;
-		}
-		if (posicion == null) {
-			if (other.posicion != null) {
-				return false;
-			}
-		} else if (!posicion.equals(other.posicion)) {
-			return false;
-		}
-		return true;
+		return Objects.equals(color, other.color) && energia == other.energia && Objects.equals(nombre, other.nombre)
+				&& Objects.equals(posicion, other.posicion);
+	}
+
+	@Override
+	public String toString() {
+		return String.format("nombre=%s, energia=%s, color=%s, posicion=(%s)", nombre, energia, color, posicion);
 	}
 
 }
 ~~~
 
 ## Ejercicios
+
+- **Persona**
+
+  Debes implementar una clase `Persona`como muestra el diagrma de clases. Por simplificar considera todos los atributos como `String`. Controla las excepciones cuando se pasan valores nulos. Los métodos `setX`son públicos por motivos didácticos que veremos en el próximo ejercicio. Cuando la hayas implementado debes reflexionar sobre si crees que es un buen diseño o no (te puede servir de ayuda la advertencia que te muestra el plugins **Sonarlint**). Crea también una clase en la que puedas probar su creación con los diferentes constructores y su uso.
+
+  <div align="center">
+  <img alt="Diagrama de clase de la clase Persona" src="imagenes/persona.png"/>
+  </div>
+
+  - Posible solución
+
+    Una posible solución podría ser la siguiente:
+
+    ###### Persona.java
+    ~~~java
+    package relacionclientela;
+
+	import java.util.Objects;
+
+	public class Persona {
+
+		private String nombre;
+		private String dni;
+		private String fechaNacimiento;
+		private String email;
+		private String telefono;
+		private String direccion;
+		private String codigoPostal;
+		private String localidad;
+
+		public Persona(String nombre, String dni, String fechaNacimiento, String email, String telefono, String direccion,
+				String codigoPostal, String localidad) {
+			setNombre(nombre);
+			setDni(dni);
+			setFechaNacimiento(fechaNacimiento);
+			setEmail(email);
+			setTelefono(telefono);
+			setDireccion(direccion);
+			setCodigoPostal(codigoPostal);
+			setLocalidad(localidad);
+		}
+
+		public Persona(Persona persona) {
+			if (nombre == null) {
+				throw new NullPointerException("La persona no puede ser nula.");
+			}
+			setNombre(persona.nombre);
+			setDni(persona.dni);
+			setFechaNacimiento(persona.fechaNacimiento);
+			setEmail(persona.email);
+			setTelefono(persona.telefono);
+			setDireccion(persona.direccion);
+			setCodigoPostal(persona.codigoPostal);
+			setLocalidad(persona.localidad);
+		}
+
+		public String getNombre() {
+			return nombre;
+		}
+
+		public void setNombre(String nombre) {
+			if (nombre == null) {
+				throw new NullPointerException("El nombre no puede ser nulo.");
+			}
+			this.nombre = nombre;
+		}
+
+		public String getDni() {
+			return dni;
+		}
+
+		public void setDni(String dni) {
+			if (dni == null) {
+				throw new NullPointerException("El DNI no puede ser nulo.");
+			}
+			this.dni = dni;
+		}
+
+		public String getFechaNacimiento() {
+			return fechaNacimiento;
+		}
+
+		public void setFechaNacimiento(String fechaNacimiento) {
+			if (fechaNacimiento == null) {
+				throw new NullPointerException("La fecha de nacimiento no puede ser nula.");
+			}
+			this.fechaNacimiento = fechaNacimiento;
+		}
+
+		public String getEmail() {
+			return email;
+		}
+
+		public void setEmail(String email) {
+			if (email == null) {
+				throw new NullPointerException("El emial no puede ser nulo.");
+			}
+			this.email = email;
+		}
+
+		public String getTelefono() {
+			return telefono;
+		}
+
+		public void setTelefono(String telefono) {
+			if (telefono == null) {
+				throw new NullPointerException("El teléfono no puede ser nulo.");
+			}
+			this.telefono = telefono;
+		}
+
+		public String getDireccion() {
+			return direccion;
+		}
+
+		public void setDireccion(String direccion) {
+			if (direccion == null) {
+				throw new NullPointerException("La dirección no puede ser nula.");
+			}
+			this.direccion = direccion;
+		}
+
+		public String getCodigoPostal() {
+			return codigoPostal;
+		}
+
+		public void setCodigoPostal(String codigoPostal) {
+			if (codigoPostal == null) {
+				throw new NullPointerException("El código postal no puede ser nulo.");
+			}
+			this.codigoPostal = codigoPostal;
+		}
+
+		public String getLocalidad() {
+			return localidad;
+		}
+
+		public void setLocalidad(String localidad) {
+			if (localidad == null) {
+				throw new NullPointerException("La localidad no puede ser nula.");
+			}
+			this.localidad = localidad;
+		}
+
+		@Override
+		public int hashCode() {
+			return Objects.hash(codigoPostal, direccion, dni, email, fechaNacimiento, localidad, nombre, telefono);
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			Persona other = (Persona) obj;
+			return Objects.equals(codigoPostal, other.codigoPostal) && Objects.equals(direccion, other.direccion)
+					&& Objects.equals(dni, other.dni) && Objects.equals(email, other.email)
+					&& Objects.equals(fechaNacimiento, other.fechaNacimiento) && Objects.equals(localidad, other.localidad)
+					&& Objects.equals(nombre, other.nombre) && Objects.equals(telefono, other.telefono);
+		}
+
+		@Override
+		public String toString() {
+			return String.format(
+					"nombre=%s, dni=%s, fechaNacimiento=%s, email=%s, telefono=%s, direccion=%s, codigoPostal=%s, localidad=%s",
+					nombre, dni, fechaNacimiento, email, telefono, direccion, codigoPostal, localidad);
+		}
+
+	}
+    ~~~
+
+    ###### PruebaPersona.java
+    ~~~java
+	public class PruebaPersona {
+
+		public static void main(String[] args) {
+			Persona persona;
+			persona = new Persona("José Ramón", "11X",  "01/01/2000", "950112233", "jr@gmail.com", "C/JR 1", "04004", "Almería");
+			System.out.println(persona);
+		}
+
+	}
+    ~~~
+
+- **Persona refactorizado**
+
+  Después de analizar los problemas del diseño anteriorte sugiero que implementes la clase `Persona` de la siguiente manera. Al igual que en el ejemplo anterior he dejado todos los métodos `setX` públicos para hacer que las clase sean mutables (aunque en la realidad eso no sería lo más adecuado) y te propongo que en la implementación evites el problema del aliasing que pudiese surgir. Crea también una clase en la que puedas probar su creación con los diferentes constructores y su uso, y analiza las diferencias con la solución anterior.
+
+  <div align="center">
+  <img alt="Diagrama de clase de la clase Persona" src="imagenes/persona1.png"/>
+  </div>
+
+  - Posible solución
+
+    Una posible solución podría ser la siguiente:
+
+    ###### DireccionPostal.java
+    ~~~java
+    import java.util.Objects;
+
+	public class DireccionPostal {
+
+		private String direccion;
+		private String codigoPostal;
+		private String localidad;
+
+		public DireccionPostal(String direccion, String codigoPostal, String localidad) {
+			setDireccion(direccion);
+			setCodigoPostal(codigoPostal);
+			setLocalidad(localidad);
+		}
+
+		public DireccionPostal(DireccionPostal direccionPostal) {
+			if (direccionPostal == null) {
+				throw new NullPointerException("La direción postal no puede ser nula.");
+			}
+			setDireccion(direccionPostal.direccion);
+			setCodigoPostal(direccionPostal.codigoPostal);
+			setLocalidad(direccionPostal.localidad);
+		}
+
+		public String getDireccion() {
+			return direccion;
+		}
+
+		public void setDireccion(String direccion) {
+			if (direccion == null) {
+				throw new NullPointerException("La direción no puede ser nula.");
+			}
+			this.direccion = direccion;
+		}
+
+		public String getCodigoPostal() {
+			return codigoPostal;
+		}
+
+		public void setCodigoPostal(String codigoPostal) {
+			if (codigoPostal == null) {
+				throw new NullPointerException("El código postal no puede ser nulo.");
+			}
+			this.codigoPostal = codigoPostal;
+		}
+
+		public String getLocalidad() {
+			return localidad;
+		}
+
+		public void setLocalidad(String localidad) {
+			if (localidad== null) {
+				throw new NullPointerException("La localidad no puede ser nula.");
+			}
+			this.localidad = localidad;
+		}
+
+		@Override
+		public int hashCode() {
+			return Objects.hash(codigoPostal, direccion, localidad);
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			DireccionPostal other = (DireccionPostal) obj;
+			return Objects.equals(codigoPostal, other.codigoPostal) && Objects.equals(direccion, other.direccion)
+					&& Objects.equals(localidad, other.localidad);
+		}
+
+		@Override
+		public String toString() {
+			return String.format("direccion=%s, codigoPostal=%s, localidad=%s", direccion, codigoPostal, localidad);
+		}
+
+	}
+    ~~~
+
+    ###### DatosContaco.java
+    ~~~java
+    import java.util.Objects;
+
+	public class DatosContacto {
+		private String telefono;
+		private String email;
+		private DireccionPostal direccionPostal;
+
+		public DatosContacto(String telefono, String email, DireccionPostal direccionPostal) {
+			setTelefono(telefono);
+			setEmail(email);
+			setDireccionPostal(direccionPostal);
+		}
+
+		public DatosContacto(DatosContacto datosContacto) {
+			if (datosContacto == null) {
+				throw new NullPointerException("Los datos de contacto no pueden ser nulos.");
+			}
+			setTelefono(datosContacto.telefono);
+			setEmail(datosContacto.email);
+			setDireccionPostal(datosContacto.direccionPostal);
+		}
+
+		public String getTelefono() {
+			return telefono;
+		}
+
+		public void setTelefono(String telefono) {
+			if (telefono == null) {
+				throw new NullPointerException("El teléfono no puede ser nulo.");
+			}
+			this.telefono = telefono;
+		}
+
+		public String getEmail() {
+			return email;
+		}
+
+		public void setEmail(String email) {
+			if (email == null) {
+				throw new NullPointerException("El email no puede ser nulo.");
+			}
+			this.email = email;
+		}
+
+		public DireccionPostal getDireccionPostal() {
+			return new DireccionPostal(direccionPostal);
+		}
+
+		public void setDireccionPostal(DireccionPostal direccionPostal) {
+			if (direccionPostal == null) {
+				throw new NullPointerException("La dirección postal no puede ser nula.");
+			}
+			this.direccionPostal = new DireccionPostal(direccionPostal);
+		}
+
+		@Override
+		public int hashCode() {
+			return Objects.hash(direccionPostal, email, telefono);
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			DatosContacto other = (DatosContacto) obj;
+			return Objects.equals(direccionPostal, other.direccionPostal) && Objects.equals(email, other.email)
+					&& Objects.equals(telefono, other.telefono);
+		}
+
+		@Override
+		public String toString() {
+			return String.format("telefono=%s, email=%s, direccionPostal=(%s)", telefono, email, direccionPostal);
+		}
+
+	}
+    ~~~
+
+    ###### DatosPersonales.java
+    ~~~java
+    import java.util.Objects;
+
+	public class DatosPersonales {
+		private String nombre;
+		private String dni;
+		private String fechaNacimiento;
+
+		public DatosPersonales(String nombre, String dni, String fechaNacimiento) {
+			setNombre(nombre);
+			setDni(dni);
+			setFechaNacimiento(fechaNacimiento);
+		}
+
+		public DatosPersonales(DatosPersonales datosPersonales) {
+			if (datosPersonales == null) {
+				throw new NullPointerException("Los datos personales no pueden ser nulos.");
+			}
+			setNombre(datosPersonales.nombre);
+			setDni(datosPersonales.dni);
+			setFechaNacimiento(datosPersonales.fechaNacimiento);
+		}
+
+		public String getNombre() {
+			return nombre;
+		}
+
+		public void setNombre(String nombre) {
+			if (nombre == null) {
+				throw new NullPointerException("El nombre no puede ser nulo.");
+			}
+			this.nombre = nombre;
+		}
+
+		public String getDni() {
+			return dni;
+		}
+
+		public void setDni(String dni) {
+			if (dni == null) {
+				throw new NullPointerException("El DNI no puede ser nulo.");
+			}
+			this.dni = dni;
+		}
+
+		public String getFechaNacimiento() {
+			return fechaNacimiento;
+		}
+
+		public void setFechaNacimiento(String fechaNacimiento) {
+			if (fechaNacimiento == null) {
+				throw new NullPointerException("La fecha de nacimiento no puede ser nula.");
+			}
+			this.fechaNacimiento = fechaNacimiento;
+		}
+
+		@Override
+		public int hashCode() {
+			return Objects.hash(dni, fechaNacimiento, nombre);
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			DatosPersonales other = (DatosPersonales) obj;
+			return Objects.equals(dni, other.dni) && Objects.equals(fechaNacimiento, other.fechaNacimiento)
+					&& Objects.equals(nombre, other.nombre);
+		}
+
+		@Override
+		public String toString() {
+			return String.format("nombre=%s, dni=%s, fechaNacimiento=%s", nombre, dni, fechaNacimiento);
+		}
+
+	}
+    ~~~
+
+    ###### Persona.java
+    ~~~java
+    import java.util.Objects;
+
+	public class Persona {
+
+		private DatosPersonales datosPersonales;
+		private DatosContacto datosContacto;
+
+		public Persona(DatosPersonales datosPersonales, DatosContacto datosContacto) {
+			setDatosPersonales(datosPersonales);
+			setDatosContacto(datosContacto);
+		}
+
+		public Persona(Persona persona) {
+			if (persona == null) {
+				throw new NullPointerException("La persona no puede ser nula.");
+			}
+			setDatosPersonales(datosPersonales);
+			setDatosContacto(datosContacto);
+		}
+
+		public DatosPersonales getDatosPersonales() {
+			return new DatosPersonales(datosPersonales);
+		}
+
+		public void setDatosPersonales(DatosPersonales datosPersonales) {
+			if (datosPersonales == null) {
+				throw new NullPointerException("Los datos personales no pueden ser nulos.");
+			}
+			this.datosPersonales = new DatosPersonales(datosPersonales);
+		}
+		public DatosContacto getDatosContacto() {
+			return new DatosContacto(datosContacto);
+		}
+
+		public void setDatosContacto(DatosContacto datosContacto) {
+			if (datosContacto == null) {
+				throw new NullPointerException("Los datos de contacto no pueden ser nulos.");
+			}
+			this.datosContacto = new DatosContacto(datosContacto);
+		}
+
+		@Override
+		public int hashCode() {
+			return Objects.hash(datosContacto, datosPersonales);
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			Persona other = (Persona) obj;
+			return Objects.equals(datosContacto, other.datosContacto)
+					&& Objects.equals(datosPersonales, other.datosPersonales);
+		}
+
+		@Override
+		public String toString() {
+			return String.format("datosPersonales=(%s), datosContacto=(%s)", datosPersonales, datosContacto);
+		}
+
+	}
+    ~~~
+
+    ###### PruebaPersona.java
+    ~~~java
+    public class PruebaPersona {
+
+		public static void main(String[] args) {
+			Persona persona;
+			DireccionPostal direccionPostal = new DireccionPostal("C/JR 1", "04004", "Almería");
+			DatosContacto datosContacto = new DatosContacto("950112233", "jr@gmail.com", direccionPostal);
+			DatosPersonales datosPersonales = new DatosPersonales("José Ramón", "11X",  "01/01/2000");
+			persona = new Persona(datosPersonales, datosContacto);
+			System.out.println(persona);
+		}
+
+	}
+    ~~~

@@ -1,16 +1,16 @@
 Algoritmo AreaCirculo
 	
-	//Declaración
-	radio Es Real
+	// Declaración
+	Definir radio Como Real
 	
-	//Entrada
-	Escribir Sin Saltar "Introduce el radio del círculo: "
+	// Entrada
+	Escribir 'Introduce el radio del círculo: 'Sin Saltar
 	Leer radio
 	
-	//Procesamiento
-	area <- PI * radio * radio
+	// Procesamiento
+	area <- PI*radio*radio
 	
-	//Salida
-	Escribir "El área del círculo es: " area
+	// Salida
+	Escribir 'El área del círculo es: ', area
 	
 FinAlgoritmo

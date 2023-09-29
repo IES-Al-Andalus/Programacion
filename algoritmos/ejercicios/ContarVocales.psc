@@ -1,15 +1,15 @@
 Algoritmo ContarVocales
 	
-	frase, vocales Es Caracter
-	i, j, numVocales Es Entero
+	frase, vocales Son Caracter
+	i, j, numVocales Son Entero
 	
 	// Entrada
-	Escribir Sin Saltar 'Introduce una frase: ' Sin Saltar
+	Escribir Sin Saltar "Introduce una frase: "
 	Leer frase
 	
 	// Procesamiento
 	frase <- Minusculas(frase)
-	vocales <- 'aeiouáéíóúü'
+	vocales <- "aeiouáéíóúü"
 	numVocales <- 0
 	
 	Para i<-0 Hasta Longitud(frase) - 1 Hacer

@@ -1,12 +1,12 @@
 Algoritmo AsignarValor
 	
-	//Declaración
-	num Es Entero
+	// Declaración
+	Definir num Como Entero
 	
-	//Asignación
+	// Asignación
 	num <- 5
 	
-	//Escritura
-	Escribir "El valor de num es: ", num
+	// Escritura
+	Escribir 'El valor de num es: ', num
 	
 FinAlgoritmo

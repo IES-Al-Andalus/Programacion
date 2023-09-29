@@ -18,9 +18,8 @@ A la hora de escribir los algoritmos utilizaré la sintaxis propuesta en el prog
 - [Tipos de datos](#tipos-de-datos)
 - [Operadores](#operadores)
 - [Funciones](#funciones)
-- [Sentencias secuenciales](#sentencias-secuenciales)
-- [Sentencias condicionales](#sentencias-condicionales)
-- [Sentencias repetitivas](#sentencias-repetitivas)
+- [Sentencias](#sentencias)
+- [Personalización del lenguaje](#personalizacion-del-lenguaje)
 - [Ejercicios](#ejercicios)
 
 ## Algoritmo
@@ -35,16 +34,16 @@ Dicho programa permite expresar un algoritmo en pseudocódigo utilizando diferen
 Todo algoritmo en pseudocódigo tiene la siguiente estructura general:
 ~~~
      Algoritmo SinTitulo
-          instruccion 1;
-          instruccion 1;
+          sentencia 1
+          sentencia 2
                .
                .
                .
-          instruccion n;
+          sentencia n
      FinAlgoritmo
 ~~~
 - El algoritmo comienza con la palabra clave `Algoritmo` seguida del nombre del mismo.
-- Le sigue una secuencia de instrucciones.
+- Le sigue una secuencia de sentencias.
 - Finaliza con la palabra `FinAlgoritmo`.
 
 ## Variables
@@ -60,7 +59,11 @@ El nombre o identificador de la variable debe comenzar con letras, y puede conte
 
   `numero Es Entero`
 
+  `Definir numero Como Entero`
+
   `numero, numCifra Son Enteros`
+
+  `Definir numero, numCifras Como Enteros`
 
 ## Tipos de datos
 
@@ -135,7 +138,15 @@ Función|Significado
 `CONVERTIRANUMERO(X)`|Recibe una cadena de caracteres que contiene un número y devuelve una variable numérica con el mismo.
 `CONVERTIRATEXTO(S)`|Recibe un real y devuelve una variable numérica con la representación como cadena de caracteres de dicho real.
 
-## Sentencias secuenciales
+## Sentencias
+
+En psudocódigo podemos encontrar tres grandes grupos de sentencias (esta clasificación es según mi parecer, aunque otros programadores o programadoras hacen otras clasificaciones): **secuenciales**, **condicionales** y **repetitivas**. 
+
+Una sentencia no es más que una orden específica para realizar una determinada acción.
+
+Vamos a verlas una a una:
+
+##### Sentencias secuenciales
 
 En PSeInt podemos encontrarnos con 3 tipos de sentencias secuenciales (que se ejecutan una detrás de otra):
 
@@ -161,16 +172,16 @@ En PSeInt podemos encontrarnos con 3 tipos de sentencias secuenciales (que se ej
 
   `Escribir Sin Saltar "Introduce un número: "`
 
-## Sentencias condicionales
+##### Sentencias condicionales
 Son sentencias que permiten alterar el flujo del algoritmo y ejecutar unas sentencias u otras dependiendo del valor de una condición.
 
 - **Condicional** Permite evaluar una condición y ejecutar una serie de sentencias si dicha condición es verdadera u otras si es falsa.
 
   ~~~
   Si <condicion> Entonces
-    <instruccionesV>
+    <sentenciasV>
   SiNo
-    <instruccionesF>
+    <sentenciasF>
   FinSi
   ~~~
 
@@ -178,64 +189,64 @@ Son sentencias que permiten alterar el flujo del algoritmo y ejecutar unas sente
 
   El bloque `SiNo` no es obligatorio y en ese caso (la condición es falsa) no se ejecuta ninguna sentencia y se continúa por la sentencia después del `FinSi`
 
-- **Selección múltiple** En este caso nos permite seleccionar las instrucciones a ejecutar dependiendo del valor de una variable numérica.
+- **Selección múltiple** En este caso nos permite seleccionar las sentencias a ejecutar dependiendo del valor de una variable numérica.
 
   ~~~
   Segun <variable> Hacer
     <número1>:
-      <instrucciones1>
+      <sentencias1>
     <número2>,<número3>:
-      <instrucciones23>
+      <sentencias23>
     <...>
     De Otro Modo:
-      <instrucciones>
+      <sentencias>
   FinSegun
   ~~~
 
-  Al ejecutarse, se evalúa el contenido de la variable y se ejecuta la secuencia de instrucciones asociada con dicho valor.
+  Al ejecutarse, se evalúa el contenido de la variable y se ejecuta la secuencia de sentencias asociada con dicho valor.
 
-  Si una opción incluye varios números, la secuencia de instrucciones asociada se debe ejecutar cuando el valor de la variable es uno de esos números.
+  Si una opción incluye varios números, la secuencia de sentencias asociada se debe ejecutar cuando el valor de la variable es uno de esos números.
 
-  Opcionalmente, se puede agregar una opción final, denominada `De Otro Modo`, cuya secuencia de instrucciones asociada se ejecutará sólo si el valor almacenado en la variable no coincide con ninguna de las opciones anteriores.
+  Opcionalmente, se puede agregar una opción final, denominada `De Otro Modo`, cuya secuencia de sentencias asociada se ejecutará sólo si el valor almacenado en la variable no coincide con ninguna de las opciones anteriores.
 
-## Sentencias repetitivas
-Son sentencias que también alteran el flujo del algoritmo, permitiendo repetir una secuencia de instrucciones mientras se de alguna condición. También son conocidas como bucles.
+##### Sentencias repetitivas
+Son sentencias que también alteran el flujo del algoritmo, permitiendo repetir una secuencia de sentencias mientras se de alguna condición. También son conocidas como bucles.
 
-- **Mientras** Esta instrucción ejecuta una secuencia de instrucciones mientras se cumpla una condición.
+- **Mientras** Esta sentencias ejecuta una secuencia de sentencias mientras se cumpla una condición.
 
   ~~~
   Mientras <condicion> Hacer
-    <instrucciones>
+    <sentencias>
   FinMientras
   ~~~
 
   Se evalúa la condición y si es verdadera se ejecuta la secuencia de sentencias. En cada paso se vuelve a repetir el proceso.
 
-  La secuencia de instrucciones no tiene por qué ejecutarse ni una sola vez, si al principio la condición es falsa.
+  La secuencia de sentencias no tiene por qué ejecutarse ni una sola vez, si al principio la condición es falsa.
 
-  Si la condición siempre es verdadera entraremos en un bucle infinito debido a que la secuencia de instrucciones no hace que la condición llegue a ser falsa.
+  Si la condición siempre es verdadera, entraremos en un bucle infinito debido a que la secuencia de sentencias no hace que la condición llegue a ser falsa.
 
-- **Repetir** Esta sentencia ejecuta un conjunto de instrucciones también mientras una condición sea verdadera, pero esta condición se evalúa al final del bucle. PSeInt tiene otras sentencias `Repetir` pero nosotros utilizaremos la siguiente por su similitud con java.
+- **Repetir** Esta sentencia ejecuta un conjunto de sentencias mientras una condición sea verdadera, pero esta condición se evalúa al final del bucle. PSeInt tiene otras sentencias `Repetir` pero nosotros utilizaremos la siguiente por su similitud con java.
 
   ~~~
   Repetir
-    <instrucciones>
+    <sentencias>
   Mientras Que <condicion>
   ~~~
 
-  La secuencia de instrucciones siempre se ejecuta al menos una vez, al contrario que en el bucle anterior.
+  La secuencia de sentencias siempre se ejecuta al menos una vez, al contrario que en el bucle anterior.
 
-  También debemos modificar las variables que afectan a la condición en la secuencia de instrucciones del cuerpo del bucle o de lo contrario se puede entrar en un bucle infinito.
+  También debemos modificar las variables que afectan a la condición en la secuencia de sentencias del cuerpo del bucle o de lo contrario se puede entrar en un bucle infinito.
 
-- **Para** Este tipo de bucles se utiliza para repetir una secuencia de instrucciones un número determinado de veces.
+- **Para** Este tipo de bucles se utiliza para repetir una secuencia de sentencvias un número determinado de veces.
 
   ~~~
   Para <variable> <- <inicial> Hasta <final> Con Paso <paso> Hacer
-    <instrucciones>
+    <sentencias>
   FinPara
   ~~~
 
-  La variable toma el valor `<inicial>` y se ejecuta la secuencia de intrucciones. Se incrementa la variable el valor de `<paso>` y se comprueba si la variable ha superado el valor `<final>`. Si no lo ha superado, se vuelve a ejecutar la secuencia de sentencias y se repite el proceso hasta que la variable supera el valor `<final>`.
+  La variable toma el valor `<inicial>` y se ejecuta la secuencia de sentencias. Se incrementa la variable el valor de `<paso>` y se comprueba si la variable ha superado el valor `<final>`. Si no lo ha superado, se vuelve a ejecutar la secuencia de sentencias y se repite el proceso hasta que la variable supera el valor `<final>`.
 
   La claúsula `Con Paso` se puede obviar, en cuyo caso el incremento será de 1.
 

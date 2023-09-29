@@ -1,21 +1,21 @@
 Algoritmo AprobadoSuspenso
 	
-	//Declaración
-	nota Es Real
-	calificacion Es Caracter
+	// Declaración
+	Definir nota Como Real
+	Definir calificacion Como Cadena
 	
-	//Lectura
-	Escribir Sin Saltar "Introduce tu nota: "
+	// Lectura
+	Escribir 'Introduce tu nota: 'Sin Saltar
 	Leer nota
 	
-	//Procesamiento
-	Si (nota >= 5) Entonces
-		calificacion = "aprobado"
+	// Procesamiento
+	Si (nota>=5) Entonces
+		calificacion <- 'aprobado'
 	SiNo
-		calificacion = "suspenso"
+		calificacion <- 'suspenso'
 	FinSi
 	
-	//Escritura
-	Escribir "Estás " calificacion
+	// Escritura
+	Escribir 'Estás ', calificacion
 	
 FinAlgoritmo

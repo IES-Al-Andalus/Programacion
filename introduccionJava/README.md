@@ -108,7 +108,7 @@ A continuación te muestro un vídeo de cómo crear el programa `HolaMundo` en *
 </video>
 </div>
 
-En esto otro vídeo os muestro como hace los mismo pero desde **IntelliJ IDEA**. 
+En esto otro vídeo os muestro como hacer los mismo pero desde **IntelliJ IDEA**. 
 
 <div align="center">
 <video width="600" controls="controls">

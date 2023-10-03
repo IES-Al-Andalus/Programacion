@@ -108,7 +108,15 @@ A continuación te muestro un vídeo de cómo crear el programa `HolaMundo` en *
 </video>
 </div>
 
-Como podéis apreciar, el proceso es muy sencillo. Ahora sólo nos queda empezar a programar!!!
+En esto otro vídeo os muestro como hace los mismo pero desde **IntelliJ IDEA**. 
+
+<div align="center">
+<video width="600" controls="controls">
+<source type="video/mp4" src="videos/HolaMundoIntelliJ.mp4"></source>
+</video>
+</div>
+
+Como podéis apreciar, el proceso es muy sencillo en ambos entornos y bastante sencillo en ambos casos. Ahora sólo nos queda empezar a programar!!!
 
 
 ## Identificadores

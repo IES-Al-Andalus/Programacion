@@ -1,0 +1,24 @@
+1
+00:00:00,000 --> 00:00:17,400
+Creamos un nuevo proyecto al que le daremos como nombre 'HolaMundo', especificaremos que el lenguaje será Java y que el sistema de construcción será el propio IntelliJ
+
+2
+00:00:18,400 --> 00:00:32,720
+En la carpeta 'src' crearemos una nueva clase llamada 'HolaMundo' que estará incluida en el paquete: 'org.example'
+
+3
+00:00:35,880 --> 00:00:39,640
+Ahora generaremos el método 'main' escribiendo dicha palabra y cuando nos lo sugiera aceptaremos
+
+4
+00:00:40,320 --> 00:00:48,480
+Seguidamente queremos mostrar el mensaje para lo que escribiremos 'Sys' y cuando nos sugiera 'System' aceptamos. Escribimos el punto y una 'o' y cuando nos sugiera 'out' aceptamos. Pulsamos otra vez el punto y la 'p' y cuando sugiera 'println' aceptamos.
+
+5
+00:00:49,280 --> 00:00:54,280
+Finalmente escribimos entre comillas el mensaje que queremos mostrar
+
+6
+00:00:55,880 --> 00:01:07,520
+Ejecutamos el actual fichero y podemos observar como nos muestra por consola el mensaje que le hemos indicado
+

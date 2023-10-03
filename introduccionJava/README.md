@@ -384,7 +384,7 @@ Son las sentencias que se ejecutan una detrás de otra, secuencialmente. Por lo 
 
     <div align="center">
     <video width="600" controls="controls">
-    <source type="video/mp4" src="videos/usoLibreriaEntrada.mp4"></source>
+    <source type="video/mp4" src="videos/usoLibreriaEntradaEclipse.mp4"></source>
     </video>
     </div>
 

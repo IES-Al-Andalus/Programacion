@@ -1,0 +1,40 @@
+1
+00:00:00,000 --> 00:00:05,000
+Creamos un nuevo proyecto java
+
+2
+00:00:05,166 --> 00:00:10,000
+Indicamos el nombre del proyecto: HolaMundo
+
+3
+00:00:10,166 --> 00:00:15,000
+Dejamos el JSE-17 que viene por defecto y le indicamos que no queremos que cree el fichero module-info.java
+
+4
+00:00:15,166 --> 00:00:20,000
+Finalizamos
+
+5
+00:00:25,000 --> 00:00:30,000
+Creamos una nueva clase en la carpeta src
+
+6
+00:00:31,333 --> 00:00:40,333
+La nombramos HolaMundo y le indicamos que cree el método main
+
+7
+00:00:43,800 --> 00:00:51,600
+Escribimos syso y pulsamos Ctrl + espacio para que autocomplete
+
+8
+00:00:52,100 --> 00:00:59,133
+Introducimos entre comillas el texto que queremos mostrar
+
+9
+00:01:01,966 --> 00:01:06,966
+Lo ejecutamos
+
+10
+00:01:07,000 --> 00:01:10,933
+Observamos que efectivamente muestra el texto que le hemos indicado
+

@@ -423,7 +423,7 @@ Son las sentencias que se ejecutan una detrás de otra, secuencialmente. Por lo 
 
 	dependencies {
         ...
-		api 'com.github.JRJimenezReyes:entrada:1.0.3'
+		implementation 'com.github.JRJimenezReyes:entrada:1.0.3'
 		...
 	}
 

@@ -21,6 +21,7 @@ Al igual que en otros apartados, el objetivo principal es que tengáis una ampl�
 - [Operadores](#operadores)
 - [Comentarios](#comentarios)
 - [Sentencias](#sentencia)
+- [Empaquetado de la aplicación](#empaquetado-de-la-aplicación)
 - [Ejercicios](#ejercicios)
 
 ## ¿Qué es Java?
@@ -108,7 +109,7 @@ A continuación te muestro un vídeo de cómo crear el programa `HolaMundo` en *
 </video>
 </div>
 
-En esto otro vídeo os muestro como hacer los mismo pero desde **IntelliJ IDEA**. 
+En esto otro vídeo os muestro cómo hacer lo mismo pero desde **IntelliJ IDEA**. 
 
 <div align="center">
 <video width="600" controls="controls">
@@ -396,19 +397,48 @@ Son las sentencias que se ejecutan una detrás de otra, secuencialmente. Por lo 
     </video>
     </div>
 
-    Si por el contrario utilizas **Gradle** para gestionar tus dependencias, simplemente desbes incluir en tu fichero `build.gradle`lo siguiente:
+	En este otro vídeo podrás ver cómo realizar el mismo proceso, pero en **IntelliJ**.
+
+    <div align="center">
+    <video width="600" controls="controls">
+    <source type="video/mp4" src="videos/usoLibreriaEntradaIntelliJ.mp4"></source>
+    </video>
+    </div>
+
+    Si por el contrario utilizas **Gradle** para gestionar tus dependencias, simplemente debes incluir en tu fichero `build.gradle` lo siguiente:
 
 	~~~gradle
+	plugins {
+    	id 'java'
+    	id 'application'
+	}
+
+	....
+
 	repositories {
         ...
 	    maven { url 'https://jitpack.io' }
+		...
 	}
 
 	dependencies {
         ...
 		api 'com.github.JRJimenezReyes:entrada:1.0.3'
+		...
+	}
+
+	...
+
+	application {
+    	mainClassName = 'org.example.Main'
+	}
+
+	run {
+    	standardInput = System.in
 	}
 	~~~
+
+	El plugin `application` de gradle genera una tarea que permite ejecutarlo directamente desde gradle: `./gradlew run`. A ese plugin hay que indicarle cúal es la clase principal para poder ejecutarla. También le indicamos que a la hora de ejecutar utilice como entrada estandar `System.in`. Las líneas relacionadas con los repositorios y las dependencias le indican a gradle dónde encontrar la dependencia y qué dependencia vamos a utilizar.
 
     La clase `Entrada` nos ofrece los siguientes métodos para leer algunos de los tipos primitivos vistos en este apartado y que podemos utilizar de la siguiente forma (he mostrado la declaración y la asignación juntas para recalcar el tipo de dato al que podemos hacer la asignación, pero podría estar dividida en dos sentencias separadas):
 
@@ -603,6 +633,33 @@ Son sentencias que también alteran el flujo de un programa, permitiendo repetir
   - `continue`, `break`, `goto`: Son sentencias que **no se deben utilizar** ya que rompen el flujo del programa de una forma inadecuada y que se pueden evitar mediante otros métodos más ortodoxos. La excepción a lo dicho, sería el uso de `break` en una sentencia `case`. Por tanto, no hablaré ni siquiera de ellas.
 
   - **Sentencias de control de errores**: Son sentencias que permiten controlar si se ha producido un error inesperado en el programa y actuar en consecuencia para que el programa no termine de forma inesperada. Es a lo que se llama **excepciones** en java y que veremos con detalle en otro apartado.
+
+## Empaquetado de la aplicación
+Una vez que tenemos lista nuestra aplicación, la forma idónea para compartirla es empaquetándola en un archivo `jar` y ese archivo podemos ejecutarlo en cualquier sistema que tenga instalada una máquina virtual de java, mediante el comando `java -jar nombreArchivo.jar`. En este archivo `jar` van nuestras clases, los recursos necesarios, las clases asociadas a las librerias que utilice nuestro proyecto y un archivo `MANIFEST.MF` en el que se dan las directivas para poder ejecutar correctamente el arvhico `jar` (entre otras debe indicarse cúal es la clase principal).
+
+En el siguiente vídeo podemos ver cómo generar en **IntelliJ** el archivo `jar` de la aplicación que realizamos anteriormente y que utilizaba la librería `Entrada`. 
+
+<div align="center">
+<video width="600" controls="controls">
+<source type="video/mp4" src="videos/empaquetandoJarIntelliJ.mp4"></source>
+</video>
+</div>
+
+Si por el contrario utilizas **Gradle** para gestionar tus dependencias, simplemente debes incluir en tu fichero `build.gradle` lo siguiente (además de lo que ya tenías):
+
+~~~gradle
+jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    manifest {
+        attributes 'Main-Class': 'org.example.Main'
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+~~~
+
+Ahora puedes generar el archivo `jar` mediante el comando `./gradlew jar`. El archivo `jar` lo habrá generado en el directorio `build/libs` y lo habrá nombrado como `PruebaEntradaGradle-1.0` (donde `1.0` es el número de versión que hemos indicado en el archivo `build.gradle`). Para ejecutarlo simplemente tecleamos `java -jar build/libs/PruebaEntradaGradle-1.0.jar` en nuestra consola.
 
 ## Ejercicios
 

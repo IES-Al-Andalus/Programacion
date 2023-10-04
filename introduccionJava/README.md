@@ -430,7 +430,7 @@ Son las sentencias que se ejecutan una detrás de otra, secuencialmente. Por lo 
 	...
 
 	application {
-    	mainClassName = 'org.example.Main'
+    	mainClass.set('org.example.Main')
 	}
 
 	run {

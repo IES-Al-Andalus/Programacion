@@ -12,8 +12,10 @@ public class MediaNumeros {
 				cantidadNumeros++;
 			}
 		} while (numero != 0);
-		if (cantidadNumeros < 0) {
+		if (cantidadNumeros > 0) {
 			System.out.println("La media de los números introducidos es: " + (float)suma / cantidadNumeros);
+		} else {
+			System.out.println("No se ha introducido ningún número para mostrar su media.");
 		}
 	}
 

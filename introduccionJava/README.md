@@ -148,7 +148,7 @@ Anteriormente he mencionado las reglas para nombrar un identificador correctamen
 
 |Tipo de identificador|Convención|Ejemplo|
 |----------------------------------------|
-|Clase|Empieza por una lerta mayúscula y cóntinua por minúsculas. Si es la concatenación de varias palabras, cada una de ellas empieza también por letra mayúscula.|`Hola`, `HolaMundo`|
+|Clase|Empieza por una letra mayúscula y cóntinua por minúsculas. Si es la concatenación de varias palabras, cada una de ellas empieza también por letra mayúscula.|`Hola`, `HolaMundo`|
 |Variable o Método|Se nombra todo en minúsculas. Si es la concatenación de varias palabras, cada una de ellas empieza también por letra mayúscula.|`sueldo`, `numeroCaracteres`|
 |Constante|Se nombra todo en mayúsculas. Si es la concatenación de varias palabras, éstas se separan por el símbolo `_`|`PI`, `CANTIDAD_MAXIMA`|
 
@@ -339,7 +339,7 @@ Son las sentencias que se ejecutan una detrás de otra, secuencialmente. Por lo 
 
 - **Declaración**: Como ya hemos dicho, en java es necesario declarar cualquier variable que vayamos a utilizar. Ya hablamos de cómo se declaraban las variables. Simplemente comentar que una variable se puede declarar en cualquier punto del programa, pero que antes de utilizarla es necesario declararla.
 
-- **Expresión**: Una expresión por si misma puede que no tenga sentido si no va ligada a una asignación. Pero hay casos en los que eso no es del todo cierto, ya que por ejemplo la sentencia `posicion++;` tiene un efecto sobre la variable `posicion`. Sin embargo, la sentencia, por poner un ejemplo, `posicion > 0;` por sí misma no tiene sentido, aunque es válida.
+- **Expresión**: Una expresión por si misma puede que no tenga sentido si no va ligada a una asignación. Pero hay casos en los que eso no es del todo cierto, ya que por ejemplo la sentencia `posicion++;` tiene un efecto sobre la variable `posicion`. Sin embargo, la sentencia, por poner un ejemplo, `posicion > 0;` por sí misma no tiene sentido, por lo que no es válida.
 
 - **Bloque de sentencias**: Un bloque de sentencias es una agrupación de sentencias que se comportan como una unidad. Los bloques de sentencias se definen encerrando la sentencia o sentencias entre los caracteres `{` y `}`. Además los bloques de sentencias se pueden anidar uno dentro de otro, como se muestra en el siguiente ejemplo:
   ~~~java
@@ -357,7 +357,7 @@ Son las sentencias que se ejecutan una detrás de otra, secuencialmente. Por lo 
   ~~~
   Como se puede apreciar hay un bloque dentro de otro. Si os acordáis, ya hablamos del ámbito de las variables. Pues en este ejemplo podemos apreciar que el ámbito de la variable `numero` es el bloque externo y el ámbito de la variable `posicion` es el bloque interno. Por lo que la variable `posicion` se creará al declararla en el bloque interno y se destruirá al salir de dicho bloque, por lo que fuera del mismo no nos podremos referir a ella. Sin embargo el ámbito de la variable `numero` es el bloque externo, por lo que dentro del bloque interno también podremos referirnos a ella ya que todavía sigue existiendo.
 
-  En todo el programa es imprescindible respetar la indentación correcta, para que la legibilidad del código sea adecuada. Esto cobra vital importancia cuando hablamos de bloques y bloques anidadas, ya que si no nos será muy difícil distinguir qué sentencia pertenece a qué bloque.
+  En todo el programa es imprescindible respetar la indentación correcta, para que la legibilidad del código sea adecuada. Esto cobra vital importancia cuando hablamos de bloques y bloques anidados, ya que si no nos será muy difícil distinguir qué sentencia pertenece a qué bloque.
 
 - **Sentencia nula**: Aunque el caracter `;` es el terminador de sentencias, también se puede considerar como la sentencia nula, al igual que se podría considerar un bloque de sentencias vacío `{}`. Hay que tener cuidado con esto y, si se utiliza, hacerlo con cautela. En los ejercicios veremos algunos ejemplos del peligro que puede conllevar un mal uso de la misma.
 
@@ -383,7 +383,7 @@ Son las sentencias que se ejecutan una detrás de otra, secuencialmente. Por lo 
 
   - **Lectura**: Para realizar la lectura desde teclado en java hay que tener conocimientos más avanzados, que ahora no vamos a detallar ya que podrían hacer perdernos en los detalles. Por ello he desarrollado una librería que os facilitará la vida y podréis llevarla a cabo por medio de una sola sentencia, evitando tener en cuenta todos los detalles asociados.
 
-    He creado una librería que empaqueta la clase `Entrada` que es la que contine los diferentes métodos de lectura. Para poder utilizarla, simplemente tenéis descargaros la última versión de la misma de mi [repositorio](https://github.com/JRJimenezReyes/entrada/releases){:target="_blank"}. En la siguiente imagen se puede ver cómo poder descargar la última versión a día de hoy (el archivo `entrada-1.0.3.jar` en este caso).
+    He creado una librería que empaqueta la clase `Entrada` que es la que contine los diferentes métodos de lectura. Para poder utilizarla, simplemente tenéis que descargaros la última versión de la misma de mi [repositorio](https://github.com/JRJimenezReyes/entrada/releases){:target="_blank"}. En la siguiente imagen se puede ver cómo poder descargar la última versión a día de hoy (el archivo `entrada-1.0.3.jar` en este caso).
 
 	<div align="center">
 	<img alt="Descarga de la última versión de la librería" src="imagenes/versionesLibrería.png"/>
@@ -1029,7 +1029,7 @@ Ahora puedes generar el archivo `jar` mediante el comando `./gradlew jar`. El ar
 					medio = numero2;
 					menor = numero1;
 				}
-				System.out.println("Los números ordenados de mayora a menor: " + mayor + ", " + medio + ", " + menor);
+				System.out.println("Los números ordenados de mayor a menor: " + mayor + ", " + medio + ", " + menor);
 			}
 
 		}
@@ -1089,7 +1089,7 @@ Ahora puedes generar el archivo `jar` mediante el comando `./gradlew jar`. El ar
 
 - **Sumar números**
 
-  Escribir un programa java que lea por teclado números enteros hasta que se introduzca un cero muestre por pantalla la suma de los mismos.
+  Escribir un programa java que lea por teclado números enteros hasta que se introduzca un cero y entonces muestre por pantalla la suma de los mismos.
 
   - Posible solución
     ~~~java
@@ -1116,7 +1116,7 @@ Ahora puedes generar el archivo `jar` mediante el comando `./gradlew jar`. El ar
 
 - **Media números**
 
-  Escribir un programa java que lea por teclado números enteros hasta que se introduzca un cero muestre por pantalla la media de los mismos.
+  Escribir un programa java que lea por teclado números enteros hasta que se introduzca un cero y entonces muestre por pantalla la media de los mismos.
 
   - Posible solución
     ~~~java
@@ -1134,8 +1134,10 @@ Ahora puedes generar el archivo `jar` mediante el comando `./gradlew jar`. El ar
 						cantidadNumeros++;
 					}
 				} while (numero != 0);
-				if (cantidadNumeros < 0) {
+				if (cantidadNumeros > 0) {
 					System.out.println("La media de los números introducidos es: " + (float)suma / cantidadNumeros);
+				} else {
+					System.out.println("No se ha introducido ningún número para mostrar su media.");
 				}
 			}
 
@@ -1426,7 +1428,7 @@ Ahora puedes generar el archivo `jar` mediante el comando `./gradlew jar`. El ar
 
 - **Tiradas monedas**
 
-  Escribir un programa java que simule la tirada de dos monedas. El programa pedirá por teclado el número de veces a tirar las monedas (entre 1 y 50). Mostrará el resultado de cada tirada y luego nos informará del número de caras, del número de cruces, de el número máximo de caras dobles consecutivas y del número máximo de cruces dobles consecutivas, que han salido.
+  Escribir un programa java que simule la tirada de dos monedas. El programa pedirá por teclado el número de veces a tirar las monedas (entre 1 y 50). Mostrará el resultado de cada tirada y luego nos informará del número de caras, del número de cruces, del número máximo de caras dobles consecutivas y del número máximo de cruces dobles consecutivas, que han salido.
 
   - Posible solución
     ~~~java

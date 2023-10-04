@@ -35,7 +35,7 @@ public class OrdenarTresNumeros {
 			medio = numero2;
 			menor = numero1;
 		}
-		System.out.println("Los números ordenados de mayora a menor: " + mayor + ", " + medio + ", " + menor);
+		System.out.println("Los números ordenados de mayor a menor: " + mayor + ", " + medio + ", " + menor);
 	}
 
 }

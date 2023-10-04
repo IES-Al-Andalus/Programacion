@@ -1,0 +1,36 @@
+1
+00:00:00,000 --> 00:00:02,560
+Partimos de nuestro proyecto en el que probamos la librería 'Entrada'
+
+2
+00:00:02,840 --> 00:00:05,720
+Iremos a la opción 'File | Project Structure ...' (Ctr+Alt+Shift+S)
+
+3
+00:00:06,680 --> 00:00:10,559
+Crearemos un nuevo artefacto del tipo JAR escogiendo la opción 'From modules with dependencies...'
+
+4
+00:00:10,880 --> 00:00:26,120
+Elegimos la clase principal y aceptamos
+
+5
+00:00:29,920 --> 00:00:38,720
+Construiremos el archivo JAR mediante la opción 'Build | Build Artifacts...' y escogemos 'Build'.
+
+6
+00:00:40,200 --> 00:00:46,960
+Cuando concluya habrá generado el archivo JAR que se encontrará el directorio 'out/artifacts' de nuestro proyecto
+
+7
+00:00:48,240 --> 00:01:23,320
+Ahora crearemos una nueva configuración para poder ejecutar y construir el archivo JAR. Elegimos el camino al archivo JAR, le damos un nombre a la configuración e indicamos que antes de ejecutarlo lo vuelva a construir
+
+8
+00:01:24,680 --> 00:01:33,640
+Ahora ya estamos listos para ejecutarlo
+
+9
+00:01:34,640 --> 00:01:55,640
+También podemos ejecutarlo desde la consola mediante la orden 'java -jar out/artifacts/PruebaEntrada_jar/PruebaEntrada.jar'
+

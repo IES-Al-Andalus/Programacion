@@ -1,0 +1,20 @@
+1
+00:00:00,000 --> 00:00:11,400
+Creamos un nuevo proyecto y lo nombramos 'PruebaEntrada' e indicamos que sea Java y que lo construya IntelliJ
+
+2
+00:00:13,120 --> 00:00:27,240
+Creamos una nueva carpeta en el proyecto llamada 'libs' y copiamos ahí la librería
+
+3
+00:00:28,000 --> 00:00:39,600
+Ahora simplemente debemos añadir dicho archivo como librería a nuestro proyecto
+
+4
+00:00:42,080 --> 00:01:43,760
+Creamos una clase llamada 'PruebaEntrada' en el paquete 'org.example'. Ahí crearemos nuestro método 'main' y podremos utilizar nuestra librería como si de otra se tratase (Tecleamos 'Entr' y ya nos sugiere la librería y luego elegimos el método adecuado)
+
+5
+00:01:45,080 --> 00:02:00,040
+Finalmente ejecutamos nuestro programa y podemos ver que si el tipo de dato no es el esperado, te lo vuelve a pedir
+

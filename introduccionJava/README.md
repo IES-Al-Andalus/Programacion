@@ -409,8 +409,8 @@ Son las sentencias que se ejecutan una detrás de otra, secuencialmente. Por lo 
 
 	~~~gradle
 	plugins {
-    	id 'java'
-    	id 'application'
+		id 'java'
+		id 'application'
 	}
 
 	....
@@ -430,11 +430,11 @@ Son las sentencias que se ejecutan una detrás de otra, secuencialmente. Por lo 
 	...
 
 	application {
-    	mainClass.set('org.example.Main')
+		mainClass.set('org.example.Main')
 	}
 
 	run {
-    	standardInput = System.in
+		standardInput = System.in
 	}
 	~~~
 

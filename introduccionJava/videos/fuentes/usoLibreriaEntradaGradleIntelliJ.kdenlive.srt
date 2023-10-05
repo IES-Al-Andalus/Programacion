@@ -1,0 +1,28 @@
+1
+00:00:02,000 --> 00:00:14,240
+Creamos un nuevo proyecto al que nombramos como 'PruebaEntradaGradle'. Indicamos que el lenguaje sea 'Java', el sistema de construcción sea 'Gradle' y el lenguaje utilizado por gradle sea 'Groovy'
+
+2
+00:00:19,800 --> 00:00:57,000
+Personalizamos el archivo 'build.gradle' tal y como indicamos en los apuntes
+
+3
+00:00:59,080 --> 00:01:06,720
+Guardamos y construimos el proyecto
+
+4
+00:01:08,360 --> 00:01:17,440
+Finalizada la construcción podemos ver como se ha añadido la librería al apartado de librerías externas, por lo que ya sólo nos queda utilizarla
+
+5
+00:01:20,240 --> 00:02:29,760
+Creamos una nueva clase para utilizarla tal y como hemos hecho en los ejemplos anteriores (la clase será idéntica)
+
+6
+00:02:31,000 --> 00:02:48,640
+Ejecutamos y podemos ver como es gradle el encargado de su construcción y ejecución
+
+7
+00:02:50,320 --> 00:03:15,320
+También podemos ir a la consola y ejecutar el comando './gradlew run' que ejecutará la tarea 'run' de graadle que será la encargada de ejecutar nuestra clase principal (notar que en la consola virtual de IntelliJ salen algunos saltos de línea que en una consola real no sale)
+

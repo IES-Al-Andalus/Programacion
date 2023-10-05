@@ -440,7 +440,7 @@ Son las sentencias que se ejecutan una detrás de otra, secuencialmente. Por lo 
 
 	El plugin `application` de gradle genera una tarea que permite ejecutarlo directamente desde gradle: `./gradlew run`. A ese plugin hay que indicarle cúal es la clase principal para poder ejecutarla. También le indicamos que a la hora de ejecutar utilice como entrada estandar `System.in`. Las líneas relacionadas con los repositorios y las dependencias le indican a gradle dónde encontrar la dependencia y qué dependencia vamos a utilizar.
 
-    En este vídeo te muestro cómo crear un proyecto en **IntelliJ** utilizando como sistema de construcción `gradle`.
+    En este vídeo te muestro cómo crear un proyecto en **IntelliJ** utilizando como sistema de construcción `gradle` y que utilice la librería `entrada-1.0.3`.
 
     <div align="center">
     <video width="600" controls="controls">

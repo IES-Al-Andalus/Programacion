@@ -521,7 +521,7 @@ Son sentencias que permiten alterar el flujo del programa y ejecutar unas senten
     ...
   ~~~
 
-- **Selección múltiple**: En este caso se nos permite seleccionar las instrucciones a ejecutar dependiendo del valor de una expresión entera, caracter o cadena.
+- **Selección múltiple**: En este caso se nos permite seleccionar las instrucciones a ejecutar dependiendo del valor de una expresión `int`, `byte`, `short` (o sus clases de envoltura), caracter, cadena o enumerado.
 
   ~~~java
 	swicth (<expresion>) {
@@ -543,9 +543,147 @@ Son sentencias que permiten alterar el flujo del programa y ejecutar unas senten
 
   Opcionalmente, se puede agregar una opción final, denominada `default`, cuya secuencia de instrucciones asociada se ejecutará sólo si el valor almacenado en la variable no coincide con ninguna de las opciones anteriores. Esta clausula es opcional y se puede omitir.
 
-  La sentencia `break` hace que no se siga haciendo comprobaciones.
+  La sentencia `break` hace que la ejecución del `switch`` no continúe, ya que de lo contrario entraría en todos los casos siguientes.
 
   Para cada grupo de sentencias no es necesario utilizar los caracteres `{}` para delimitar los bloques de cada opción ya que en esta construcción cada bloque está perfectamente delimitado.
+
+  Veamos un ejemplo de una primera versión que nos devuelve el número de días de un mes sin tener en cuenta si el año es bisiesto o no:
+
+  ~~~java
+	int dias = 0;
+	switch (mes) {
+		case 1:
+			dias = 31;
+			break;
+		case 2:
+			dias = 28;
+			break;
+		case 3:
+			dias = 31;
+			break;
+		case 4:
+			dias = 30;
+			break;
+		case 5:
+			dias = 31;
+			break;
+		case 6:
+			dias = 30;
+			break;
+		case 7:
+			dias = 31;
+			break;
+		case 8:
+			dias = 31;
+			break;
+		case 9:
+			dias = 30;
+			break;
+		case 10:
+			dias = 31;
+			break;
+		case 11:
+			dias = 30;
+			break;
+		case 12:
+			dias = 31;
+			break;
+		default:
+			throw new IllegalArgumentException("El número del mes no es correcto.");
+	}
+	System.out.println("El mes: " + mes + " tiene " + dias + " días.");
+  ~~~
+
+  Este ejemplo se podría mejorar de la siguiente forma:
+  ~~~java
+	int dias = 0;
+	switch (mes) {
+		case 1:
+		case 3:
+		case 5:
+		case 7:
+		case 8:
+		case 10:
+		case 12:
+			dias = 31;
+			break;
+		case 2:
+			dias = 28;
+			break;
+		case 4:
+		case 6:
+		case 9:
+		case 11:
+			dias = 30;
+			break;
+		default:
+			throw new IllegalArgumentException("El número del mes no es correcto.");
+	}
+	System.out.println("El mes: " + mes + " tiene " + dias + " días.");
+  ~~~
+
+  E incluso poner las diferentes etiquetas separadas por comas:
+  ~~~java
+	int dias = 0;
+	switch (mes) {
+		case 1, 3, 5, 7, 8, 10, 12:
+			dias = 31;
+			break;
+		case 2:
+			dias = 28;
+			break;
+		case 4, 6, 9, 11:
+			dias = 30;
+			break;
+		default:
+			throw new IllegalArgumentException("El número del mes no es correcto.");
+	}
+	System.out.println("El mes: " + mes + " tiene " + dias + " días.");
+  ~~~
+
+  Pero a partir de **java 14**, la sentencia `switch` se mejoró bastante y ya no es necesaria la claúsula `break` y se pueden sustituir los `:` por `->`, quedando la sentencia anterior como sigue:
+
+  ~~~java
+	int dias = 0;
+	switch (mes) {
+		case 1, 3, 5, 7, 8, 10, 12 -> dias = 31;
+		case 2 -> dias = 28;
+		case 4, 6, 9, 11 -> dias = 30;
+		default -> throw new IllegalArgumentException("El número del mes no es correcto.");
+	}
+	System.out.println("El mes: " + mes + " tiene " + dias + " días.");
+  ~~~
+
+  Por último esta sentencia también se podría utilizar en una expresión de la siguiente forma:
+  ~~~java
+	int dias = switch (mes) {
+		case 1, 3, 5, 7, 8, 10, 12 -> 31;
+		case 2 -> 28;
+		case 4, 6, 9, 11 -> 30;
+		default -> throw new IllegalArgumentException("El número del mes no es correcto.");
+	};
+	System.out.println("El mes: " + mes + " tiene " + dias + " días.");
+  ~~~
+
+  Si fuesen necesarias varias sentencias para cada etiqueta o conjunto de ellas se podrían encerrar entre `{}` y  utilizar la sentencia `yield` para devolver el valor deseado:
+  ~~~java
+	int dias = switch (mes) {
+		case 1, 3, 5, 7, 8, 10, 12 -> {
+			System.out.println("31 días");
+			yield 31;
+		}
+		case 2 -> {
+			System.out.println("28 días");
+			yield 28;
+		}
+		case 4, 6, 9, 11 -> {
+			System.out.println("30 días");
+			yield 30;
+		}
+		default -> throw new IllegalArgumentException("El número del mes no es correcto.");
+	};
+	System.out.println("El mes: " + mes + " tiene " + dias + " días.");
+  ~~~
 
 ##### Sentencias repetitivas
 Son sentencias que también alteran el flujo de un programa, permitiendo repetir una secuencia de instrucciones mientras se cumpla alguna condición. También son conocidas como bucles.

@@ -543,7 +543,7 @@ Son sentencias que permiten alterar el flujo del programa y ejecutar unas senten
 
   Opcionalmente, se puede agregar una opción final, denominada `default`, cuya secuencia de instrucciones asociada se ejecutará sólo si el valor almacenado en la variable no coincide con ninguna de las opciones anteriores. Esta clausula es opcional y se puede omitir.
 
-  La sentencia `break` hace que la ejecución del `switch`` no continúe, ya que de lo contrario entraría en todos los casos siguientes.
+  La sentencia `break` hace que la ejecución del `switch` no continúe, ya que de lo contrario entraría en todos los casos siguientes.
 
   Para cada grupo de sentencias no es necesario utilizar los caracteres `{}` para delimitar los bloques de cada opción ya que en esta construcción cada bloque está perfectamente delimitado.
 

@@ -16,6 +16,7 @@ Al igual que en otros apartados, el objetivo principal es que tengáis una ampl�
 - [Clases en Java](#clases-en-java)
 - [Objetos en Java](#objetos-en-java)
 - [Excepciones](#excepciones)
+- [Registros](#registros)
 - [Paquetes](#paquetes)
 - [Enumerados](#enumerados)
 - [Ejercicios](#ejercicios)
@@ -41,7 +42,7 @@ La programación orientada a objetos se basa en una serie de conceptos o caracte
 
 ## Clases en Java
 
-Una clase es el molde que define cómo será el nuevo tipo de dato que se está creando. Además una clase también define el comportamiento que tendrán todos los objetos que pertenezcan a dicha clase.
+Una clase es el molde que define cómo será el nuevo tipo de dato que se está creando. Además, una clase también define el comportamiento que tendrán todos los objetos que pertenezcan a dicha clase.
 
 Por tanto, una clase se podrá definir por su estado o estructura y por su comportamiento. El **estado** vendrá dado por los **atributos** de la clase y el **comportamiento** por los **métodos** de la misma. El comportamiento para todos los objetos de una clase es el mismo, lo que varía es el estado de cada objeto.
 
@@ -116,7 +117,7 @@ public class Personaje {
 
 Los métodos son los encargados de realizar operaciones que sean aplicables a los objetos de la clase. Además, para conservar el principio de ocultación, deberían ser los únicos que modificasen el valor de los atributos.
 
-Los métodos contarán con una cabecera y un cuerpo. La cabecera será la declaración del método en sí, en la que indicaremos entre otros: el nivel de acceso, el valor devuelto, el nombre, la lista de parámetros. El cuerpo será el código que implemente dicho método.
+Los métodos contarán con una cabecera y un cuerpo. La cabecera será la declaración del método en sí, en la que indicaremos entre otros: el nivel de acceso, el valor devuelto, el nombre y la lista de parámetros. El cuerpo será el código que implemente dicho método.
 
 Para declarar un método debemos utilizar la siguiente sintaxis:
 ~~~java
@@ -129,11 +130,13 @@ Los modificadores de contenido son casi iguales que para los atributos pero su s
 - `final`: indica que el método no puede ser sobreescrito en la cadena de herencia. Lo veremos en otro apartado.
 - `abstract`: indica que es un método abstracto y que no tiene implementación. Lo veremos en otro apartado.
 
-La lista de parámetros es una lista de declaraciones separadas por comas, es decir, de tipos de dato y nombre separados por coma. Un método también puede aceptar un número variable de parámetros del mismo tipo mediante la construcción `varargs` que tampoco me detendré a mencionar, ya que no es más que una forma transparente de pasar como parámetro un array.
+La lista de parámetros es una lista de declaraciones separadas por comas, es decir, de tipo de dato y nombre separados por coma. 
+
+Un método también puede aceptar un número variable de parámetros del mismo tipo mediante la construcción `varargs`, utilizando la sintaxis `tipo... nombre`, lo que indica que puede recibir un numero variable de parámetros del tipo indicado. Esta sintaxis no es más que una forma transparente de pasar como parámetro un array.
 
 Del apartado `[excepciones]` ya hablaremos algo más adelante.
 
-Los métodos que devuelven algo distinto de `void` deben acabar con una sentencia `return valor` y devolverán un `valor` del mismo tipo del declarado.
+Los métodos que devuelven algo distinto de `void` deben acabar con una sentencia `return valor` y devolverán un `valor` del mismo tipo del declarado. Es importante notar que el valor devuelto deberá ser almacenado en alguna variaable (o mostrado por consola en su caso) o de lo contrario se perderá.
 
 Los métodos se pueden sobrecargar, es decir, definir varios métodos que tengan el mismo identificador pero con distinta lista de parámetros (sin tener en cuenta el valor devuelto). Un uso muy común de sobrecarga de métodos es en el caso de los constructores.
 
@@ -167,9 +170,9 @@ Podemos distinguir tres:
 
 Si nosotros no definimos ningún constructor, el compilador generará uno por defecto por nosotros. Recuerda el método que aparecía en el diagrama de clases que se llamaba igual que la clase.
 
-Un constructor puede llamar a otro constructor. Por ejemplo, un constructor con parámetros, primero podría querer llamar al constructor por defecto y luego realizar otras acciones. Para ello se utiliza la llamada a `this()` que llamaría al constructor por defecto o si indicamos los parámetros adecuados, a otro constructor. La llamada a `this()` debe ser la primera línea de la implementación del constructor.
+Un constructor puede llamar a otro constructor. Por ejemplo, un constructor con parámetros, primero podría querer llamar al constructor por defecto y luego realizar otras acciones. Para ello se utiliza la llamada a `this()` que llamaría al constructor por defecto o si indicamos los parámetros adecuados, a otro constructor con dichos parámetros. La llamada a `this()` (o sus homólagas con parámetros) debe ser la primera línea de la implementación del constructor.
 
-En los constructores (y en muchos otros métodos) es típico que el parámetro del método se llame igual que el atributo cuyo valor queremos establecer. Con esto surge un problema ya que dentro del método cuando utilicemos dicho nombre, nos estaremos refiriendo al parámetro y no al atributo. Para eliminar la ambigüedad podemos utilizar la palabra clave `this` que se refiere a la clase en cuestión y mediante la utilización del operador `.` podremos acceder al atributo deseado:
+En los constructores (y en muchos otros métodos, como por ejemplo en los métodos de modificación o setters, que veremos más adelate) es típico que el parámetro del método se llame igual que el atributo cuyo valor queremos establecer. Con esto surge un problema de ambigüedad, ya que dentro del método cuando utilicemos dicho nombre, nos estaremos refiriendo al parámetro y no al atributo. Para eliminar dicha ambigüedad debemos utilizar la palabra clave `this` que se refiere a la clase en cuestión y mediante la utilización del operador `.` podremos acceder al atributo deseado:
 
 > Si añadimos los constructores a nuestro ejemplo de `Personaje`, el código podría quedarnos así:
 
@@ -203,7 +206,7 @@ public class Personaje {
 ~~~
 
 ###### Métodos de acceso y modificación
-Son aquellos métodos que nos permiten consultar y/o establecer el valor de los atributos.
+Son aquellos métodos que nos permiten consultar y/o establecer el valor de los atributos. A veces, nos referimos a ellos como getters y setters respectivamente.
 
 Los métodos de consulta se nombran como `getNombre` donde `Nombre` es el nombre del atributo que queremos consultar. En el caso de que sea un atributo de tipo `boolean` se utiliza `isNombre` para realizar la consulta.
 
@@ -213,13 +216,13 @@ Cierto es que estos métodos podrían tener el nombre que quisiéramos, pero por
 
 Para cumplir con el principio de ocultación, la norma general es:
 - Definiremos los atributos con una visibilidad `private`.
-- Pensaremos qué atributos queremos que sean accesibles desde fuera y creamos métodos de consulta para los mismos con una visibilidad `public`. Generalmente, para todos los atributos querremos que se pueda consultar su valor.
+- Pensaremos qué atributos queremos que sean accesibles desde fuera y creamos métodos de consulta para los mismos con una visibilidad `public`. Generalmente, para todos los atributos querremos que se pueda consultar su valor, aunque habría que estudiar cada caso concreto.
 - Pensaremos qué atributos queremos que se puedan modificar, pasándole un nuevo valor. Ten en cuenta que habrá atributos que no tenga mucho sentido que podamos cambiar a nuestro antojo ya que: no tiene sentido cambiar dicho atributo una vez creado el objeto, depende de otros atributos que se pueda modificar o no, al modificar este atributo también habría que modificar otros para que nuestra clase guarde la consistencia, etc. Una vez decididos qué atributos queremos que se puedan modificar crearemos sus métodos de modificación con una visibilidad `public`.
-- Habrá atributos para los que no queramos crear métodos de modificación pero para los que tenemos que hacer ciertas validaciones antes de modificar el valor de dicho atributo. Para estos atributos es una buena práctica crear métodos de modificación con visibilidad `private` que usarán otros métodos, como pudiera ser el constructor, para que lleve a cabo dichas validaciones. Es una buena costumbre llamar a los métodos `set` para modificar el valor de los atributos.
+- Habrá atributos para los que no queramos crear métodos de modificación, pero para los que tenemos que hacer ciertas validaciones antes de modificar el valor de dicho atributo. Para estos atributos es una buena práctica crear métodos de modificación con visibilidad `private` que usarán otros métodos, como pudiera ser el constructor, para que lleve a cabo dichas validaciones. Es una buena costumbre llamar a los métodos `set` para modificar el valor de los atributos.
 
 De esta forma estamos aislando a los clientes de nuestra clase de los cambios en la estructura de la misma.
 
-> Siguiendo con nuestro ejemplo del videojuego, debemos proporcionar a la clase de métodos de acceso para los atributos, pero sin embargo los métodos de modificación de los mismos no tienen sentido para todos los atributos, ya que no tiene sentido cambiar el nombre de un personaje una vez creado y tampoco tiene sentido modificar a nuestro antojo la energía de un personaje ya que se hará por medio de otros métodos. Por tanto, nuestro diagrama de clases queda como sigue:
+> Siguiendo con nuestro ejemplo del videojuego, debemos proporcionar a la clase de métodos de acceso para los atributos. Sin embargo, los métodos de modificación de los atributos no tienen sentido para todos ellos, ya que no tiene sentido cambiar el nombre de un personaje una vez creado y tampoco tiene sentido modificar a nuestro antojo la energía de un personaje, ya que se hará por medio de otros métodos. Por tanto, nuestro diagrama de clases queda como sigue:
 > <div align="center">
 > <img alt="Diagramas de clases del Personaje" src="imagenes/personaje1.png"/>
 > </div>
@@ -274,13 +277,13 @@ public class Personaje {
 
 Hasta ahora hemos visto los miembros (atributos y métodos) de instancia, es decir, los miembros particulares de cada uno de los objetos que se creen de dicha clase. Pero hay situaciones en las que debemos compartir información entre todos los objetos de una clase o que queremos utilizar algún método de la clase sin necesidad de tener que instanciar un objeto de la misma. Estos son los miembros de clase.
 
-Los **atributos de clase** son atributos compartidos por todos los objetos de la clase y en su definición utilizamos el modificador `static`. Por ejemplo, imaginemos que queremos saber en cada momento cuántos objetos se han creado de una clase. Para ello definiremos un atributo de clase que en el constructor de la misma se irá incrementando. Para los atributos de clase podemos definir los métodos de acceso y/o modificación según convenga.
+Los **atributos de clase** son atributos compartidos por todos los objetos de la clase y en su definición utilizamos el modificador `static`. Por ejemplo, imaginemos que queremos saber en cada momento cuántos objetos se han creado de una clase. Para ello definiremos un atributo de clase que, en el constructor de la misma, se irá incrementando. Para los atributos de clase podemos definir los métodos de acceso y/o modificación según convenga.
 
 En java no existen las **constantes** como tal, pero podemos conseguir el mismo efecto declarando dicho atributo como `static final`. Por tanto, sería un atributo de clase que no se puede modificar. Estos atributos no tiene sentido que tengan métodos de acceso y mucho menos de modificación ya que no está permitida. Es normal utilizar las constantes para indicar los valores por defecto que utilizaremos en los constructores, entre otros usos. Este tipo de atributos hay que inicializarlos en la declaración o en el constructor y ya no se le podrá cambiar el valor.
 
 Los **métodos de clase** son métodos que no se aplican sobre objetos, sino sobre la clase en sí. Para definir estos métodos debemos utilizar el modificador `static` en su declaración. Para invocar estos métodos no es necesario instanciar ningún objeto de la clase. Estos métodos se invocan sobre la clase (su nombre). Aunque no lo creas ya has utilizado métodos de clase sin saberlo: `Math.random()`, `Entrada.entero()`, etc. Otra aspecto importante sobre estos métodos es que en su cuerpo **sólo pueden hacer referencia a miembros de clase** y en ningún caso a miembros de instancia.
 
-Es común declarar **clases de utilidades** que sólo tienen métodos de clase y atributos de clase. Por ejemplo, la clase `Math` o la clase `Entrada`. Dado que no vamos a instanciar objetos de dichas clases, debemos evitar que el compilador nos cree el constructor por defecto y para ello definiremos un **constructor privado** con un simple comentario en su cuerpo y así nos aseguramos que nadie va a instanciar un objeto de nuestra clase de utilidades. Esto puedes verlo en la implementación de la clase `Entrada` que os proporcioné en el apartado anterior para realizar la entrada por teclado.
+Es común declarar **clases de utilidades** que sólo tienen métodos de clase y atributos de clase. Por ejemplo, la clase `Math` o la clase `Entrada`. Dado que no vamos a instanciar objetos de dichas clases, debemos evitar que el compilador nos cree el constructor por defecto y para ello definiremos un **constructor privado** vacío y así nos aseguramos que nadie va a instanciar un objeto de nuestra clase de utilidades. Esto puedes verlo en la implementación de la clase `Entrada` que os proporcioné en el apartado anterior para realizar la entrada por teclado.
 
 > Supongamos que para nuestro videojuego queremos llevar la cuenta de los personajes que hemos ido creando y que podamos consultarlo. Además, en el constructor por defecto asignaremos un nombre que haga referencia al número de personaje. También queremos utilizar algunas constantes para los valores iniciales. Veamos cómo quedaría nuestro diagrama de clases y el código de nuestra clase. Podéis apreciar en el diagrama que los miembros estáticos aparecen subrayados (además, he hecho que se muestren con un color diferente ya que el subrayado no se aprecia lo suficiente).
 > <div align="center">
@@ -345,7 +348,7 @@ public class Personaje {
 
 ##### Relación de clientela
 
-Hasta ahora hemos declarado atributos de tipos primitivos o a lo sumo `String`. Pero una clase también puede tener atributos cuyo tipo es otra clase. Cuando una clase X declara atributos cuyo tipo es de otra clase Y, entonces se dice que **la clase X es cliente de la clase Y**.
+Hasta ahora hemos declarado atributos de tipos primitivos o a lo sumo `String`. Pero una clase también puede tener atributos cuyos tipos sean otra clase. Cuando una clase X declara atributos cuyo tipo es de otra clase Y, entonces se dice que **la clase X es cliente de la clase Y**.
 
 A veces nos ponemos a diseñar una clase y vemos que tenemos demasiados atributos de tipos primitivo. Generalmente esto nos está indicando que deberíamos crear otra clase que contenga algunos de dichos atributos relacionados y así hacer la primera clase cliente de la segunda.
 
@@ -353,7 +356,7 @@ Cuando tenemos un atributo cuyo tipo es de otra clase debemos tener en cuenta qu
 
 Más adelante hablaremos del problema del **aliasing** que debemos tener muy en cuenta.
 
-También hacer notar que en los diagramas de clase, estos atributos cuyo tipo son de otra clase no aparecen como tal en la lista de atributos. La relación de cliente se expresa en estos diagramas mediante una flecha desde una clase a la otra. La flecha se etiqueta con el nombre del atributo y la cardinalidad, que por ahora será `0..1` ya que se trata de un atributo simple y no es un array o una colección, en cuyo caso podría poner el límite superior del array o `*` si es que no tiene límite superior.
+También hacer notar que en los diagramas de clase, estos atributos cuyo tipo son de otra clase no aparecen como tal en el compartimento de atributos. La relación de clientela se expresa en estos diagramas mediante una flecha desde la clase cliente a la otra. La flecha se etiqueta con el nombre y visibilidad del atributo, y la cardinalidad, que por ahora será `1` ya que se trata de un atributo simple y no es un array o una colección, en cuyo caso podría poner el límite superior del array o `*` si es que no tiene límite superior.
 
 > Imaginemos que ahora nos dicen que nuestro personaje ocupará una posición dentro la pantalla, que podrá ir cambiando conforme se vaya moviendo. Podríamos añadir dos atributos nuevos a nuestra clase que indiquen la posición X e Y de nuestro personaje. Sin embargo, otra solución más acertada sería crear una clase llamada `Posicion` que contendrá como atributos la posición X e Y y luego hacer que nuestra clase `Personaje` sea cliente de la clase `Posicion`. Como queremos que nuestro personaje se pueda mover, permitiremos modificar la posición en X y en Y, por lo que haremos que los métodos de modificación sean públicos para poder modificar dichas coordenas desde fuera de la clase (además esto lo hacemos por motivos didácticos para luego ejemplificar algunos problemas que pueden surgir de este diseño). Para que nuestro personaje se pueda mover debemos implementar un método llamado `mover` que recibirá como parámetros el incremento en la coordenada X y el incremento en la coordenada Y, y que modifique la posición de nuestro personaje en consecuencia. Tendremos unas constantes que marcarán los límites de la coordenada X y la Y y si intentamos asignar un valor que no esté dentro de esos límites, no lo permitirá y le asignará el valor mínimo, aunque en principio no deberíamos dejar hacerlo, pero eso lo dejamos para corregirlo cuando veamos las excepciones. Veamos cómo quedaría el diagrama de clases y el código de ambas clases.
 > <div align="center">
@@ -383,8 +386,8 @@ public class Posicion {
 	}
 
 	public Posicion(Posicion posicion) {
-		setX(posicion.getX());
-		setY(posicion.getY());
+		x = posicion.x;
+		y = posicion.y;
 	}
 
 	public int getX() {
@@ -520,11 +523,11 @@ Generalmente, nos convendrá que a la hora de realizar esta operación se muestr
 	...
 	@Override
 	public String toString() {
-		return String.format("x=%s, y=%s", x, y);
+		return String.format("Posicion[x=%s, y=%s]", this.x, this.y);
 	}
 ~~~
 
-> Una vez hecho esto, ya podremos mostrar es estado de los objetos de la clase `Posicion`
+> Una vez hecho esto, ya podremos mostrar el estado de los objetos de la clase `Posicion`
 
 ~~~java
 	...
@@ -563,9 +566,9 @@ Veamos en qué consiste este problema, analizando el siguiente código:
 
 Como se puede apreciar, simplemente hemos modificado la coordenada `x` de la referencia `posicion2`, pero dicha modificación también ha afectado a la referencia `posicion1`. Si lo pensamos, es normal ya que ambas referencias apuntan al mismo objeto y cualquier modificación afectará a ambas referencias.
 
-El aliasing ocurre cuando estamos trabajando con clases mutables, es decir, se puede modificar su estado. Esto no ocurriría si la clase `Posicion` fuese inmutable y eso se podría conseguir haciendo que sus método `setX` no fuesen públicos (o no estuviesen implementados).
+El aliasing ocurre cuando estamos trabajando con clases mutables, es decir, se puede modificar su estado. Esto no ocurriría si la clase `Posicion` fuese inmutable y eso se podría conseguir haciendo que sus método `setX` no fuesen públicos (o no estuviesen implementados). Realmente, el diseño correcto para la clase `Posicion` debía ser que fuese inmutable.
 
-Dado que en nuestro ejemplo, la clase `Posicion` es mutable, debemos tenerlo muy en cuenta ya que a veces podemos tener efectos no deseados. Por ejemplo, en un método de acceso de una clase, que accede a un atributo que es una referencia a otro objeto, si devolvemos la referencia estaremos comprometiendo la integridad ya que desde fuera se podrían cambiar los valores del objeto al que apunta. Veámoslo con un ejemplo:
+Pero, dado que en nuestro ejemplo, la clase `Posicion` es mutable (lo que se hizo a drede por motivos didácticos), debemos tenerlo muy en cuenta ya que a veces podemos tener efectos no deseados. Por ejemplo, en un método de acceso de una clase, que accede a un atributo que es una referencia a otro objeto, si devolvemos la referencia estaremos comprometiendo la integridad ya que desde fuera se podrían cambiar los valores del objeto al que apunta. Veámoslo con un ejemplo:
 ~~~java
 	...
 	Personaje miPersonaje = new Personaje("Calamardo");
@@ -590,20 +593,20 @@ Por tanto, aunque depende del problema a resolver, lo normal es que creemos nuev
 El constructor copia lo que hará es crear un nuevo objeto con los valores de los atributos igualados a los de la referencia del objeto pasado como argumento. Si simplemente copiamos los valores, estaremos creando lo que se llama **copia superficial** y si la clase es cliente de otra clase mutable, podríamos encontrarnos con este problema.
 ~~~java
 	public Personaje(Personaje personaje) {
-		nombre = personaje.getNombre();
-		energia = personaje.getEnergia();
-		color = personaje.getColor();
-		posicion = personaje.getPosicion();
+		nombre = personaje.nombre;
+		energia = personaje.energia;
+		color = personaje.color;
+		posicion = personaje.posicion;
 	}
 ~~~
-Como se puede ver, para el atributo `posicion` hemos igualado la referencia, ya que el método `getPosicion` devolvía dicha referencia.
+Como se puede ver, para el atributo `posicion` hemos igualado la referencia.
 
 Para solucionarlo, utilizaremos la **copia profunda** que en vez de igualar referencias, cree nuevos objetos e iguale a dichos objetos recién creados.
 ~~~java
 	public Personaje(Personaje personaje) {
-		nombre = personaje.getNombre();
-		energia = personaje.getEnergia();
-		color = personaje.getColor();
+		nombre = personaje.nombre;
+		energia = personaje.energia;
+		color = personaje.color;
 		posicion = new Posicion(personaje.posicion);
 	}
 ~~~
@@ -640,8 +643,8 @@ public class Posicion {
 	}
 
 	public Posicion(Posicion posicion) {
-		setX(posicion.getX());
-		setY(posicion.getY());
+		x = posicion.x;
+		y = posicion.y;
 	}
 
 	public int getX() {
@@ -669,25 +672,20 @@ public class Posicion {
 	}
 
 	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof Posicion posicion)) return false;
+		return x == posicion.x && y == posicion.y;
+	}
+
+	@Override
 	public int hashCode() {
 		return Objects.hash(x, y);
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (!(obj instanceof Posicion)) {
-			return false;
-		}
-		Posicion other = (Posicion) obj;
-		return x == other.x && y == other.y;
-	}
-
-	@Override
 	public String toString() {
-		return String.format("x=%s, y=%s", x, y);
+		return String.format("Posicion[x=%s, y=%s]", this.x, this.y);
 	}
 
 }
@@ -728,9 +726,9 @@ public class Personaje {
 	}
 
 	public Personaje(Personaje personaje) {
-		nombre = personaje.getNombre();
-		energia = personaje.getEnergia();
-		color = personaje.getColor();
+		nombre = personaje.nombre;
+		energia = personaje.energia;
+		color = personaje.color;
 		posicion = new Posicion(personaje.posicion);
 	}
 
@@ -772,26 +770,20 @@ public class Personaje {
 	}
 
 	@Override
-	public int hashCode() {
-		return Objects.hash(color, energia, nombre, posicion);
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof Personaje that)) return false;
+		return energia == that.energia && Objects.equals(nombre, that.nombre) && Objects.equals(color, that.color) && Objects.equals(posicion, that.posicion);
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Personaje other = (Personaje) obj;
-		return Objects.equals(color, other.color) && energia == other.energia && Objects.equals(nombre, other.nombre)
-				&& Objects.equals(posicion, other.posicion);
+	public int hashCode() {
+		return Objects.hash(nombre, energia, color, posicion);
 	}
 
 	@Override
 	public String toString() {
-		return String.format("nombre=%s, energia=%s, color=%s, posicion=(%s)", nombre, energia, color, posicion);
+		return String.format("Personaje[nombre=%s, energía=%s, color=%s, posición=%s]", this.nombre, this.energia, this.color, this.posicion);
 	}
 
 }
@@ -802,9 +794,9 @@ public class Personaje {
 Una excepción no es más que un error o un problema que ocurre durante la ejecución de nuestro programa. Cuando se produce esta situación anómala el flujo normal del programa se interrumpe y el programa termina abruptamente. Nosotros, como buenos programadores, intentaremos por todos los medios que nuestro programa sea **robusto** y que, por tanto, sea capaz de reaccionar adecuadamente ante estas situaciones excepcionales.
 
 Imaginaos, por ejemplo, que queremos transferir un archivo por la red y lo queremos guardar en un archivo que se encuentra en un pendrive. Veamos qué situaciones anómalas se pueden dar:
-- Que el origen de donde leeremos el fichero está malformado o el fichero no existe.
+- Que el origen de donde leeremos el fichero esté malformado o el fichero no existe.
 - Que la conexión de red se pierda por algún motivo (alguién apaga la wifi, hay un problema en el router, etc.).
-- Que el pendrive está lleno y no tiene espacio para almacenar dicho fichero.
+- Que el pendrive esté lleno y no tiene espacio para almacenar dicho fichero.
 - Que en medio de la escritura del fichero, alguien saca el pendrive.
 - Que no tenemos permiso de escritura en el pendrive.
 - Etc.
@@ -812,10 +804,9 @@ Imaginaos, por ejemplo, que queremos transferir un archivo por la red y lo quere
 En java las excepciones están representadas por una clase. Las excepciones, al igual que toda clase, siguen una jerarquía de clases, que no voy a mostrar ya que ni siquiera hemos hablado de herencia, aún. Uno de los métodos más comunes de las excepciones es el método `getMessage` que devuelve una cadena con un mensaje explicativo sobre la causa de dicha excepción.
 
 Dentro de estas situaciones anómalas podemos distinguir tres categorías:
-- **Errores**: son situaciones ante las que nosotros poco podemos hacer. Este tipo de situaciones quedan fuera de nuestro alcance y terminarán el programa. Por ejemplo, que la JVM se queda sin memoria. Ante esto poco podemos hacer (además de revisar nuestro código para ver si podemos reducir el uso de memoria de alguna forma). Por ello, no se consideran excepciones propiamente dichas. Todos los errores heredan de la clase `Error`.
+- **Errores**: son situaciones ante las que nosotros poco podemos hacer. Este tipo de situaciones quedan fuera de nuestro alcance y terminarán el programa. Por ejemplo, que la JVM se quede sin memoria. Ante esto poco podemos hacer (además de revisar nuestro código para ver si podemos reducir el uso de memoria de alguna forma). Por ello, no se consideran excepciones propiamente dichas. Todos los errores heredan de la clase `Error`.
 - **Excepciones comprobadas**: son situaciones que son típicas que ocurran al tratar con ciertos recursos como disco, red, etc. Estas excepciones debemos tratarlas para evitar que nuestro programa termine abruptamente. Además, estamos obligados a tratarlas ya que si no, tendremos un error en tiempo de compilación. Todas las excepciones comprobadas heredan de la clase `Exception`, pero no de `RuntimeException`. Este tipo de excepciones es obligatorio tratarlas.
-- **Excepciones no comprobadas**: son situaciones que ocurren debido a errores que cometemos en la programación: intentar acceder a una posición de un array que no existe (`IndexOutOfBoundsException`), intentar trabajar con un objeto nulo (`NullPointerException`), pasar un argumento no válido a un método (`IllegalArgumentException`), etc. Todas estas excepciones heredan de
-`RuntimeException`. Este tipo de excepciones podemos tratarlas o no, según sea la situación.
+- **Excepciones no comprobadas**: son situaciones que ocurren debido a errores que cometemos en la programación: intentar acceder a una posición de un array que no existe (`IndexOutOfBoundsException`), intentar trabajar con un objeto nulo (`NullPointerException`), pasar un argumento no válido a un método (`IllegalArgumentException`), etc. Todas estas excepciones heredan de `RuntimeException`. Este tipo de excepciones podemos tratarlas o no, según sea la situación, pero lo que sí debemos hacer es evitar que ocurran.
 
 ##### Tratamiento de una excepción
 Cuando vamos a llamar a un método que pueda lanzar una excepción, encerraremos dicha llamada al método en un `try`. Seguida a este bloque, puede haber uno o varios bloques `catch`. Y podemos terminar con un bloque `finally`. Veamos que significa todo esto:
@@ -830,7 +821,7 @@ Cuando vamos a llamar a un método que pueda lanzar una excepción, encerraremos
 		System.out.println(e.getMessage());
 	}
 ~~~
-Los bloques `try` se pueden anidar. Además en un bloque `catch` se pueden capturar varias excepciones separando sus nombre por medio del operador `|`.
+Los bloques `try` se pueden anidar. Además en un bloque `catch` se pueden capturar varias excepciones separando sus nombres por medio del operador `|`.
 ~~~java
 	try {
 		fichero = new FileInputStream(nombreArchivo);
@@ -858,6 +849,13 @@ Para lanzar una excepción, simplemente tendremos que crear un nuevo objeto del 
 		throw new NullPointerException("El objeto pasado es nulo.");
 	}
 ~~~
+
+Este tipo de comprobación es muy común ya que siempre debemos evitar trabajar con referencias `null`y por ello, la clase de utilidades `Objects` nos ofrece el método `requireNonNull` que hace lo mismo y simplifica nuestro código bastante. El código anterior quedaría como sigue:
+~~~~java
+    Objects.requireNonNullpo(objeto, "El objeto pasado es nulo.");
+~~~~
+
+Lo bueno que tiene este método es que además nos devuelve el objeto si éste no es `null`, por lo que en los métodos `set`, por ejemplo, nos viene muy bien.
 
 > Ahora que hemos visto el tratamiento de excepciones, queremos que nuestra clase Personaje pueda informar si se ha pasado algún valor incorrecto a los métodos. Además, como os comenté también utilizaré métodos modificadores privados que se encargarán de realizar la comprobación y que se llamarán en el constructor. Además queremos que el método `mover` lance una excepción comprobada `OperationNotSupportedException` cuando estemos intentando mover la posición de nuestro personaje y éste sobrepase los límites establecidos.
 > <div align="center">
@@ -889,11 +887,9 @@ public class Posicion {
 	}
 
 	public Posicion(Posicion posicion) {
-		if (posicion == null) {
-			throw new NullPointerException("No puedo copiar una posición nula.");
-		}
-		setX(posicion.getX());
-		setY(posicion.getY());
+		Objects.requireNonNull(posicion, "No puedo copiar una posición nula.");
+		x = posicion.x;
+		y = posicion.y;
 	}
 
 	public int getX() {
@@ -923,25 +919,20 @@ public class Posicion {
 	}
 
 	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof Posicion posicion2)) return false;
+		return x == posicion2.x && y == posicion2.y;
+	}
+
+	@Override
 	public int hashCode() {
 		return Objects.hash(x, y);
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Posicion other = (Posicion) obj;
-		return x == other.x && y == other.y;
-	}
-
-	@Override
 	public String toString() {
-		return String.format("x=%s, y=%s", x, y);
+		return String.format("Posicion[x=%s, y=%s]", this.x, this.y);
 	}
 
 }
@@ -991,12 +982,10 @@ public class Personaje {
 
 	public Personaje(Personaje personaje) {
 		this();
-		if (personaje == null) {
-			throw new NullPointerException("No puedo copiar un personaje nulo.");
-		}
-		nombre = personaje.getNombre();
-		energia = personaje.getEnergia();
-		color = personaje.getColor();
+		Objects.requireNonNull(personaje, "No puedo copiar un personaje nulo.");
+		nombre = personaje.nombre;
+		energia = personaje.energia;
+		color = personaje.color;
 		posicion = new Posicion(personaje.posicion);
 	}
 
@@ -1005,10 +994,7 @@ public class Personaje {
 	}
 
 	private void setNombre(String nombre) {
-		if (nombre == null) {
-			throw new NullPointerException("El nombre del personaje no puede ser nulo.");
-		}
-		this.nombre = nombre;
+		this.nombre = Objects.requireNonNull(nombre, "El nombre del personaje no puede ser nulo.");
 	}
 
 	public int getEnergia() {
@@ -1017,9 +1003,9 @@ public class Personaje {
 
 	private void setEnergia(int energia) {
 		if (energia < MIN_ENERGIA) {
-			throw new IllegalArgumentException("El valor de la energia no puede ser menor que el mínimo establecido.");
+			throw new IllegalArgumentException("El valor de la energía no puede ser menor que el mínimo establecido.");
 		} else if (energia > MAX_ENERGIA) {
-			throw new IllegalArgumentException("El valor de la energia no puede ser mayor que el máximo establecido.");
+			throw new IllegalArgumentException("El valor de la energía no puede ser mayor que el máximo establecido.");
 		}
 		this.energia = energia;
 	}
@@ -1029,24 +1015,18 @@ public class Personaje {
 	}
 
 	public void setColor(String color) {
-		if (color == null) {
-			throw new NullPointerException("El color del personaje no puede ser nulo.");
-		}
-		this.color = color;
+		this.color = Objects.requireNonNull(color, "El color del personaje no puede ser nulo.");
 	}
 
 	public Posicion getPosicion() {
 		return posicion;
 	}
 
-	public void setPosicion(Posicion posicion) {
-		if (posicion == null) {
-			throw new NullPointerException("La posición del personaje no puede ser nula.");
-		}
-		this.posicion = posicion;
+	private void setPosicion(Posicion posicion) {
+		this.posicion = new Posicion(Objects.requireNonNull(posicion, "La posición del personaje no puede ser nula."));
 	}
 
-		public void chocar(int posiblePerdida) {
+	public void chocar(int posiblePerdida) {
 		setEnergia(energia - posiblePerdida);
 	}
 
@@ -1054,40 +1034,53 @@ public class Personaje {
 		setEnergia(energia + posibleGanancia);
 	}
 
-	public void mover(int x, int y) throws OperationNotSupportedException {
+	public void mover(int x, int y) throws OperationNotSupportedException{
 		try {
 			posicion.setX(posicion.getX() + x);
 			posicion.setY(posicion.getY() + y);
 		} catch (IllegalArgumentException e) {
-			throw new OperationNotSupportedException("Movimiento no válido: " + e.getMessage());
+			throw new OperationNotSupportedException("Movimiento no válido");
 		}
 	}
 
 	@Override
-	public int hashCode() {
-		return Objects.hash(color, energia, nombre, posicion);
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof Personaje that)) return false;
+		return energia == that.energia && Objects.equals(nombre, that.nombre) && Objects.equals(color, that.color) && Objects.equals(posicion, that.posicion);
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Personaje other = (Personaje) obj;
-		return Objects.equals(color, other.color) && energia == other.energia && Objects.equals(nombre, other.nombre)
-				&& Objects.equals(posicion, other.posicion);
+	public int hashCode() {
+		return Objects.hash(nombre, energia, color, posicion);
 	}
 
 	@Override
 	public String toString() {
-		return String.format("nombre=%s, energia=%s, color=%s, posicion=(%s)", nombre, energia, color, posicion);
+		return String.format("Personaje[nombre=%s, energía=%s, color=%s, posición=%s]", this.nombre, this.energia, this.color, this.posicion);
 	}
 
 }
 ~~~
+
+## Registros
+
+En java los registros (`record`) son un tipo especial de declaración de una clase que nos permite evitar el código repetitivo cuando queremos implementar clases de objetos inmutables. Su intención es utilizarlos en clases de dominio cuyo cometido es simplemente contener datos y transferirlos entre diferentes módulos (vease el patrón DTO). Los registros están disponibles a partir de **java 14**.
+
+La sintaxis para declarar un registro es: `[modificadorAcceso] record Nombre([listaParametros]) {}`. Por ejemplo, vamos a declara un registro para nuestra clase `Posicion`:
+~~~java
+    public record Posicion(int x, int y) {}
+~~~
+
+Esta simple declaración nos creará una clase inmutable `Posicion`, con los atributos `x` e `y` privados. Creará un constructor con los mismos parámetros que atributos. Creará los métodos de acceso, pero en vez de nombrarlos como `getX()` y `getY()`, los nombrará como `x()` e `y()`. También crea los métodos `equals`, `hashCode` y `toString`. Como se puede apreciar el trabajo que nos ahorra es indudable. Dentro del cuerpo podemos implmentar (si fuese necesario) nuevos constructores, métodos para implementar nuestra lógica, etc.
+
+Su representación en un diagrama de clases (la representación que he elegido, ya que en UML no existe esta representación como tal) será la siguiente:
+
+<div align="center">
+<img alt="Diagramas de clases del registro Posicion" src="imagenes/Posicion.png"/>
+</div>
+
+Podéis encontrar más información en la documentación de Oracle: [novedades en el jdk 14.](https://docs.oracle.com/en/java/javase/14/language/records.html#GUID-6699E26F-4A9B-4393-A08B-1E47D4B2D263){:target="_blank"}
 
 ## Paquetes
 
@@ -1095,10 +1088,10 @@ Hasta ahora, los programas que has realizado constaban de una sola clase o muy p
 
 Para ello existen los paquetes, que no son más que agrupaciones de clases relacionadas. Al fin y al cabo esto no es más que diferentes directorios con sus clases. Pero para que una clase pertenezca a un paquete no basta con colocarla en un determinado directorio, sino que la primera instrucción del fichero `.java` debe indicar el paquete al que pertenece.
 
-Los paquetes se pueden anidar unos dentro de otros.
+Los paquetes se pueden anidar unos dentro de otros. Lo normal es que todos los paquetes empiecen con el nombre cualificado de nuestra organización en orden inverso. Todos los paquetes se escriben en minúsculas.
 
 ~~~java
-package videojuego;
+package org.iesalandalus.programacion.poo.videojuego;
 ...
 ~~~
 
@@ -1225,37 +1218,37 @@ Noviembre tiene 30 días.
 Diciembre tiene 31 días.
 ~~~
 
-> Por último nos dicen que los personajes sólo aceptarán tres colores: rojo, verde y azul (queremos que su representación como cadena sea su nombre con la primera letra en mayúsculas y lo demás en minúsculas). Además nos comentan que quieren que nuestro personaje pueda moverse en una determinada dirección: arriba, abajo, derecha e izquierda, y un determinado número de pasos  (además de como se podía mover anteriormente). También nos comentan que quieren que metamos todo en un paquete llamado `videojuego`. Pues el resultado final de nuestro diagrama de clases y el código final de todas nuestras clases sería el siguiente (debemos tener en cuenta que el diagrama de clases no me permite mostrar sus atributos o métodos, por lo que para el enumerado `Color` lo anotado junto a su representación para que quede claro):
+> Por último nos dicen que los personajes sólo aceptarán tres colores: rojo, verde y azul (queremos que su representación como cadena sea su nombre con la primera letra en mayúsculas y lo demás en minúsculas). Además nos comentan que quieren que nuestro personaje pueda moverse en una determinada dirección: arriba, abajo, derecha e izquierda, y un determinado número de pasos  (además de como se podía mover anteriormente). También nos comentan que quieren que metamos todo en un paquete llamado `org.iesalandalus.programacion.poo.videojuego`. Pues el resultado final de nuestro diagrama de clases y el código final de todas nuestras clases sería el siguiente (debemos tener en cuenta que el diagrama de clases no me permite mostrar sus atributos o métodos, por lo que para el enumerado `Color` lo anotado junto a su representación para que quede claro):
 > <div align="center">
 > <img alt="Diagramas de clases del Personaje" src="imagenes/personaje6.png"/>
 > </div>
 
 ###### Direccion.java
 ~~~java
-package videojuego;
+package org.iesalandalus.programacion.poo.videojuego;
 
 public enum Direccion {
-	ARRIBA,
-	ABAJO,
-	DERECHA,
+	ARRIBA, 
+	ABAJO, 
+	DERECHA, 
 	IZQUIERDA;
 }
 ~~~
 ###### Color.java
 ~~~java
-package videojuego;
+package org.iesalandalus.programacion.poo.videojuego;
 
 public enum Color {
-	ROJO("Rojo"),
-	VERDE("Verde"),
+	ROJO("Rojo"), 
+	VERDE("Verde"), 
 	AZUL("Azul");
-
+	
 	private String cadenaAMostrar;
-
+	
 	private Color(String cadenaAMostrar) {
 		this.cadenaAMostrar = cadenaAMostrar;
 	}
-
+	
 	@Override
 	public String toString() {
 		return cadenaAMostrar;
@@ -1264,7 +1257,7 @@ public enum Color {
 ~~~
 ###### Posicion.java
 ~~~java
-package videojuego;
+package org.iesalandalus.programacion.poo.videojuego;
 
 import java.util.Objects;
 
@@ -1289,11 +1282,9 @@ public class Posicion {
 	}
 
 	public Posicion(Posicion posicion) {
-		if (posicion == null) {
-			throw new NullPointerException("No puedo copiar una posición nula.");
-		}
-		setX(posicion.getX());
-		setY(posicion.getY());
+		Objects.requireNonNull(posicion, "No puedo copiar una posición nula.");
+		x = posicion.x;
+		y = posicion.y;
 	}
 
 	public int getX() {
@@ -1323,42 +1314,36 @@ public class Posicion {
 	}
 
 	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof Posicion posicion2)) return false;
+		return x == posicion2.x && y == posicion2.y;
+	}
+
+	@Override
 	public int hashCode() {
 		return Objects.hash(x, y);
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Posicion other = (Posicion) obj;
-		return x == other.x && y == other.y;
-	}
-
-	@Override
 	public String toString() {
-		return String.format("x=%s, y=%s", x, y);
+		return String.format("Posicion[x=%s, y=%s]", this.x, this.y);
 	}
 
 }
 ~~~
 ###### Personaje.java
 ~~~java
-package videojuego;
-
-import java.util.Objects;
+package org.iesalandalus.programacion.poo.videojuego;
 
 import javax.naming.OperationNotSupportedException;
+import java.util.Objects;
 
 public class Personaje {
 
 	private static final String PREFIJO_NOMBRE = "Personaje ";
 	private static final int ENERGIA_INICIAL = 100;
-	private static final Color COLOR_INICIAL = Color.ROJO;
+	private static final String COLOR_INICIAL = "Rojo";
 	private static final int MIN_ENERGIA = 0;
 	private static final int MAX_ENERGIA = 100;
 
@@ -1366,7 +1351,7 @@ public class Personaje {
 
 	private String nombre;
 	private int energia;
-	private Color color;
+	private String color;
 	private Posicion posicion;
 
 	public Personaje() {
@@ -1382,7 +1367,7 @@ public class Personaje {
 		setNombre(nombre);
 	}
 
-	public Personaje(String nombre, int energia, Color color, Posicion posicion) {
+	public Personaje(String nombre, int energia, String color, Posicion posicion) {
 		this();
 		setNombre(nombre);
 		setEnergia(energia);
@@ -1392,12 +1377,10 @@ public class Personaje {
 
 	public Personaje(Personaje personaje) {
 		this();
-		if (personaje == null) {
-			throw new NullPointerException("No puedo copiar un personaje nulo.");
-		}
-		nombre = personaje.getNombre();
-		energia = personaje.getEnergia();
-		color = personaje.getColor();
+		Objects.requireNonNull(personaje, "No puedo copiar un personaje nulo.");
+		nombre = personaje.nombre;
+		energia = personaje.energia;
+		color = personaje.color;
 		posicion = new Posicion(personaje.posicion);
 	}
 
@@ -1406,10 +1389,7 @@ public class Personaje {
 	}
 
 	private void setNombre(String nombre) {
-		if (nombre == null) {
-			throw new NullPointerException("El nombre del personaje no puede ser nulo.");
-		}
-		this.nombre = nombre;
+		this.nombre = Objects.requireNonNull(nombre, "El nombre del personaje no puede ser nulo.");
 	}
 
 	public int getEnergia() {
@@ -1418,22 +1398,19 @@ public class Personaje {
 
 	private void setEnergia(int energia) {
 		if (energia < MIN_ENERGIA) {
-			throw new IllegalArgumentException("El valor de la energia no puede ser menor que el mínimo establecido.");
+			throw new IllegalArgumentException("El valor de la energía no puede ser menor que el mínimo establecido.");
 		} else if (energia > MAX_ENERGIA) {
-			throw new IllegalArgumentException("El valor de la energia no puede ser mayor que el máximo establecido.");
+			throw new IllegalArgumentException("El valor de la energía no puede ser mayor que el máximo establecido.");
 		}
 		this.energia = energia;
 	}
 
-	public Color getColor() {
+	public String getColor() {
 		return color;
 	}
 
-	public void setColor(Color color) {
-		if (color == null) {
-			throw new NullPointerException("El color del personaje no puede ser nulo.");
-		}
-		this.color = color;
+	public void setColor(String color) {
+		this.color = Objects.requireNonNull(color, "El color del personaje no puede ser nulo.");
 	}
 
 	public Posicion getPosicion() {
@@ -1441,10 +1418,7 @@ public class Personaje {
 	}
 
 	private void setPosicion(Posicion posicion) {
-		if (posicion == null) {
-			throw new NullPointerException("La posición del personaje no puede ser nula.");
-		}
-		this.posicion = posicion;
+		this.posicion = new Posicion(Objects.requireNonNull(posicion, "La posición del personaje no puede ser nula."));
 	}
 
 	public void chocar(int posiblePerdida) {
@@ -1460,73 +1434,25 @@ public class Personaje {
 			posicion.setX(posicion.getX() + x);
 			posicion.setY(posicion.getY() + y);
 		} catch (IllegalArgumentException e) {
-			throw new OperationNotSupportedException("Movimiento no válido: " + e.getMessage());
+			throw new OperationNotSupportedException("Movimiento no válido");
 		}
 	}
 
-	public void mover(Direccion direccion, int pasos) throws OperationNotSupportedException {
-		if (direccion == null) {
-			throw new IllegalArgumentException("La dirección no puede ser nula.");
-		}
-		if (pasos <= 0) {
-			throw new IllegalArgumentException("El número de pasos debe ser mayor que cero.");
-		}
-		String movimientoNoValido = "Movimiento no válido: ";
-		switch (direccion) {
-			case ARRIBA:
-				try {
-					posicion.setX(posicion.getY() + pasos);
-				} catch (IllegalArgumentException e) {
-					throw new OperationNotSupportedException(movimientoNoValido + e.getMessage());
-				}
-				break;
-			case ABAJO:
-				try {
-					posicion.setX(posicion.getY() - pasos);
-				} catch (IllegalArgumentException e) {
-					throw new OperationNotSupportedException(movimientoNoValido + e.getMessage());
-				}
-				break;
-			case DERECHA:
-				try {
-					posicion.setX(posicion.getX() + pasos);
-				} catch (IllegalArgumentException e) {
-					throw new OperationNotSupportedException(movimientoNoValido + e.getMessage());
-				}
-				break;
-			case IZQUIERDA:
-				try {
-					posicion.setX(posicion.getX() - pasos);
-				} catch (IllegalArgumentException e) {
-					throw new OperationNotSupportedException(movimientoNoValido + e.getMessage());
-				}
-				break;
-			default:
-				break;
-		}
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof Personaje that)) return false;
+		return energia == that.energia && Objects.equals(nombre, that.nombre) && Objects.equals(color, that.color) && Objects.equals(posicion, that.posicion);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(color, energia, nombre, posicion);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Personaje other = (Personaje) obj;
-		return Objects.equals(color, other.color) && energia == other.energia && Objects.equals(nombre, other.nombre)
-				&& Objects.equals(posicion, other.posicion);
+		return Objects.hash(nombre, energia, color, posicion);
 	}
 
 	@Override
 	public String toString() {
-		return String.format("nombre=%s, energia=%s, color=%s, posicion=(%s)", nombre, energia, color, posicion);
+		return String.format("Personaje[nombre=%s, energía=%s, color=%s, posición=%s]", this.nombre, this.energia, this.color, this.posicion);
 	}
 
 }

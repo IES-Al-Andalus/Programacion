@@ -852,7 +852,7 @@ Para lanzar una excepción, simplemente tendremos que crear un nuevo objeto del 
 
 Este tipo de comprobación es muy común ya que siempre debemos evitar trabajar con referencias `null`y por ello, la clase de utilidades `Objects` nos ofrece el método `requireNonNull` que hace lo mismo y simplifica nuestro código bastante. El código anterior quedaría como sigue:
 ~~~~java
-    Objects.requireNonNullpo(objeto, "El objeto pasado es nulo.");
+    Objects.requireNonNull(objeto, "El objeto pasado es nulo.");
 ~~~~
 
 Lo bueno que tiene este método es que además nos devuelve el objeto si éste no es `null`, por lo que en los métodos `set`, por ejemplo, nos viene muy bien.
@@ -1019,7 +1019,7 @@ public class Personaje {
 	}
 
 	public Posicion getPosicion() {
-		return posicion;
+		return new Posicion(posicion);
 	}
 
 	private void setPosicion(Posicion posicion) {
@@ -1072,7 +1072,44 @@ La sintaxis para declarar un registro es: `[modificadorAcceso] record Nombre([li
     public record Posicion(int x, int y) {}
 ~~~
 
-Esta simple declaración nos creará una clase inmutable `Posicion`, con los atributos `x` e `y` privados. Creará un constructor con los mismos parámetros que atributos. Creará los métodos de acceso, pero en vez de nombrarlos como `getX()` y `getY()`, los nombrará como `x()` e `y()`. También crea los métodos `equals`, `hashCode` y `toString`. Como se puede apreciar el trabajo que nos ahorra es indudable. Dentro del cuerpo podemos implmentar (si fuese necesario) nuevos constructores, métodos para implementar nuestra lógica, etc.
+Esta simple declaración nos creará una clase inmutable `Posicion`, con los atributos `x` e `y` privados y no modificables (`final`). Creará un constructor con los mismos parámetros que atributos. Creará los métodos de acceso, pero en vez de nombrarlos como `getX()` y `getY()`, los nombrará como `x()` e `y()`. También crea los métodos `equals`, `hashCode` y `toString`. Como se puede apreciar el trabajo que nos ahorra es indudable. Dentro del cuerpo podemos implementar (si fuese necesario) nuevos constructores, métodos para implementar nuestra lógica, etc.
+
+Vamos a implementar nuestra clase `Posicion` utilizando un registro. Cabe la pena destacar que el constructor copia ya no tiene sentido, debido a que la clase es inmutable.
+~~~java
+public record Posicion(int x, int y) {
+
+	private static final int MIN_X = 0;
+	private static final int MAX_X = 100;
+	private static final int MIN_Y = 0;
+	private static final int MAX_Y = 100;
+
+	public Posicion {
+		validarX(x);
+		validarY(y);
+	}
+
+	public Posicion() {
+		this(MIN_X, MIN_Y);
+	}
+
+	public void validarX(int x) {
+		if (x < MIN_X) {
+			throw new IllegalArgumentException("El valor de la x es menor que el mínimo permitido.");
+		} else if (x > MAX_X) {
+			throw new IllegalArgumentException("El valor de la x es mayor que el máximo permitido.");
+		}
+	}
+
+	public void validarY(int y) {
+		if (y < MIN_Y) {
+			throw new IllegalArgumentException("El valor de la y es menor que el mínimo permitido.");
+		} else if (y > MAX_Y) {
+			throw new IllegalArgumentException("El valor de la y es mayor que el máximo permitido.");
+		}
+	}
+
+}
+~~~
 
 Su representación en un diagrama de clases (la representación que he elegido, ya que en UML no existe esta representación como tal) será la siguiente:
 
@@ -1259,75 +1296,36 @@ public enum Color {
 ~~~java
 package org.iesalandalus.programacion.poo.videojuego;
 
-import java.util.Objects;
-
-public class Posicion {
+public record Posicion(int x, int y) {
 
 	private static final int MIN_X = 0;
 	private static final int MAX_X = 100;
 	private static final int MIN_Y = 0;
 	private static final int MAX_Y = 100;
 
-	private int x;
-	private int y;
+	public Posicion {
+		validarX(x);
+		validarY(y);
+	}
 
 	public Posicion() {
-		x = MIN_X;
-		y = MIN_Y;
+		this(MIN_X, MIN_Y);
 	}
 
-	public Posicion(int x, int y) {
-		setX(x);
-		setY(y);
-	}
-
-	public Posicion(Posicion posicion) {
-		Objects.requireNonNull(posicion, "No puedo copiar una posición nula.");
-		x = posicion.x;
-		y = posicion.y;
-	}
-
-	public int getX() {
-		return x;
-	}
-
-	public void setX(int x) {
+	public void validarX(int x) {
 		if (x < MIN_X) {
 			throw new IllegalArgumentException("El valor de la x es menor que el mínimo permitido.");
 		} else if (x > MAX_X) {
 			throw new IllegalArgumentException("El valor de la x es mayor que el máximo permitido.");
 		}
-		this.x = x;
 	}
 
-	public int getY() {
-		return y;
-	}
-
-	public void setY(int y) {
+	public void validarY(int y) {
 		if (y < MIN_Y) {
 			throw new IllegalArgumentException("El valor de la y es menor que el mínimo permitido.");
 		} else if (y > MAX_Y) {
 			throw new IllegalArgumentException("El valor de la y es mayor que el máximo permitido.");
 		}
-		this.y = y;
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (!(o instanceof Posicion posicion2)) return false;
-		return x == posicion2.x && y == posicion2.y;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(x, y);
-	}
-
-	@Override
-	public String toString() {
-		return String.format("Posicion[x=%s, y=%s]", this.x, this.y);
 	}
 
 }
@@ -1343,7 +1341,7 @@ public class Personaje {
 
 	private static final String PREFIJO_NOMBRE = "Personaje ";
 	private static final int ENERGIA_INICIAL = 100;
-	private static final String COLOR_INICIAL = "Rojo";
+	private static final Color COLOR_INICIAL = Color.ROJO;
 	private static final int MIN_ENERGIA = 0;
 	private static final int MAX_ENERGIA = 100;
 
@@ -1351,7 +1349,7 @@ public class Personaje {
 
 	private String nombre;
 	private int energia;
-	private String color;
+	private Color color;
 	private Posicion posicion;
 
 	public Personaje() {
@@ -1367,7 +1365,7 @@ public class Personaje {
 		setNombre(nombre);
 	}
 
-	public Personaje(String nombre, int energia, String color, Posicion posicion) {
+	public Personaje(String nombre, int energia, Color color, Posicion posicion) {
 		this();
 		setNombre(nombre);
 		setEnergia(energia);
@@ -1381,7 +1379,7 @@ public class Personaje {
 		nombre = personaje.nombre;
 		energia = personaje.energia;
 		color = personaje.color;
-		posicion = new Posicion(personaje.posicion);
+		posicion = personaje.posicion;
 	}
 
 	public String getNombre() {
@@ -1405,11 +1403,11 @@ public class Personaje {
 		this.energia = energia;
 	}
 
-	public String getColor() {
+	public Color getColor() {
 		return color;
 	}
 
-	public void setColor(String color) {
+	public void setColor(Color color) {
 		this.color = Objects.requireNonNull(color, "El color del personaje no puede ser nulo.");
 	}
 
@@ -1418,7 +1416,7 @@ public class Personaje {
 	}
 
 	private void setPosicion(Posicion posicion) {
-		this.posicion = new Posicion(Objects.requireNonNull(posicion, "La posición del personaje no puede ser nula."));
+		this.posicion = Objects.requireNonNull(posicion, "La posición del personaje no puede ser nula.");
 	}
 
 	public void chocar(int posiblePerdida) {
@@ -1431,10 +1429,29 @@ public class Personaje {
 
 	public void mover(int x, int y) throws OperationNotSupportedException{
 		try {
-			posicion.setX(posicion.getX() + x);
-			posicion.setY(posicion.getY() + y);
+			posicion = new Posicion(posicion.x() + x, posicion.y() + y);
 		} catch (IllegalArgumentException e) {
-			throw new OperationNotSupportedException("Movimiento no válido");
+			throw new OperationNotSupportedException("Movimiento no válido: " + e.getMessage());
+		}
+	}
+	
+	public void mover(Direccion direccion, int pasos) throws OperationNotSupportedException {
+		Objects.requireNonNull(direccion, "La dirección no puede ser nula.");
+		if (pasos <= 0) {
+			throw new IllegalArgumentException("El número de pasos debe ser mayor que cero.");
+		}
+		int nuevaX = posicion.x();
+		int nuevaY = posicion.y();
+		switch (direccion) {
+			case ARRIBA -> nuevaY += pasos;
+			case ABAJO -> nuevaY -= pasos;
+			case DERECHA -> nuevaX += pasos;
+			case IZQUIERDA -> nuevaX -= pasos;
+		}
+		try {
+			posicion = new Posicion(nuevaX, nuevaY);
+		} catch (IllegalArgumentException e) {
+			throw new OperationNotSupportedException("Movimiento no válido: " + e.getMessage());
 		}
 	}
 
@@ -1474,12 +1491,12 @@ public class Personaje {
 
     ###### Persona.java
     ~~~java
-    package relacionclientela;
+    package org.iesalandalus.programacion.poo.persona;
 
 	import java.util.Objects;
 
 	public class Persona {
-
+		
 		private String nombre;
 		private String dni;
 		private String fechaNacimiento;
@@ -1488,9 +1505,8 @@ public class Personaje {
 		private String direccion;
 		private String codigoPostal;
 		private String localidad;
-
-		public Persona(String nombre, String dni, String fechaNacimiento, String email, String telefono, String direccion,
-				String codigoPostal, String localidad) {
+		
+		public Persona(String nombre, String dni, String fechaNacimiento, String email, String telefono, String direccion, String codigoPostal, String localidad) {
 			setNombre(nombre);
 			setDni(dni);
 			setFechaNacimiento(fechaNacimiento);
@@ -1500,11 +1516,9 @@ public class Personaje {
 			setCodigoPostal(codigoPostal);
 			setLocalidad(localidad);
 		}
-
-		public Persona(Persona persona) {
-			if (nombre == null) {
-				throw new NullPointerException("La persona no puede ser nula.");
-			}
+		
+		public Persona(Persona1 persona) {
+			Objects.requireNonNull(persona, "La persona no puede ser nula.");
 			setNombre(persona.nombre);
 			setDni(persona.dni);
 			setFechaNacimiento(persona.fechaNacimiento);
@@ -1518,119 +1532,86 @@ public class Personaje {
 		public String getNombre() {
 			return nombre;
 		}
-
+		
 		public void setNombre(String nombre) {
-			if (nombre == null) {
-				throw new NullPointerException("El nombre no puede ser nulo.");
-			}
-			this.nombre = nombre;
+			this.nombre = Objects.requireNonNull(nombre, "El nombre no puede ser nulo.");
 		}
-
+		
 		public String getDni() {
 			return dni;
 		}
-
+		
 		public void setDni(String dni) {
-			if (dni == null) {
-				throw new NullPointerException("El DNI no puede ser nulo.");
-			}
-			this.dni = dni;
+			this.dni = Objects.requireNonNull(dni, "El DNI no puede ser nulo.");
 		}
-
+		
 		public String getFechaNacimiento() {
 			return fechaNacimiento;
 		}
-
+		
 		public void setFechaNacimiento(String fechaNacimiento) {
-			if (fechaNacimiento == null) {
-				throw new NullPointerException("La fecha de nacimiento no puede ser nula.");
-			}
-			this.fechaNacimiento = fechaNacimiento;
+			this.fechaNacimiento = Objects.requireNonNull(fechaNacimiento, "La fecha de nacimiento no puede ser nula.");
 		}
-
+		
 		public String getEmail() {
 			return email;
 		}
-
+		
 		public void setEmail(String email) {
-			if (email == null) {
-				throw new NullPointerException("El emial no puede ser nulo.");
-			}
-			this.email = email;
+			this.email = Objects.requireNonNull(email, "El email no puede ser nulo.");
 		}
-
+		
 		public String getTelefono() {
 			return telefono;
 		}
-
+		
 		public void setTelefono(String telefono) {
-			if (telefono == null) {
-				throw new NullPointerException("El teléfono no puede ser nulo.");
-			}
-			this.telefono = telefono;
+			this.telefono = Objects.requireNonNull(telefono, "El teléfono no puede ser nulo.");
 		}
-
+		
 		public String getDireccion() {
 			return direccion;
 		}
-
+		
 		public void setDireccion(String direccion) {
-			if (direccion == null) {
-				throw new NullPointerException("La dirección no puede ser nula.");
-			}
-			this.direccion = direccion;
+			this.direccion = Objects.requireNonNull(direccion, "La dirección no puede ser nula.");
 		}
-
+		
 		public String getCodigoPostal() {
 			return codigoPostal;
 		}
-
+		
 		public void setCodigoPostal(String codigoPostal) {
-			if (codigoPostal == null) {
-				throw new NullPointerException("El código postal no puede ser nulo.");
-			}
-			this.codigoPostal = codigoPostal;
+			this.codigoPostal = Objects.requireNonNull(codigoPostal, "El código postal no puede ser nulo.");
 		}
-
+		
 		public String getLocalidad() {
 			return localidad;
 		}
 
 		public void setLocalidad(String localidad) {
-			if (localidad == null) {
-				throw new NullPointerException("La localidad no puede ser nula.");
-			}
-			this.localidad = localidad;
+			this.localidad = Objects.requireNonNull(localidad, "La localidad no puede ser nula.");
+		}
+
+		@Override
+		public boolean equals(Object o) {
+			if (this == o) return true;
+			if (!(o instanceof Persona1 persona1)) return false;
+			return Objects.equals(dni, persona1.dni);
 		}
 
 		@Override
 		public int hashCode() {
-			return Objects.hash(codigoPostal, direccion, dni, email, fechaNacimiento, localidad, nombre, telefono);
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj)
-				return true;
-			if (obj == null)
-				return false;
-			if (getClass() != obj.getClass())
-				return false;
-			Persona other = (Persona) obj;
-			return Objects.equals(codigoPostal, other.codigoPostal) && Objects.equals(direccion, other.direccion)
-					&& Objects.equals(dni, other.dni) && Objects.equals(email, other.email)
-					&& Objects.equals(fechaNacimiento, other.fechaNacimiento) && Objects.equals(localidad, other.localidad)
-					&& Objects.equals(nombre, other.nombre) && Objects.equals(telefono, other.telefono);
+			return Objects.hash(dni);
 		}
 
 		@Override
 		public String toString() {
-			return String.format(
-					"nombre=%s, dni=%s, fechaNacimiento=%s, email=%s, telefono=%s, direccion=%s, codigoPostal=%s, localidad=%s",
-					nombre, dni, fechaNacimiento, email, telefono, direccion, codigoPostal, localidad);
+			return String.format("Persona1[nombre=%s, dni=%s, fechaNacimiento=%s, email=%s, telefono=%s, direccion=%s, codigoPostal=%s, localidad=%s]", this.nombre, this.dni, this.fechaNacimiento, this.email, this.telefono, this.direccion, this.codigoPostal, this.localidad);
 		}
 
 	}
+
     ~~~
 
     ###### PruebaPersona.java
@@ -1660,10 +1641,12 @@ public class Personaje {
 
     ###### DireccionPostal.java
     ~~~java
-    import java.util.Objects;
+	package org.iesalandalus.programacion.poo.persona;
+
+	import java.util.Objects;
 
 	public class DireccionPostal {
-
+		
 		private String direccion;
 		private String codigoPostal;
 		private String localidad;
@@ -1673,11 +1656,9 @@ public class Personaje {
 			setCodigoPostal(codigoPostal);
 			setLocalidad(localidad);
 		}
-
+		
 		public DireccionPostal(DireccionPostal direccionPostal) {
-			if (direccionPostal == null) {
-				throw new NullPointerException("La direción postal no puede ser nula.");
-			}
+			Objects.requireNonNull(direccionPostal, "La dirección postal no puede ser nula.");
 			setDireccion(direccionPostal.direccion);
 			setCodigoPostal(direccionPostal.codigoPostal);
 			setLocalidad(direccionPostal.localidad);
@@ -1688,10 +1669,7 @@ public class Personaje {
 		}
 
 		public void setDireccion(String direccion) {
-			if (direccion == null) {
-				throw new NullPointerException("La direción no puede ser nula.");
-			}
-			this.direccion = direccion;
+			this.direccion = Objects.requireNonNull(direccion, "La dirección no puede ser nula.");
 		}
 
 		public String getCodigoPostal() {
@@ -1699,10 +1677,7 @@ public class Personaje {
 		}
 
 		public void setCodigoPostal(String codigoPostal) {
-			if (codigoPostal == null) {
-				throw new NullPointerException("El código postal no puede ser nulo.");
-			}
-			this.codigoPostal = codigoPostal;
+			this.codigoPostal = Objects.requireNonNull(codigoPostal, "El código postal no puede ser nulo.");
 		}
 
 		public String getLocalidad() {
@@ -1710,33 +1685,24 @@ public class Personaje {
 		}
 
 		public void setLocalidad(String localidad) {
-			if (localidad== null) {
-				throw new NullPointerException("La localidad no puede ser nula.");
-			}
-			this.localidad = localidad;
+			this.localidad = Objects.requireNonNull(localidad, "La localidad no puede ser nula.");
+		}
+
+		@Override
+		public boolean equals(Object o) {
+			if (this == o) return true;
+			if (!(o instanceof DireccionPostal that)) return false;
+			return Objects.equals(direccion, that.direccion) && Objects.equals(codigoPostal, that.codigoPostal) && Objects.equals(localidad, that.localidad);
 		}
 
 		@Override
 		public int hashCode() {
-			return Objects.hash(codigoPostal, direccion, localidad);
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj)
-				return true;
-			if (obj == null)
-				return false;
-			if (getClass() != obj.getClass())
-				return false;
-			DireccionPostal other = (DireccionPostal) obj;
-			return Objects.equals(codigoPostal, other.codigoPostal) && Objects.equals(direccion, other.direccion)
-					&& Objects.equals(localidad, other.localidad);
+			return Objects.hash(direccion, codigoPostal, localidad);
 		}
 
 		@Override
 		public String toString() {
-			return String.format("direccion=%s, codigoPostal=%s, localidad=%s", direccion, codigoPostal, localidad);
+			return String.format("DireccionPostal[direccion=%s, codigoPostal=%s, localidad=%s]", this.direccion, this.codigoPostal, this.localidad);
 		}
 
 	}
@@ -1744,7 +1710,9 @@ public class Personaje {
 
     ###### DatosContaco.java
     ~~~java
-    import java.util.Objects;
+    package org.iesalandalus.programacion.poo.persona;
+
+	import java.util.Objects;
 
 	public class DatosContacto {
 		private String telefono;
@@ -1756,11 +1724,9 @@ public class Personaje {
 			setEmail(email);
 			setDireccionPostal(direccionPostal);
 		}
-
+		
 		public DatosContacto(DatosContacto datosContacto) {
-			if (datosContacto == null) {
-				throw new NullPointerException("Los datos de contacto no pueden ser nulos.");
-			}
+			Objects.requireNonNull(datosContacto, "Los datos de contacto no pueden ser nulos.");
 			setTelefono(datosContacto.telefono);
 			setEmail(datosContacto.email);
 			setDireccionPostal(datosContacto.direccionPostal);
@@ -1771,10 +1737,7 @@ public class Personaje {
 		}
 
 		public void setTelefono(String telefono) {
-			if (telefono == null) {
-				throw new NullPointerException("El teléfono no puede ser nulo.");
-			}
-			this.telefono = telefono;
+			this.telefono = Objects.requireNonNull(telefono, "El teléfono no puede ser nulo.");
 		}
 
 		public String getEmail() {
@@ -1782,10 +1745,7 @@ public class Personaje {
 		}
 
 		public void setEmail(String email) {
-			if (email == null) {
-				throw new NullPointerException("El email no puede ser nulo.");
-			}
-			this.email = email;
+			this.email = Objects.requireNonNull(email, "El email no puede ser nulo.");
 		}
 
 		public DireccionPostal getDireccionPostal() {
@@ -1793,33 +1753,24 @@ public class Personaje {
 		}
 
 		public void setDireccionPostal(DireccionPostal direccionPostal) {
-			if (direccionPostal == null) {
-				throw new NullPointerException("La dirección postal no puede ser nula.");
-			}
-			this.direccionPostal = new DireccionPostal(direccionPostal);
+			this.direccionPostal = new DireccionPostal(Objects.requireNonNull(direccionPostal, "La dirección postal no puede ser nula."));
+		}
+
+		@Override
+		public boolean equals(Object o) {
+			if (this == o) return true;
+			if (!(o instanceof DatosContacto that)) return false;
+			return Objects.equals(telefono, that.telefono) && Objects.equals(email, that.email) && Objects.equals(direccionPostal, that.direccionPostal);
 		}
 
 		@Override
 		public int hashCode() {
-			return Objects.hash(direccionPostal, email, telefono);
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj)
-				return true;
-			if (obj == null)
-				return false;
-			if (getClass() != obj.getClass())
-				return false;
-			DatosContacto other = (DatosContacto) obj;
-			return Objects.equals(direccionPostal, other.direccionPostal) && Objects.equals(email, other.email)
-					&& Objects.equals(telefono, other.telefono);
+			return Objects.hash(telefono, email, direccionPostal);
 		}
 
 		@Override
 		public String toString() {
-			return String.format("telefono=%s, email=%s, direccionPostal=(%s)", telefono, email, direccionPostal);
+			return String.format("DatosContacto[telefono=%s, email=%s, direccionPostal=%s]", this.telefono, this.email, this.direccionPostal);
 		}
 
 	}
@@ -1827,23 +1778,23 @@ public class Personaje {
 
     ###### DatosPersonales.java
     ~~~java
-    import java.util.Objects;
+    package org.iesalandalus.programacion.poo.persona;
+
+	import java.util.Objects;
 
 	public class DatosPersonales {
 		private String nombre;
 		private String dni;
 		private String fechaNacimiento;
-
+		
 		public DatosPersonales(String nombre, String dni, String fechaNacimiento) {
 			setNombre(nombre);
 			setDni(dni);
 			setFechaNacimiento(fechaNacimiento);
 		}
-
+		
 		public DatosPersonales(DatosPersonales datosPersonales) {
-			if (datosPersonales == null) {
-				throw new NullPointerException("Los datos personales no pueden ser nulos.");
-			}
+			Objects.requireNonNull(datosPersonales,"Los datos personales no pueden ser nulos.");
 			setNombre(datosPersonales.nombre);
 			setDni(datosPersonales.dni);
 			setFechaNacimiento(datosPersonales.fechaNacimiento);
@@ -1854,10 +1805,7 @@ public class Personaje {
 		}
 
 		public void setNombre(String nombre) {
-			if (nombre == null) {
-				throw new NullPointerException("El nombre no puede ser nulo.");
-			}
-			this.nombre = nombre;
+			this.nombre = Objects.requireNonNull(nombre, "El nombre no puede ser nulo.");
 		}
 
 		public String getDni() {
@@ -1865,10 +1813,7 @@ public class Personaje {
 		}
 
 		public void setDni(String dni) {
-			if (dni == null) {
-				throw new NullPointerException("El DNI no puede ser nulo.");
-			}
-			this.dni = dni;
+			this.dni = Objects.requireNonNull(dni, "El DNI no puede ser nulo.");
 		}
 
 		public String getFechaNacimiento() {
@@ -1876,33 +1821,24 @@ public class Personaje {
 		}
 
 		public void setFechaNacimiento(String fechaNacimiento) {
-			if (fechaNacimiento == null) {
-				throw new NullPointerException("La fecha de nacimiento no puede ser nula.");
-			}
-			this.fechaNacimiento = fechaNacimiento;
+			this.fechaNacimiento = Objects.requireNonNull(fechaNacimiento, "La fecha de nacimiento no puede ser nula.");
+		}
+
+		@Override
+		public boolean equals(Object o) {
+			if (this == o) return true;
+			if (!(o instanceof DatosPersonales that)) return false;
+			return Objects.equals(dni, that.dni);
 		}
 
 		@Override
 		public int hashCode() {
-			return Objects.hash(dni, fechaNacimiento, nombre);
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj)
-				return true;
-			if (obj == null)
-				return false;
-			if (getClass() != obj.getClass())
-				return false;
-			DatosPersonales other = (DatosPersonales) obj;
-			return Objects.equals(dni, other.dni) && Objects.equals(fechaNacimiento, other.fechaNacimiento)
-					&& Objects.equals(nombre, other.nombre);
+			return Objects.hash(dni);
 		}
 
 		@Override
 		public String toString() {
-			return String.format("nombre=%s, dni=%s, fechaNacimiento=%s", nombre, dni, fechaNacimiento);
+			return String.format("DatosPersonales[nombre=%s, dni=%s, fechaNacimiento=%s]", this.nombre, this.dni, this.fechaNacimiento);
 		}
 
 	}
@@ -1910,71 +1846,53 @@ public class Personaje {
 
     ###### Persona.java
     ~~~java
-    import java.util.Objects;
+    package org.iesalandalus.programacion.poo.persona;
 
-	public class Persona {
+	import java.util.Objects;
 
+	public class Persona2 {
+		
 		private DatosPersonales datosPersonales;
 		private DatosContacto datosContacto;
 
-		public Persona(DatosPersonales datosPersonales, DatosContacto datosContacto) {
-			setDatosPersonales(datosPersonales);
-			setDatosContacto(datosContacto);
-		}
-
-		public Persona(Persona persona) {
-			if (persona == null) {
-				throw new NullPointerException("La persona no puede ser nula.");
-			}
+		public Persona2(DatosPersonales datosPersonales, DatosContacto datosContacto) {
 			setDatosPersonales(datosPersonales);
 			setDatosContacto(datosContacto);
 		}
 
 		public DatosPersonales getDatosPersonales() {
-			return new DatosPersonales(datosPersonales);
+			return datosPersonales;
 		}
 
-		public void setDatosPersonales(DatosPersonales datosPersonales) {
-			if (datosPersonales == null) {
-				throw new NullPointerException("Los datos personales no pueden ser nulos.");
-			}
-			this.datosPersonales = new DatosPersonales(datosPersonales);
+		private void setDatosPersonales(DatosPersonales datosPersonales) {
+			this.datosPersonales = Objects.requireNonNull(datosPersonales, "Los datos personales no pueden ser nulos.");
 		}
 		public DatosContacto getDatosContacto() {
-			return new DatosContacto(datosContacto);
+			return datosContacto;
 		}
 
-		public void setDatosContacto(DatosContacto datosContacto) {
-			if (datosContacto == null) {
-				throw new NullPointerException("Los datos de contacto no pueden ser nulos.");
-			}
-			this.datosContacto = new DatosContacto(datosContacto);
+		private void setDatosContacto(DatosContacto datosContacto) {
+			this.datosContacto = Objects.requireNonNull(datosContacto, "Los datos de contacto no pueden ser nulos.");
+		}
+
+		@Override
+		public boolean equals(Object o) {
+			if (this == o) return true;
+			if (!(o instanceof Persona2 persona2)) return false;
+			return Objects.equals(datosPersonales, persona2.datosPersonales);
 		}
 
 		@Override
 		public int hashCode() {
-			return Objects.hash(datosContacto, datosPersonales);
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj)
-				return true;
-			if (obj == null)
-				return false;
-			if (getClass() != obj.getClass())
-				return false;
-			Persona other = (Persona) obj;
-			return Objects.equals(datosContacto, other.datosContacto)
-					&& Objects.equals(datosPersonales, other.datosPersonales);
+			return Objects.hash(datosPersonales);
 		}
 
 		@Override
 		public String toString() {
-			return String.format("datosPersonales=(%s), datosContacto=(%s)", datosPersonales, datosContacto);
+			return String.format("Persona2[datosPersonales=%s, datosContacto=%s]", this.datosPersonales, this.datosContacto);
 		}
-
 	}
+
     ~~~
 
     ###### PruebaPersona.java

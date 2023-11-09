@@ -1092,7 +1092,7 @@ public record Posicion(int x, int y) {
 		this(MIN_X, MIN_Y);
 	}
 
-	public void validarX(int x) {
+	private void validarX(int x) {
 		if (x < MIN_X) {
 			throw new IllegalArgumentException("El valor de la x es menor que el mínimo permitido.");
 		} else if (x > MAX_X) {
@@ -1100,7 +1100,7 @@ public record Posicion(int x, int y) {
 		}
 	}
 
-	public void validarY(int y) {
+	private void validarY(int y) {
 		if (y < MIN_Y) {
 			throw new IllegalArgumentException("El valor de la y es menor que el mínimo permitido.");
 		} else if (y > MAX_Y) {
@@ -1312,7 +1312,7 @@ public record Posicion(int x, int y) {
 		this(MIN_X, MIN_Y);
 	}
 
-	public void validarX(int x) {
+	private void validarX(int x) {
 		if (x < MIN_X) {
 			throw new IllegalArgumentException("El valor de la x es menor que el mínimo permitido.");
 		} else if (x > MAX_X) {
@@ -1320,7 +1320,7 @@ public record Posicion(int x, int y) {
 		}
 	}
 
-	public void validarY(int y) {
+	private void validarY(int y) {
 		if (y < MIN_Y) {
 			throw new IllegalArgumentException("El valor de la y es menor que el mínimo permitido.");
 		} else if (y > MAX_Y) {

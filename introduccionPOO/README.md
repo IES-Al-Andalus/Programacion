@@ -1980,9 +1980,11 @@ public class Personaje {
 		public boolean estaVacio() {
 			return (ocupado == 0);
 		}
+
 		public boolean estaLleno() {
 			return (ocupado == capacidad);
 		}
+
 		public void escribir(int cantidad) throws OperationNotSupportedException {
 			if (cantidad <= 0) {
 				throw new IllegalArgumentException("Debes escribir algo.");
@@ -2075,6 +2077,235 @@ public class Personaje {
 				System.out.println("Borrado correcto: " + penDrive2);
 			} catch (IllegalArgumentException | OperationNotSupportedException e) {
 				System.out.println("Error al borrar: " + e.getMessage());
+			}
+		}
+	}
+	~~~
+
+- **Vehiculo**
+
+  Se trata de simular el funcionamiento de un vehículo que consta de su cuentakilómetros y su depósito de combustible. El cuentakilómetros sólo puede avanzar en un kilómetro y puede dovolver la cuenta de los kilómetros e inicialmente dicha cuenta siempre es 0. El depósito tendrá una capacidad dada (que por defecto será 100) medida en litros, un contenido que es la cantidad de combustible que contiene actualmente. Un depósito se puede crear con una capacidad por defecto o con una capacidad dada y es posible llenar una cantidad entera de litros, es posible gastar una cantidad de litros expresada como un `double` y se puede consultar si está vacío y si está lleno. Por último tendremos un vehículo que posee un cuentakilómetros, un depósito, es de una determinada marca y modelo y tiene un consumo expresado como litros a los 100 km (que por defecto será 10). El vehículo puede avanzar una cantidad de kilómetros y repostar un determinado número de litros de combustible. La operación de avanzar debe ir avanzando el cuentakilómetros y gastando el combustible adecuado y avanzará mientras tenga combustible. Podemos crear un vehículo expresando su marca y modelo, o expresando marca, modelo, capacidad del depósito y consumo. También queremos poder representar un vehículo mediante su marca, modelo, consumo, kilómetros de su cuentakilómetros y combustible restante de su depósito. Se deben tratar las posibles excepciones analizando cuándo se lanzará `NullPointerException`, `IllegalArgumentException` o `OperationNotSupportedException`. El diagrama de clases es el que te muestro a continuación. Por supuesto debes hacer pruebas creando varios vehículos utilizando los diferentes constructores y realizar diferentes operaciones sobre los mismos.
+
+  <div align="center">
+  <img alt="Diagrama de clase de la clase PenDrive" src="imagenes/vehiculo.png"/>
+  </div>
+
+  - ###### Posible solución
+
+    Una posible solución podría ser la siguiente:
+
+	###### Cuentakilometros.java
+	~~~java
+	package org.iesalandalus.programacion.poo.vehiculo;
+
+	public class Cuentakilometros {
+
+		private int kilometros;
+
+		public Cuentakilometros() {
+			kilometros = 0;
+		}
+
+		public int getKilometros() {
+			return kilometros;
+		}
+
+		public void avanzar() {
+			kilometros++;
+		}
+
+	}
+	~~~
+
+	###### Deposito.java
+	~~~java
+	package org.iesalandalus.programacion.poo.vehiculo;
+
+	import javax.naming.OperationNotSupportedException;
+
+	public class Deposito {
+
+		public static final int CAPACIDAD_DEFECTO = 100;
+		private final int capacidad;
+		private double contenido;
+
+		public Deposito() {
+			capacidad = CAPACIDAD_DEFECTO;
+			contenido = 0;
+		}
+
+		public Deposito(int capacidad) {
+			if (capacidad <= 0) {
+				throw new IllegalArgumentException("La capacidad debe ser mayor que cero.");
+			}
+			this.capacidad = capacidad;
+			contenido = 0;
+		}
+
+		public int getCapacidad() {
+			return capacidad;
+		}
+
+		public double getContenido() {
+			return contenido;
+		}
+
+		public boolean estaVacio() {
+			return (contenido == 0);
+		}
+
+		public boolean estaLleno() {
+			return (contenido == capacidad);
+		}
+
+		public void llenar(int litros) throws OperationNotSupportedException {
+			if (litros <= 0) {
+				throw new IllegalArgumentException("Debes llenar con alguna cantidad.");
+			}
+			if (estaLleno()) {
+				throw new OperationNotSupportedException("No se puede repostar ya que el depósito está lleno.");
+			}
+			if (contenido + litros > capacidad) {
+				throw new OperationNotSupportedException("Si se añade esa cantidad se excede la capacidad del depósito.");
+			}
+			contenido += litros;
+		}
+
+		public void gastar(double litros) throws OperationNotSupportedException {
+			if (litros <= 0) {
+				throw new IllegalArgumentException("Debes gastar alguna cantidad.");
+			}
+			if (estaVacio()) {
+				throw new OperationNotSupportedException("No se puede gastar combustible ya que el depósito está vacío.");
+			}
+			if (contenido - litros < 0) {
+				throw new OperationNotSupportedException("Si se gasta esa cantidad el depósito se queda vacío.");
+			}
+			contenido -= litros;
+		}
+	}
+	~~~
+
+	###### Vehiculo.java
+	~~~java
+	package org.iesalandalus.programacion.poo.vehiculo;
+
+	import javax.naming.OperationNotSupportedException;
+	import java.util.Objects;
+
+	public class Vehiculo {
+		public static final int CONSUMO_DEFECTO = 10;
+		private final String marca;
+		private final String modelo;
+		private double consumo;
+		private final Cuentakilometros cuentakilometros;
+		private Deposito deposito;
+
+		public Vehiculo(String marca, String modelo) {
+			this.marca = Objects.requireNonNull(marca, "La marca no puede ser nula.");
+			this.modelo = Objects.requireNonNull(modelo, "El modelo no puede ser nulo.");
+			consumo = CONSUMO_DEFECTO;
+			cuentakilometros = new Cuentakilometros();
+			deposito = new Deposito();
+		}
+
+		public Vehiculo(String marca, String modelo, int capacidadDeposito, double consumo) {
+			this(marca, modelo);
+			deposito = new Deposito(capacidadDeposito);
+			setConsumo(consumo);
+		}
+
+		private void setConsumo(double consumo) {
+			if (consumo < 0) {
+				throw new IllegalArgumentException("El consumo no puede ser menor que cero.");
+			}
+			this.consumo = consumo;
+		}
+
+		public String getMarca() {
+			return marca;
+		}
+
+		public String getModelo() {
+			return modelo;
+		}
+
+		public int getKilometraje() {
+			return cuentakilometros.getKilometros();
+		}
+
+		public double getCombustible() {
+			return deposito.getContenido();
+		}
+
+		private void avanzar() throws OperationNotSupportedException {
+			try {
+				deposito.gastar(consumo / 100d );
+				cuentakilometros.avanzar();
+			} catch (IllegalArgumentException | OperationNotSupportedException e) {
+				throw new OperationNotSupportedException("Error al avanzar: " + e.getMessage());
+			}
+		}
+		public void avanzar(int kilometros) throws OperationNotSupportedException {
+			if (kilometros <= 0) {
+				throw new IllegalArgumentException("Se debe avanzar al menos un kilómetro.");
+			}
+			for (int i = 0; i < kilometros; i++) {
+				avanzar();
+			}
+		}
+
+		public void repostar(int litros) throws OperationNotSupportedException {
+			try {
+				deposito.llenar(litros);
+			} catch (IllegalArgumentException | OperationNotSupportedException e) {
+				throw new OperationNotSupportedException("Error al repostar: " + e.getMessage());
+			}
+		}
+
+		@Override
+		public String toString() {
+			return String.format("Vehiculo[marca=%s, modelo=%s, consumo=%s, kilómetros=%s, combustible=%.2f]", marca, modelo, consumo, cuentakilometros.getKilometros(), deposito.getContenido());
+		}
+	}
+	~~~
+
+	###### Main.java
+	~~~java
+	package org.iesalandalus.programacion.poo.vehiculo;
+
+	import org.iesalandalus.programacion.utilidades.Entrada;
+
+	import javax.naming.OperationNotSupportedException;
+
+	public class Main {
+		public static void main(String[] args) {
+			System.out.println("********* Vehículo 1 *********");
+			Vehiculo vehiculo1 = new Vehiculo("Seat", "Ibiza");
+			System.out.println(vehiculo1);
+			utilizarVehiculo(vehiculo1);
+			System.out.println("********* Vehículo 2 *********");
+			System.out.print("Dime la capacidad del segundo vehículo: ");
+			int capacidad = Entrada.entero();
+			System.out.print("Dime el consumo del segundo vehículo: ");
+			double consumo = Entrada.realDoble();
+			Vehiculo vehiculo2 = new Vehiculo("Renault", "Megane", capacidad, consumo);
+			utilizarVehiculo(vehiculo2);
+		}
+
+		private static void utilizarVehiculo(Vehiculo vehiculo) {
+			try {
+				System.out.print("Dime los litros a repostar: ");
+				int litros = Entrada.entero();
+				vehiculo.repostar(litros);
+				System.out.println(vehiculo);
+				System.out.print("Dime los kilómetros a avanzar: ");
+				int kilometros = Entrada.entero();
+				vehiculo.avanzar(kilometros);
+				System.out.println(vehiculo);
+			} catch (OperationNotSupportedException e) {
+				System.out.println(e.getMessage());
+				System.out.println(vehiculo);
 			}
 		}
 	}

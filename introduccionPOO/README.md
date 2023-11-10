@@ -1485,7 +1485,7 @@ public class Personaje {
   <img alt="Diagrama de clase de la clase Persona" src="imagenes/persona.png"/>
   </div>
 
-  - Posible solución
+  - ###### Posible solución
 
     Una posible solución podría ser la siguiente:
 
@@ -1635,7 +1635,7 @@ public class Personaje {
   <img alt="Diagrama de clase de la clase Persona" src="imagenes/persona1.png"/>
   </div>
 
-  - Posible solución
+  - ###### Posible solución
 
     Una posible solución podría ser la siguiente:
 
@@ -1910,3 +1910,172 @@ public class Personaje {
 
 	}
     ~~~
+
+- **PenDrive**
+
+  Se trata de simular el funcionamiento de un pendrive en el que podemos escribir, se puede leer (simplemente devuelve la cantidad de información leída) y se puede leer una determinada cantidad de información. Se deben tratar las posibles excepciones: si la cantidad de información pasada a los métodos es menor que cero se lanzará `IllegalArgumentException`, pero si se sobrepasa la capacidad, se quiere leer más información de la ocupada o se quiere borrar más información de la ocupada, la excepción a lanzar será `OperationNotSupportedException`. También debe tener métodos para consultar si el pendrive está vación y si está lleno. Dos pendrives los consideramos iguales si son del mismo fabricante y tienen la misma capacidad. El diagrama de clases es el que te muestro a continuación. Por supuesto debes hacer prueba creando varios pendrives, utilizando los diferentes constructores y realizar diferentes operaciones sobre los mismos.
+
+  <div align="center">
+  <img alt="Diagrama de clase de la clase PenDrive" src="imagenes/pendrive.png"/>
+  </div>
+
+  - ###### Posible solución
+
+    Una posible solución podría ser la siguiente:
+
+	###### PenDrive.java
+	~~~java
+	package org.iesalandalus.programacion.poo.pendrive;
+
+	import javax.naming.OperationNotSupportedException;
+	import java.util.Objects;
+
+	public class PenDrive {
+		private static final String FABRICANTE_DESCONOCIDO = "Desconocido";
+		private static final int CAPACIDAD_MINIMA = 64;
+		private static final int CAPACIDAD_MAXIMA = 1024;
+		private String fabricante;
+		private int capacidad;
+		private int ocupado;
+		
+		public PenDrive() {
+			fabricante = FABRICANTE_DESCONOCIDO;
+			capacidad = 64;
+			ocupado = 0;
+		}
+		
+		public PenDrive(String fabricante, int capacidad) {
+			setFabricante(fabricante);
+			setCapacidad(capacidad);
+			ocupado = 0;
+		}
+
+		public String getFabricante() {
+			return fabricante;
+		}
+
+		private void setFabricante(String fabricante) {
+			this.fabricante = Objects.requireNonNull(fabricante, "El fabricante no puede ser nulo.");
+		}
+
+		private void setCapacidad(int capacidad) {
+			if (capacidad < CAPACIDAD_MINIMA || capacidad > CAPACIDAD_MAXIMA) {
+				throw new IllegalArgumentException("La capacidad no es correcta.");
+			}
+			this.capacidad = capacidad;
+		}
+
+		public int getCapacidad() {
+			return capacidad;
+		}
+
+		public int getOcupado() {
+			return ocupado;
+		}
+
+		public int getLibre() {
+			return capacidad - ocupado;
+		}
+
+		public boolean estaVacio() {
+			return (ocupado == 0);
+		}
+		public boolean estaLleno() {
+			return (ocupado == capacidad);
+		}
+		public void escribir(int cantidad) throws OperationNotSupportedException {
+			if (cantidad <= 0) {
+				throw new IllegalArgumentException("Debes escribir algo.");
+			}
+			if (cantidad > getLibre()) {
+				throw new OperationNotSupportedException("No se puede escribir más información del espacio restante.");
+			}
+			ocupado += cantidad;
+		}
+
+		public int leer(int cantidad) throws OperationNotSupportedException {
+			if (cantidad <= 0) {
+				throw new IllegalArgumentException("Debes leer algo.");
+			}
+			if (cantidad > ocupado) {
+				throw new OperationNotSupportedException("No puedes leer más información de la que hay ocupada.");
+			}
+			return cantidad;
+		}
+
+		public void borrar(int cantidad) throws OperationNotSupportedException {
+			if (cantidad <= 0) {
+				throw new IllegalArgumentException("Debes borrar algo.");
+			}
+			if (cantidad > ocupado) {
+				throw new OperationNotSupportedException("No puedes borrar más información de la que hay ocupada.");
+			}
+			ocupado -= cantidad;
+		}
+
+		@Override
+		public boolean equals(Object o) {
+			if (this == o) return true;
+			if (!(o instanceof PenDrive penDrive)) return false;
+			return capacidad == penDrive.capacidad && Objects.equals(fabricante, penDrive.fabricante);
+		}
+
+		@Override
+		public int hashCode() {
+			return Objects.hash(fabricante, capacidad);
+		}
+
+		@Override
+		public String toString() {
+			return String.format("PenDrive[fabricante=%s, capacidad=%s, ocupado=%s]", this.fabricante, this.capacidad, this.ocupado);
+		}
+	}
+	~~~
+
+	###### Main.java
+	~~~java
+	package org.iesalandalus.programacion.poo.pendrive;
+
+	import org.iesalandalus.programacion.utilidades.Entrada;
+	import javax.naming.OperationNotSupportedException;
+
+	public class Main {
+		public static void main(String[] args) {
+			System.out.println("******** Pen Drive 1 ********");
+			PenDrive penDrive1 = new PenDrive();
+			System.out.println("Pen Drive 1 creado: " + penDrive1);
+			try {
+				System.out.print("Dima la cantidad de información que quieres escribir: ");
+				penDrive1.escribir(Entrada.entero());
+				System.out.println("Escritura correcta: " + penDrive1);
+			} catch (IllegalArgumentException | OperationNotSupportedException e) {
+				System.out.println("Error al escribir: " + e.getMessage());
+			}
+			try {
+				System.out.print("Dima la cantidad de información que quieres borrar: ");
+				penDrive1.borrar(Entrada.entero());
+				System.out.println("Borrado correcto: " + penDrive1);
+			} catch (IllegalArgumentException | OperationNotSupportedException e) {
+				System.out.println("Error al borrar: " + e.getMessage());
+			}
+
+			System.out.println("******** Pen Drive 2 ********");
+			PenDrive penDrive2 = new PenDrive("Kingston", 128);
+			System.out.println("Pen Drive 2 creado: " + penDrive2);
+			try {
+				System.out.print("Dima la cantidad de información que quieres escribir: ");
+				penDrive2.escribir(Entrada.entero());
+				System.out.println("Escritura correcta: " + penDrive2);
+			} catch (IllegalArgumentException | OperationNotSupportedException e) {
+				System.out.println("Error al escribir: " + e.getMessage());
+			}
+			try {
+				System.out.print("Dima la cantidad de información que quieres borrar: ");
+				penDrive2.borrar(Entrada.entero());
+				System.out.println("Borrado correcto: " + penDrive2);
+			} catch (IllegalArgumentException | OperationNotSupportedException e) {
+				System.out.println("Error al borrar: " + e.getMessage());
+			}
+		}
+	}
+	~~~

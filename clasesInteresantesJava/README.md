@@ -1517,38 +1517,3 @@ Otra forma sería hacerlo con las funciones lambda de java 8:
 
 		[Repostiorio con la posible solución para el juego de dados](https://github.com/JRJimenezReyes/JuegoDados)
 
-- **Gestión de clientes**
-
-	Debes crear un programa para la gestión de clientes de una empresa.
-
-	Una dirección postal constará de una dirección, una localidad y un código postal.
-
-	Los datos de contacto de un cliente constarán de un teléfono, un correo y una dirección postal.
-
-	Los datos personales de un cliente tendrán un nombre, unos apellidos, un dni y una fecha de nacimiento.
-
-	Los datos de un cliente se compondrán de sus datos personales y sus datos de contacto.
-
-	Un cliente será igual a otro si su dni es el mismo.
-
-	Deberemos podemos añadir clientes, borrar clientes, buscar clientes, obtener todos los clientes y listar los clientes existentes.
-
-	Nunca devolveremos una referencia o nos adueñaremos de la misma en nuestra clase.
-
-	Para ello, por ahora debe utilizar arrays.
-
-	El programa principal mostrará un menú que nos permitirá realizar todas estas acciones.
-
-	Aunque aún no estamos utilizando el patrón MVC, deberás estruturar las clases en una vista y un modelo.
-
-	Para todo ello te propongo el siguiente diagrama de clases:
-
-	<div align="center">
-	<img src="imagenes/gestionClientes.png"/>
-	</div>
-
-	- Posible solución
-
-		Una posible solución a este ejercicio la puedes encontrar en el siguiente repositorio:
-
-		[Repostiorio con la posible solución para la gestión de clientes](https://github.com/JRJimenezReyes/GestionClientes)

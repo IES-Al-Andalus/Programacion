@@ -1483,17 +1483,17 @@ Otra forma sería hacerlo con las funciones lambda de java 8:
 
 - **Baraja de cartas**
 
-	Debes crear un programa que modele una baraja de cartas y simule que intercambias cartas de posiciones aleatorias n veces y muestre cuántas se han quedado en la misma posición inicial y el resultado final de la baraja. Para ello te propongo el siguiente diagrama de clases:
+	Debes crear un programa que modele una baraja de cartas y simule que intercambias cartas de posiciones aleatorias n veces y muestre las se han quedado en la misma posición inicial y cuántas han sido. Para ello te propongo el siguiente diagrama de clases:
 
 	<div align="center">
-	<img src="imagenes/baraja.png"/>
+	<img src="imagenes/barajaCartas.png"/>
 	</div>
 
 	- Posible solución
 
 		Una posible solución a este ejercicio la puedes encontrar en el siguiente repositorio:
 
-		[Repostiorio con la posible solución para la baraja de cartas](https://github.com/JRJimenezReyes/Baraja)
+		[Repostiorio con la posible solución para la baraja de cartas](https://github.com/JRJimenezReyes/BarajaCartas)
 
 - **Juego de dados**
 

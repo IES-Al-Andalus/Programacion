@@ -1498,14 +1498,15 @@ Otra forma sería hacerlo con las funciones lambda de java 8:
 - **Juego de dados**
 
 	Debes crear un programa en java que simule un juego de dados. El juego de dados consiste en que entre 2 y 10 jugadores lanzarán un dado 5 veces y ganará o ganarán los que su puntuación haya sido la más alta.
-
+	
 	Un dado simplemente se podrá lanzar y en su lanzamiento devolverá un número entero entre 1 y 6, ambos inclusive.
+	
+	Un jugador tendrá un nombre que no puede estar vacío, sabrá jugar (es decir, sabrá lanzar el dado 5 veces), llevará apuntado el resultado de cada tirada y sabrá sumar sus tiradas para mostrar su puntuación total obtenida. Además, un jugador se mostrará indicando su nombre, sus tiradas y su puntuación total.
+	
+	El juego de dados tendrá un conjunto de jugadores entre 2 y 10, se podrá jugar, lo que hará que cada jugador comience el juego y será capaz de informar de la puntuación ganadora y de los jugadores que han obtenido dicha puntuación. Un juego de dados se representa, representando cada uno de los jugadores (su nombre, tiradas y puntuación total).
+	
+	El programa principal preguntará cuántos jugadores quieren jugar, leerá los nombres de cada uno de los jugadores, comenzará la partida y mostrará los resultados (jugadores, puntuación ganadora y nombre de los ganadores). Para ello debes implementar el diseño que se expone en el siguiente diagrama de clases:
 
-	Un jugador tendrá un nombre que no puede estar vacío, sabrá jugar (es decir, sabrá lanzar el dado 5 veces), llevará apuntado el resultado de cada tirada y sabrá sumar sus tiradas para mostrar su puntuación total obtenido. Además un jugador se mostrará indicando su nombre, sus tiradas y su puntuación total.
-
-	El juego de dados tendrá un conjunto de jugadores entre 2 y 10, se podrá jugar lo que hará que cada jugador comience el juego y será capaz de informar de la puntuación ganadora y de los jugadores que han obtenido dicha puntuación. Un juego de dados se representa, representando cada uno de los jugadores (su nombre, tiradas y puntuación total), la puntuación ganadora y los jugadores que han obtenido dicha puntuación.
-
-	El programa principal preguntará cuántos jugadores quieren jugar, leerá los nombres de cada uno de los jugadores, comenzará la partida y mostrará los resultados. Para ello debes implementar el diseño que se expone en el siguiente diagrama de clases:
 
 	<div align="center">
 	<img src="imagenes/juegoDados.png"/>

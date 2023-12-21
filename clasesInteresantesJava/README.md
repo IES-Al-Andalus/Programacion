@@ -15,6 +15,7 @@ Al igual que en otros apartados, el objetivo principal es que tengáis una ampl�
 - [Arrays](#arrays)
 - [Cadenas de caracteres](#cadenas-de-caracteres)
 - [Expresiones regulares](#expresiones-regulares)
+- [Clases envoltorio](#clases-envoltorio)
 - [Fechas y tiempos](#fechas-y-tiempos)
 - [Generación de números aleatorios en java](#generacin-de-nmeros-aleatorios-en-java)
 - [Ejercicios](#ejercicios)
@@ -625,7 +626,88 @@ Veamos algunos ejemplos, aunque luego en los ejercicios veremos más.
 
 ###### Expresiones regulares en java
 
+Para trabjar con expresiones regulares en java deberemos realizar los siguientes pasos:
 
+- Crear una cadena que contenga la expresión regular como hemos visto anteriormente.
+- Compilar dicha expresión regular en un patrón, mediante la clase `Pattern`.
+- Comprobar las coincidencias de dicho patrón en un texto dado, mediante la clase `Matcher`.
+
+~~~java
+System.out.print("Dime tu nombre: ");
+String texto = Entrada.cadena();
+Pattern patron = Pattern.compile("A.a");
+Matcher comparador = patron.matcher(texto);
+System.out.println(comparador.matches() ? "Coincide con el patrón `A.a`." : "NO coincide con el patrón `A.a`.");
+~~~
+
+Aunque si lo que solo queremos es comprobarsi una cadena coincide con un patrón, no es necesario ni siquiera utilizar la clase `Matcher`, podemos hacerlo con el método `matches` de la clase `Pattern`:
+
+~~~java
+System.out.print("Dime tu nombre: ");
+String texto = Entrada.cadena();
+System.out.println(Pattern.matches("A.+a", texto) ? "Coincide con el patrón `A.+a`." : "NO coincide con el patrón `A.+a`.");
+~~~
+
+Y la forma más sencilla es utilizar el método `matches` de la clase `String`:
+
+~~~java
+System.out.print("Dime tu nombre: ");
+String nombre = Entrada.cadena();
+System.out.println(nombre.matches("A.+a") ? "Coincide con el patrón `A.+a`." : "NO coincide con el patrón `A.+a`.");
+~~~
+
+Te recomiendo que visites la [API de la clase `Pattern`](https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html) y la [API de la clase `Matcher`](https://docs.oracle.com/javase/8/docs/api/java/util/regex/Matcher.html) para más información.
+
+## Clases envoltorio
+
+Como ya sabemos, en java existen estos tipos de datos:
+- **Primitivos**: son los únicos que no son objetos y se utilizan por su eficiencia, además siempre se pasan por valor a los métodos, por lo que es imposible modificarlos dentro del cuerpo del mismo.
+- **Objetos**: Son aquellos que se construyen a partir de una clase y podemos interactuar con ellos a través de sus miembros (siempre que su visibilidad nos lo permita). Realmente son referencias a la zona de memoria donde se almacena el estado de dicho objeto, por lo que al pasarlos como parámetro a los métodos se están pasando por referencia.
+
+En java existen 8 clases que envuelven a cada uno de los tipos primitivos, es a lo que se llama **clase envoltorio** o **wrapper** y existen a partir del **JDK 5**. Estas clases nos permiten realizar diferentes operaciones con ellas, entre las que podemos destacar las conversiones desde el tipo primitivo o al tipo primitivo y las converciones desde una cadena o a una cadena. Las clases envoltorio son clases inmutables. Son las siguientes:
+
+|Tipo primitivo|Clase envoltorio|
+|--------------|----------------|
+|int|Integer|
+|short|Short|
+|long|Long|
+|byte|Byte|
+|float|Float|
+|double|Double|
+|char|Character|
+|boolean|Boolean|
+
+Para crear un objeto de una clase envoltorio, lo podríamos hacer como con cualquier otro objeto de una clase (pondremos los ejemplos con la clase `Integer`, aunque son todas parecidas):
+
+~~~java
+Integer numero = new Integer(5);
+System.out.println(numero.getClass() + ", valor: " + numero);
+~~~
+
+Pero está forma de hacerlo no es la más adecuada y desde el **JDK 9** está marcada como **deprecated** u **obsoleta**. Para evitarlo, las clases envoltorio disponen de un método estático de fábrica más adecuado para este fin: `valueOf`.
+
+~~~java
+Integer numero = Integer.valueOf(5);
+System.out.println(numero.getClass() + ", valor: " + numero);
+~~~
+
+Además, este método está sobrecargado y nos permite hacer conversiones, por ejemplo a partir de una cadena:
+
+~~~java
+Integer numero = Integer.valueOf("5");
+System.out.println(numero.getClass() + ", valor: " + numero);
+~~~
+
+También tenemos los mecanismos de **autoboxing** y **unboxing** (envoltura y desenvoltura automáticas), que consisten en la conversión automática desde el tipo primitivo o al tipo primitivo:
+
+~~~java
+Integer numero = 5;                 //Autoboxing
+System.out.println(numero.getClass() + ", valor: " + numero);
+int numeroPrimitvo = numero;        //Unboxing
+System.out.println("Tipo primitivo, valor: " + numeroPrimitvo);
+~~~
+
+Siempre podrás obtener más información consultando la [API del paquete `java.lang`](https://docs.oracle.com/javase/8/docs/api/java/lang/package-summary.html) y consultando la clase en cuestión.
 
 ## Fechas y tiempos
 

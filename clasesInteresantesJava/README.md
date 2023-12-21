@@ -698,6 +698,17 @@ Integer numero = Integer.valueOf("5");
 System.out.println(numero.getClass() + ", valor: " + numero);
 ~~~
 
+Este último método podría lanzar la excepción `NumberFormatException` si la cadena no se puede convertir a un entero.
+~~~java
+try {
+	System.out.print("Dime tu edad: ");
+	Integer numero = Integer.valueOf(Entrada.cadena());
+	System.out.println(numero.getClass() + ", valor: " + numero);
+} catch (NumberFormatException e) {
+	System.out.println("La edad introducida no es válida.");
+}
+~~~
+
 También tenemos los mecanismos de **autoboxing** y **unboxing** (envoltura y desenvoltura automáticas), que consisten en la conversión automática desde el tipo primitivo o al tipo primitivo:
 
 ~~~java

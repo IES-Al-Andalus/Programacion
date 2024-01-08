@@ -344,7 +344,7 @@ Vistas las peculiaridades de las cadenas, veamos los principales métodos que no
 |`int indexOf(char ch, int fromIndex)`|Igual que la anterior, pero comienza la búsqueda a partir del índice `fromIndex`.|
 |`int indexOf(String str)`|Devuelve el índice de la primera ocurrencia de la subcadena `str`.|
 |`boolean isEmpty()`|Devuelve `true` si la longitud de la cadena es igual a 0.|
-|`boolean isBlank()`|Devuelve `true` si la cadena está vacía o solo contiene espacios en blanco.|
+|`boolean isBlank()`|Devuelve `true` si la cadena está vacía o solo contiene espacios en blanco. Está disponible a partir del JDK 11.|
 |`int lastIndexOf(char ch)`|Devuelve el índice que ocupa la última ocurrencia del caracter. Este método está sobrecargado para que también se le pueda pasar una cadena en vez de un caracter.|
 |`int lastIndexOf(char ch, int fromIndex)`|Lo mismo que la anterior, pero comienza la búsqueda desde el índice `fromIndex` hacia atrás. Al igual que el anterior, este método también está sobrecargado para que se le pueda pasar una cadena en vez de un caracter.|
 |`int length()`|Devuelve la longitud de la cadena.|

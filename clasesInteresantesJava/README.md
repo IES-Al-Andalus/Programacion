@@ -489,59 +489,55 @@ Por lo dicho hasta ahora, utilizaremos `String` cuando no vayamos a realizar muc
 
 Para mostrar la diferencia en rendimiento veamos la salida del siguiente programa:
 ~~~java
-	final int TAMANO = 100000;
-	long inicio, tiempoConsumido;
+public class ComparativaCadenas {
+    public static void main(String[] args) {
+        final int TAMANO = 100000;
+        final float NANOSEGUNDOS_SEGUNDO = 1000000000;
+        long inicio, tiempoConsumido;
 
-	String cadena = "";
-	char ch = 'a';
-	inicio = System.nanoTime();
-	for (int n = 0; n < TAMANO; ++n) {
-		cadena += ch;
-		++ch;
-		if (ch > 'z') {
-			ch = 'a';
-		}
-	}
-	tiempoConsumido = System.nanoTime() - inicio;
+        String cadena = "";
+        char caracter = 'a';
+        inicio = System.nanoTime();
+        for (int n = 0; n < TAMANO; ++n) {
+            cadena += caracter;
+            caracter = (caracter > 'z') ? 'a' : (char) (caracter + 1);
+        }
+        tiempoConsumido = System.nanoTime() - inicio;
 
-	System.out.printf("Tiempo: %d s. en la construcción de un String de tamaño %d caracteres%n", tiempoConsumido / 1000, TAMANO);
+        System.out.printf("Tiempo: %f s. en la construcción de un String de tamaño %d caracteres.%n", tiempoConsumido / NANOSEGUNDOS_SEGUNDO, TAMANO);
 
-	StringBuilder cadenaSB = new StringBuilder();
-	ch = 'a';
-	inicio = System.nanoTime();
-	for (int n = 0; n < TAMANO; ++n) {
-		cadenaSB.append(ch);
-		++ch;
-		if (ch > 'z') {
-			ch = 'a';
-		}
-	}
-	tiempoConsumido = System.nanoTime() - inicio;
+        StringBuilder cadenaSB = new StringBuilder();
+        caracter = 'a';
+        inicio = System.nanoTime();
+        for (int n = 0; n < TAMANO; ++n) {
+            cadenaSB.append(caracter);
+            caracter = (caracter > 'z') ? 'a' : (char) (caracter + 1);
+        }
+        tiempoConsumido = System.nanoTime() - inicio;
 
-	System.out.printf("Tiempo: %d s. en la construcción de un StringBuilder de tamaño %d caracteres%n", tiempoConsumido / 1000, TAMANO);
+        System.out.printf("Tiempo: %f s. en la construcción de un StringBuilder de tamaño %d caracteres.%n", tiempoConsumido / NANOSEGUNDOS_SEGUNDO, TAMANO);
 
-	StringBuffer cadenaSBf = new StringBuffer();
-	ch = 'a';
-	inicio = System.nanoTime();
-	for (int n = 0; n < TAMANO; ++n) {
-		cadenaSBf.append(ch);
-		++ch;
-		if (ch > 'z') {
-			ch = 'a';
-		}
-	}
-	tiempoConsumido = System.nanoTime() - inicio;
+        StringBuffer cadenaSBf = new StringBuffer();
+        caracter = 'a';
+        inicio = System.nanoTime();
+        for (int n = 0; n < TAMANO; ++n) {
+            cadenaSBf.append(caracter);
+            caracter = (caracter > 'z') ? 'a' : (char) (caracter + 1);
+        }
+        tiempoConsumido = System.nanoTime() - inicio;
 
-	System.out.printf("Tiempo: %d s. en la construcción de un StringBuffer de tamaño %d caracteres%n", tiempoConsumido / 1000, TAMANO);
+        System.out.printf("Tiempo: %f s. en la construcción de un StringBuffer de tamaño %d caracteres.%n", tiempoConsumido / NANOSEGUNDOS_SEGUNDO, TAMANO);
+    }
+}
 ~~~
 
 El programa crea una cadena por concatenación de `TAMANO` caracteres y mide el tiempo empleado en ello y lo muestra. Hace lo mismo para un `StringBuilder` y un `StringBuffer`.
 
 La salida del mismo, en mi ordenador, es la siguiente, que creo que habla por ella misma (aunque los tiempos mostrados varían de una ejecución a otra, lo que no varía es la magnitud de la diferencia).
 ~~~
-Tiempo: 3549781 s. en la construcción de un String de tamaño 100000 caracteres
-Tiempo: 1863 s. en la construcción de un StringBuilder de tamaño 100000 caracteres
-Tiempo: 2817 s. en la construcción de un StringBuffer de tamaño 100000 caracteres
+Tiempo: 1,619124 s. en la construcción de un String de tamaño 100000 caracteres.
+Tiempo: 0,004411 s. en la construcción de un StringBuilder de tamaño 100000 caracteres.
+Tiempo: 0,009187 s. en la construcción de un StringBuffer de tamaño 100000 caracteres.
 ~~~
 
 ## Expresiones regulares

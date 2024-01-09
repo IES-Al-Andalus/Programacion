@@ -604,7 +604,7 @@ Nos permiten indicar el número de veces que debe aparecer un elemento en una ex
 |A*|Coincide con la aparición de la expresión regular A 0 o más veces (es decir, que A podría no aparecer)|
 |A+|Coincide con la aparición de la expresión regular A al menos una vez|
 
-De manera predeterminada, los cuantificadores son **codiciosos**, lo que significa que intentan hacer coincidir la mayor cantidad posible de la cadena. El caracter `?` después del cuantificador hace que el cuantificador **no sea codicioso**, lo que significa que se detendrá tan pronto encuentre una coincidencia.
+De manera predeterminada, los cuantificadores son **ambiciosos**, lo que significa que intentan hacer coincidir la mayor cantidad posible de la cadena. El caracter `?` después del cuantificador hace que el cuantificador **perezoso**, lo que significa que se detendrá tan pronto encuentre una coincidencia.
 
 ###### Agrupamientos
 Podemos agrupar elementos para tratarlos como una sola unidad mediante su agrupamiento. Además, un grupo puede ser luego consultado. Para agrupar una serie de elementos utilizamos los paréntesis `()`. Para referirnos a cada grupo lo haremos por su número de orden, sabiendo que se agrupa de grupos más externos a más internos. Por ejemplo, la expresión `((A)(B))` contiene tres grupos. El primer grupo sería `((A)(B))`, el segundo `(A)` y el tercero `(B)`. También hay un grupo especial al que nos referimos por el orden 0 que representa la expresión completa.

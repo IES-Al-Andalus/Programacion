@@ -620,8 +620,8 @@ Veamos algunos ejemplos, aunque luego en los ejercicios veremos más.
 - Expresión regular que coincida con un número de teléfono: `\d{9}`
 - Expresión regular que coincida con números del 0 al 49: `[0-4]?\d`
 - Expresión regular que coincida con números hexadecimales: `[\da-fA-F]+`
-- Expresión regular que se ajuste a un número hexadecimal pero en el que no podamos mezclar mayúsculas y minúsculas (utilizamos unas u otras): `(?:[\dA-F]+)|(?:[\da-f]+)`
-- Expresión regular que se ajuste a números de tres cifras del 000 al 255: `(?:[0-1]\d{2})|(?:2[0-4]\d)|(?:25[0-5])`
+- Expresión regular que se ajuste a un número hexadecimal pero en el que no podamos mezclar mayúsculas y minúsculas (utilizamos unas u otras): `[\dA-F]+|[\da-f]+`
+- Expresión regular que se ajuste a números de tres cifras del 000 al 255: `[0-1]\d{2}|2[0-4]\d|25[0-5]`
 
 ###### Expresiones regulares en java
 

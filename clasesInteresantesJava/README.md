@@ -612,7 +612,7 @@ Podemos agrupar elementos para tratarlos como una sola unidad mediante su agrupa
 También podemos agrupar elementos pero sin capturarlos mediante el uso de los paréntesis y comenzando por `?:`. Por ejemplo: `(?:ABC)`.
 
 ###### Ejemplos
-Es conveniente que practiques con las expresiones regulares ya que son muy utilizadas sobre todo para llevar a cabo validaciones. Para ello te recomiendo que visites la siguiente página [Comprobador de expresiones regulares](https://regex101.com/) en la que puedes probar las expresiones regulares, consultar la documentación y además te explica qué hace cada elemento, etc. En esta otra puedes mostrar una visualización gráfica de la expresión regular [Representación gráfica de expresiones regulares](https://regexper.com/).
+Es conveniente que practiques con las expresiones regulares ya que son muy utilizadas sobre todo para llevar a cabo validaciones. Para ello te recomiendo que visites la siguiente página: [Comprobador de expresiones regulares](https://regex101.com/) en la que puedes probar las expresiones regulares, consultar la documentación y además te explica qué hace cada elemento, etc. En esta otra puedes mostrar una visualización gráfica de la expresión regular: [Representación gráfica de expresiones regulares](https://regexper.com/).
 
 Veamos algunos ejemplos, aunque luego en los ejercicios veremos más.
 

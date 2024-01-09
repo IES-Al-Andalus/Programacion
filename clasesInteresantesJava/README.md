@@ -607,7 +607,7 @@ Nos permiten indicar el número de veces que debe aparecer un elemento en una ex
 De manera predeterminada, los cuantificadores son **codiciosos**, lo que significa que intentan hacer coincidir la mayor cantidad posible de la cadena. El caracter `?` después del cuantificador hace que el cuantificador **no sea codicioso**, lo que significa que se detendrá tan pronto encuentre una coincidencia.
 
 ###### Agrupamientos
-Podemos agrupar elementos para tratarlos como una sola unidad mediante su agrupamiento. Además, un grupo puede ser luego consultado. Para agrupar una serie de elementos utilizamos los paréntesis `()`. Para referirnos a cada grupo lo haremos por su número de orden, sabiendo que se agrupa de grupos más externos a más internos. Por ejemplo, la expresión `((A)(B))` contiene tres grupos. El primer grupos sería `((A)(B))`, el segundo `(A)` y el tercero `(B)`. También hay un grupo especial al que nos referimos por el orden 0 que representa la expresión completa.
+Podemos agrupar elementos para tratarlos como una sola unidad mediante su agrupamiento. Además, un grupo puede ser luego consultado. Para agrupar una serie de elementos utilizamos los paréntesis `()`. Para referirnos a cada grupo lo haremos por su número de orden, sabiendo que se agrupa de grupos más externos a más internos. Por ejemplo, la expresión `((A)(B))` contiene tres grupos. El primer grupo sería `((A)(B))`, el segundo `(A)` y el tercero `(B)`. También hay un grupo especial al que nos referimos por el orden 0 que representa la expresión completa.
 
 También podemos agrupar elementos pero sin capturarlos mediante el uso de los paréntesis y comenzando por `?:`. Por ejemplo: `(?:ABC)`.
 

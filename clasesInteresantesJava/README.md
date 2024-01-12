@@ -708,6 +708,8 @@ try {
 }
 ~~~
 
+También existe el método `parseInt` que se comporta exactamente igual que el ejemplo anterior, pero en vez de devolver un `Integer` devuelve un `int`. Si queremos realizar la operación contraria, es decir, convertir el `Integer` a `String` utilizaremos el método `toString`.
+
 También tenemos los mecanismos de **autoboxing** y **unboxing** (envoltura y desenvoltura automáticas), que consisten en la conversión automática desde el tipo primitivo o al tipo primitivo:
 
 ~~~java
@@ -745,11 +747,12 @@ El método que nos permite obtener la fecha actual es el método estático `now(
 ~~~
 
 Como hemos visto en el ejemplo anterior, la salida por consola no se adecua al formato que a lo mejor esperábamos. Para ello, podemos utilizar la clase `DateTimeFormatter`. Esta clase tiene muchos patrones para elegir, tanto para fechas como para horas Para utilizarlos usaremos el método `ofPattern` de la clase anterior para construir el patrón. Luego pasaremos el patrón al método `format` del objeto fecha. Veamos un ejemplo, partiendo del anterior.
+
 ~~~java
 	DateTimeFormatter formatoCorto = DateTimeFormatter.ofPattern("d/M/yy");
 	DateTimeFormatter formatoLargo = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-	DateTimeFormatter formatoTextoLargo = DateTimeFormatter.ofPattern("cccc, d 'de' MMMM 'de' yyyy");
 	DateTimeFormatter formatoTextoCorto = DateTimeFormatter.ofPattern("ccc, d 'de' MMM 'de' yyyy");
+	DateTimeFormatter formatoTextoLargo = DateTimeFormatter.ofPattern("cccc, d 'de' MMMM 'de' yyyy");
 	System.out.println("La fecha de hoy en formato corto se expresa como: " + hoy.format(formatoCorto));
 	System.out.println("La fecha de hoy en formato largo se expresa como: " + hoy.format(formatoLargo));
 	System.out.println("La fecha de hoy expresada en texto corto es: " + hoy.format(formatoTextoCorto));
@@ -776,6 +779,7 @@ Por último, podemos crear fechas a partir de cadenas (sería el proceso inverso
 	LocalDate fechaLiberacionJava8 = LocalDate.parse(liberacionJava8, formatoLargo);
 	System.out.println("Fecha de liberación de Java 8: " + fechaLiberacionJava8.format(formatoTextoLargo));
 ~~~
+Este método puede lanzar la excepción `DateTimeParseException` si no se puede realizar la conversión.
 
 ###### Tiempo
 La clase para trabajar con tiempos en java 8 es la clase `LocalTime`. Esta clase representa la hora, minutos, segundos y nanosegundos de un tiempo dado. Su uso es muy parecido al de las fechas.
@@ -818,6 +822,7 @@ También podemos crear tiempos a partir de cadenas (proceso inverso al formateo)
 	mediaNoche = LocalTime.parse(mediaNocheString, formatoLargo24h);
 	System.out.println("Media noche desde cadena: " + mediaNoche.format(formatoTexto));
 ~~~
+Este método puede lanzar la excepción `DateTimeParseException` si no se puede realizar la conversión.
 
 ###### Fechas y tiempos agrupados
 En java 8 también podemos representar en un solo objeto la fecha y el tiempo juntos mediante la clase `LocalDateTime`. Su uso es una combinación de las dos clases vistas anteriormente. Por tanto no nos detendremos en más detalles.
@@ -845,6 +850,11 @@ Sin embargo, dicha clase también posee el método `nextInt(int)` que genera nú
 ~~~java
 	Random generador = new Random();
 	int numeroAleatorio = generador.nextInt(y - x + 1) + x;
+~~~
+
+El método anterior se encuentra sobrecargado y acepta el límite inferior (inclusive) y el superior (exclusive), por lo que el ejemplo anterior podría quedar como sigue:
+~~~java
+	int numeroAleatorio = generador.nextInt(x, y + 1);
 ~~~
 
 Desde java 8, la clase `Random` posee varios métodos sobrecargados que nos permiten generar un `IntStream` que es un flujo de números aleatorios. Por ejemplo, si queremos simular que tiramos un dado 15 veces podríamos utilizar el siguiente código:

@@ -104,7 +104,7 @@ public class MetodoGenerico {
 		for (T elemento : elementos) {
 			elementosSeparadosPorComas.append(elemento).append(',');
 		}
-		if (elementosSeparadosPorComas.length() > 0) {
+		if (!elementosSeparadosPorComas.isEmpty()) {
 			elementosSeparadosPorComas.deleteCharAt(elementosSeparadosPorComas.length() - 1);
 		}
 		return elementosSeparadosPorComas.toString();
@@ -363,6 +363,7 @@ El comportamiento de los principales métodos debería ser el siguiente:
 |`boolean containsValue(Object value)`|Indica si el mapa contiene una entrada con dicho valor (o varias).|
 |`Set<Entry<K, V>> entrySet()`|Devuelve un conjunto de entradas, es decir, de pares clave-valor.|
 |`V get(Object key)`|Devuelve el valor de la entrada cuya clave es la especificada o `null` si no existe una entrada con dicha clave.|
+|`V getOrDefault(Object key, V defaultValue)`|Devuelve el valor de la entrada cuya clase se especifica o `defaultValue` si no existe una entra con dicha clave.|
 |`boolean isEmpty()`|Indica si el mapa está vacío o no.|
 |`Set<K> keySet()`|Devuelve el conjunto de claves del mapa.|
 |`V put(K key, V value)`|Establece el valor de la entrada asociada a la clave especificada.|
@@ -397,7 +398,7 @@ private static final int CARAS = 6;
 	}
 	Map<Integer, Integer> ocurrencias = new TreeMap<>();
 	for (Integer numero : numeros) {
-		ocurrencias.put(numero, ocurrencias.containsKey(numero) ? ocurrencias.get(numero) + 1 : 1);
+		ocurrencias.put(numero, ocurrencias.getOrDefault(numero, 0)  + 1)
 	}
 	System.out.println(ocurrencias);
 ...
@@ -449,9 +450,7 @@ private static final int CARAS = 6;
     	}
 
     	public void encolar(E elemento) {
-    		if (elemento == null) {
-    			throw new NullPointerException("ERROR: No acepto elementos nulos.");
-    		}
+    		Objects.requireNonNull(elemento, "ERROR: No acepto elementos nulos.");
     		if (principio == null) {
     			principio = new Nodo<>(elemento);
     			fin = principio;
@@ -530,33 +529,27 @@ private static final int CARAS = 6;
     	private List<E> elementos;
 
     	public ListaSinRepetidos() {
-    		elementos = new ArrayList<>();
+				elementos = new ArrayList<>();
     	}
 
     	public List<E> get() {
-    		return elementos;
+				return elementos;
     	}
 
     	public void insertar(E elemento) throws OperationNotSupportedException {
-    		if (elemento == null) {
-    			throw new NullPointerException("ERROR: No se puede insertar un elemento nulo.");
-    		}
-    		if (!elementos.contains(elemento))	{
-    			elementos.add(elemento);
-    		} else {
-    			throw new OperationNotSupportedException("ERROR: Ya existe un elemento igual (" + elemento + ").");
-    		}
+				Objects.requireNonNull(elemento, "ERROR: No se puede insertar un elemento nulo.");
+				if (elementos.contains(elemento)) {
+					throw new OperationNotSupportedException("ERROR: Ya existe un elemento igual (" + elemento + ").");
+				}
+				elementos.add(elemento);
     	}
 
     	public void borrar(E elemento) throws OperationNotSupportedException {
-    		if (elemento == null) {
-    			throw new IllegalArgumentException("ERROR: No se puede borrar un elemento nulo.");
-    		}
-    		if (!elementos.contains(elemento)) {
-    			throw new OperationNotSupportedException("ERROR: No existe ningún elmento igual (" + elemento + ").");
-    		} else {
-    			elementos.remove(elemento);
-    		}
+				Objects.requireNonNull(elemento, "ERROR: No se puede borrar un elemento nulo.");
+				if (!elementos.contains(elemento)) {
+					throw new OperationNotSupportedException("ERROR: No existe ningún elemento igual (" + elemento + ").");
+				}
+				elementos.remove(elemento);
     	}
 
     }

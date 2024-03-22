@@ -57,17 +57,17 @@ public class CalculoIMC {
 	private static SujetoEstudio leerSujeto(int numero) {
 		String nombre;
 		do {
-			System.out.printf("Introduce el nombre del sujeto nº %d: ", numero);
+			System.out.printf("Introduce el nombre del sujeto n.º %d: ", numero);
 			nombre = Entrada.cadena();
 		} while (nombre.equals(""));
 		double peso;
 		do {
-			System.out.printf("Introduce el peso en kg. del sujeto nº %d: ", numero);
+			System.out.printf("Introduce el peso en kg. del sujeto n.º %d: ", numero);
 			peso = Entrada.realDoble();
 		} while (peso <= 0);
 		double altura;
 		do {
-			System.out.printf("Introduce la altura en cm. del sujeto nº %d: ", numero);
+			System.out.printf("Introduce la altura en cm. del sujeto n.º %d: ", numero);
 			altura = Entrada.realDoble();
 		} while (altura <= 0);
 		return new SujetoEstudio(nombre, peso, altura);

@@ -22,13 +22,13 @@ Al igual que en otros apartados, el objetivo principal es que tengáis una ampl�
 
 ## Arrays
 
-Un array en java no es más que una estructura de memoria capaz de almacenar objetos (llamados elementos cuando hablamos de arrays) del mismo tipo. Un array en sí es un objeto. A los elementos almacenados en un array se puede acceder mediante un índice que indica el desplazamiento desde el comienzo de dicho array. A la hora de crear un array se establece la longitud del mismo y ésta no se puede cambiar.
+Un array en java no es más que una estructura de memoria capaz de almacenar objetos (llamados elementos cuando hablamos de arrays) del mismo tipo. Un array en sí es un objeto. A los elementos almacenados en un array se puede acceder mediante un índice que indica el desplazamiento desde el comienzo de dicho array. A la hora de crear un array se establece la longitud del mismo y esta no se puede cambiar.
 
 <div align="center">
 <img alt="Array" src="imagenes/array.png"/>
 </div>
 
-Como he comentado, un array es un objeto en java. Por tanto, primero deberemos declarar una referencia a dicho array, después crear el array y posteriormente inicializar su contenido. Veamos cómo se lleva a cabo cada una de estas operaciones.
+Como he comentado, un array es un objeto en java. Por tanto, primero deberemos declarar una referencia de dicho array, después crear el array y posteriormente inicializar su contenido. Veamos cómo se lleva a cabo cada una de estas operaciones.
 
 Para **declarar** una referencia a un array utilizaremos la siguiente nomenclatura: `tipo[] nombre`, donde `tipo` puede ser un tipo primitivo, una clase de la API de java o una clase definida por nosotros mismos. Los corchetes indican que estamos declarando un array. Y `nombre` será el identificador que le damos a nuestra referencia al array.
 
@@ -36,7 +36,7 @@ Para **declarar** una referencia a un array utilizaremos la siguiente nomenclatu
 	int[] miArray;
 ~~~
 
-Con esto habremos declarado la referencia al array identificada por `miArray`. Pero, al igual que ocurría con los objetos, ahora mismo esa referencia es `null`. Por lo que deberemos crear el array y asignarlo a dicho identificador, para que la referencia apunte al array recién creado. Para **crear** el array se utiliza el operador `new` seguido por el tipo de objetos que va almacenar el array y entre corchetes la longitud que queremos asignar a dicho array. La longitud puede ser un valor constante o un valor calculado en tiempo de ejecución.
+Con esto habremos declarado la referencia al array identificada por `miArray`. Pero, al igual que ocurría con los objetos, ahora mismo esa referencia es `null`. Por lo que deberemos crear el array y asignarlo a dicho identificador, para que la referencia apunte al array recién creado. Para **crear** el array se utiliza el operador `new` seguido por el tipo de objetos que va a almacenar el array y entre corchetes la longitud que queremos asignar para dicho array. La longitud puede ser un valor constante o un valor calculado en tiempo de ejecución.
 
 ~~~java
 	miArray = new int[15];
@@ -84,7 +84,7 @@ Pero java define otro tipo de bucles, que no habíamos comentado, que permite re
 
 ###### Arrays multidimensionales
 
-Los arrays multidimensionales son arrays de varias dimensiones, aunque pasar de tres dimensiones es complicado ya que su uso no es nada intuitivo.
+Los arrays multidimensionales son arrays de varias dimensiones, aunque pasar de tres dimensiones es complicado, ya que su uso no es nada intuitivo.
 
 Lo más normal es la utilización de arrays de dos dimensiones, también llamados matrices. Son arrays de arrays. Para declararlos utilizaremos tantos corchetes como dimensiones queramos declarar.
 
@@ -238,7 +238,7 @@ La primera idea sería asignar un array a otro, pero como ya sabemos lo que en v
 			+ arrayDestino[0]); //Muestra Punto[x=2, x=1], Punto[x=2, y=1]
 ~~~
 
-Otra opción sería utilizar el método `clone` que se hereda de `Object`, pero esta opción tampoco es una solución adecuada, ya que utilizando este método se crea una nueva referencia del array pero para cada elemento se igualan las referencias.
+Otra opción sería utilizar el método `clone` que se hereda de `Object`, pero esta opción tampoco es una solución adecuada, ya que utilizando este método se crea una nueva referencia del array, pero para cada elemento se igualan las referencias.
 
 ~~~java
 	...
@@ -252,7 +252,7 @@ Otra opción sería utilizar el método `clone` que se hereda de `Object`, pero 
 			+ arrayDestino[0]); //Muestra Punto[x=2, x=1], Punto[x=2, y=1]
 ~~~
 
-Hay otros métodos que también permiten hacer una copia de un array como el método `arraycopy` de la clase `System` la cuál acepta como parámetros el array de origen, la posición de origen, el array de destino, la posición del destino en qué copiarlo y la longitud a copiar. Pero este método también se comporta como en el caso anterior.
+Hay otros métodos que también permiten hacer una copia de un array como el método `arraycopy` de la clase `System` la cual acepta como parámetros el array de origen, la posición de origen, el array de destino, la posición del destino en qué copiarlo y la longitud a copiar. Pero este método también se comporta como en el caso anterior.
 
 ~~~java
 	...
@@ -290,13 +290,13 @@ Si lo que pretendemos es realizar una **copia profunda** del array, lo que deber
 
 La clase `java.util.Arrays` nos ofrece algunos otros métodos (además de los vistos) que nos pueden servir de ayuda en algún momento. Veamos algunos de los métodos más interesantes:
 
-- `fill`: acepta como parámetros el array y el valor a asignar a cada elemento y rellena cada elemento del array con dicho valor. Hay que tener cuidado ya que simplemente hace una asignación del valor, por lo que si es una referencia tendremos el problema del **aliasing** para cada elemento.
+- `fill`: acepta como parámetros el array y el valor a asignar a cada elemento y rellena cada elemento del array con dicho valor. Hay que tener cuidado, ya que simplemente hace una asignación del valor, por lo que si es una referencia tendremos el problema del **aliasing** para cada elemento.
 - `sort`: ordena el array en orden ascendente. Este método trabaja correctamente con tipos primitivos, pero si queremos ordenar un array de objetos, la clase de dicho objeto debe implementar la interfaz `Comparable` o que le pasemos el método para comparar (utilizando una expresión lambda, por ejemplo), pero esto lo dejamos para más adelante.
-- `binarySearch`: utiliza el algoritmo de búsqueda binaria para buscar un elemento en el array y devuelve la posición + 1 (en negativo) de dicho elemento. El requisito para que este método funcione correctamente es que el array esté previamente ordenado. Al igual que en el caso anterior, este método funciona correctamente con tipos primitivos pero si hablamos de objetos, la clase debe implementar la interfaz `Comparator` o que le pasemos el método para comparar.
+- `binarySearch`: utiliza el algoritmo de búsqueda binaria para buscar un elemento en el array y devuelve la posición + 1 (en negativo) de dicho elemento. El requisito para que este método funcione correctamente es que el array esté previamente ordenado. Al igual que en el caso anterior, este método funciona correctamente con tipos primitivos, pero si hablamos de objetos, la clase debe implementar la interfaz `Comparator` o que le pasemos el método para comparar.
 
 ## Cadenas de caracteres
 
-La clase `String` representa una cadena de caracteres. Internamente podríamos verla como un array de caracteres.
+La clase `String` representa una cadena de caracteres. Internamente, podríamos verla como un array de caracteres.
 
 Dado que el uso de cadenas de caracteres es muy común en los lenguajes de programación, en java la clase `String` está a medio camino entre un tipo primitivo y una clase. Debido a su amplio uso, su declaración e inicialización se parecen más a un tipo primitivo que a un objeto de una clase. Además, es importante mencionar que es un **objeto inmutable**, es decir, que una vez creado no puede cambiar su contenido.
 
@@ -394,7 +394,7 @@ Un especificador de formato, además puede ir acompañado de otros modificadores
 ~~~java
 	%[indice_argumento$][modificador][anchura][.precision]tipo_conversion
 ~~~
-Como se puede apreciar sólo es obligatorio el símbolo `%` acompañado del tipo de conversión. El índice de argumento se utiliza para referirnos a un parámetro en cuestión. El modificador se utiliza para cambiar el formato de salida. La anchura se utiliza para limitar el número de caractares a mostrar. La precisión se utiliza para limitar el número de caracteres a mostrar dependiendo del tipo de conversión.
+Como se puede apreciar solo es obligatorio el símbolo `%` acompañado del tipo de conversión. El índice de argumento se utiliza para referirnos a un parámetro en cuestión. El modificador se utiliza para cambiar el formato de salida. La anchura se utiliza para limitar el número de caractares a mostrar. La precisión se utiliza para limitar el número de caracteres a mostrar dependiendo del tipo de conversión.
 
 En el siguiente ejemplo utilizo los **índices** para hacer lo mismo que en el primer ejemplo.
 ~~~java
@@ -461,9 +461,9 @@ Como ya mencioné, un objeto de la clase `String` es un objeto inmutable, lo que
 ~~~
 Este código crea tres objetos. El primero en la inicialización y uno por cada concatenación. Cuando trabajamos con pocas de estas operaciones no importa, pero si realizamos muchas de ellas si puede penalizar en recursos y/o tiempo.
 
-Para solventar este problema java nos ofrece dos clases `StringBuilder` y `StringBuffer`. Su interfaz es exactamente la misma (los métodos que nos ofrecen) y con la única diferencia que la primera clase no está sincronizada y la segunda sí. Por tanto, lo recomendable sería utilizar `StringBuilder` en entornos con un solo hilo y `StringBuffer` en entornos multi-hilo.
+Para solventar este problema, java nos ofrece dos clases `StringBuilder` y `StringBuffer`. Su interfaz es exactamente la misma (los métodos que nos ofrecen) y con la única diferencia que la primera clase no está sincronizada y la segunda sí. Por tanto, lo recomendable sería utilizar `StringBuilder` en entornos con un solo hilo y `StringBuffer` en entornos multi-hilo.
 
-Los objetos de dichas clases son estructuras dinámicas que pueden crecer cuando lo necesiten. Además de su longitud, tienen un atributo que indica su capacidad (que siempre será mayor o igual que la longitud). Dicha capacidad puede crecer se así es necesario.
+Los objetos de dichas clases son estructuras dinámicas que pueden crecer cuando lo necesiten. Además de su longitud, tienen un atributo que indica su capacidad (que siempre será mayor o igual que la longitud). Esta capacidad puede crecer si así es necesario.
 
 Un objeto `String` puede convertirse fácilmente en un objeto de una de las clases anteriores simplemente pasando el objeto `String` a la hora de crear el objeto. A la inversa, simplemente debemos utilizar el método `toString`.
 
@@ -550,7 +550,7 @@ En este apartado veremos cómo definimos las expresiones regulares, es decir, c�
 
 #### Construcción de expresiones regulares
 
-Pasemos a ver cómo podemos construir expresiones regulares, pero sin profundizar mucho ya que de este tema se podría hacer un sólo libro como ya los hay: [Mastering Regular Expressions, 3nd Edition, Jeffrey E. F. Friedl, O'Reilly and Associates, 2006](http://www.oreilly.com/catalog/regex3/).
+Pasemos a ver cómo podemos construir expresiones regulares, pero sin profundizar mucho ya que de este tema se podría hacer un solo libro como ya los hay: [Mastering Regular Expressions, 3nd Edition, Jeffrey E. F. Friedl, O'Reilly and Associates, 2006](http://www.oreilly.com/catalog/regex3/).
 
 ###### Caracteres
 
@@ -563,7 +563,7 @@ En las expresiones regulares podemos utilizar caracteres alfanuméricos que empa
 |\\r|Con el retorno de carro|
 |\\t|Con el tabulador|
 
-Además para construir expresiones regulares también se utilizan algunos caracteres que tienen un significado especial y que, por tanto, también debemos escapar.
+Además, para construir expresiones regulares también se utilizan algunos caracteres que tienen un significado especial y que, por tanto, también debemos escapar.
 
 En java el caracter de escape se representa por la doble barra `\\` por lo que si queremos emparejar con el caracter `\`, en la expresión regular en java deberemos escribir `\\\\`.
 
@@ -612,7 +612,7 @@ Podemos agrupar elementos para tratarlos como una sola unidad mediante su agrupa
 También podemos agrupar elementos pero sin capturarlos mediante el uso de los paréntesis y comenzando por `?:`. Por ejemplo: `(?:ABC)`.
 
 ###### Ejemplos
-Es conveniente que practiques con las expresiones regulares ya que son muy utilizadas sobre todo para llevar a cabo validaciones. Para ello te recomiendo que visites la siguiente página: [Comprobador de expresiones regulares](https://regex101.com/) en la que puedes probar las expresiones regulares, consultar la documentación y además te explica qué hace cada elemento, etc. En esta otra puedes mostrar una visualización gráfica de la expresión regular: [Representación gráfica de expresiones regulares](https://regexper.com/).
+Es conveniente que practiques con las expresiones regulares, ya que son muy utilizadas sobre todo para llevar a cabo validaciones. Para ello te recomiendo que visites la siguiente página: [Comprobador de expresiones regulares](https://regex101.com/) en la que puedes probar las expresiones regulares, consultar la documentación y además te explica qué hace cada elemento, etc. En esta otra puedes mostrar una visualización gráfica de la expresión regular: [Representación gráfica de expresiones regulares](https://regexper.com/).
 
 Veamos algunos ejemplos, aunque luego en los ejercicios veremos más.
 
@@ -620,7 +620,7 @@ Veamos algunos ejemplos, aunque luego en los ejercicios veremos más.
 - Expresión regular que coincida con un número de teléfono: `\d{9}`
 - Expresión regular que coincida con números del 0 al 49: `[0-4]?\d`
 - Expresión regular que coincida con números hexadecimales: `[\da-fA-F]+`
-- Expresión regular que se ajuste a un número hexadecimal pero en el que no podamos mezclar mayúsculas y minúsculas (utilizamos unas u otras): `[\dA-F]+|[\da-f]+`
+- Expresión regular que se ajuste a un número hexadecimal, pero en el que no podamos mezclar mayúsculas y minúsculas (utilizamos unas u otras): `[\dA-F]+|[\da-f]+`
 - Expresión regular que se ajuste a números de tres cifras del 000 al 255: `[0-1]\d{2}|2[0-4]\d|25[0-5]`
 
 ###### Expresiones regulares en java
@@ -708,7 +708,7 @@ try {
 }
 ~~~
 
-También existe el método `parseInt` que se comporta exactamente igual que el ejemplo anterior, pero en vez de devolver un `Integer` devuelve un `int`. Si queremos realizar la operación contraria, es decir, convertir el `Integer` a `String` utilizaremos el método `toString`.
+También existe el método `parseInt` que se comporta exactamente igual que el ejemplo anterior, pero en vez de devolver un `Integer` devuelve un `int`. Si queremos realizar la operación contraria, es decir, convertir un `Integer` a `String` utilizaremos el método `toString`.
 
 También tenemos los mecanismos de **autoboxing** y **unboxing** (envoltura y desenvoltura automáticas), que consisten en la conversión automática desde el tipo primitivo o al tipo primitivo:
 
@@ -723,7 +723,7 @@ Siempre podrás obtener más información consultando la [API del paquete `java.
 
 ## Fechas y tiempos
 
-En las versiones anteriores de java, trabajar con fechas y horas era muy tedioso y a veces se podía convertir en una locura. Pero en la versión 8 de java se han esmerado en hacer que trabajar con fechas y horas sea sencillo. Lo primero que han hecho es unificar los nombres de los métodos, por lo que trabajar con fechas o trabajar con horas es casi idéntico y, por tanto, su aprendizaje se hace mucho más sencillo. Todas las clases que veremos son inmutables (al igual que ocurría con la clase `String`) y eso es importante que lo tengas en cuenta ya que, como sabes, esto quiere decir que dichos objetos no se pueden modificar.
+En las versiones anteriores de java, trabajar con fechas y horas era muy tedioso y a veces se podía convertir en una locura. Pero en la versión 8 de java se han esmerado en hacer que trabajar con fechas y horas sea sencillo. Lo primero que han hecho es unificar los nombres de los métodos, por lo que trabajar con fechas o trabajar con horas es casi idéntico y, por tanto, su aprendizaje se hace mucho más sencillo. Todas las clases que veremos son inmutables (al igual que ocurría con la clase `String`) y eso es importante que lo tengas en cuenta, ya que, como sabes, esto quiere decir que dichos objetos no se pueden modificar.
 
 En este apartado veremos cómo trabajar con ellas haciendo uso de los métodos más comunes y útiles, aunque para una completa explicación te recomiendo que le eches un vistazo a la documentación de la API.
 
@@ -767,7 +767,7 @@ También podemos crear una fecha concreta pasándole el día, mes y año mediant
 
 Nos ofrece métodos para consultar datos de la fecha, como conocer el año `getYear`, el mes `getMonthValue` (el método `getMonth` nos devuelve un enumerado representado dicho mes), el día del año `getDayOfYear`, el día del mes `getDayOfMonth`, el día de la semana `getDayOfWeek`. Podemos consultar también si el año de una fecha fue bisiesto `isLeapYear` o saber el número de días del mes `lengthOfMonth`.
 
-Dada una fecha también podemos manipularla: cambiar el año `withYear`, cambiar el mes `withMonth`, cambiar el día `withDayOfMonth` o cambiar lo que queramos mediante el método `with` que como primer parámetro se le pasa un enumerado `ChronoField` que contiene una gran cantidad de constantes. Ten en cuenta que estos métodos no modifican el objeto sobre que el actúan ya que estos objetos son **inmutables** y lo que hacen es devolver una nueva fecha con el resultado de dicha manipulación.
+Dada una fecha también podemos manipularla: cambiar el año `withYear`, cambiar el mes `withMonth`, cambiar el día `withDayOfMonth` o cambiar lo que queramos mediante el método `with` que como primer parámetro se le pasa un enumerado `ChronoField` que contiene una gran cantidad de constantes. Ten en cuenta que estos métodos no modifican el objeto sobre el que actúan, ya que estos objetos son **inmutables** y lo que hacen es devolver una nueva fecha con el resultado de dicha manipulación.
 
 Nos permite realizar operaciones con una fecha dada: añadir años `plusYears`, añadir meses `plusMonths`, añadir días `plusDays` o añadir lo que queramos mediante `plus` y el uso de `ChronoField`. Lo mismo nos permite restar mediante los métodos `minus*`.
 
@@ -804,7 +804,7 @@ Como ocurría con las fechas, el formato de salida a lo mejor no es el esperado.
 	System.out.println("La hora actual expresada en texto es: " + ahora.format(formatoTexto));
 ~~~
 
-También podemos crear un tiempo concreto pasándole la hora, los minutos, los segundos ... mediante el método estático `of`.
+También podemos crear un tiempo concreto pasándole la hora, los minutos, los segundos, etc. mediante el método estático `of`.
 ~~~java
 	LocalTime mediaNoche = LocalTime.of(0, 0, 0);
 	System.out.println("Media noche: " + mediaNoche.format(formatoLargoAMPM));
@@ -812,7 +812,7 @@ También podemos crear un tiempo concreto pasándole la hora, los minutos, los s
 
 También posee métodos para consultar la hora `getHour`, los minutos `getMinute`, los segundos `getMinute` y los nanosegundos `getNano`.
 
-Ofrece métodos para manipular un tiempo: cambiar la hora `withHour`, cambiar los minutos `withMinute`, cambiar los segundos `withSecond`, añadir o restar horas `plusHour` y `minusHour`, añadir o restar minutos `plusMinutes` y `minusMinutes`, añadir o restar segundos `plusSeconds` y `minusSecond` y añadir o restar nanosegundos `plusNano` y `minusNano`. Recordar que estos métodos no modifican el objeto fecha sobre el que actúa ya que dichos objetos son **inmutables** y lo que hacen es devolver una copia con dicho objeto modificado.
+Ofrece métodos para manipular un tiempo: cambiar la hora `withHour`, cambiar los minutos `withMinute`, cambiar los segundos `withSecond`, añadir o restar horas `plusHour` y `minusHour`, añadir o restar minutos `plusMinutes` y `minusMinutes`, añadir o restar segundos `plusSeconds` y `minusSecond` y añadir o restar nanosegundos `plusNano` y `minusNano`. Recordar que estos métodos no modifican el objeto fecha sobre el que actúa, ya que dichos objetos son **inmutables** y lo que hacen es devolver una copia con dicho objeto modificado.
 
 Los métodos `equals` y `compareTo` nos permiten comparar tiempos. También se pueden utilizar los métodos `isBefore`, `isAfter` y `isEquals`.
 
@@ -825,7 +825,7 @@ También podemos crear tiempos a partir de cadenas (proceso inverso al formateo)
 Este método puede lanzar la excepción `DateTimeParseException` si no se puede realizar la conversión.
 
 ###### Fechas y tiempos agrupados
-En java 8 también podemos representar en un solo objeto la fecha y el tiempo juntos mediante la clase `LocalDateTime`. Su uso es una combinación de las dos clases vistas anteriormente. Por tanto no nos detendremos en más detalles.
+En java 8 también podemos representar en un solo objeto la fecha y el tiempo juntos mediante la clase `LocalDateTime`. Su uso es una combinación de las dos clases vistas anteriormente. Por tanto, no nos detendremos en más detalles.
 
 ## Generación de números aleatorios en java
 
@@ -880,7 +880,7 @@ Otra forma sería hacerlo con las funciones lambda de java 8:
 
 - **Letra del DNI**
 
-  Escribir un programa java que lea el número de tu DNI y te muestra la letra correspondiente al mismo. Las letras del DNI se calculan quedándonos con el resto del numero de DNI entre 23 y aplicando esta correspondencia:
+  Escribir un programa en java que lea el número de tu DNI y te muestra la letra correspondiente al mismo. Las letras del DNI se calculan quedándonos con el resto del número de DNI entre 23 y aplicando esta correspondencia:
 	~~~
 	0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22
 	T R W A G M Y F P D X  B  N  J  Z  S  Q  V  H  L  C  K  E
@@ -912,7 +912,7 @@ Otra forma sería hacerlo con las funciones lambda de java 8:
 
 - **Mayor y menor**
 
-	Escribir un programa en java que pida por teclado el número enteros a generar, que deberá ser al menos dos. Cree un array de enteros de ese tamaño y lo rellene con números aleatorios entre 0 y 1000. Finalmente nos mostrará cuál es el mayor, cuál es el menor y la posición que ocupan.
+	Escribir un programa en java que pida por teclado el número enteros a generar, que deberá ser al menos dos. Cree un array de enteros de ese tamaño y lo rellene con números aleatorios entre 0 y 1000. Finalmente, nos mostrará cuál es el mayor, cuál es el menor y la posición que ocupan.
 
 	- Posible solución
 		~~~java
@@ -925,7 +925,7 @@ Otra forma sería hacerlo con las funciones lambda de java 8:
 			public static void main(String[] args) {
 				int cantidadNumeros;
 				do {
-					System.out.print("Inroduce la cantidad de números a generar: ");
+					System.out.print("Introduce la cantidad de números a generar: ");
 					cantidadNumeros = Entrada.entero();
 				} while (cantidadNumeros < 2);
 				int[] numeros = new int[cantidadNumeros];
@@ -956,7 +956,7 @@ Otra forma sería hacerlo con las funciones lambda de java 8:
 
 - **Media**
 
-	Escribir un programa java que lea por teclado la cantidad de números a generar, que deberá ser al menos 3. Cree un array de dicho tamaño y los genere aleatoriamente entre 0 y 100. Debe calcular la media de los mismos como entero y contar la cantidad de números que hay por encima, por debajo y los que son iguales a la media. También debe anotar las posiciones en las que se encuentran los números iguales a la media. Para ello ve almacenando sus posiciones en un `StringBuffer` separados por comas y lo muestre sólo en el caso que haya números iguales. Si solo hay uno no debe mostrar la coma final.
+	Escribir un programa en java que lea por teclado la cantidad de números a generar, que deberá ser al menos 3. Cree un array de dicho tamaño y los genere aleatoriamente entre 0 y 100. Debe calcular la media de los mismos como entero y contar la cantidad de números que hay por encima, por debajo y los que son iguales a la media. También debe anotar las posiciones en las que se encuentran los números iguales a la media. Para ello ve almacenando sus posiciones en un `StringBuffer` separados por comas y lo muestre solo en el caso de que haya números iguales. Si solo hay uno no debe mostrar la coma final.
 
 	- Posible solución
 		~~~java
@@ -1039,7 +1039,7 @@ Otra forma sería hacerlo con las funciones lambda de java 8:
 						{'X', ' ', 'X', ' ', 'X', ' ', 'X', ' '},
 						{' ', 'X', ' ', 'X', ' ', 'X', ' ', 'X'},
 						{'X', ' ', 'X', ' ', 'X', ' ', 'X', ' '}};
-				System.out.println("Tablero inicializado al declarlo");
+				System.out.println("Tablero inicializado al declararlo");
 				return tablero;
 			}
 
@@ -1075,7 +1075,7 @@ Otra forma sería hacerlo con las funciones lambda de java 8:
 
 - **Estudio estadístico IMC**
 
-	Escribir un programa java que lea el IMC de una cantidad mayor que 2 de sujetos y nos muestre la media del IMC de dichos sujetos, el nombre del sujeto (o de uno de los sujetos) con mayor IMC y con menor IMC, la cantidad de sujetos con IMC por encima de la media y por debajo. El IMC de un sujeto se calcula como la división de su peso en kg. entre el cuadrado de su altura en cm.
+	Escribir un programa en java que lea el IMC de una cantidad mayor que 2 de sujetos y nos muestre la media del IMC de dichos sujetos, el nombre del sujeto (o de uno de los sujetos) con mayor IMC y con menor IMC, la cantidad de sujetos con IMC por encima de la media y por debajo. El IMC de un sujeto se calcula como la división de su peso en kg. entre el cuadrado de su altura en cm.
 
 	- **Posible solución**:
 		SujetoEstudio.java
@@ -1199,17 +1199,17 @@ Otra forma sería hacerlo con las funciones lambda de java 8:
 			private static SujetoEstudio leerSujeto(int numero) {
 				String nombre;
 				do {
-					System.out.printf("Introduce el nombre del sujeto nº %d: ", numero);
+					System.out.printf("Introduce el nombre del sujeto n.º %d: ", numero);
 					nombre = Entrada.cadena();
 				} while (nombre.equals(""));
 				double peso;
 				do {
-					System.out.printf("Introduce el peso en kg. del sujeto nº %d: ", numero);
+					System.out.printf("Introduce el peso en kg. del sujeto n.º %d: ", numero);
 					peso = Entrada.realDoble();
 				} while (peso <= 0);
 				double altura;
 				do {
-					System.out.printf("Introduce la altura en cm. del sujeto nº %d: ", numero);
+					System.out.printf("Introduce la altura en cm. del sujeto n.º %d: ", numero);
 					altura = Entrada.realDoble();
 				} while (altura <= 0);
 				return new SujetoEstudio(nombre, peso, altura);
@@ -1224,7 +1224,7 @@ Otra forma sería hacerlo con las funciones lambda de java 8:
 
 - **Reconocimiento DNI**
 
-	Escribir un programa que pida por teclado un DNI mientras éste no sea válido. Luego mostrará el número por un lado y la letra por otra. Todo ello lo debe hacer utilizando expresiones regulares y grupos en las mismas.
+	Escribir un programa que pida por teclado un DNI mientras este no sea válido. Luego mostrará el número, por un lado, y la letra por otra. Todo ello lo debe hacer utilizando expresiones regulares y grupos en las mismas.
 
 	- Posible solución
 		~~~java
@@ -1277,7 +1277,7 @@ Otra forma sería hacerlo con las funciones lambda de java 8:
 				String telefono;
 
 				do {
-					System.out.print("Introduce un telefono: ");
+					System.out.print("Introduce un teléfono: ");
 					telefono = Entrada.cadena();
 				} while (!telefono.matches(ER_TELEFONO));
 
@@ -1290,7 +1290,7 @@ Otra forma sería hacerlo con las funciones lambda de java 8:
 
 - **Prefijos telefónicos**
 
-	Escribir un programa java que valide si un teléfono introducido cumple el formato de un teléfono español. Puede llevar el prefijo internacional o no. Será válido si su prefijo provincial es de tres cifras y el número de teléfono de 6 cifras o el prefijo de capital es dos cifras y el número de teléfono de 7 cifras. Cada campo irá separado por espacios. Finalmente mostrará o el prefijo de provincia o el prefijo de capital.
+	Escribir un programa en java que valide si un teléfono introducido cumple el formato de un teléfono español. Puede llevar el prefijo internacional o no. Será válido si su prefijo provincial es de tres cifras y el número de teléfono de 6 cifras o el prefijo de capital es dos cifras y el número de teléfono de 7 cifras. Cada campo irá separado por espacios. Finalmente, mostrará o el prefijo de provincia o el prefijo de capital.
 
 	- Posible solución
 		~~~java
@@ -1405,7 +1405,7 @@ Otra forma sería hacerlo con las funciones lambda de java 8:
 
 - **Cuenta vocales**
 
-	Escribir un programa java que cuente las vocales existentes en una frase introducida por teclado, ignorando mayúsculas y minúsculas.
+	Escribir un programa en java que cuente las vocales existentes en una frase introducida por teclado, ignorando mayúsculas y minúsculas.
 
 	- Posible solución
 		~~~java
@@ -1513,13 +1513,13 @@ Otra forma sería hacerlo con las funciones lambda de java 8:
 				DateTimeFormatter formatoTexto = DateTimeFormatter.ofPattern("h 'horas' m 'minutos' s 'segundos' a");
 				System.out.println("La hora actual en formato corto AM/PM se expresa como: " + ahora.format(formatoCortoAMPM));
 				System.out.println("La hora actual en formato largo AM/PM se expresa como: " + ahora.format(formatoLargoAMPM));
-				System.out.println("La hora actual en formato corto 24h se expresa como: " + ahora.format(formatoCorto24h));
-				System.out.println("La hora actual en formato largo 24h se expresa como: " + ahora.format(formatoLargo24h));
+				System.out.println("La hora actual en formato corto 24 h se expresa como: " + ahora.format(formatoCorto24h));
+				System.out.println("La hora actual en formato largo 24 h se expresa como: " + ahora.format(formatoLargo24h));
 				System.out.println("La hora actual expresada en texto es: " + ahora.format(formatoTexto));
 
 
 				LocalTime medioDia = LocalTime.of(12, 0, 0);
-				System.out.println("Media día: " + medioDia.format(formatoLargo24h));
+				System.out.println("Medio día: " + medioDia.format(formatoLargo24h));
 
 				String mediaNocheString = "00:00:00";
 				LocalTime mediaNoche = LocalTime.parse(mediaNocheString, formatoLargo24h);
@@ -1529,8 +1529,8 @@ Otra forma sería hacerlo con las funciones lambda de java 8:
 		}
 		~~~
 
-- **Fecha nacimiento y cumpleaños**
-	Crea un programa que nos pida la fecha de nacimiento como cadena en un formato válido mientras esta no sea válida. Nos muestre dicha fecha por pantalla, nos diga qué día de la semana era y nos diga los días que faltan para el mismo, los que han pasado o si hoy es nuestro cumpleaños en cuyo caso nos felicitará y nos dirá los años que cumplimos.
+- **Fecha de nacimiento y cumpleaños**
+	Crea un programa que nos pida la fecha de nacimiento como cadena en un formato válido mientras esta no sea válida. Nos muestra dicha fecha por pantalla, nos diga qué día de la semana era y nos diga los días que faltan para el mismo, los que han pasado o si hoy es nuestro cumpleaños en cuyo caso nos felicitará y nos dirá los años que cumplimos.
 
 	- Posible solución
 

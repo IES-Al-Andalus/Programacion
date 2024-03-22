@@ -22,7 +22,7 @@ public class Tablero {
 				{'X', ' ', 'X', ' ', 'X', ' ', 'X', ' '},
 				{' ', 'X', ' ', 'X', ' ', 'X', ' ', 'X'},
 				{'X', ' ', 'X', ' ', 'X', ' ', 'X', ' '}};
-		System.out.println("Tablero inicializado al declarlo");
+		System.out.println("Tablero inicializado al declararlo");
 		return tablero;
 	}
 	

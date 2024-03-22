@@ -1,6 +1,6 @@
 # Estructuras dinámicas en java
 
-En este apartado trataremos las **estructuras dinámicas en java**. Para ello primero abordaremos la genericidad en java ya que es el instrumento utilizado para la utilización de las estructuras de datos dinámicas. Seguidamente he pretendido presentaros las estructuras de datos más utilizadas en java.
+En este apartado trataremos las **estructuras dinámicas en java**. Para ello primero abordaremos la genericidad en java, ya que es el instrumento utilizado para la utilización de las estructuras de datos dinámicas. Seguidamente, he pretendido presentaros las estructuras de datos más utilizadas en java.
 
 Al igual que en otros apartados, el objetivo principal es que tengáis una amplía gama de ejercicios, con sus respectivas posibles soluciones, sobre **estructuras dinámicas en java**.
 
@@ -32,17 +32,17 @@ Como sabéis, estas estructuras son muy útiles y muy utilizadas, pero adolecen 
 
 En este apartado nos vamos a dedicar a introducir las **estructuras dinámicas de datos** que, a diferencia de las anteriores, si pueden modificar su tamaño en tiempo de ejecución, es decir, pueden crecer o decrecer según nuestras necesidades. Es por ello, que dominarlas es esencial debido a su amplio uso, dadas sus ventajas.
 
-Por ello, empezaremos viendo cómo declarar y utilizar clases genéricas ya que son la base de las estructuras dinámicas de datos. Luego pasaremos a ver las colecciones y sus principales tipos. Finalmente veremos los mapas. Y como siempre os mostraré ejemplos de uso de todo ello.
+Por ello, empezaremos viendo cómo declarar y utilizar clases genéricas, ya que son la base de las estructuras dinámicas de datos. Luego pasaremos a ver las colecciones y sus principales tipos. Finalmente veremos los mapas. Y como siempre os mostraré ejemplos de uso de todo ello.
 
 ## Genéricos
 
 En java, a partir de la versión 5, existen los denominados genéricos. Los genéricos son el mecanismo que nos brinda java para usar tipos abstractos para definir clases, interfaces y métodos y que luego instanciaremos con un tipo concreto. Como puedes imaginar, esto también es posible haciendo uso de la clase `Object`, pero con el uso de genéricos tenemos muchas ventajas, tales como:
 
 - La comprobación de tipos se hace en tiempo de compilación y no tendremos indeseadas `ClassCastException` que muchas veces son difíciles de depurar.
-- Eliminamos el abuso de los casting que hace que nuestro código no sea lo suficientemente legible.
+- Eliminamos el abuso de los castings que hacen que nuestro código no sea lo suficientemente legible.
 - Nos permiten la reutilización de código con tipado seguro, por ejemplo para implementar clases contenedoras como las colecciones o implementar algoritmos genéricos.
 
-Una **clase genérica** es una clase que en su definición contiene un parámetro de tipo o una lista de parámetros de tipos, que serán establecidos cuando ésta sea instanciada. Generalmente estos parámetros son nombrados como `E` (elemento de una colección), `T` (un tipo), `K` (una clave), `V` (un valor), etc. aunque nosotros podemos ponerle el nombre que creamos conveniente. Los parámetros son encerrados entre los signos `<` y `>` y si hay más de uno se separan por comas.
+Una **clase genérica** es una clase que en su definición contiene un parámetro de tipo o una lista de parámetros de tipos, que serán establecidos cuando esta sea instanciada. Generalmente, estos parámetros son nombrados como `E` (elemento de una colección), `T` (un tipo), `K` (una clave), `V` (un valor), etc. aunque nosotros podemos ponerle el nombre que creamos conveniente. Los parámetros son encerrados entre los signos `<` y `>` y si hay más de uno se separan por comas.
 
 Cuando declaramos una clase genérica debemos indicar el parámetro de tipo. A la hora de instanciar una clase genérica también debemos indicar el parámetro de tipo, aunque a partir de java 7 podemos utilizar el operador diamante `<>` y el tipo se inferirá de la declaración.
 
@@ -80,7 +80,7 @@ public class PruebaContenedor {
 }
 ~~~
 
-Como se puede ver hemos declarado dos variables de nuestra clase. Una que contendrá `Integer` y otra que contendrá `String`. Para ello, a la hora de la declaración hemos utilizado el nombre de la clase seguida por el tipo que queremos darle al parámetro de tipo, encerrado entre `<` y `>`. Luego hemos llamado al operador `new` para crearla y seguido al nombre de la clase hemos utilizado el operador diamante `<>` que indica que es una clase genérica y que infiere el tipo del parámetro de tipo de la declaración de la misma en la que sí indicábamos el parámetro de tipo. Como veis, es un ejemplo que puede tener poca utilidad pero que sí nos sirve para ver cómo declarar y utilizar los genéricos.
+Como se puede ver hemos declarado dos variables de nuestra clase. Una que contendrá `Integer` y otra que contendrá `String`. Para ello, a la hora de la declaración hemos utilizado el nombre de la clase seguida por el tipo que queremos darle al parámetro de tipo, encerrado entre `<` y `>`. Luego hemos llamado al operador `new` para crearla y seguido al nombre de la clase hemos utilizado el operador diamante `<>` que indica que es una clase genérica y que infiere el tipo del parámetro de tipo de la declaración de la misma en la que sí indicábamos el parámetro de tipo. Como veis, es un ejemplo que puede tener poca utilidad, pero que sí nos sirve para ver cómo declarar y utilizar los genéricos.
 
 Al igual que hemos hecho con las clases, también podemos declarar **interfaces genéricas**.
 
@@ -89,7 +89,7 @@ También es posible **restringir los parámetros de tipo** indicando de quién d
 Los genéricos tienen algunas restricciones, como pueden ser:
 
 - No podemos instanciar tipos genéricos con tipos primitivos. Para ello debemos utilizar las clases envoltorio como `Integer`, `Float`, `Double`, etc. El compilador transforma automáticamente los tipos primitivos en sus clases envoltorio y viceversa, es el mecanismo conocido como **autoboxing**.
-- Sobre un parámetro de tipo sólo podemos aplicar métodos públicos de la clase `Object` (el método `clone` no es público en la clase `Object`).
+- Sobre un parámetro de tipo solo podemos aplicar métodos públicos de la clase `Object` (el método `clone` no es público en la clase `Object`).
 - No se pueden crear instancias de los parámetros de tipo.
 - No se pueden crear arrays de los parámetros de tipo.
 - Tampoco se pueden declarar campos `static` de dichos tipos.
@@ -207,7 +207,7 @@ La interfaz `List` es implementada por dos clases:
 
 ### Recorridos
 
-La forma adecuada de declarar una lista o un conjunto es utilizando la interfaz (`List` o `Set`) en la declaración y así podremos cambiar su implementación en cualquier momento sin modificar nuestro código. Esto es válido a la hora de declarar parámetros de un método o el valor que devuelve. En la declaración debemos indicar la clase que va albergar entre `<` y `>`. Para su creación utilizaremos el operador `new` seguido por el constructor de la clase que queremos utilizar (su implementación) seguida del operador diamante `<>`.
+La forma adecuada de declarar una lista o un conjunto es utilizando la interfaz (`List` o `Set`) en la declaración y así podremos cambiar su implementación en cualquier momento sin modificar nuestro código. Esto es válido a la hora de declarar parámetros de un método o el valor que devuelve. En la declaración debemos indicar la clase que va a albergar entre `<` y `>`. Para su creación utilizaremos el operador `new` seguido por el constructor de la clase que queremos utilizar (su implementación) seguida del operador diamante `<>`.
 
 ~~~java
 ...
@@ -236,7 +236,7 @@ Pero también podemos utilizar un iterador. Un iterador es un objeto genérico q
 - `T next()` devuelve el siguiente elemento del iterador.
 - `void remove()` elimina el último elemento devuelto por el iterador, **tanto del iterador como de la colección**.
 
-Por tanto podemos utilizar un iterador para recorrer una colección. En este primer ejemplo utilizaremos un bucle `for`:
+Por tanto, podemos utilizar un iterador para recorrer una colección. En este primer ejemplo utilizaremos un bucle `for`:
 
 ~~~java
 ...
@@ -284,7 +284,7 @@ Lo más fácil sería que los elementos pertenezcan a una clase que tiene defini
 
 Si la clase de los elementos implementa esta interfaz, podremos utilizar la clase de utilidades `Collections`, por medio de su método `sort` que, en una primera implementación, recibe una lista cuyos elementos implementan la interfaz `Comparable` y que ordena dicha lista.
 
-Si una clase implementa la interfaz `Comparable` éste será el orden que utilizará un `TreeSet` para mantener sus elementos ordenados.
+Si una clase implementa la interfaz `Comparable` este será el orden que utilizará un `TreeSet` para mantener sus elementos ordenados.
 
 ###### Segunda posibilidad
 
@@ -311,7 +311,7 @@ Collections.sort(palabras, new Comparator<String>() {
 ...
 ~~~
 
-Aunque la forma idónea de hacerlo sería utilizando las funciones lambda, dado que `Comparator` es un interfaz funcional, de la siguiente forma:
+Aunque la forma idónea de hacerlo sería utilizando las funciones lambda, dado que `Comparator` es una interfaz funcional, de la siguiente forma:
 
 ~~~java
 Collections.sort(palabras, (elemento1, elemento2) -> (elemento1.length() == elemento2.length()) ?

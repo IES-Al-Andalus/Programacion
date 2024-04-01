@@ -10,6 +10,7 @@ Este repositorio no pretende ser una obra exhaustiva sobre programación, ni sob
 - [Introducción a la programación orientada a objetos en java](introduccionPOO/)
 - [Algunas clases interesantes en java](clasesInteresantesJava/)
 - [Estructuras dinámicas en java](estructurasDinamicasJava/)
+- [Ficheros en java](ficheros/)
 
 ## Autor
 
@@ -31,7 +32,7 @@ Este proyecto tiene licencia del MIT - veáse el fichero de [licencia](LICENSE) 
 
 ## Contribuciones
 
-Os animo a que realicéis vuestras contribuciones en el proyecto en la medida de las posibilidades de cada cuál:
+Os animo a que realicéis vuestras contribuciones en el proyecto en la medida de las posibilidades de cada cual:
 
 - Sugiriendo mejoras.
 - Aportando nuevos ejemplos.

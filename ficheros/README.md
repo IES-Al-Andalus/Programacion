@@ -330,7 +330,7 @@ También podemos utilizar una función lambda para realizar el mismo filtrado:
     [Descargar posible solución para el programa **MostrarFicherosEntreDosFechasConFileFilterClaseAnonima**](ejercicios/file/MostrarFicherosEntreDosFechasConFileFilterClaseAnonima.java)
 
 
-- **Filtrar ficheros con clase anónima**
+- **Filtrar ficheros con función lambda**
 
   Escribir un programa en java que liste los ficheros comprendidos entre dos fechas introducidas por teclado de la carpeta actual. Utiliza una clase anónima.
 

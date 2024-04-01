@@ -35,7 +35,7 @@ Si nos atenemos a cómo accedemos a los ficheros podemos distinguir dos modos de
 - **Acceso aleatorio**: Podemos acceder a cualquier byte que deseemos. Un simil podría ser los CD de música, en los que podemos escuchar la canción que deseemos.
 
 En java todas las operaciones de E/S se encuentran en el paquete `java.io` y es lo que veremos en los siguientes apartados. Antes de continuar, sería conveniente mencionar que en java existen un par de abstracciones relacionadas con los ficheros:
-- **Flujo de datos** también conocido como `Stream`, es una abstracción que se asocia al fichero físico y que es tratada por la máquina virtual, de forma que nosotros tratamos con el flujo y la máquina virtual es la encargada de tratar con los distintos ficheros físicos.
+- **Flujo de datos** también conocido como `Stream`, es una abstracción que se asocia al fichero físico, en nuestro caso, y que es tratada por la máquina virtual, de forma que nosotros tratamos con el flujo y la máquina virtual es la encargada de tratar con los distintos ficheros físicos.
 - **Buffer de datos** es una abstracción que se asocia a un flujo y actúa de intermediario entre nuestro programa y el flujo, haciendo más eficientes las lecturas y escrituras. Se comporta como una memoria intermedia que almacena una cantidad de bytes definida, de forma que las lecturas se realizan desde esta memoria intermedia y cuando se lee por completo se carga otro bloque en la misma. Para las escrituras actúa de forma similiar, escribimos en la memoria intermedia y cuando se llena, se vuelca al flujo y se vacía.
 
 Cuando trabajamos con ficheros, debemos crear la asociación, bien sea mediante un flujo o mediante un buffer. A esto es a lo que se conoce como **abrir el fichero**. Leeremos o escribiremos los datos y finalmente eliminaremos la asociación para liberar el recurso. A esto es a lo que se llama **cerrar el fichero**. Es importante cerrar los ficheros. 
@@ -62,4 +62,338 @@ Como se puede apreciar, en el try se abre el fichero, pero nunca se cierra, ya q
 Ahora que ya conocemos todos estos, es la hora de que pasemos a ver las posibilidades que nos ofrece el paquete `java.io` para trabajar con ficheros.
 
 ## El sistema de archivos
+
+Para trabajar con el sistema de ficheros nos vamos a centrar en las siguientes clases o interfaces:
+- `File`: Clase que nos ofrece una representación abstracta de un fichero y que nos permite realizar con él las operaciones más comunes: creación, borrado, consultar propiedades, etc.
+- `FileFilter` y`FilenameFilter`: Interfaces que determinan el comportamiento que deben tener las clases que vayamos a utilizar para filtrar el listado de archivos de una carpeta.
+
+### File
+
+Esta clase pertenece al paquete `java.io` y hereda directamente de `Object`. Es una representación abstracta del fichero, pero no es el fichero en sí mismo. Es más, podría ser la representación abstracta de un fichero que ni siquiera existe, por ejemplo porque vamos a crearlo.
+
+Con esta clase podemos hacer todas las operaciones a realizar con un fichero o carpeta. 
+
+Para crear objetos de tipo `File` se nos ofrece varios constructores, aunque los más comunes son los siguientes:
+
+|Constructor|Descripción|
+|-----------------------|
+|`File(String nombre)`|Crea un objeto del tipo `File` en la localización asociada al nombre que se le pasa, que puede ser una ruta absoluta o relativa (es recomendable utilizar las rutas relativas en la medida de lo posible). Si el nombre no termina en un separador nos estaremos refiriendo a una carpeta, que es un fichero.|
+|`File(String ruta, String nombre)`|Igual que el anterior, aunque ahora la ruta y el nombre se indican por separado.|
+|`File(Uri uri)`|Crea un objeto del tipo `File` asociado a la URI indicada.| 
+
+Para construir las rutas, debemos utilizar el separador del sistema, para que nuestra aplicación sea portable de un SO a otro. Para ello la clase `File` tiene la constante `separator` que nos devuelve dicho separador dependiente de la plataforma.
+
+
+Veamos los métodos más comunes de su API:
+
+|Método|Descripción|
+|------------------|
+|`boolean canExecute()`|Comprueba si el archivo es ejecutable.|
+|`boolean canRead()`|Comprueba si tenemos permisos de lectura.|
+|`boolean canExecute()`|Comprueba si tenemos permisos de escritura.|
+|`boolean createNewFile()`|Crea un nuevo fichero vacío si es que no existe.|
+|`boolean delete()`|Borra el fichero.|
+|`boolean exist()`|Comprueba si existe el fichero.|
+|`String getParent()`|Devuelve la cadena asociada al camino.|
+|`String getName()`|Devuelve la cadena asociada al nombre.|
+|`boolean isDirectory()`|Comprueba si es una carpeta.|
+|`boolean isFile()`|Comprueba si es un fichero regular.|
+|`boolean isHidden()`|Comprueba si es un fichero oculto.|
+|`long length()`|Devuelve el tamaño del fichero.|
+|`String[] list()`|Devuelve un array con los nombres de los ficheros y directorios contenidos en el mismo.|
+|`String[] list(FileFilter filtro)`|Devuelve un array con los nombre de los ficheros y directorios aplicando el filtro.|
+|`File[] lisFiles()`|Devuelve un array con los ficheros y directorios contenidos en el mismo.|
+|`File[] listFiles(FileFilter filtro)`|Devuelve un array con los ficheros y directorios aplicando el filtro.|
+|`File[] listFiles(FilenameFilter filtro)`|Devuelve un array con los ficheros y directorios aplicando el filtro.|
+|`boolean mkdir()`|Crea la carpeta.|
+|`boolean renameTo(File nombre)`|Renombra el fichero al indicado por el fichero que se le pasa.|
+|`boolean setExecutable(boolean ejecutable)`|Establece el permiso de ejecucion al indicado.|
+|`boolean setLastModified(long tiempo)`|Establece la fecha de la última modificación a la indicada.|
+|`boolean setReadable(boolean leible)`|Establece el permiso de lectura al indicado.|
+|`boolean setWritable(boolean escribible)`|Establece el permiso de escritura al indicado.|
+
+En el apartado de [ejercicios](#ejercicios) tienes algunos ejemplos sobre el uso de la clase `File`.
+
+### Filtros
+
+Hemos visto que con el método `list` podemos listar todos los archivos de una carpeta dada. Pero a veces no mqueremos listar todos los archivos sino solo aquellos que cumplan con cierto criterio. Pues dicho método está sobrecargado para establecer el criterio de filtrado. 
+
+Para ello tenemos las siguientes interfaces que determinan el comportamiento de las clases capaces de realizar este tipo de filtrado:
+
+- `FileFilter`: Para filtrar basándonos en el fichero (sus características). Obliga a implementar el método `boolean accept(File fichero)`.
+- `FilenameFilter`: Para filtrar basándonos en el nombre del fichero. Obliga a implementar el método `boolena accept(File padre, String nombre)`.
+
+Recordad que podemos utilizar una clase anónima para este cometido o, dado que ambas son interfaces funcionales, podemos utilizar funciones lambda o referencias a métodos.
+
+Por ejemplo, podemos filtrar por extensión de la siguiente forma:
+~~~java
+    ...
+    File[] contenido = carpeta.listFiles(new FileFilter() {
+			
+        @Override
+        public boolean accept(File padre, String nombre) {
+            return nombre.endsWith(".java");
+        }
+
+    });
+    ...
+~~~
+
+También podemos utilizar una función lambda para realizar el mismo filtrado:
+~~~java
+    ...
+    File[] contenido = carpeta.listFiles((padre, nombre) -> nombre.endsWith(".java"));
+    ...
+~~~
+
+
+## Ejercicios
+
+###### File
+
+- **Mostrar propiedades**
+
+  Escribir un programa en java que muestre por pantalla las propiedades de un fichero que pida por consola y si es un directorio debe mostrar también su contenido. Este proceso lo repetirá mientras no introduzcamos como nombre de fichero: `FIN`.
+
+  - Posible solución
+    ~~~java
+		package org.iesalandalus.programacion.ficheros.file;
+
+        import java.io.File;
+        import java.util.Date;
+
+        import org.iesalandalus.programacion.utilidades.Entrada;
+
+        public class MostrarPropiedades {
+
+            public static void main(String[] args) {
+
+                mostrarPropiedadesSistema();
+                System.out.print("Escribe el nombre del fichero: ");
+                String nombreFichero = Entrada.cadena();
+                while(!nombreFichero.equals("FIN")) {
+                    File fichero = new File(nombreFichero);
+                    if (fichero.exists()) {
+                        mostrarPropiedadesFichero(fichero);
+                    } else {
+                        System.out.println("El fichero: " + nombreFichero + " NO existe.");
+                    }
+                    
+                    System.out.print("Escribe el nombre del fichero: ");
+                    nombreFichero = Entrada.cadena();
+                }
+
+            }
+
+            private static void mostrarPropiedadesSistema() {
+                System.out.println("Propiedades del sistema");
+                System.out.println("=======================");
+                System.out.printf("Separador del sistema: %s%n", File.separator);
+                System.out.printf("Directorio de trabajo: %s%n", new File("").getAbsolutePath());
+                System.out.printf("Directorio de trabajo (user.dir): %s%n%n", System.getProperty("user.dir"));
+            }
+
+            private static void mostrarPropiedadesFichero(File fichero) {
+                System.out.printf("Fecha última modificación: %s%n", new Date(fichero.lastModified()));
+                System.out.printf("Directorio? %s%n", fichero.isDirectory());
+                System.out.printf("Fichero? %s%n", fichero.isFile());
+                System.out.printf("Se puede escribir? %s%n", fichero.canWrite());
+                System.out.printf("Se puede leer? %s%n", fichero.canRead());
+                System.out.printf("Se puede ejecutar? %s%n", fichero.canExecute());
+                System.out.printf("Camino absoluto: %s%n", fichero.getAbsolutePath());
+                System.out.printf("Tamaño: %d%n", fichero.length());
+                
+                if (fichero.isDirectory()) {
+                    System.out.println();
+                    System.out.println("Contenido del directorio");
+                    System.out.println("========================");
+                    File[] ficheros = fichero.listFiles();
+                    for (File file : ficheros) {
+                        if (ficheros[i].isDirectory()) {
+                            System.out.printf("D-> %s%n", ficheros[i]);
+                        } else {
+                            System.out.printf("A-> %s%n", ficheros[i]);
+                        }
+                    }
+                }
+                System.out.printf("---------------------------%n%n");
+            }
+
+        }
+    ~~~
+
+    [Descargar posible solución para el programa **MostrarPropiedades**](ejercicios/file/MostrarPropiedades.java)
+
+- **Mostrar árbol**
+
+  Escribir un programa en java que muestre por pantalla el árbol de contenidos de la carpeta actual.
+
+  - Posible solución
+    ~~~java
+		package org.iesalandalus.programacion.ficheros.file;
+
+        import java.io.File;
+
+        public class MostrarArbol {
+
+            public static void main(String[] args) {
+                File carpeta = new File(".");
+                if (!carpeta.exists()) 
+                    System.out.println(args[0] + " NO existe.");
+                else
+                    imprimeArbol(carpeta, "");
+            }
+
+            private static void imprimeArbol(File carpeta, String tabulador) {
+                File[] contenido = carpeta.listFiles();
+                if (contenido != null) {
+                    for (File file : contenido)
+                        if (file.isDirectory()) {
+                            System.out.println(tabulador + "|-" + file.getName());
+                            imprimeArbol(file, tabulador + "|  ");
+                        } else {
+                            System.out.println(tabulador + "+-" + file.getName());
+                        }
+                }
+            }
+
+        }
+    ~~~
+
+    [Descargar posible solución para el programa **MostrarArbol**](ejercicios/file/MostrarArbol.java)
+
+- **Filtrar ficheros con clase anónima**
+
+  Escribir un programa en java que liste los ficheros comprendidos entre dos fechas introducidas por teclado de la carpeta actual. Utiliza una clase anónima.
+
+  - Posible solución
+    ~~~java
+		package org.iesalandalus.programacion.ficheros.file;
+
+        import java.io.File;
+        import java.io.FileFilter;
+        import java.sql.Timestamp;
+        import java.time.LocalDate;
+        import java.time.format.DateTimeFormatter;
+        import java.time.format.DateTimeParseException;
+
+        import org.iesalandalus.programacion.utilidades.Entrada;
+
+        public class MostrarFicherosEntreDosFechasConFileFilterClaseAnonima {
+            
+            private static final String STR_FORMATO_FECHA = "dd/MM/yyyy";
+            private static final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern(STR_FORMATO_FECHA);
+            private static final String NOMBRE_CARPETA = ".";
+
+            public static void main(String[] args) {
+                
+                LocalDate fechaInicio = leerFecha(String.format("Introduce la fecha de inicio (%s): ", STR_FORMATO_FECHA));
+                LocalDate fechaFin = leerFecha(String.format("Introduce la fecha de fin (%s): ", STR_FORMATO_FECHA));
+
+                File carpeta = new File(NOMBRE_CARPETA);
+                File[] contenido = carpeta.listFiles(new FileFilter() {
+                    
+                    @Override
+                    public boolean accept(File fichero) {
+                        LocalDate fechaFichero = new Timestamp(fichero.lastModified()).toLocalDateTime().toLocalDate();
+                        return (fichero.isFile() && !fechaFichero.isBefore(fechaInicio) && !fechaFichero.isAfter(fechaFin));
+                    }
+
+                });
+                
+                if (contenido != null) {
+                    for (File fichero : contenido) {
+                        System.out.printf("%s: %s%n", fichero.getName(), 
+                                new Timestamp(fichero.lastModified()).toLocalDateTime().toLocalDate().format(FORMATO_FECHA));
+                    }
+                }
+            }
+
+            private static LocalDate leerFecha(String mensaje) {
+                LocalDate fecha = null;
+                boolean fechaValida;
+                do {
+                    try {
+                        System.out.printf("%s", mensaje);
+                        fecha = LocalDate.parse(Entrada.cadena(), FORMATO_FECHA);
+                        fechaValida = true;
+                    } catch (DateTimeParseException e) {
+                        fechaValida = false;
+                    }
+
+                } while(!fechaValida);
+                return fecha;
+            }
+        }
+    ~~~
+
+    [Descargar posible solución para el programa **MostrarFicherosEntreDosFechasConFileFilterClaseAnonima**](ejercicios/file/MostrarFicherosEntreDosFechasConFileFilterClaseAnonima.java)
+
+
+- **Filtrar ficheros con clase anónima**
+
+  Escribir un programa en java que liste los ficheros comprendidos entre dos fechas introducidas por teclado de la carpeta actual. Utiliza una clase anónima.
+
+  - Posible solución
+    ~~~java
+		package org.iesalandalus.programacion.ficheros.file;
+
+        import java.io.File;
+        import java.sql.Timestamp;
+        import java.time.LocalDate;
+        import java.time.format.DateTimeFormatter;
+        import java.time.format.DateTimeParseException;
+
+        import org.iesalandalus.programacion.utilidades.Entrada;
+
+        public class MostrarFicherosEntreDosFechasConFileFilterLambda {
+            
+            private static final String STR_FORMATO_FECHA = "dd/MM/yyyy";
+            private static final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern(STR_FORMATO_FECHA);
+            private static final String NOMBRE_CARPETA = ".";
+
+            public static void main(String[] args) {
+                
+                LocalDate fechaInicio = leerFecha(String.format("Introduce la fecha de inicio (%s): ", STR_FORMATO_FECHA));
+                LocalDate fechaFin = leerFecha(String.format("Introduce la fecha de fin (%s): ", STR_FORMATO_FECHA));
+
+                File carpeta = new File(NOMBRE_CARPETA);
+                File[] contenido = carpeta.listFiles(fichero -> {
+                    LocalDate fechaFichero = new Timestamp(fichero.lastModified()).toLocalDateTime().toLocalDate();
+                    return (fichero.isFile() && !fechaFichero.isBefore(fechaInicio) && !fechaFichero.isAfter(fechaFin));
+                });
+                
+                if (contenido != null) {
+                    for (File fichero : contenido) {
+                        System.out.printf("%s: %s%n", fichero.getName(), 
+                                new Timestamp(fichero.lastModified()).toLocalDateTime().toLocalDate().format(FORMATO_FECHA));
+                    }
+                }
+            }
+
+            private static LocalDate leerFecha(String mensaje) {
+                LocalDate fecha = null;
+                boolean fechaValida;
+                do {
+                    try {
+                        System.out.printf("%s", mensaje);
+                        fecha = LocalDate.parse(Entrada.cadena(), FORMATO_FECHA);
+                        fechaValida = true;
+                    } catch (DateTimeParseException e) {
+                        fechaValida = false;
+                    }
+
+                } while(!fechaValida);
+                return fecha;
+            }
+        }
+    ~~~
+
+    [Descargar posible solución para el programa **MostrarFicherosEntreDosFechasConFileFilterLambda**](ejercicios/file/MostrarFicherosEntreDosFechasConFileFilterLambda.java)
+
+
+
+
+
+
 

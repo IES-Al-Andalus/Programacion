@@ -14,6 +14,8 @@ Al igual que en otros apartados, el objetivo principal es que tengáis una ampl�
 ---
 - [Introducción](#introduccin)
 - [El sistema de archivos](#el-sistema-de-archivos)
+- [Ficheros de texto](#ficheros-de-texto)
+- [Ejercicios](#ejercicios)
 
 
 ## Introducción
@@ -35,7 +37,7 @@ Si nos atenemos a cómo accedemos a los ficheros podemos distinguir dos modos de
 - **Acceso aleatorio**: Podemos acceder a cualquier byte que deseemos. Un simil podría ser los CD de música, en los que podemos escuchar la canción que deseemos.
 
 En java todas las operaciones de E/S se encuentran en el paquete `java.io` y es lo que veremos en los siguientes apartados. Antes de continuar, sería conveniente mencionar que en java existen un par de abstracciones relacionadas con los ficheros:
-- **Flujo de datos** también conocido como `Stream`, es una abstracción que se asocia al fichero físico, en nuestro caso, y que es tratada por la máquina virtual, de forma que nosotros tratamos con el flujo y la máquina virtual es la encargada de tratar con los distintos ficheros físicos.
+- **Flujo de datos** también conocido como `Stream`, es una abstracción que se asocia al fichero físico, aunque podría ser cualquier otro como la memoría, la red, el teclado, etc., y que es tratada por la máquina virtual. Toda operación de E/S se hará a través de un flujo de datos, por lo que nosotros trabjaremos de la misma forma sea cual sea el dispositivo al que esté asociado el flujo.
 - **Buffer de datos** es una abstracción que se asocia a un flujo y actúa de intermediario entre nuestro programa y el flujo, haciendo más eficientes las lecturas y escrituras. Se comporta como una memoria intermedia que almacena una cantidad de bytes definida, de forma que las lecturas se realizan desde esta memoria intermedia y cuando se lee por completo se carga otro bloque en la misma. Para las escrituras actúa de forma similiar, escribimos en la memoria intermedia y cuando se llena, se vuelca al flujo y se vacía.
 
 Cuando trabajamos con ficheros, debemos crear la asociación, bien sea mediante un flujo o mediante un buffer. A esto es a lo que se conoce como **abrir el fichero**. Leeremos o escribiremos los datos y finalmente eliminaremos la asociación para liberar el recurso. A esto es a lo que se llama **cerrar el fichero**. Es importante cerrar los ficheros. 
@@ -45,7 +47,7 @@ También debemos tener en cuenta que es posible que se produzcan situaciones an�
 - `EOFException`: Cuando se llega al final del archivo. Esta excepción salta al leer ficheros de objetos.
 - `IOException`: Excepción general que indica que ha sucedido algo no esperado al trabajar con ficheros; no existe, no se tienen permisos, sistema de archivos lleno, etc. Es la clase padre de las anteriores y de cualquier excepción que puede saltar al trabajar con ficheros.
 
-Teniendo en mente que es posible que salte alguna excepción y que es muy importante cerrar los ficheros, debemos capturar las excepciones para evitar estas situaciones inesperadas y posibilitar cerrar los ficheros. Para facilitar esta tarea, a partir de java 7, existe la construcción `try-with-resource`. Esta construcción es como un `try-catch` normal en la que se indica el o los recursos que se van a abrir y es la máquina virtual la que se encarga de cerrar el o los recursos, bien al capturar alguna excepción o bien al finalizar. Veamos un ejemplo para clarificar:
+Teniendo en mente que es posible que salte alguna excepción y que es muy importante cerrar los ficheros, debemos capturar las excepciones para evitar estas situaciones inesperadas y posibilitar cerrar los ficheros. Para facilitar esta tarea, a partir de java 7, existe la construcción `try-with-resources`. Esta construcción es como un `try-catch` normal en la que se indica el o los recursos que se van a abrir y es la máquina virtual la que se encarga de cerrar el o los recursos, bien al capturar alguna excepción o bien al finalizar. Veamos un ejemplo para clarificar:
 
 ~~~java
     try (FileInputStream entrada = new FileInputStream(ficheroEntrada)){
@@ -73,7 +75,7 @@ Esta clase pertenece al paquete `java.io` y hereda directamente de `Object`. Es 
 
 Con esta clase podemos hacer todas las operaciones a realizar con un fichero o carpeta. 
 
-Para crear objetos de tipo `File` se nos ofrece varios constructores, aunque los más comunes son los siguientes:
+Para crear objetos de tipo `File` se nos ofrecen varios constructores, aunque los más comunes son los siguientes:
 
 |Constructor|Descripción|
 |-----------------------|
@@ -116,14 +118,14 @@ En el apartado de [ejercicios](#ejercicios) tienes algunos ejemplos sobre el uso
 
 ### Filtros
 
-Hemos visto que con el método `list` podemos listar todos los archivos de una carpeta dada. Pero a veces no queremos listar todos los archivos sino solo aquellos que cumplan con cierto criterio. Pues dicho método está sobrecargado para establecer el criterio de filtrado. 
+Hemos visto que con el método `list` podemos listar todos los archivos de una carpeta dada. Pero a veces no queremos listar todos los archivos sino solo aquellos que cumplan con cierto criterio. Por ello dicho método está sobrecargado para establecer el criterio de filtrado. 
 
 Para ello tenemos las siguientes interfaces que determinan el comportamiento de las clases capaces de realizar este tipo de filtrado:
 
 - `FileFilter`: Para filtrar basándonos en el fichero (sus características). Obliga a implementar el método `boolean accept(File fichero)`.
 - `FilenameFilter`: Para filtrar basándonos en el nombre del fichero. Obliga a implementar el método `boolena accept(File padre, String nombre)`.
 
-Recordad que podemos utilizar una clase anónima para este cometido o, dado que ambas son interfaces funcionales, podemos utilizar funciones lambda o referencias a métodos.
+Recordad que podemos utilizar una clase anónima para este cometido o, dado que ambas son interfaces funcionales, podemos utilizar funciones lambda.
 
 Por ejemplo, podemos filtrar por extensión de la siguiente forma:
 ~~~java
@@ -146,6 +148,74 @@ También podemos utilizar una función lambda para realizar el mismo filtrado:
     ...
 ~~~
 
+## Ficheros de texto
+
+Para trabajar con ficheros de texto tenemos las siguientes clases, que podemos ver en el siguiente diagrama de clases muy simplificado. Estos son las principales, aunque hay más.
+
+![jerarquia de caracteres](imagenes/jerarquiaCaracteres.png)
+
+### Flujos de caracteres
+
+Para trabajar con **flujos de caracteres** utilizaremos las clases, `FileReader` y `FileWriter` que crearán un flujo de entrada o salida sobre el fichero que pasemos en el constructor. Podemos pasarle un objeto de la clase `File` o una cadena con la ruta del fichero. Al crear el flujo puede lanzar la excepción `FileNotFoundException` si el fichero no existe o existe pero es un directorío para el caso de las lecturas y si el fichero existe pero no es un fichero o no se puede escribir en la ruta indicada. Para la clase `FileWriter` también podemos pasar en el constructor un parámetro lógico inicando si vamos a añadir o vamos a machacar (por defecto sobrescribe).
+
+Las clases `InputStreamReader` y `OutputStreamWriter` son las encargadas de realizar las conversiones entre codificaciones y las anteriores heredan de ellas. 
+
+~~~java
+    ...
+    private static final String FICHERO = String.format("%s%s%s", "ficheros", File.separator, "ficheroTexto.txt");
+    ...
+    try (FileReader entrada = new FileReader(FICHERO)){
+        // Procesamiento
+    } catch (FileNotFoundException e) {
+        System.out.println("No se puede leer el fichero de entrada");
+    } catch (IOException e) {
+        System.out.println("Error inesperado de Entrada/Salida");
+    }
+    ...
+~~~
+
+Para leer de un flujo de entrada de caracteres, mediante objetos de la clase `FileReader`, utilizaremos los métodos:
+- `int read()`: lee un solo caracter y devuelve el carácter leído o -1 si llegó al final.
+- `int read(char[] caracteres, int desplazamiento, int cantidad)`: lee hasta la cantidad de caracteres indicados por `cantidad` y los almacena en el array `caracteres` comenzando desde la posición indicada por `desplazamiento`. Deveulve la cantidad de caracteres leídos o -1 si llegó al final.
+
+Para escribir en un flujo de salida de caracteres, mediante objetos de la clase `FileWriter` utilizaremos los siguientes métodos:
+- `void append(char caracter)`: Añade el caracter indicado al final del flujo.
+- `void write(char caracter)`: Escribe el caracter indicado en el flujo.
+- `void write(char[] caracteres, int desplazamiento, int cantidad)`: Escribe hasta la cantidad de caracteres indicados por `cantidad` comenzando en `desplazamiento` del array `caracteres`.
+- `void write(String cadena)`: Escribe la cadena de caracteres en el flujo.
+
+Para escribir en un flujo de caracteres, también podemos utilizar la clase `PrintWriter` que nos ofrece métodos como `print`, `println`, `printf`, etc. que de sobra conocemos.
+
+En java también tenemos algunos flujos predefinidos como son:
+- `System.in`: Objeto de la clase `InputStreamReader` que está asociado a la entrada estándard.
+- `System.out`: Objeto de la clase `PrintStream` que está asociado a la salida estándard.
+- `System.err`: Objeto de la clase `PrintStream` que está asociado al error estándard.
+
+### Buferes de caracteres
+Tabmién podemos utilizar buferes para realizar las operaciones de E/S. Los buferes se montan sobre flujos ya creados, bien sean de entrada o de salida. Son objetos de las clases `BufferedReader` y `BufferedWriter`.
+
+~~~java
+    ...
+    private static final String FICHERO = String.format("%s%s%s", "ficheros", File.separator, "ficheroTexto.txt");
+    ...
+    try (BufferedReader entrada = new BufferedReader(new FileReader(FICHERO))){
+        String linea;
+        while ((linea = entrada.readLine()) != null) {
+            //Procesamiento
+        }
+    } catch (FileNotFoundException e) {
+        System.out.println("No se puede leer el fichero de entrada.");
+    } catch (IOException e) {
+        System.out.println("Error inesperado de Entrada/Salida.");
+    }
+    ....
+~~~
+
+Para la lectura podemos utilizar el método adicional `readline` que devuelve la línea leído o `null` si ha llegado al final.
+
+Para la escritura podemos utilizar los métodos `write` y `newLine`.
+
+Es conveniente utilizar buferes dada su eficiencia en comparación con los simples flujos. Te recomiendo que hagas una prueba: ejecuta midiendo el tiempo (por ejemplo utilizando el comando `time`) la copia de un fichero de texto utilizando flujos y utilizando buferes y fíjate en la diferencia que hay al hacer con fichero grandes. Estos ejemplos los tienes en los ejercicios.
 
 ## Ejercicios
 
@@ -261,6 +331,8 @@ También podemos utilizar una función lambda para realizar el mismo filtrado:
     ~~~
 
     [Descargar posible solución para el programa **MostrarArbol**](ejercicios/file/MostrarArbol.java)
+
+###### Filtros
 
 - **Filtrar ficheros con clase anónima**
 
@@ -391,9 +463,193 @@ También podemos utilizar una función lambda para realizar el mismo filtrado:
 
     [Descargar posible solución para el programa **MostrarFicherosEntreDosFechasConFileFilterLambda**](ejercicios/file/MostrarFicherosEntreDosFechasConFileFilterLambda.java)
 
+###### Flujos de caracteres
 
+- **Mostrar fichero de texto**
 
+  Escribir un programa en java que muestre un fichero de texto por consola, utilizando flujos.
 
+  - Posible solución
+    ~~~java
+		package org.iesalandalus.programacion.ficheros.secuencial.caracteres.flujos;
+
+        import java.io.*;
+
+        public class MostrarFicheroTexto {
+
+            private static final String FICHERO = String.format("%s%s%s", "ficheros", File.separator, "ficheroTexto.txt");
+            
+            public static void main(String[] args) {
+                try (FileReader entrada = new FileReader(FICHERO)){
+                    int dato;
+                    while ((dato = entrada.read()) != -1) {
+                        System.out.print((char) dato);
+                    }
+                } catch (FileNotFoundException e) {
+                    System.out.println("No se puede leer el fichero de entrada");
+                } catch (IOException e) {
+                    System.out.println("Error inesperado de Entrada/Salida");
+                }
+            }
+
+        }
+    ~~~
+
+    [Descargar posible solución para el programa **MostrarFicheroTexto**](ejercicios/caracteres/flujos/MostrarFicheroTexto.java)
+
+- **Escribir fichero de texto**
+
+  Escribir un programa en java que escriba en un fichero de texto todo lo que introducimos consola mientras no se lea el caracter `|`, utilizando flujos.
+
+  - Posible solución
+    ~~~java
+		package org.iesalandalus.programacion.ficheros.secuencial.caracteres.flujos;
+
+        import java.io.*;
+
+        public class EscribirFicheroTexto {
+            
+            private static final String FICHERO = String.format("%s%s%s", "ficheros", File.separator, "salidaFicheroTexto.txt");
+            
+            public static void main(String[] args) {
+                try (FileWriter salida = new FileWriter(FICHERO);
+                    InputStreamReader entrada = new InputStreamReader(System.in)){
+                    int dato;
+                    while ((dato = entrada.read()) != '|') {
+                        salida.write((char)dato);
+                    }
+                } catch (FileNotFoundException e) {
+                    System.out.printf("No existe el fichero de destino: %s%n", FICHERO);
+                }
+                catch (IOException e) {
+                    System.out.println("Error inesperado de Entrada/Salida");
+                }
+            }
+
+        }
+    ~~~
+
+    [Descargar posible solución para el programa **EscribirFicheroTexto**](ejercicios/caracteres/flujos/EscribirFicheroTexto.java)
+
+- **Copiar fichero de texto**
+
+  Escribir un programa en java que copie un fichero de texto en otro, utilizando flujos.
+
+  - Posible solución
+    ~~~java
+		package org.iesalandalus.programacion.ficheros.secuencial.caracteres.flujos;
+
+        import java.io.*;
+
+        public class CopiarFicheroTexto {
+            
+            private static final String FICHERO_ENTRADA = String.format("%s%s%s", "ficheros", File.separator, "ficheroTextoGrande.txt");
+            private static final String FICHERO_SALIDA = String.format("%s%s%s", "ficheros", File.separator, "salidaFicheroTexto.txt");
+            
+            public static void main(String[] args) {
+                try (FileReader entrada = new FileReader(FICHERO_ENTRADA); FileWriter salida = new FileWriter(FICHERO_SALIDA)){
+                    int dato;
+                    while ((dato = entrada.read()) != -1) {
+                        salida.write((char)dato);
+                    }
+                    System.out.println("Fichero copiado satisfactoriamente.");
+                } catch (FileNotFoundException e) {
+                    if (e.getMessage().startsWith(FICHERO_ENTRADA)) {
+                        System.out.printf("No existe el fichero de origen: %s%n", FICHERO_ENTRADA);
+                    } else {
+                        System.out.printf("No existe el directorio de destino o no tengo permiso de escritura: %s%n", FICHERO_SALIDA);
+                    }
+                } catch (IOException e) {	
+                    System.out.println("Error inesperado de Entrada/Salida.");
+                } 
+            }
+
+        }
+    ~~~
+
+    [Descargar posible solución para el programa **CopiarFicheroTexto**](ejercicios/caracteres/flujos/CopiarFicheroTexto.java)
+
+###### Buferes de caracteres
+
+- **Mostrar fichero de texto**
+
+  Escribir un programa en java que muestre un fichero de texto por consola, utilizando buferes.
+
+  - Posible solución
+    ~~~java
+		package org.iesalandalus.programacion.ficheros.secuencial.caracteres.buffers;
+
+        import java.io.BufferedReader;
+        import java.io.File;
+        import java.io.FileNotFoundException;
+        import java.io.FileReader;
+        import java.io.IOException;
+
+        public class MostrarFicheroTexto {
+            
+            private static final String FICHERO = String.format("%s%s%s", "ficheros", File.separator, "ficheroTexto.txt");
+            
+            public static void main(String[] args) {
+                try (BufferedReader entrada = new BufferedReader(new FileReader(FICHERO))){
+                    String linea;
+                    while ((linea = entrada.readLine()) != null) {
+                        System.out.println(linea);
+                    }
+                } catch (FileNotFoundException e) {
+                    System.out.println("No se puede leer el fichero de entrada.");
+                } catch (IOException e) {
+                    System.out.println("Error inesperado de Entrada/Salida.");
+                }
+            }
+        }
+    ~~~
+
+    [Descargar posible solución para el programa **MostrarFicheroTexto**](ejercicios/caracteres/buffers/MostrarFicheroTexto.java)
+
+- **Copiar fichero de texto**
+
+  Escribir un programa en java que copie un fichero de texto en otro, utilizando buferes.
+
+  - Posible solución
+    ~~~java
+		package org.iesalandalus.programacion.ficheros.secuencial.caracteres.buffers;
+
+        import java.io.BufferedReader;
+        import java.io.BufferedWriter;
+        import java.io.File;
+        import java.io.FileNotFoundException;
+        import java.io.FileReader;
+        import java.io.FileWriter;
+        import java.io.IOException;
+
+        public class CopiarFicheroTexto {
+
+            private static final String FICHERO_ENTRADA = String.format("%s%s%s", "ficheros", File.separator, "ficheroTextoGrande.txt");
+            private static final String FICHERO_SALIDA = String.format("%s%s%s", "ficheros", File.separator, "salidaFicheroTexto.txt");
+            
+            public static void main(String[] args) {
+                try (BufferedReader entrada = new BufferedReader(new FileReader(FICHERO_ENTRADA)); BufferedWriter salida = new BufferedWriter(new FileWriter(FICHERO_SALIDA))){
+                    String linea;
+                    while ((linea = entrada.readLine()) != null) {
+                        salida.write(linea);
+                        salida.newLine();
+                    }
+                    System.out.println("Fichero copiado satisfactoriamente.");
+                } catch (FileNotFoundException e) {
+                    if (e.getMessage().startsWith(FICHERO_ENTRADA)) {
+                        System.out.printf("No existe el fichero de origen: %s%n", FICHERO_ENTRADA);
+                    } else {
+                        System.out.printf("No existe el directorio de destino o no tengo permiso de escritura: %s%n", FICHERO_SALIDA);
+                    }
+                } catch (IOException e) {	
+                    System.out.println("Error inesperado de Entrada/Salida.");
+                } 
+            }
+
+        }
+    ~~~
+
+    [Descargar posible solución para el programa **CopiarFicheroTexto**](ejercicios/caracteres/buffers/CopiarFicheroTexto.java)
 
 
 

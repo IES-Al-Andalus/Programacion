@@ -15,6 +15,7 @@ Al igual que en otros apartados, el objetivo principal es que tengáis una ampl�
 - [Introducción](#introduccin)
 - [El sistema de archivos](#el-sistema-de-archivos)
 - [Ficheros de texto](#ficheros-de-texto)
+- [Ficheros binarios](#ficheros-binarios)
 - [Ejercicios](#ejercicios)
 
 

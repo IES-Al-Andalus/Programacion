@@ -21,16 +21,20 @@ public class MostrarFicherosEntreDosFechasConFileFilterLambda {
 
 		File carpeta = new File(NOMBRE_CARPETA);
 		File[] contenido = carpeta.listFiles(fichero -> {
-			LocalDate fechaFichero = new Timestamp(fichero.lastModified()).toLocalDateTime().toLocalDate();
+			LocalDate fechaFichero = getUltimaModificacion(fichero);
 			return (fichero.isFile() && !fechaFichero.isBefore(fechaInicio) && !fechaFichero.isAfter(fechaFin));
 		});
 		
 		if (contenido != null) {
 			for (File fichero : contenido) {
 				System.out.printf("%s: %s%n", fichero.getName(), 
-						new Timestamp(fichero.lastModified()).toLocalDateTime().toLocalDate().format(FORMATO_FECHA));
+						getUltimaModificacion(fichero).format(FORMATO_FECHA));
 			}
 		}
+	}
+
+	private static LocalDate getUltimaModificacion(File fichero) {
+		return new Timestamp(fichero.lastModified()).toLocalDateTime().toLocalDate();
 	}
 
 	private static LocalDate leerFecha(String mensaje) {

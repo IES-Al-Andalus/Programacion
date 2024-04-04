@@ -38,7 +38,7 @@ Si nos atenemos a cómo accedemos a los ficheros podemos distinguir dos modos de
 - **Acceso aleatorio**: Podemos acceder a cualquier byte que deseemos. Un simil podría ser los CD de música, en los que podemos escuchar la canción que deseemos.
 
 En java todas las operaciones de E/S se encuentran en el paquete `java.io` y es lo que veremos en los siguientes apartados. Antes de continuar, sería conveniente mencionar que en java existen un par de abstracciones relacionadas con los ficheros:
-- **Flujo de datos** también conocido como `Stream`, es una abstracción que se asocia al fichero físico, aunque podría ser cualquier otro como la memoría, la red, el teclado, etc., y que es tratada por la máquina virtual. Toda operación de E/S se hará a través de un flujo de datos, por lo que nosotros trabjaremos de la misma forma sea cual sea el dispositivo al que esté asociado el flujo.
+- **Flujo de datos** también conocido como `Stream`, es una abstracción que se asocia al fichero físico, aunque podría ser cualquier otro como la memoría, la red, el teclado, etc., y que es tratada por la máquina virtual. Toda operación de E/S se hará a través de un flujo de datos, por lo que nosotros trabajaremos de la misma forma sea cual sea el dispositivo al que esté asociado el flujo.
 - **Buffer de datos** es una abstracción que se asocia a un flujo y actúa de intermediario entre nuestro programa y el flujo, haciendo más eficientes las lecturas y escrituras. Se comporta como una memoria intermedia que almacena una cantidad de bytes definida, de forma que las lecturas se realizan desde esta memoria intermedia y cuando se lee por completo se carga otro bloque en la misma. Para las escrituras actúa de forma similiar, escribimos en la memoria intermedia y cuando se llena, se vuelca al flujo y se vacía.
 
 Cuando trabajamos con ficheros, debemos crear la asociación, bien sea mediante un flujo o mediante un buffer. A esto es a lo que se conoce como **abrir el fichero**. Leeremos o escribiremos los datos y finalmente eliminaremos la asociación para liberar el recurso. A esto es a lo que se llama **cerrar el fichero**. Es importante cerrar los ficheros. 
@@ -62,7 +62,7 @@ Teniendo en mente que es posible que salte alguna excepción y que es muy import
 
 Como se puede apreciar, en el try se abre el fichero, pero nunca se cierra, ya que es la máquina virtual la encargada por el hecho de utilizar esta construcción.
 
-Ahora que ya conocemos todos estos, es la hora de que pasemos a ver las posibilidades que nos ofrece el paquete `java.io` para trabajar con ficheros.
+Ahora que ya conocemos todos estos, es la hora de que pasemos a ver las posibilidades que nos ofrece el paquete `java.io` para trabajar con ficheros. Ante cualquier duda siempre puedes consultar la [documentación de la API de `java.io`](https://docs.oracle.com/javase/8/docs/api/java/io/package-summary.html)
 
 ## El sistema de archivos
 
@@ -80,7 +80,7 @@ Para crear objetos de tipo `File` se nos ofrecen varios constructores, aunque lo
 
 |Constructor|Descripción|
 |-----------------------|
-|`File(String nombre)`|Crea un objeto del tipo `File` en la localización asociada al nombre que se le pasa, que puede ser una ruta absoluta o relativa (es recomendable utilizar las rutas relativas en la medida de lo posible). Si el nombre no termina en un separador nos estaremos refiriendo a una carpeta, que es un fichero.|
+|`File(String nombre)`|Crea un objeto del tipo `File` en la localización asociada al nombre que se le pasa, que puede ser una ruta absoluta o relativa (es recomendable utilizar las rutas relativas en la medida de lo posible). Si el nombre termina en un separador nos estaremos refiriendo a una carpeta.|
 |`File(String ruta, String nombre)`|Igual que el anterior, aunque ahora la ruta y el nombre se indican por separado.|
 |`File(Uri uri)`|Crea un objeto del tipo `File` asociado a la URI indicada.| 
 
@@ -93,7 +93,7 @@ Veamos los métodos más comunes de su API:
 |------------------|
 |`boolean canExecute()`|Comprueba si el archivo es ejecutable.|
 |`boolean canRead()`|Comprueba si tenemos permisos de lectura.|
-|`boolean canExecute()`|Comprueba si tenemos permisos de escritura.|
+|`boolean canWrite()`|Comprueba si tenemos permisos de escritura.|
 |`boolean createNewFile()`|Crea un nuevo fichero vacío si es que no existe.|
 |`boolean delete()`|Borra el fichero.|
 |`boolean exist()`|Comprueba si existe el fichero.|
@@ -103,8 +103,9 @@ Veamos los métodos más comunes de su API:
 |`boolean isFile()`|Comprueba si es un fichero regular.|
 |`boolean isHidden()`|Comprueba si es un fichero oculto.|
 |`long length()`|Devuelve el tamaño del fichero.|
+|`long lastModified()`|Devuelve la fecha, medida en milisegundos que han trasncurrido desde el 01/01/1970, de la última modificación.|
 |`String[] list()`|Devuelve un array con los nombres de los ficheros y directorios contenidos en el mismo.|
-|`String[] list(FileFilter filtro)`|Devuelve un array con los nombre de los ficheros y directorios aplicando el filtro.|
+|`String[] list(FilenameFilter filtro)`|Devuelve un array con los nombre de los ficheros y directorios aplicando el filtro.|
 |`File[] lisFiles()`|Devuelve un array con los ficheros y directorios contenidos en el mismo.|
 |`File[] listFiles(FileFilter filtro)`|Devuelve un array con los ficheros y directorios aplicando el filtro.|
 |`File[] listFiles(FilenameFilter filtro)`|Devuelve un array con los ficheros y directorios aplicando el filtro.|
@@ -313,7 +314,7 @@ En java podedmos...
                     if (fichero.exists()) {
                         mostrarPropiedadesFichero(fichero);
                     } else {
-                        System.out.println("El fichero: " + nombreFichero + " NO existe.");
+                        System.out.printf("El fichero: %s No existe.%n", nombreFichero);
                     }
                     
                     System.out.print("Escribe el nombre del fichero: ");
@@ -369,34 +370,40 @@ En java podedmos...
 
     - Posible solución
       ~~~java
-          package org.iesalandalus.programacion.ficheros.file;
-  
-          import java.io.File;
-  
-          public class MostrarArbol {
-  
-              public static void main(String[] args) {
-                  File carpeta = new File(".");
-                  if (!carpeta.exists()) 
-                      System.out.println(args[0] + " NO existe.");
-                  else
-                      imprimeArbol(carpeta, "");
-              }
-  
-              private static void imprimeArbol(File carpeta, String tabulador) {
-                  File[] contenido = carpeta.listFiles();
-                  if (contenido != null) {
-                      for (File file : contenido)
-                          if (file.isDirectory()) {
-                              System.out.println(tabulador + "|-" + file.getName());
-                              imprimeArbol(file, tabulador + "|  ");
-                          } else {
-                              System.out.println(tabulador + "+-" + file.getName());
-                          }
-                  }
-              }
-  
-          }
+        package org.iesalandalus.programacion.ficheros.file;
+
+        import org.iesalandalus.programacion.utilidades.Entrada;
+
+        import java.io.File;
+
+        public class MostrarArbol {
+
+            public static void main(String[] args) {
+                System.out.print("Introduce la carpeta a mostrar: ");
+                String nombreCarpeta = Entrada.cadena();
+                File carpeta = new File(nombreCarpeta);
+                if (!carpeta.exists()) {
+                    System.out.printf("%s NO existe.", nombreCarpeta);
+                } else {
+                    imprimeArbol(carpeta, "");
+                }
+            }
+
+            private static void imprimeArbol(File carpeta, String tabulador) {
+                File[] contenido = carpeta.listFiles();
+                if (contenido != null) {
+                    for (File file : contenido) {
+                        if (file.isDirectory()) {
+                            System.out.printf("%s|-%s%n", tabulador, file.getName());
+                            imprimeArbol(file, tabulador + "|  ");
+                        } else {
+                            System.out.printf("%s+-%s%n", tabulador, file.getName());
+                        }
+                    }
+                }
+            }
+
+        }
       ~~~
 
       [Descargar posible solución para el programa **MostrarArbol**](ejercicios/file/MostrarArbol.java)
@@ -409,63 +416,68 @@ En java podedmos...
 
     - Posible solución
       ~~~java
-          package org.iesalandalus.programacion.ficheros.file;
-  
-          import java.io.File;
-          import java.io.FileFilter;
-          import java.sql.Timestamp;
-          import java.time.LocalDate;
-          import java.time.format.DateTimeFormatter;
-          import java.time.format.DateTimeParseException;
-  
-          import org.iesalandalus.programacion.utilidades.Entrada;
-  
-          public class MostrarFicherosEntreDosFechasConFileFilterClaseAnonima {
-              
-              private static final String STR_FORMATO_FECHA = "dd/MM/yyyy";
-              private static final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern(STR_FORMATO_FECHA);
-              private static final String NOMBRE_CARPETA = ".";
-  
-              public static void main(String[] args) {
-                  
-                  LocalDate fechaInicio = leerFecha(String.format("Introduce la fecha de inicio (%s): ", STR_FORMATO_FECHA));
-                  LocalDate fechaFin = leerFecha(String.format("Introduce la fecha de fin (%s): ", STR_FORMATO_FECHA));
-  
-                  File carpeta = new File(NOMBRE_CARPETA);
-                  File[] contenido = carpeta.listFiles(new FileFilter() {
-                      
-                      @Override
-                      public boolean accept(File fichero) {
-                          LocalDate fechaFichero = new Timestamp(fichero.lastModified()).toLocalDateTime().toLocalDate();
-                          return (fichero.isFile() && !fechaFichero.isBefore(fechaInicio) && !fechaFichero.isAfter(fechaFin));
-                      }
-  
-                  });
-                  
-                  if (contenido != null) {
-                      for (File fichero : contenido) {
-                          System.out.printf("%s: %s%n", fichero.getName(), 
-                                  new Timestamp(fichero.lastModified()).toLocalDateTime().toLocalDate().format(FORMATO_FECHA));
-                      }
-                  }
-              }
-  
-              private static LocalDate leerFecha(String mensaje) {
-                  LocalDate fecha = null;
-                  boolean fechaValida;
-                  do {
-                      try {
-                          System.out.printf("%s", mensaje);
-                          fecha = LocalDate.parse(Entrada.cadena(), FORMATO_FECHA);
-                          fechaValida = true;
-                      } catch (DateTimeParseException e) {
-                          fechaValida = false;
-                      }
-  
-                  } while(!fechaValida);
-                  return fecha;
-              }
-          }
+        package org.iesalandalus.programacion.ficheros.file;
+
+        import java.io.File;
+        import java.io.FileFilter;
+        import java.sql.Timestamp;
+        import java.time.LocalDate;
+        import java.time.LocalDateTime;
+        import java.time.format.DateTimeFormatter;
+        import java.time.format.DateTimeParseException;
+
+        import org.iesalandalus.programacion.utilidades.Entrada;
+
+        public class MostrarFicherosEntreDosFechasConFileFilterClaseAnonima {
+            
+            private static final String STR_FORMATO_FECHA = "dd/MM/yyyy";
+            private static final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern(STR_FORMATO_FECHA);
+            private static final String NOMBRE_CARPETA = ".";
+
+            public static void main(String[] args) {
+                
+                LocalDate fechaInicio = leerFecha(String.format("Introduce la fecha de inicio (%s): ", STR_FORMATO_FECHA));
+                LocalDate fechaFin = leerFecha(String.format("Introduce la fecha de fin (%s): ", STR_FORMATO_FECHA));
+
+                File carpeta = new File(NOMBRE_CARPETA);
+                File[] contenido = carpeta.listFiles(new FileFilter() {
+                    
+                    @Override
+                    public boolean accept(File fichero) {
+                        LocalDate fechaFichero = getUltimaModificacion(fichero).toLocalDate();
+                        return (fichero.isFile() && !fechaFichero.isBefore(fechaInicio)	&& !fechaFichero.isAfter(fechaFin));
+                    }
+
+                });
+                
+                if (contenido != null) {
+                    for (File fichero : contenido) {
+                        System.out.printf("%s: %s%n", fichero.getName(), 
+                                getUltimaModificacion(fichero).toLocalDate().format(FORMATO_FECHA));
+                    }
+                }
+            }
+
+            private static LocalDateTime getUltimaModificacion(File fichero) {
+                return new Timestamp(fichero.lastModified()).toLocalDateTime();
+            }
+
+            private static LocalDate leerFecha(String mensaje) {
+                LocalDate fecha = null;
+                boolean fechaValida;
+                do {
+                    try {
+                        System.out.printf("%s", mensaje);
+                        fecha = LocalDate.parse(Entrada.cadena(), FORMATO_FECHA);
+                        fechaValida = true;
+                    } catch (DateTimeParseException e) {
+                        fechaValida = false;
+                    }
+
+                } while(!fechaValida);
+                return fecha;
+            }
+        }
       ~~~
 
       [Descargar posible solución para el programa **MostrarFicherosEntreDosFechasConFileFilterClaseAnonima**](ejercicios/file/MostrarFicherosEntreDosFechasConFileFilterClaseAnonima.java)
@@ -477,57 +489,61 @@ En java podedmos...
 
     - Posible solución
       ~~~java
-          package org.iesalandalus.programacion.ficheros.file;
-  
-          import java.io.File;
-          import java.sql.Timestamp;
-          import java.time.LocalDate;
-          import java.time.format.DateTimeFormatter;
-          import java.time.format.DateTimeParseException;
-  
-          import org.iesalandalus.programacion.utilidades.Entrada;
-  
-          public class MostrarFicherosEntreDosFechasConFileFilterLambda {
-              
-              private static final String STR_FORMATO_FECHA = "dd/MM/yyyy";
-              private static final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern(STR_FORMATO_FECHA);
-              private static final String NOMBRE_CARPETA = ".";
-  
-              public static void main(String[] args) {
-                  
-                  LocalDate fechaInicio = leerFecha(String.format("Introduce la fecha de inicio (%s): ", STR_FORMATO_FECHA));
-                  LocalDate fechaFin = leerFecha(String.format("Introduce la fecha de fin (%s): ", STR_FORMATO_FECHA));
-  
-                  File carpeta = new File(NOMBRE_CARPETA);
-                  File[] contenido = carpeta.listFiles(fichero -> {
-                      LocalDate fechaFichero = new Timestamp(fichero.lastModified()).toLocalDateTime().toLocalDate();
-                      return (fichero.isFile() && !fechaFichero.isBefore(fechaInicio) && !fechaFichero.isAfter(fechaFin));
-                  });
-                  
-                  if (contenido != null) {
-                      for (File fichero : contenido) {
-                          System.out.printf("%s: %s%n", fichero.getName(), 
-                                  new Timestamp(fichero.lastModified()).toLocalDateTime().toLocalDate().format(FORMATO_FECHA));
-                      }
-                  }
-              }
-  
-              private static LocalDate leerFecha(String mensaje) {
-                  LocalDate fecha = null;
-                  boolean fechaValida;
-                  do {
-                      try {
-                          System.out.printf("%s", mensaje);
-                          fecha = LocalDate.parse(Entrada.cadena(), FORMATO_FECHA);
-                          fechaValida = true;
-                      } catch (DateTimeParseException e) {
-                          fechaValida = false;
-                      }
-  
-                  } while(!fechaValida);
-                  return fecha;
-              }
-          }
+        package org.iesalandalus.programacion.ficheros.file;
+
+        import java.io.File;
+        import java.sql.Timestamp;
+        import java.time.LocalDate;
+        import java.time.format.DateTimeFormatter;
+        import java.time.format.DateTimeParseException;
+
+        import org.iesalandalus.programacion.utilidades.Entrada;
+
+        public class MostrarFicherosEntreDosFechasConFileFilterLambda {
+            
+            private static final String STR_FORMATO_FECHA = "dd/MM/yyyy";
+            private static final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern(STR_FORMATO_FECHA);
+            private static final String NOMBRE_CARPETA = ".";
+
+            public static void main(String[] args) {
+                
+                LocalDate fechaInicio = leerFecha(String.format("Introduce la fecha de inicio (%s): ", STR_FORMATO_FECHA));
+                LocalDate fechaFin = leerFecha(String.format("Introduce la fecha de fin (%s): ", STR_FORMATO_FECHA));
+
+                File carpeta = new File(NOMBRE_CARPETA);
+                File[] contenido = carpeta.listFiles(fichero -> {
+                    LocalDate fechaFichero = getUltimaModificacion(fichero);
+                    return (fichero.isFile() && !fechaFichero.isBefore(fechaInicio) && !fechaFichero.isAfter(fechaFin));
+                });
+                
+                if (contenido != null) {
+                    for (File fichero : contenido) {
+                        System.out.printf("%s: %s%n", fichero.getName(), 
+                                getUltimaModificacion(fichero).format(FORMATO_FECHA));
+                    }
+                }
+            }
+
+            private static LocalDate getUltimaModificacion(File fichero) {
+                return new Timestamp(fichero.lastModified()).toLocalDateTime().toLocalDate();
+            }
+
+            private static LocalDate leerFecha(String mensaje) {
+                LocalDate fecha = null;
+                boolean fechaValida;
+                do {
+                    try {
+                        System.out.printf("%s", mensaje);
+                        fecha = LocalDate.parse(Entrada.cadena(), FORMATO_FECHA);
+                        fechaValida = true;
+                    } catch (DateTimeParseException e) {
+                        fechaValida = false;
+                    }
+
+                } while(!fechaValida);
+                return fecha;
+            }
+        }
       ~~~
 
       [Descargar posible solución para el programa **MostrarFicherosEntreDosFechasConFileFilterLambda**](ejercicios/file/MostrarFicherosEntreDosFechasConFileFilterLambda.java)

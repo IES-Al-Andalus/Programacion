@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileFilter;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
@@ -25,7 +26,7 @@ public class MostrarFicherosEntreDosFechasConFileFilterClaseAnonima {
 			
 			@Override
 			public boolean accept(File fichero) {
-				LocalDate fechaFichero = new Timestamp(fichero.lastModified()).toLocalDateTime().toLocalDate();
+				LocalDate fechaFichero = getUltimaModificacion(fichero).toLocalDate();
 				return (fichero.isFile() && !fechaFichero.isBefore(fechaInicio)	&& !fechaFichero.isAfter(fechaFin));
 			}
 
@@ -34,9 +35,13 @@ public class MostrarFicherosEntreDosFechasConFileFilterClaseAnonima {
 		if (contenido != null) {
 			for (File fichero : contenido) {
 				System.out.printf("%s: %s%n", fichero.getName(), 
-						new Timestamp(fichero.lastModified()).toLocalDateTime().toLocalDate().format(FORMATO_FECHA));
+						getUltimaModificacion(fichero).toLocalDate().format(FORMATO_FECHA));
 			}
 		}
+	}
+
+	private static LocalDateTime getUltimaModificacion(File fichero) {
+		return new Timestamp(fichero.lastModified()).toLocalDateTime();
 	}
 
 	private static LocalDate leerFecha(String mensaje) {

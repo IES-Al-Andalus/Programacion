@@ -17,7 +17,7 @@ public class MostrarPropiedades {
 			if (fichero.exists()) {
 				mostrarPropiedadesFichero(fichero);
 			} else {
-				System.out.println("El fichero: " + nombreFichero + " NO existe.");
+				System.out.printf("El fichero: %s No existe.%n", nombreFichero);
 			}
 			
 			System.out.print("Escribe el nombre del fichero: ");
@@ -49,13 +49,15 @@ public class MostrarPropiedades {
 			System.out.println("Contenido del directorio");
 			System.out.println("========================");
 			File[] ficheros = fichero.listFiles();
-            for (File file : ficheros) {
-                if (file.isDirectory()) {
-                    System.out.printf("D-> %s%n", file);
-                } else {
-                    System.out.printf("A-> %s%n", file);
-                }
-            }
+			if (ficheros != null) {
+				for (File file : ficheros) {
+					if (file.isDirectory()) {
+						System.out.printf("D-> %s%n", file);
+					} else {
+						System.out.printf("A-> %s%n", file);
+					}
+				}
+			}
 		}
 		System.out.printf("---------------------------%n%n");
 	}

@@ -125,7 +125,7 @@ Hemos visto que con el método `list` podemos listar todos los archivos de una c
 Para ello tenemos las siguientes interfaces que determinan el comportamiento de las clases capaces de realizar este tipo de filtrado:
 
 - `FileFilter`: Para filtrar basándonos en el fichero (sus características). Obliga a implementar el método `boolean accept(File fichero)`.
-- `FilenameFilter`: Para filtrar basándonos en el nombre del fichero. Obliga a implementar el método `boolena accept(File padre, String nombre)`.
+- `FilenameFilter`: Para filtrar basándonos en el nombre del fichero. Obliga a implementar el método `boolen accept(File padre, String nombre)`.
 
 Recordad que podemos utilizar una clase anónima para este cometido o, dado que ambas son interfaces funcionales, podemos utilizar funciones lambda.
 
@@ -283,7 +283,153 @@ pepino@Tor:~/Desarrollos/java/IntelliJ/Ficheros$
 
 ### Ficheros de objetos primitivos
 
-En java podedmos...
+En java también podemos leer y escribir en ficheros, datos primitivos. Estas operacinoes las podemos realizar mediante las clases `DataInputStream` y `DataOutputStream`. Para crear objetos de estas clases debemos pasarle al constructor el flujo correspondiente (en realidad se le pasan objetos de las clases `InputStream` y `OutputStream` que son las clases abstractas padre de esta jerarquía).
+
+Las principales operaciones que podemos realizar con estas clases son las siguientes:
+
+|`DataInputStream`|`DataOuputStream`|
+|-----------------------------------|
+| `boolean readBoolean()`|`void writeBoolean(boolean dato)`|
+| `char readChar()`|`void writeChar(char dato)`|
+| `double readDouble()`|`void writeDouble(double dato)`|
+| `float readFloat()`|`void writeFloat(float dato)`|
+| `int readInt()`|`void writeInt(int dato)`|
+| `long readLong()`|`void writeLong(long dato)`|
+| `short readShort()`|`void writeShort(short dato)`|
+| `String readUTF()`|`void writeUTF(String dato)`|
+
+Para realizar las lecturas debemos iterar indefinidamente hasta que salte la excepción `EOFException` indicando que se ha llegado al final del fichero.
+
+### Serialización de objetos
+
+A veces nos interesa guardar o transmitir objetos completos y/o leer o recibir completos. Para ello se debe poder convertir el objeto en una secuencia de bytes o convertir una secuencia de bytes en un objeto. A estas operaciones se les denomina **serialización** y **deserialización**.
+
+Java permite llevar a cabo dichas operaciones, simplemente haciendo que las clases a las que pertenecen los objetos que queremos serializar o deserializar implementen la interfaz `Serializable`. Esta interfaz es una **interfaz marcadora**, es decir, simplemente marca la clase como serializable pero, al contrario que las demás interfaces, no obliga a implementar ningún método. Para que una clase sea serializable, todos sus atributos deben ser a su vez serializables. Todos los tipos primitivos, las colecciones, los mapas, etc. son serializables.
+
+Una vez que ya tenemos la clase serializable, ahora podemos utilizar las clases `ObjectInputStream` y `ObjectOutputStream` para leer o escribir objetos de esta clase a un flujo. Para crear objetos de esta clase se le pasa el flujo correspondiente. Luego podemos utilizar los métodos `readObject` y `writeObject` para realizar las correspondientes operaciones de lectura y escritura. Cuando leemos un objeto y lo queremos asignar a una variable debemos realizar el correspondiente casting y además debemos capturar la excepción `ClassCastException`, que saltará si no se puede encontar la clase de los objetos que queremos leer o no es serializable (o alguno de sus atributos). Al realizar las lecturas devolverá `null` si llegamos al final del fichero.
+
+~~~java
+    ...
+    try (ObjectInputStream entrada = new ObjectInputStream(new FileInputStream(FICHERO))) {
+        Persona persona;
+        while ((persona = (Persona) entrada.readObject()) != null) {
+            System.out.printf("Nombre: %s, edad: %d%n", persona.getNombre(), persona.getEdad());
+        }
+    } catch (FileNotFoundException e) {
+        System.out.println("No puedo crear el fichero de entrada.");
+    } catch (EOFException eo) {
+        System.out.println("Fichero leído satisfactoriamente.");
+    } catch (ClassNotFoundException e) {
+        System.out.println("No puedo encontrar la clase que tengo que leer.");
+    } catch (IOException e) {
+        System.out.println("No puedo abrir el fichero de entrada.");
+    }
+    ...
+~~~
+
+Para escribir objetos utilizaremos un código parecido al siguiente:
+~~~java
+    ...
+    Persona persona;
+    String[] nombres = { "Juan", "Alfonso", "Araceli", "Manolo", "Rubén", "Elvira", "Inés", "José Ramón" };
+    int[] edades = { 31, 35, 25, 40, 37, 18, 20, 22 };
+    try (ObjectOutputStream salida = new ObjectOutputStream(new FileOutputStream(FICHERO))){
+        for (int i = 0; i < edades.length; i++) {
+            persona = new Persona(nombres[i], edades[i]);
+            salida.writeObject(persona);
+        }
+        System.out.println("Fichero escrito satisfactoriamente.");
+    } catch (FileNotFoundException e) {
+        System.out.println("No puedo crear el fichero de salida.");
+    } catch (IOException e) {
+        System.out.println("Error inesperado de Entrada/Salida.");
+    }
+    ...
+~~~
+
+En el ejemplo anterior, en cada iteración del bucle estamos creando una nueva instancia de `Persona`. Si esta clase permitiese modificar los atributos e intentamos, en vez de crear una nueva instancia, realizar las modificaciones utilizando los correspondientes métodos `set`, podremos comprobar que siempre escribe el mismo objeto, es como si no se enterase de dichas modificaciones. Para que tenga en cuenta las modificaciones es necesario utilizar el método `reset`.
+
+~~~java
+    ...
+    Persona persona = new Persona("lo que sea", 1);
+    String[] nombres = { "Juan", "Alfonso", "Araceli", "Manolo", "Rubén", "Elvira", "Inés", "José Ramón" };
+    int[] edades = { 31, 35, 25, 40, 37, 18, 20, 22 };
+    try (ObjectOutputStream salida = new ObjectOutputStream(new FileOutputStream(FICHERO))){
+        for (int i = 0; i < edades.length; i++) {
+            persona.setNombre(nombres[i]);
+            persona.setEdad(edades[i]);
+            //Como hemos modificado los atributos y no creado una nueva instancia, debemos hacer reset
+            //para que se entere de los cambios. Por tanto, siempre es mejor hacer el new y olvidarnos del reset.
+            salida.reset();
+            salida.writeObject(persona);
+        }
+        System.out.println("Fichero escrito satisfactoriamente.");
+    } catch (FileNotFoundException e) {
+        System.out.println("No puedo crear el fichero de salida.");
+    } catch (IOException e) {
+        System.out.println("Error inesperado de Entrada/Salida.");
+    }
+    ...
+~~~
+
+Otro problema asociado a la escritura de objetos es que cada vez que abrimos el fichero se escribe una cabecera. Si cerramos el fichero y lo volvemos a abrir para añadir más objetos, se vuelve a escribir otra cabecera en medio, lo que resultará en que saltará una excepción dado que no se esperaba dicha cabecera. Si ejecutamos el siguiente código y luego pretendemos leer el fichero podéis comprobarlo.
+
+~~~java
+    ...
+    Persona persona;
+    String[] nombres = { "Juan", "Alfonso", "Araceli", "Manolo", "Rubén", "Elvira", "Inés", "José Ramón" };
+    int[] edades = { 31, 35, 25, 40, 37, 18, 20, 43 };
+    //La primera vez creamos un objeto ObjectOutputStream que escribirá la cabecera adecuada
+    try (ObjectOutputStream salida = new ObjectOutputStream(new FileOutputStream(FICHERO))){
+        for (int i = 0; i < edades.length; i++) {
+            persona = new Persona(nombres[i], edades[i]);
+            salida.writeObject(persona);
+        }
+    } catch (FileNotFoundException e) {
+        System.out.println("No puedo crear el fichero de salida.");
+    } catch (IOException e) {
+        System.out.println("Error inesperado de Entrada/Salida.");
+    }
+    //Al cerrar el flujo y volverlo abrir para añadir, se añade entre medias una cabecera que luego
+    //hará que nos salte una excepción al leerlo. Para evitarlo hemos de sobreescribir el método encargado de escribir la
+    //cabecera de la clase ObjectOutputStream (writeStreamHeader).
+    //Como ahora abrimos para añadir, creamos un objeto de nuestra clase heredada que no escribe cabecera
+    try (ObjectOutputStream salida = new ObjectOutputStream(new FileOutputStream(FICHERO, true))) {
+    //try (ObjectOutputStream salida = new MyObjectOutputStream(new FileOutputStream(FICHERO, true))) {
+        for (int i = 0; i < edades.length; i++) {
+            persona = new Persona(nombres[i], edades[i]);
+            salida.writeObject(persona);
+        }
+        System.out.println("Fichero escrito satisfactoriamente.");
+    } catch (FileNotFoundException e) {
+        System.out.println("No puedo crear el fichero de salida.");
+    } catch (IOException e) {
+        System.out.println("Error inesperado de Entrada/Salida.");
+    }
+    ...
+~~~
+
+Para solucionar este problema debemos crear una clase que herede de `ObjectOutputStream` para sobrescribir el método `writeStreamReader` que es el encardo de escribir la cabecera y que no haga nada.
+
+~~~java
+public class MyObjectOutputStream extends ObjectOutputStream {
+
+    public MyObjectOutputStream () throws IOException{
+        super();
+    }
+
+    public MyObjectOutputStream(OutputStream out) throws IOException {
+        super(out);
+    }
+
+    @Override
+    protected void writeStreamHeader() throws IOException {
+        // No escribo ninguna cabecera
+    }
+}
+~~~
+
+Ahora solo queda, a la hora de abrirlo para añadir, crear una instancia de esta nueva clase y no de `ObjectOutputStream`. Lo puedes comprobar en el código anterior comentando la línea que crea la instancia de `ObjectOutputStream` y descomentar la que crea la instancia de `MyObjectOutputStream`.
 
 ## Ejercicios
 
@@ -956,4 +1102,233 @@ En java podedmos...
       ~~~
 
       [Descargar posible solución para el programa **CopiarFicheroBinario**](ejercicios/bytes/buffers/CopiarFicheroBinario.java)
+
+###### Datos primitivos
+
+- **Leer fichero de datos primitivos**
+
+  Escribir un programa en java que muestre los datos almacenados en un fichero de datos primitivos cuyo orden de escritura ha sido: `String`, `int` y `double`.
+
+    - Posible solución
+      ~~~java
+        package org.iesalandalus.programacion.ficheros.secuencial.bytes.datosprimitivos;
+
+        import java.io.*;
+
+        public class LeerFicheroDatos {
+            
+            private static final String FICHERO = String.format("%s%s%s", "ficheros", File.separator, "ficheroDatos.bin");
+            
+            public static void main(String[] args) {		
+                try (DataInputStream entrada = new DataInputStream(new FileInputStream(FICHERO))){
+                    mostrarDatos(entrada);
+                } catch (FileNotFoundException e) {
+                    System.out.println("No se puede leer el fichero de entrada");
+                } catch (IOException e) {
+                    System.out.printf("No existe el fichero de origen: %s%n", FICHERO);
+                }
+            }
+
+            private static void mostrarDatos(DataInputStream entrada) throws IOException {
+                try {
+                    String datoString = "";
+                    int datoInt;
+                    double datoDouble;
+                    while (datoString != null) { //Esta condición siempre será verdadera
+                        datoString = entrada.readUTF();
+                        datoInt = entrada.readInt();
+                        datoDouble = entrada.readDouble();
+                        System.out.printf("Cadena: %s\tEntero: %s\tDoble: %s%n", datoString, datoInt, datoDouble);
+                    }
+                } catch (EOFException e) {
+                    System.out.println("Fichero leído satisfactoriamente.");
+                }
+            }
+
+        }
+      ~~~
+
+      [Descargar posible solución para el programa **LeerFicheroDatos**](ejercicios/bytes/datosprimitivos/LeerFicheroDatos.java)
+
+- **Escribir fichero de datos primitivos**
+
+  Escribir un programa en java que escriba un fichero con datos primitivos en este orden: `String`, `int` y `double`. Debe escribir 10 de cada uno de ellos.
+
+    - Posible solución
+      ~~~java
+        package org.iesalandalus.programacion.ficheros.secuencial.bytes.datosprimitivos;
+
+        import java.io.*;
+
+        public class EscribirFicheroDatos {
+
+            private static final String FICHERO = String.format("%s%s%s", "ficheros", File.separator, "ficheroDatos.bin");
+
+            public static void main(String[] args) {
+
+                try (DataOutputStream salida = new DataOutputStream(new FileOutputStream(FICHERO))) {
+                    escribirDatos(salida);
+                } catch (FileNotFoundException e) {
+                    System.out.println("No se puede leer el fichero de salida");
+                } catch (IOException e) {
+                    System.out.printf("No existe el fichero: %s%n", FICHERO);
+                }
+            }
+
+            private static void escribirDatos(DataOutputStream salida) throws IOException {
+                String datoString;
+                int datoInt;
+                double datoDouble;
+                for (int i = 0; i < 10; i++) {
+                    datoString = "Cadena número: " + i;
+                    datoInt = 10 * i;
+                    datoDouble = datoInt / 100.0;
+                    salida.writeUTF(datoString);
+                    salida.writeInt(datoInt);
+                    salida.writeDouble(datoDouble);
+                }
+                System.out.println("Fichero creado satisfactoriamente");
+            }
+
+        }
+      ~~~
+
+      [Descargar posible solución para el programa **EscribirFicheroDatos**](ejercicios/bytes/datosprimitivos/EscribirFicheroDatos.java)
+
+###### Serialización de objetos
+
+Dada la siguiente clase `Persona`, realiza los ejercicios que se proponenen a contincuación.
+~~~java
+package org.iesalandalus.programacion.ficheros.secuencial.bytes.objetos;
+
+import java.io.Serializable;
+import java.util.Objects;
+
+public class Persona implements Serializable {
+	
+	private String nombre;
+	private int edad;
+
+	public Persona(String nombre, int edad) {
+		setNombre(nombre);
+		setEdad(edad);
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = Objects.requireNonNull(nombre, "El nombre de una persona no puede ser nulo.");
+		if (nombre.isBlank()) {
+			throw new IllegalArgumentException("El nombre de una persona no puede estar vacío.");
+		}
+	}
+
+	public void setEdad(int edad) {
+		if (edad <= 0) {
+			throw new IllegalArgumentException("La edad de una persona no puede ser menor o igual a cero.");
+		}
+		this.edad = edad;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public int getEdad() {
+		return edad;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof Persona persona)) return false;
+		return Objects.equals(nombre, persona.nombre);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(nombre);
+	}
+
+	@Override
+	public String toString() {
+		return String.format("Persona [nombre=%s, edad=%s]", nombre, edad);
+	}
+	
+}
+~~~
+
+- **Leer fichero de objetos**
+
+  Escribir un programa en java que muestre los objetos de la clase `Persona` almacenados en un fichero de objetos.
+
+    - Posible solución
+      ~~~java
+        package org.iesalandalus.programacion.ficheros.secuencial.bytes.objetos;
+
+        import java.io.*;
+
+        public class LeerObjetos {
+            
+            private static final String FICHERO = String.format("%s%s%s", "ficheros", File.separator, "personas.dat");
+            
+            public static void main(String[] args) {
+                try (ObjectInputStream entrada = new ObjectInputStream(new FileInputStream(FICHERO))) {
+                    Persona persona;
+                    while ((persona = (Persona) entrada.readObject()) != null) {
+                        System.out.printf("Nombre: %s, edad: %d%n", persona.getNombre(), persona.getEdad());
+                    }
+                } catch (FileNotFoundException e) {
+                    System.out.println("No puedo crear el fichero de entrada.");
+                } catch (EOFException eo) {
+                    System.out.println("Fichero leído satisfactoriamente.");
+                } catch (ClassNotFoundException e) {
+                    System.out.println("No puedo encontrar la clase que tengo que leer.");
+                } catch (IOException e) {
+                    System.out.println("Error inesperado de Entrada/Salida.");
+                }
+            }
+
+        }
+      ~~~
+
+      [Descargar posible solución para el programa **LeerObjetos**](ejercicios/bytes/objetos/LeerObjetos.java)
+
+- **Escribir fichero de objetos**
+
+  Escribir un programa en java que escriba en un fichero 10 instancias de la clase `Persona`.
+
+    - Posible solución
+      ~~~java
+        package org.iesalandalus.programacion.ficheros.secuencial.bytes.objetos;
+
+        import java.io.File;
+        import java.io.FileNotFoundException;
+        import java.io.FileOutputStream;
+        import java.io.IOException;
+        import java.io.ObjectOutputStream;
+
+        public class EscribirObjetos {
+            
+            private static final String FICHERO = String.format("%s%s%s", "ficheros", File.separator, "personas.dat");
+
+            public static void main(String[] args) {
+                Persona persona;
+                String[] nombres = { "Juan", "Alfonso", "Araceli", "Manolo", "Rubén", "Elvira", "Inés", "José Ramón" };
+                int[] edades = { 31, 35, 25, 40, 37, 18, 20, 22 };
+                try (ObjectOutputStream salida = new ObjectOutputStream(new FileOutputStream(FICHERO))){
+                    for (int i = 0; i < edades.length; i++) {
+                        persona = new Persona(nombres[i], edades[i]);
+                        salida.writeObject(persona);
+                    }
+                    System.out.println("Fichero escrito satisfactoriamente.");
+                } catch (FileNotFoundException e) {
+                    System.out.println("No puedo crear el fichero de salida.");
+                } catch (IOException e) {
+                    System.out.println("Error inesperado de Entrada/Salida.");
+                }
+            }
+
+        }
+      ~~~
+
+      [Descargar posible solución para el programa **EscribirObjetos**](ejercicios/bytes/objetos/EscribirObjetos.java)
 

@@ -167,7 +167,10 @@ Las clases `InputStreamReader` y `OutputStreamWriter` son las encargadas de real
     private static final String FICHERO = String.format("%s%s%s", "ficheros", File.separator, "ficheroTexto.txt");
     ...
     try (FileReader entrada = new FileReader(FICHERO)){
-        // Procesamiento
+        int dato;
+        while ((dato = entrada.read()) != -1) {
+            //Procesamiento
+        }
     } catch (FileNotFoundException e) {
         System.out.println("No se puede leer el fichero de entrada");
     } catch (IOException e) {
@@ -177,7 +180,7 @@ Las clases `InputStreamReader` y `OutputStreamWriter` son las encargadas de real
 ~~~
 
 Para **leer de un flujo de entrada de caracteres**, mediante objetos de la clase `FileReader`, utilizaremos los métodos:
-- `int read()`: lee un solo caracter y devuelve el carácter leído o -1 si llegó al final.
+- `int read()`: lee un solo caracter y devuelve el carácter leído o -1 si llegó al final. Debemos hacer un casting del entero leído a un `char`.
 - `int read(char[] caracteres, int desplazamiento, int cantidad)`: lee hasta la cantidad de caracteres indicados por `cantidad` y los almacena en el array `caracteres` comenzando desde la posición indicada por `desplazamiento`. Deveulve la cantidad de caracteres leídos o -1 si llegó al final.
 
 Para **escribir en un flujo de salida de caracteres**, mediante objetos de la clase `FileWriter` utilizaremos los siguientes métodos:

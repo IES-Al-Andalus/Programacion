@@ -158,7 +158,7 @@ Para trabajar con ficheros de texto tenemos las siguientes clases, que podemos v
 
 ### Flujos de caracteres
 
-Para trabajar con **flujos de caracteres** utilizaremos las clases, `FileReader` y `FileWriter` que crearán un flujo de entrada o salida sobre el fichero que pasemos en el constructor. Podemos pasarle un objeto de la clase `File` o una cadena con la ruta del fichero. Al crear el flujo puede lanzar la excepción `FileNotFoundException` si el fichero no existe, o existe y es un directorío, para el caso de las lecturas y si el fichero existe y no es un fichero, o no se puede escribir en la ruta indicada, para el caso de las escrituras. Para la clase `FileWriter` también podemos pasar en el constructor un parámetro lógico inicando si vamos a añadir o vamos a machacar (por defecto sobrescribe).
+Para trabajar con **flujos de caracteres** utilizaremos las clases, `FileReader` y `FileWriter` que crearán un flujo de entrada o salida sobre el fichero que pasemos en el constructor. Podemos pasarle un objeto de la clase `File` o una cadena con la ruta del fichero. Al crear el flujo puede lanzar la excepción `FileNotFoundException` si el fichero no existe, o existe y es un directorío, para el caso de las lecturas y si el fichero existe y es un directorio, o no se puede escribir en la ruta indicada, para el caso de las escrituras. Para la clase `FileWriter` también podemos pasar en el constructor un parámetro lógico inicando si vamos a añadir o vamos a machacar (por defecto sobrescribe).
 
 Las clases `InputStreamReader` y `OutputStreamWriter` son las encargadas de realizar las conversiones entre codificaciones y las anteriores heredan de ellas. 
 
@@ -730,7 +730,7 @@ Ahora solo queda, a la hora de abrirlo para añadir, crear una instancia de esta
 
 - **Escribir fichero de texto**
 
-  Escribir un programa en java que escriba en un fichero de texto todo lo que introducimos consola mientras no se lea el caracter `|`, utilizando flujos.
+  Escribir un programa en java que escriba en un fichero de texto todo lo que introducimos por consola mientras no se lea el caracter `|`, utilizando flujos.
 
     - Posible solución
       ~~~java

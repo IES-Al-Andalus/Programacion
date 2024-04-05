@@ -283,7 +283,7 @@ pepino@Tor:~/Desarrollos/java/IntelliJ/Ficheros$
 
 ### Ficheros de objetos primitivos
 
-En java también podemos leer y escribir en ficheros, datos primitivos. Estas operacinoes las podemos realizar mediante las clases `DataInputStream` y `DataOutputStream`. Para crear objetos de estas clases debemos pasarle al constructor el flujo correspondiente (en realidad se le pasan objetos de las clases `InputStream` y `OutputStream` que son las clases abstractas padre de esta jerarquía).
+En java también podemos leer y escribir en flujos datos primitivos. Estas operaciones las podemos realizar mediante las clases `DataInputStream` y `DataOutputStream`. Para crear objetos de estas clases, debemos pasarle al constructor el flujo correspondiente (en realidad se le pasan objetos de las clases `InputStream` y `OutputStream` que son las clases abstractas padre de esta jerarquía).
 
 Las principales operaciones que podemos realizar con estas clases son las siguientes:
 
@@ -302,11 +302,11 @@ Para realizar las lecturas debemos iterar indefinidamente hasta que salte la exc
 
 ### Serialización de objetos
 
-A veces nos interesa guardar o transmitir objetos completos y/o leer o recibir completos. Para ello se debe poder convertir el objeto en una secuencia de bytes o convertir una secuencia de bytes en un objeto. A estas operaciones se les denomina **serialización** y **deserialización**.
+A veces nos interesa guardar o transmitir objetos completos y/o leer o recibir objetos completos. Para ello se debe poder convertir el objeto en una secuencia de bytes o convertir una secuencia de bytes en un objeto. A estas operaciones se les denomina **serialización** y **deserialización**.
 
 Java permite llevar a cabo dichas operaciones, simplemente haciendo que las clases a las que pertenecen los objetos que queremos serializar o deserializar implementen la interfaz `Serializable`. Esta interfaz es una **interfaz marcadora**, es decir, simplemente marca la clase como serializable pero, al contrario que las demás interfaces, no obliga a implementar ningún método. Para que una clase sea serializable, todos sus atributos deben ser a su vez serializables. Todos los tipos primitivos, las colecciones, los mapas, etc. son serializables.
 
-Una vez que ya tenemos la clase serializable, ahora podemos utilizar las clases `ObjectInputStream` y `ObjectOutputStream` para leer o escribir objetos de esta clase a un flujo. Para crear objetos de esta clase se le pasa el flujo correspondiente. Luego podemos utilizar los métodos `readObject` y `writeObject` para realizar las correspondientes operaciones de lectura y escritura. Cuando leemos un objeto y lo queremos asignar a una variable debemos realizar el correspondiente casting y además debemos capturar la excepción `ClassCastException`, que saltará si no se puede encontar la clase de los objetos que queremos leer o no es serializable (o alguno de sus atributos). Al realizar las lecturas devolverá `null` si llegamos al final del fichero.
+Una vez que ya tenemos la clase serializable, ahora podemos utilizar las clases `ObjectInputStream` y `ObjectOutputStream` para leer o escribir objetos de esta clase a un flujo. Para crear objetos de esta clase se le pasa el flujo correspondiente. Luego podemos utilizar los métodos `readObject` y `writeObject` para realizar las correspondientes operaciones de lectura y escritura. Cuando leemos un objeto y lo queremos asignar a una variable, debemos realizar el correspondiente casting y además debemos capturar la excepción `ClassCastException`, que saltará si no se puede encontar la clase de los objetos que queremos leer o esta no es serializable (o alguno de sus atributos). Al realizar las lecturas devolverá `null` si llegamos al final del fichero.
 
 ~~~java
     ...
@@ -372,7 +372,7 @@ En el ejemplo anterior, en cada iteración del bucle estamos creando una nueva i
     ...
 ~~~
 
-Otro problema asociado a la escritura de objetos es que cada vez que abrimos el fichero se escribe una cabecera. Si cerramos el fichero y lo volvemos a abrir para añadir más objetos, se vuelve a escribir otra cabecera en medio, lo que resultará en que saltará una excepción dado que no se esperaba dicha cabecera. Si ejecutamos el siguiente código y luego pretendemos leer el fichero podéis comprobarlo.
+Otro problema asociado a la escritura de objetos es que cada vez que abrimos el fichero se escribe una cabecera. Si cerramos el fichero y lo volvemos a abrir para añadir más objetos, se vuelve a escribir otra cabecera en medio. A la hora de leerlo esta situación provovará que salte una excepción dado que no se esperaba dicha cabecera. Si ejecutamos el siguiente código y luego pretendemos leer el fichero podéis comprobarlo.
 
 ~~~java
     ...

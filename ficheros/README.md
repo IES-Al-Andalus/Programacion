@@ -230,7 +230,7 @@ Para trabajar con ficheros binarios tenemos las siguientes clases, que podemos v
 
 ### Flujos binarios
 
-Para trabajar con **flujos binarios** utilizaremos las clases, `FileInputStream` y `FileOutputStream` que crearán un flujo de entrada o salida sobre el fichero que pasemos en el constructor. Podemos pasarle un objeto de la clase `File` o una cadena con la ruta del fichero. Al crear el flujo puede lanzar la excepción `FileNotFoundException` si el fichero no existe, o existe y es un directorío, para el caso de las lecturas y si el fichero existe y no es un fichero, o no se puede escribir en la ruta indicada, para el caso de las escrituras. Para la clase `FileOutputStream` también podemos pasar en el constructor un parámetro lógico inicando si vamos a añadir o vamos a machacar (por defecto sobrescribe).
+Para trabajar con **flujos binarios** utilizaremos las clases, `FileInputStream` y `FileOutputStream` que crearán un flujo de entrada o salida sobre el fichero que pasemos en el constructor. Podemos pasarle un objeto de la clase `File` o una cadena con la ruta del fichero. Al crear el flujo puede lanzar la excepción `FileNotFoundException` si el fichero no existe, o existe y es un directorío, para el caso de las lecturas y si el fichero existe y es un directorio, o no se puede escribir en la ruta indicada, para el caso de las escrituras. Para la clase `FileOutputStream` también podemos pasar en el constructor un parámetro lógico inicando si vamos a añadir o vamos a machacar (por defecto sobrescribe).
 
 Para **leer de un flujo de entrada binario**, mediante objetos de la clase `FileInputStream`, utilizaremos los métodos:
 - `int read()`: lee un solo byte y devuelve el byte leído o -1 si llegó al final.
@@ -248,8 +248,7 @@ También podemos utilizar buferes para realizar las operaciones de E/S. Los bufe
     ...
     public static final String FICHERO = String.format("%s%s%s", "ficheros", File.separator, "ficheroBinarioPeque.bin");
     ...
-    File ficheroEntrada = new File(FICHERO);
-    try (BufferedInputStream entrada = new BufferedInputStream(new FileInputStream(ficheroEntrada))){
+    try (BufferedInputStream entrada = new BufferedInputStream(new FileInputStream(FICHERO))){
         //Procesamiento
     } catch (FileNotFoundException e) {
         System.out.println("No se puede leer el fichero de entrada");
@@ -284,7 +283,7 @@ sys     0m0,127s
 pepino@Tor:~/Desarrollos/java/IntelliJ/Ficheros$ 
 ~~~
 
-### Ficheros de objetos primitivos
+### Ficheros de datos primitivos
 
 En java también podemos leer y escribir en flujos datos primitivos. Estas operaciones las podemos realizar mediante las clases `DataInputStream` y `DataOutputStream`. Para crear objetos de estas clases, debemos pasarle al constructor el flujo correspondiente (en realidad se le pasan objetos de las clases `InputStream` y `OutputStream` que son las clases abstractas padre de esta jerarquía).
 
@@ -433,6 +432,17 @@ public class MyObjectOutputStream extends ObjectOutputStream {
 ~~~
 
 Ahora solo queda, a la hora de abrirlo para añadir, crear una instancia de esta nueva clase y no de `ObjectOutputStream`. Lo puedes comprobar en el código anterior comentando la línea que crea la instancia de `ObjectOutputStream` y descomentar la que crea la instancia de `MyObjectOutputStream`.
+
+### Acceso aleatorio a Ficheros
+
+Java ofrece la clase `RandomAccessFile` para acceder de forma aleatoria a ficheros binarios. Esta clase trata el fichero como un array de bytes y maneja un puntero o índice que indica dónde se realizará la siguiente operación de E/S. Cada vez que se realiza una nueva operación de E/S el puntero se mueve los bytes implicados en dicha operación.
+
+A la hora de abrir un fichero para acceso aleatorio debemos indicar el modo con una cadena: `r` indica lectura y `rw` indica lectura y escritura.
+
+Podemos mover el puntero mediante el método `void seek(long posicion)` y nos ofrece los mismos métodos que los ficheros de datos primitivos.
+
+A la hora de trabajar con este tipo de ficheros, lo común es utilizar registros de longitud fija que albergarán los diferentes campos con los que vamos a trabajar. En el apartado de ejercicios puedes ver un ejemplo.
+
 
 ## Ejercicios
 
@@ -1200,7 +1210,7 @@ Ahora solo queda, a la hora de abrirlo para añadir, crear una instancia de esta
 
 ###### Serialización de objetos
 
-Dada la siguiente clase `Persona`, realiza los ejercicios que se proponenen a contincuación.
+Dada la siguiente clase `Persona`, realiza los ejercicios que se proponen a contincuación.
 ~~~java
 package org.iesalandalus.programacion.ficheros.secuencial.bytes.objetos;
 
@@ -1335,3 +1345,571 @@ public class Persona implements Serializable {
 
       [Descargar posible solución para el programa **EscribirObjetos**](ejercicios/bytes/objetos/EscribirObjetos.java)
 
+###### Acceso aleatorio
+
+Dada la siguiente clase `Amigo`, realiza los ejercicios que se proponen a contincuación.
+~~~java
+package org.iesalandalus.programacion.ficheros.aleatorio.modelo.dominio;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.Objects;
+
+public class Amigo {
+	
+	private static final String ER_TELEFONO = "\\d{9}";
+	private static final String ER_CORREO = "\\w+(?:\\.\\w+)*+@\\w+\\.\\w{2,5}";
+	private static final DateTimeFormatter FORMATO_DIA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	
+	protected String nombre;
+	protected String telefono;
+	protected String correo;
+	protected String direccion;
+	protected LocalDate fechaNacimiento;
+	protected double peso;		
+	protected int altura;		
+	
+	public Amigo() {
+	}
+	
+	public Amigo(String nombre, String telefono, String correo, String direccion, LocalDate fechaNacimiento, double peso, int altura) {
+		setNombre(nombre);
+		setTelefono(telefono);
+		setCorreo(correo);
+		setDireccion(direccion);
+		setFechaNacimiento(fechaNacimiento);
+		setPeso(peso);
+		setAltura(altura);
+	}
+	
+	public Amigo(String nombre, String telefono, String correo, String direccion, String fechaNacimiento, double peso, int altura) {
+		setNombre(nombre);
+		setTelefono(telefono);
+		setCorreo(correo);
+		setDireccion(direccion);
+		setFechaNacimiento(fechaNacimiento);
+		setPeso(peso);
+		setAltura(altura);
+	}
+	
+	public Amigo(Amigo amigo) {
+		Objects.requireNonNull(amigo, "El amigo a copiar no puede ser nulo.");
+		nombre = amigo.nombre;
+		telefono = amigo.telefono;
+		correo = amigo.correo;
+		direccion = amigo.direccion;
+		fechaNacimiento = amigo.fechaNacimiento;
+		peso = amigo.peso;
+		altura = amigo.altura;
+	}
+	
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		Objects.requireNonNull(nombre, "El nombre no puede ser nulo.");
+		if (nombre.isBlank()) {
+			throw new IllegalArgumentException("El nombre no puede estar vacío.");
+		}
+		this.nombre = nombre;
+	}
+
+	public String getTelefono() {
+		return telefono;
+	}
+
+	public void setTelefono(String telefono) {
+		Objects.requireNonNull(telefono,"El teléfono no puede ser nulo.");
+		if (!telefono.matches(ER_TELEFONO)) {
+			throw new IllegalArgumentException("El formato del teléfono no es correcto.");
+		}
+		this.telefono = telefono;
+	}
+
+	public String getCorreo() {
+		return correo;
+	}
+
+	public void setCorreo(String correo) {
+		Objects.requireNonNull(correo, "El correo no puede ser nulo.");
+		if (!correo.matches(ER_CORREO)) {
+			throw new IllegalArgumentException("El formato del correo no es correcto.");
+		}
+		this.correo = correo;
+	}
+
+	public String getDireccion() {
+		return direccion;
+	}
+
+	public void setDireccion(String direccion) {
+		Objects.requireNonNull(direccion, "La dirección no puede ser nula.");
+		if (direccion.isBlank()) {
+			throw new IllegalArgumentException("La dirección no puede estar vacía.");
+		}
+		this.direccion = direccion;
+	}
+
+	public LocalDate getFechaNacimiento() {
+		return fechaNacimiento;
+	}
+	
+	public String getFechaNacimientoStr() {
+		return FORMATO_DIA.format(fechaNacimiento);
+	}
+
+	public void setFechaNacimiento(LocalDate fechaNacimiento) {
+		Objects.requireNonNull(fechaNacimiento, "La fecha de nacimiento no puede ser nula.");
+		this.fechaNacimiento = fechaNacimiento;
+	}
+	
+	public void setFechaNacimiento(String fechaNacimiento) {
+		Objects.requireNonNull(fechaNacimiento, "La fecha de nacimiento no puede ser nula.");
+		try {
+			this.fechaNacimiento = LocalDate.parse(fechaNacimiento, FORMATO_DIA);
+		} catch (DateTimeParseException e) {
+			throw new IllegalArgumentException("Formato de la fecha de nacimiento incorrecto.");
+		}
+	}
+
+	public double getPeso() {
+		return peso;
+	}
+
+	public void setPeso(double peso) {
+		if (peso <= 0) {
+			throw new IllegalArgumentException("El peso debe ser mayor que cero.");
+		}
+		this.peso = peso;
+	}
+
+	public int getAltura() {
+		return altura;
+	}
+
+	public void setAltura(int altura) {
+		if (altura <= 0) {
+			throw new IllegalArgumentException("La altura debe ser mayor que cero.");
+		}
+		this.altura = altura;
+	}
+	
+	public int compareTo(Amigo amigo) {
+		return this.getNombre().compareTo(amigo.getNombre());
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof Amigo amigo)) return false;
+		return Objects.equals(nombre, amigo.nombre);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(nombre);
+	}
+
+	@Override
+	public String toString() {
+		return String.format(
+				"Amigo [nombre=%s, teléfono=%s, correo=%s, dirección=%s, fechaNacimiento=%s, peso=%s, altura=%s]",
+				nombre, telefono, correo, direccion, fechaNacimiento.format(FORMATO_DIA), peso, altura);
+	}
+	
+}
+~~~
+- **Agenda de amigos**
+
+  Escribir un programa en java que cree una agenda de amigos, basándote en la clase `Amigo`. Con la agenda se podrán realizar las operaciones básicas: insertar, borrar, buscar, etc.
+
+    - Posible solución
+
+      `RegistroAmigo.java`
+      ~~~java
+        package org.iesalandalus.programacion.ficheros.aleatorio.modelo.dao;
+
+        import java.io.IOException;
+        import java.io.RandomAccessFile;
+        import java.util.Arrays;
+
+        import org.iesalandalus.programacion.ficheros.aleatorio.modelo.dominio.Amigo;
+
+        public class RegistroAmigo extends Amigo {
+            private static final int LONGITUD_NOMBRE = 75; 			// 150 bytes =  75 caracteres * 2 byte/caracter UNICODE
+            private static final int LONGITUD_TELEFONO = 9;			//  18 bytes =   9 caracteres * 2 byte/caracter UNICODE
+            private static final int LONGITUD_CORREO = 50;			// 100 bytes =  50 caracteres * 2 byte/caracter UNICODE
+            private static final int LONGITUD_DIRECCION = 100;		// 200 bytes = 100 caracteres * 2 byte/caracter UNICODE
+            private static final int LONGITUD_F_NACIMIENTO = 10;	//  20 bytes =  10 caracteres * 2 byte/caracter UNICODE
+            private static final int LONGITUD_PESO = 8;				//   8 bytes ocupa un double
+            private static final int LONGITUD_ALTURA = 4;			//   4 bytes ocupa un integer
+            static final int LONGITUD = LONGITUD_NOMBRE  * 2 + LONGITUD_TELEFONO * 2 + LONGITUD_CORREO * 2 +
+                    LONGITUD_DIRECCION * 2 + LONGITUD_F_NACIMIENTO * 2 + LONGITUD_PESO + LONGITUD_ALTURA;
+            
+            public RegistroAmigo() {
+                super();
+            }
+            
+            public RegistroAmigo(Amigo amigo) {
+                super(amigo);
+            }
+
+            public void leer(RandomAccessFile fichero) throws IOException {
+                leerNombre(fichero);
+                leerTelefono(fichero);
+                leerCorreo(fichero);
+                leerDireccion(fichero);
+                leerFechaNacimiento(fichero);
+                leerPeso(fichero);
+                leerAltura(fichero);
+            }
+
+            public void escribir(RandomAccessFile fichero) throws IOException {
+                escribirNombre(fichero);
+                escribirTelefono(fichero);
+                escribirCorreo(fichero);
+                escribirDireccion(fichero);
+                escribirFechaNacimiento(fichero);
+                escribirPeso(fichero);
+                escribirAltura(fichero);
+            }
+            
+            private void leerNombre(RandomAccessFile fichero) throws IOException {
+                setNombre(leerCadena(fichero, LONGITUD_NOMBRE));
+            }
+            
+            private void escribirNombre(RandomAccessFile fichero) throws IOException {
+                escribirCadena(fichero, getNombre(), LONGITUD_NOMBRE);
+            }
+            
+            private void leerTelefono(RandomAccessFile fichero) throws IOException {
+                setTelefono(leerCadena(fichero, LONGITUD_TELEFONO));
+            }
+            
+            private void escribirTelefono(RandomAccessFile fichero) throws IOException {
+                escribirCadena(fichero, getTelefono(), LONGITUD_TELEFONO);
+            }
+
+            private void leerCorreo(RandomAccessFile fichero) throws IOException {
+                setCorreo(leerCadena(fichero, LONGITUD_CORREO));
+            }
+            
+            private void escribirCorreo(RandomAccessFile fichero) throws IOException {
+                escribirCadena(fichero, getCorreo(), LONGITUD_CORREO);
+            }
+            
+            private void leerDireccion(RandomAccessFile fichero) throws IOException {
+                setDireccion(leerCadena(fichero, LONGITUD_DIRECCION));
+            }
+            
+            private void escribirDireccion(RandomAccessFile fichero) throws IOException {
+                escribirCadena(fichero, getDireccion(), LONGITUD_DIRECCION);
+            }
+            
+            private void leerFechaNacimiento(RandomAccessFile fichero) throws IOException {
+                setFechaNacimiento(leerCadena(fichero, LONGITUD_F_NACIMIENTO));
+            }
+            
+            private void escribirFechaNacimiento(RandomAccessFile fichero) throws IOException {
+                escribirCadena(fichero, getFechaNacimientoStr(), LONGITUD_F_NACIMIENTO);
+            }
+            
+            private void leerPeso(RandomAccessFile fichero) throws IOException {
+                setPeso(fichero.readDouble());
+            }
+            
+            private void escribirPeso(RandomAccessFile fichero) throws IOException {
+                fichero.writeDouble(getPeso());
+            }
+            
+            private void leerAltura(RandomAccessFile fichero) throws IOException {
+                setAltura(fichero.readInt());
+            }
+            
+            private void escribirAltura(RandomAccessFile fichero) throws IOException {
+                fichero.writeInt(getAltura());
+            }
+            
+            private String leerCadena(RandomAccessFile fichero, int tamano) throws IOException {
+                char[] campo = new char[tamano];
+                for (int i = 0; i < tamano; i++) {
+                    campo[i] = fichero.readChar();
+                }
+                return new String(campo).trim();
+            }
+
+            private void escribirCadena(RandomAccessFile fichero, String cadena, int tamano) throws IOException {
+                char[] arrayCadena = Arrays.copyOf(cadena.toCharArray(), tamano);
+                fichero.writeChars(new String(arrayCadena));
+            }
+
+        }
+      ~~~
+      `Agenda.java`
+      ~~~java
+        package org.iesalandalus.programacion.ficheros.aleatorio.modelo.dao;
+
+        import java.io.File;
+        import java.io.IOException;
+        import java.io.RandomAccessFile;
+
+        import org.iesalandalus.programacion.ficheros.aleatorio.modelo.dominio.Amigo;
+
+        public class Agenda {
+            
+            private static final String FICHERO_AMIGOS = String.format("%s%s%s", "ficheros", File.separator, "amigos.dat");
+
+            private RandomAccessFile fichero;
+
+            public void abrir() throws IOException {
+                fichero = new RandomAccessFile(FICHERO_AMIGOS, "rw");
+            }
+
+            public void cerrar() throws IOException {
+                if (fichero != null) {
+                    fichero.close();
+                }
+            }
+
+            public RegistroAmigo leer() {
+                RegistroAmigo registro = null;
+                if (fichero != null) {
+                    try {
+                        registro = new RegistroAmigo();
+                        registro.leer(fichero);
+                    } catch (Exception error) {
+                        registro = null;
+                    }
+                }
+                return registro;
+            }
+
+            public RegistroAmigo leer(long indice) throws IOException {
+                if (fichero != null) {
+                    fichero.seek((indice - 1) * RegistroAmigo.LONGITUD);
+                }
+                return leer();
+            }
+            
+            public void escribir(Amigo amigo) throws IOException {
+                RegistroAmigo registro = new RegistroAmigo(amigo);
+                if (fichero != null) {
+                    registro.escribir(fichero);
+                }
+            }
+
+            public void escribir(Amigo amigo, long indice) throws IOException {
+                if (fichero != null) {
+                    fichero.seek((indice - 1) * RegistroAmigo.LONGITUD);
+                    escribir(amigo);
+                }
+            }
+            
+            public long getNumRegistros() throws IOException {
+                return fichero.length() / RegistroAmigo.LONGITUD;
+            }
+            
+            protected void setNumRegistros(long numRegistros) throws IOException {
+                fichero.setLength(numRegistros * RegistroAmigo.LONGITUD);
+            }
+            
+            public void listar() throws IOException {
+                fichero.seek(0);
+                for (long i = 1; i <= getNumRegistros(); i++) {
+                    System.out.println(leer(i));
+                }
+            }
+
+            public void limpiar() throws IOException {
+                fichero.setLength(0);
+            }
+            
+            public void borrar(Amigo amigo) throws IOException {
+                long indice = buscar(amigo);
+                if (indice != -1) {
+                    desplazarIzquierda(indice);
+                }
+            }
+            
+            public long buscar(Amigo amigo) throws IOException {
+                boolean encontrado = false;
+                RegistroAmigo registro = null;
+                long indiceRegistro = 1;
+                while (indiceRegistro <= getNumRegistros() && !encontrado) {
+                    registro = leer(indiceRegistro++);
+                    encontrado = amigo.compareTo(registro) == 0;
+                }
+                return (encontrado) ? indiceRegistro - 1 : -1;
+            }
+            
+            protected void desplazarIzquierda(long posicion) throws IOException {
+                long numRegistros = getNumRegistros();	
+                Amigo registroAuxiliar = null;
+                for (long i = posicion; i < numRegistros; i++) {
+                    registroAuxiliar = leer(i + 1);
+                    escribir(registroAuxiliar, i);
+                }
+                setNumRegistros(numRegistros - 1);
+            }
+
+        }
+      ~~~
+      `MainApp.java`
+      ~~~java
+        package org.iesalandalus.programacion.ficheros.aleatorio;
+
+        import java.io.IOException;
+
+        import org.iesalandalus.programacion.ficheros.aleatorio.modelo.dao.Agenda;
+        import org.iesalandalus.programacion.ficheros.aleatorio.modelo.dominio.Amigo;
+
+        public class MainApp {
+            public static void main(String[] args) throws IOException {
+                Amigo amigo1 = new Amigo("Paco Jones", "950456789", "paco.jones@iesalandalus.org", 
+                        "Parque", "01/02/2003", 75.4, 183);
+                Amigo amigo2 = new Amigo("Juan Sin Miedo", "950122223", "juansinmiedo@iesalandalus.org",
+                        "Casa de los Horrores", "11/12/2013", 65.8, 150);
+                Amigo amigo3 = new Amigo("Bob Esponja", "950233445", "bobesponja@iesalandalus.org",
+                        "Fondo de Bikini", "05/06/2007", 25.8, 100);
+                
+                Agenda agenda = new Agenda();
+                agenda.abrir();
+                agenda.escribir(amigo1);
+                agenda.escribir(amigo2);
+                agenda.escribir(amigo3);
+                agenda.cerrar();
+                agenda.abrir();
+                agenda.listar();
+                System.out.printf("Posición amigo1: %s%n", agenda.buscar(amigo1));
+                agenda.borrar(amigo1);
+                agenda.listar();
+                System.out.printf("Posición amigo2: %s%n", agenda.buscar(amigo2));
+                agenda.borrar(amigo2);
+                agenda.listar();
+                System.out.printf("Posición amigo3: %s%n", agenda.buscar(amigo3));
+                agenda.borrar(amigo3);
+                agenda.listar();
+
+                agenda.cerrar();
+            }
+
+        }
+      ~~~
+      [Acceder a la posible solución para el programa **Agenda de amigos**](https://github.com/JRJimenezReyes/Ficheros/tree/master/src/main/java/org/iesalandalus/programacion/ficheros/aleatorio)
+- **Agenda ordenada de amigos**
+
+  Escribir un programa en java que cree una agenda ordenada de amigos, basándote en la anterior.
+    - Posible solución
+
+      `AgendaOrdenada.java`
+      ~~~java
+        package org.iesalandalus.programacion.ficheros.aleatorio.modelo.dao;
+
+        import java.io.IOException;
+
+        import org.iesalandalus.programacion.ficheros.aleatorio.modelo.dominio.Amigo;
+
+        public class AgendaOrdenada extends Agenda {
+            
+            public AgendaOrdenada() {
+                super();
+            }
+            
+            public void insertar(Amigo amigo) throws IOException {
+                long indice = buscar(amigo);
+                if (indice != -1) {
+                    desplazarDerecha(indice);
+                    escribir(amigo, indice);
+                } else {
+                    escribir(amigo);
+                }
+            }
+            
+            @Override
+            public long buscar(Amigo amigo) throws IOException {
+                return busquedaBinaria(amigo, 1, getNumRegistros());
+            }
+
+            @Override
+            public void borrar(Amigo amigo) throws IOException {
+                long indice = busquedaBinaria(amigo, 1, getNumRegistros());
+                if (indice != -1) {
+                    desplazarIzquierda(indice);
+                }
+            }
+
+            private long busquedaBinaria(Amigo amigo, long izquierda, long derecha) throws IOException {
+                long indice = -1;
+                long mitad = (izquierda + derecha) / 2;
+                if (izquierda <= derecha) {
+                    Amigo amigoMitad = leer(mitad);
+                    if (amigo.compareTo(amigoMitad) < 0)
+                        indice = busquedaBinaria(amigo, izquierda, mitad - 1);
+                    else {
+                        if (amigo.compareTo(amigoMitad) == 0)
+                            indice = mitad;
+                        else
+                            indice = busquedaBinaria(amigo, mitad + 1, derecha);
+                    }
+                } else {
+                    indice = mitad + 1;
+                }
+                return indice;
+            }
+
+            private void desplazarDerecha(long indice) throws IOException {
+                long numRegistros = getNumRegistros();
+                setNumRegistros(numRegistros + 1);
+                Amigo amigoAuxiliar = null;
+                for (long i = numRegistros; i > indice - 1; i--) {
+                    amigoAuxiliar = leer(i);
+                    escribir(amigoAuxiliar, i + 1);
+                }
+            }
+
+        }
+      ~~~
+      `MainAppOrdenada.java`
+      ~~~java
+        package org.iesalandalus.programacion.ficheros.aleatorio;
+
+        import java.io.IOException;
+
+        import org.iesalandalus.programacion.ficheros.aleatorio.modelo.dao.AgendaOrdenada;
+        import org.iesalandalus.programacion.ficheros.aleatorio.modelo.dominio.Amigo;
+
+        public class MainAppOrdenada {
+            public static void main(String[] args) throws IOException {
+                Amigo amigo1 = new Amigo("Paco Jones", "950456789", "paco.jones@iesalandalus.org", 
+                        "Parque", "01/02/2003", 75.4, 183);
+                Amigo amigo2 = new Amigo("Juan Sin Miedo", "950122223", "juansinmiedo@iesalandalus.org",
+                        "Casa de los Horrores", "11/12/2013", 65.8, 150);
+                Amigo amigo3 = new Amigo("Bob Esponja", "950233445", "bobesponja@iesalandalus.org",
+                        "Fondo de Bikini", "05/06/2007", 25.8, 100);
+                
+                AgendaOrdenada agenda = new AgendaOrdenada();
+                agenda.abrir();
+                agenda.insertar(amigo1);
+                agenda.insertar(amigo2);
+                agenda.insertar(amigo3);
+                agenda.cerrar();
+                agenda.abrir();
+                agenda.listar();
+                System.out.printf("Posición amigo1: %s%n", agenda.buscar(amigo1));
+                agenda.borrar(amigo1);
+                agenda.listar();
+                System.out.printf("Posición amigo2: %s%n", agenda.buscar(amigo2));
+                agenda.borrar(amigo2);
+                agenda.listar();
+                System.out.printf("Posición amigo3: %s%n", agenda.buscar(amigo3));
+                agenda.borrar(amigo3);
+                agenda.listar();
+
+                agenda.cerrar();
+            }
+
+        }
+      ~~~
+      [Acceder a la posible solución para el programa **Agenda de amigos**](https://github.com/JRJimenezReyes/Ficheros/tree/master/src/main/java/org/iesalandalus/programacion/ficheros/aleatorio)

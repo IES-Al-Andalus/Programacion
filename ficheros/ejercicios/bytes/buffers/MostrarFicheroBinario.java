@@ -11,8 +11,7 @@ public class MostrarFicheroBinario {
 	public static final String FICHERO = String.format("%s%s%s", "ficheros", File.separator, "ficheroBinarioPeque.bin");
     
 	public static void main(String[] args) {
-		File ficheroEntrada = new File(FICHERO);
-		try (BufferedInputStream entrada = new BufferedInputStream(new FileInputStream(ficheroEntrada))){
+		try (BufferedInputStream entrada = new BufferedInputStream(new FileInputStream(FICHERO))){
 			mostrarFichero(entrada);
 		} catch (FileNotFoundException e) {
 			System.out.println("No se puede leer el fichero de entrada");

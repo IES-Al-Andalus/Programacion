@@ -441,7 +441,7 @@ A la hora de abrir un fichero para acceso aleatorio debemos indicar el modo con 
 
 Podemos mover el puntero mediante el método `void seek(long posicion)` y nos ofrece los mismos métodos que los ficheros de datos primitivos.
 
-A la hora de trabajar con este tipo de ficheros, lo común es utilizar registros de longitud fija que albergarán los diferentes campos con los que vamos a trabajar. En el apartado de ejercicios puedes ver un ejemplo.
+A la hora de trabajar con este tipo de ficheros, lo común es utilizar registros de longitud fija que albergarán los diferentes campos con los que vamos a trabajar. En el apartado de ejercicios puedes ver un ejemplo de su uso.
 
 
 ## Ejercicios

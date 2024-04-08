@@ -639,7 +639,7 @@ public class UtilidadesXml {
 
 Para **leer un fichero XML** utilizaremos el método `leerDocumentoXml` al que le pasaremos la ruta del archivo que queremos leer y nos devolverá el árbol DOM. Para recorrer dicho árbol obtendremos la lista de nodos que es un objeto de la clase `NodeList` y accederemos a cada uno de ellos mediante el método `item` al que le pasamos el índice del nodo a obtener. Cada nodo podemos convertirlo a `Element` mediante un casting (asegurándonos que el nodo es de dicho tipo mediante el método `getNodeType`). Para cada elemento podemos acceder a los elementos hijo mediante el método `getElementsByTagName` (esto devuelve una lista, nos debemos quedar con su primer elemento y acceder a la información de texto asociada mediante el método `getTextContent`) o al valor de sus atributos mediante `getAttribute`.
 
-Por ejemplo, para leer el primer fichero que hemos mostrado podíamos utilizar el siguiente código:
+Por ejemplo, para leer el primer fichero que hemos mostrado, podríamos utilizar el siguiente código:
 ~~~java
     ...
     Document documentoXml = UtilidadesXml.leerDocumentoXml(FICHERO_XML);

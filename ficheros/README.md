@@ -221,7 +221,7 @@ Para la lectura podemos utilizar el método adicional `readline` que devuelve la
 
 Para la escritura podemos utilizar los métodos `write` y `newLine`.
 
-Es conveniente utilizar buferes dada su eficiencia en comparación con los simples flujos. Te recomiendo que hagas una prueba: ejecuta midiendo el tiempo (por ejemplo utilizando el comando `time`) la copia de un fichero de texto utilizando flujos y utilizando buferes y fíjate en la diferencia que hay al hacerlo con ficheros grandes. Estos ejemplos los tienes en los ejercicios. Te mostraré los resultados cuando hablemos de ficheros binarios ya que es más fácil tener ficheros algo más grandes.
+Es conveniente utilizar buferes dada su eficiencia en comparación con los simples flujos. Te recomiendo que hagas una prueba: ejecuta midiendo el tiempo (por ejemplo utilizando el comando `time`) la copia de un fichero de texto utilizando flujos y utilizando buferes y fíjate en la diferencia que hay al hacerlo con ficheros grandes. Estos ejemplos los tienes en los ejercicios. Te mostraré los resultados cuando hablemos de ficheros binarios, ya que es más fácil tener ficheros algo más grandes.
 
 ## Ficheros binarios
 
@@ -264,7 +264,7 @@ Para la lectura podemos utilizar el método adicional `read` que devuelve el byt
 
 Para la escritura podemos utilizar los métodos `write` al que se le pasa el byte a escribir.
 
-Cuando hablamos de ficheros de texto dijimos que era conveniente utilizar buferes debido a su eficiencia. En los ejercicios tienes ejemplos, entre otros, de como copiar un fichero binario utilizando flujos y utilizando buferes. Ambos copian el mismo fichero. Os dejo, como ya os comenté, la comparativa de copiar un fichero de unos 9 Mb. utilizando flujos y buferes en mi ordenador. Ni que decir tiene que lo mismo pasa con los ficheros de texto. Creo que las ventajas son obvias.
+Cuando hablamos de ficheros de texto dijimos que era conveniente utilizar buferes debido a su eficiencia. En los ejercicios tienes ejemplos, entre otros, de como copiar un fichero binario utilizando flujos y utilizando buferes. Ambos copian el mismo fichero. Os dejo, como ya os comenté, la comparativa de copiar un fichero de unos 9 MB. utilizando flujos y buferes en mi ordenador. Ni que decir tiene que lo mismo pasa con los ficheros de texto. Creo que las ventajas son obvias.
 
 ~~~bash
 pepino@Tor:~/Desarrollos/java/IntelliJ/Ficheros$ ls -l  ficheros/ficheroBinarioGrande.bin 
@@ -307,7 +307,7 @@ Para realizar las lecturas debemos iterar indefinidamente hasta que salte la exc
 
 A veces nos interesa guardar o transmitir objetos completos y/o leer o recibir objetos completos. Para ello se debe poder convertir el objeto en una secuencia de bytes o convertir una secuencia de bytes en un objeto. A estas operaciones se les denomina **serialización** y **deserialización**.
 
-Java permite llevar a cabo dichas operaciones, simplemente haciendo que las clases a las que pertenecen los objetos que queremos serializar o deserializar implementen la interfaz `Serializable`. Esta interfaz es una **interfaz marcadora**, es decir, simplemente marca la clase como serializable pero, al contrario que las demás interfaces, no obliga a implementar ningún método. Para que una clase sea serializable, todos sus atributos deben ser a su vez serializables. Todos los tipos primitivos, las colecciones, los mapas, etc. son serializables.
+Java permite llevar a cabo dichas operaciones, simplemente haciendo que las clases a las que pertenecen los objetos que queremos serializar o deserializar implementen la interfaz `Serializable`. Esta interfaz es una **interfaz marcadora**, es decir, simplemente marca la clase como serializable, pero al contrario que las demás interfaces, no obliga a implementar ningún método. Para que una clase sea serializable, todos sus atributos deben ser a su vez serializables. Todos los tipos primitivos, las colecciones, los mapas, etc. son serializables.
 
 Una vez que ya tenemos la clase serializable, ahora podemos utilizar las clases `ObjectInputStream` y `ObjectOutputStream` para leer o escribir objetos de esta clase a un flujo. Para crear objetos de esta clase se le pasa el flujo correspondiente. Luego podemos utilizar los métodos `readObject` y `writeObject` para realizar las correspondientes operaciones de lectura y escritura. Cuando leemos un objeto y lo queremos asignar a una variable, debemos realizar el correspondiente casting y además debemos capturar la excepción `ClassCastException`, que saltará si no se puede encontar la clase de los objetos que queremos leer o esta no es serializable (o alguno de sus atributos). Al realizar las lecturas devolverá `null` si llegamos al final del fichero.
 
@@ -450,7 +450,7 @@ En este apartado vamos a comentar cómo trabajar con algunos ficheros especiales
 
 ### Ficheros CSV
 
-CSV es la abraviatura en inglés de valores separados por comas. Son un caso especial de ficheros de texto, donde cada valor va separado por un caracter separador que generalmente es la coma, de ahí su nopmbre. Por tanto, los trataremos como un fichero de texto normal y cada línea la dividiremos utilizando el separador. Es un formato bastante utilizado para exportar datos dada su sencillez.
+CSV es la abraviatura en inglés de comma separated values (valores separados por comas). Son un caso especial de ficheros de texto, donde cada valor va separado por un caracter separador que generalmente es la coma, de ahí su nombre. Por tanto, los trataremos como un fichero de texto normal y cada línea la dividiremos utilizando el separador. Es un formato bastante utilizado para exportar datos dada su sencillez.
 
 ~~~java
     ...
@@ -486,6 +486,249 @@ Para escribir este tipo de ficheros, formaremos cada línea a escribir concatena
         System.out.printf("No se ha podido escribir el fichero %s.%n", FICHERO_CSV);
     }
 ~~~
+
+### Ficheros XML
+
+XML es la abreviatura en inglés de eXtensible Markup Language (lenguaje de marcas extensible). Son otro caso especial de ficheros de texto. A diferencia de los ficheros CSV, manejar los ficheros XML es más complicado, por lo que utilizaremos una API que nos proporciona java para llevar a cabo el procesamiento de este tipo de ficheros.
+
+Veamos un par de ejemplos de ficheros XML que contienen la misma información:
+
+~~~xml
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<personas>
+    <persona edad="31" nombre="Juan"/>
+    <persona edad="35" nombre="Alfonso"/>
+    <persona edad="25" nombre="Araceli"/>
+    <persona edad="40" nombre="Manolo"/>
+    <persona edad="37" nombre="Rubén"/>
+    <persona edad="18" nombre="Elvira"/>
+    <persona edad="20" nombre="Inés"/>
+    <persona edad="43" nombre="José Ramón"/>
+</personas>
+~~~
+
+~~~xml
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<personas>
+    <persona>
+        <nombre>Juan</nombre>
+        <edad>31</edad>
+    </persona>
+    <persona>
+        <nombre>Alfonso</nombre>
+        <edad>35</edad>
+    </persona>
+    <persona>
+        <nombre>Araceli</nombre>
+        <edad>25</edad>
+    </persona>
+    <persona>
+        <nombre>Manolo</nombre>
+        <edad>40</edad>
+    </persona>
+    <persona>
+        <nombre>Rubén</nombre>
+        <edad>37</edad>
+    </persona>
+    <persona>
+        <nombre>Elvira</nombre>
+        <edad>18</edad>
+    </persona>
+    <persona>
+        <nombre>Inés</nombre>
+        <edad>20</edad>
+    </persona>
+    <persona>
+        <nombre>José Ramón</nombre>
+        <edad>43</edad>
+    </persona>
+</personas>
+~~~
+
+Como se puede apreciar la información que contienen es la misma. En el primero se utilizan los atributos del elemento `persona` para almacenar los valores. En el segundo se utilizan diferentes elementos dentro de cada elemento `persona`.
+
+La API para trabajar con ficheros XML está dividida en los siguientes paquetes:
+- `javax.xml.parsers`: agrupa las funcionalidades para realizar el procesamiento de un fichero XML y crear la estructura de árbol que representa dicho fichero. Dicho árbol es llamado **árbol DOM**. Algunas de las clases y/o interfaces que nos ofrece son: `DocumentBuilder` y `DocumentSbuilderFactory`. 
+- `javax.xml.transformer`: agrupa las funcionalidades para transformar el árbol DOM en un fichero. Algunas de las clases y/o interfaces que nos ofrece son: `Transform`, `TransformFactory`, `DOMSource` y `StreamResult`.
+- `org.w3c.dom`: agrupa las funcionalidades para trabajar con el árbolDOM. Algunas de las clases y/o interfaces que nos ofrece son: `Document`, `Element`, `Node` y `NodeList`.
+
+Para leer un fichero XML debemos crear un objeto de la clase `DocumentBuilder`, utilizando su fábrica y así obtener el árbol DOM. Partiendo de un árbol DOM ya creado, podemos escribirlo a un fichero utilizando un objeto de la clase `Tranform`, utilizando su fábrica, para posteriormente tranformar el árbol en un fichero. Dado que estas operaciones son muy comunes, te las he agrupado en una clase de utilidades que provee los métodos para leer un fichero XML y devolver su árbol DOM y viceversa.
+
+`UtilidadesXml.java`
+~~~java
+package org.iesalandalus.programacion.xml;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
+import javax.xml.XMLConstants;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.TransformerFactoryConfigurationError;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
+
+public class UtilidadesXml {
+
+	private UtilidadesXml() {
+		// Evito que se creen instancias.
+	}
+
+	public static void escribirDocumentoXml(Document documentoXml, String salida) {
+		try (FileWriter ficheroSalida = new FileWriter(salida)) {
+			TransformerFactory factoria = TransformerFactory.newInstance();
+			factoria.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+			factoria.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "");
+			Transformer conversor = factoria.newTransformer();
+			conversor.setOutputProperty(OutputKeys.INDENT, "yes");
+			conversor.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+			conversor.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+			StreamResult destino = new StreamResult(ficheroSalida);
+			DOMSource fuente = new DOMSource(documentoXml);
+			conversor.transform(fuente, destino);
+			System.out.printf("Fichero %s escrito correctamente.%n", salida);
+		} catch (TransformerConfigurationException | TransformerFactoryConfigurationError e) {
+			System.out.println("Imposible crear el conversor.");
+		} catch (TransformerException e) {
+			System.out.println("Error irrecuperable en la conversión.");
+		} catch (IOException e) {
+			System.out.printf("No se ha podido escribir el fichero %s.%n", salida);
+		}
+	}
+
+	public static Document leerDocumentoXml(String ficheroXml) {
+		Document documentoXml = null;
+		try {
+			DocumentBuilder constructor = crearConstructorDocumentoXml();
+			if (constructor != null) {
+				documentoXml = constructor.parse(ficheroXml);
+				documentoXml.getDocumentElement().normalize();
+			}
+		} catch (SAXException e) {
+			System.out.println("Documento XML mal formado.");
+		} catch (IOException e) {
+			System.out.printf("No se ha podido leer el fichero %s.%n", ficheroXml);
+		}
+		return documentoXml;
+	}
+
+	public static DocumentBuilder crearConstructorDocumentoXml() {
+		DocumentBuilder constructor = null;
+		try {
+			DocumentBuilderFactory fabrica = DocumentBuilderFactory.newInstance();
+			fabrica.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+			constructor = fabrica.newDocumentBuilder();
+		} catch (ParserConfigurationException e) {
+			System.out.println("Error al crear el constructor.");
+		}
+		return constructor;
+	}
+
+}
+~~~
+
+Para **leer un fichero XML** utilizaremos el método `leerDocumentoXml` al que le pasaremos la ruta del archivo que queremos leer y nos devolverá el árbol DOM. Para recorrer dicho árbol obtendremos la lista de nodos que es un objeto de la clase `NodeList` y accederemos a cada uno de ellos mediante el método `item` al que le pasamos el índice del nodo a obtener. Cada nodo podemos convertirlo a `Element` mediante un casting (asegurándonos que el nodo es de dicho tipo mediante el método `getNodeType`). Para cada elemento podemos acceder a los elementos hijo mediante el método `getElementsByTagName` (esto devuelve una lista, nos debemos quedar con su primer elemento y acceder a la información de texto asociada mediante el método `getTextContent`) o al valor de sus atributos mediante `getAttribute`.
+
+Por ejemplo, para leer el primer fichero que hemos mostrado podíamos utilizar el siguiente código:
+~~~java
+    ...
+    Document documentoXml = UtilidadesXml.leerDocumentoXml(FICHERO_XML);
+    if (documentoXml != null) {
+        System.out.println("Fichero leúido correctamente.");
+        NodeList personas = documentoXml.getElementsByTagName("persona");
+        for (int i = 0; i < personas.getLength(); i++) {
+            Node persona = personas.item(i);
+            if (persona.getNodeType() == Node.ELEMENT_NODE) {
+                String nombre = ((Element)persona).getAttribute("nombre");
+                int edad = Integer.parseInt(((Element)persona).getAttribute("edad"));
+                System.out.println(new Persona(nombre, edad));
+            }
+        }
+    }
+    ...
+~~~
+
+Para leer el segundo fichero que hemos mostrado, podríamos utilizar el siguiente código:
+~~~java
+    ...
+    Document documentoXml = UtilidadesXml.leerDocumentoXml(FICHERO_XML);
+    if (documentoXml != null) {
+        System.out.println("Fichero leúido correctamente.");
+        NodeList personas = documentoXml.getElementsByTagName("persona");
+        for (int i = 0; i < personas.getLength(); i++) {
+            Node persona = personas.item(i);
+            if (persona.getNodeType() == Node.ELEMENT_NODE) {
+                String nombre = ((Element)persona).getElementsByTagName("nombre").item(0).getTextContent();
+                int edad = Integer.parseInt(((Element)persona).getElementsByTagName("edad").item(0).getTextContent());
+                System.out.println(new Persona(nombre, edad));
+            }
+        }
+    }
+    ...
+~~~
+
+Para **escribir un fichero XML**, primero debemos crear el árbol DOM vacío utilizando el método `newDocument` de la clase `DocumentBuilder`. Para facilitar la creación de objetos `DocumentBuilder` puedes utilizar el método `crearConstructorDocumentoXml`. Debemos añadir el elemento que hará de raíz y a este le iremos añadiendo los diferentes elementos. Para todo este podemos utilizar los métodos `createElement` y `appendChild` de la clase `Document`. También tenemos la clase `Element` que nos ofrece los métodos `appendChild`, `setAttribute`, `setTextContent` y `hasAttribute`. Una vez que ya tenemos creado nuestro árbol DOM podemos escribirlo a fichero utilizando el método `escribirDocumentoXml` que facilita la escritura, ya que crea un objeto de la clase `Transform` y las correspondientes intancias de las clases `StreamResult` y `DOMSource`.
+
+Para escribir el primer fichero mostrado, podríamos utilizar el siguiente código:
+~~~java
+    ...
+    DocumentBuilder constructor = UtilidadesXml.crearConstructorDocumentoXml();
+    Document documentoXml = null;
+    if (constructor != null) {
+        documentoXml = constructor.newDocument();
+        documentoXml.appendChild(documentoXml.createElement("personas"));
+        for (Persona persona : personas) {
+            Element elementoPersona = crearElementoPersonaConAtributos(documentoXml, persona);
+            documentoXml.getDocumentElement().appendChild(elementoPersona);
+        }
+    }
+    ...
+    private static Element crearElementoPersonaConAtributos(Document documentoXML, Persona persona) {
+		Element elementoPersona = documentoXML.createElement("persona");
+		elementoPersona.setAttribute("nombre", persona.getNombre());
+		elementoPersona.setAttribute("edad", String.format("%d", persona.getEdad()));
+		return elementoPersona;
+	}
+    ...
+~~~
+
+Para el segundo fichero mostrado, el código podría ser el siguiente:
+~~~java
+    ...
+    DocumentBuilder constructor = UtilidadesXml.crearConstructorDocumentoXml();
+    Document documentoXml = null;
+    if (constructor != null) {
+        documentoXml = constructor.newDocument();
+        documentoXml.appendChild(documentoXml.createElement("personas"));
+        for (Persona persona : personas) {
+            Element elementoPersona = crearElementoPersonaConElementos(documentoXml, persona);
+            documentoXml.getDocumentElement().appendChild(elementoPersona);
+        }
+    }
+    ...
+    private static Element crearElementoPersonaConElementos(Document documentoXml, Persona persona) {
+		Element elementoPersona = documentoXml.createElement("persona");
+		Element elementoNombre = documentoXml.createElement("nombre");
+		elementoNombre.setTextContent(persona.getNombre());
+		Element elementoEdad = documentoXml.createElement("edad");
+		elementoEdad.setTextContent(String.format("%d", persona.getEdad()));
+		elementoPersona.appendChild(elementoNombre);
+		elementoPersona.appendChild(elementoEdad);
+		return elementoPersona;
+	}
+    ...
+~~~
+
 ## Ejercicios
 
 ###### File
@@ -2021,8 +2264,7 @@ public class Amigo {
             }
         }
       ~~~
-
-    [Descargar posible solución para el programa **ConvertirCSVAFicheroObjetos**](ejercicios/csv/ConvertirCSVAFicheroObjetos.java)
+  [Descargar posible solución para el programa **ConvertirCSVAFicheroObjetos**](ejercicios/csv/ConvertirCSVAFicheroObjetos.java)
 
 - **Convertir fichero de objetos en CSV**
 
@@ -2091,7 +2333,277 @@ public class Amigo {
 
         }
       ~~~
-      
-    [Descargar posible solución para el programa **ConvertirFicheroObjetosACSV**](ejercicios/csv/ConvertirFicheroObjetosACSV.java)
+  [Descargar posible solución para el programa **ConvertirFicheroObjetosACSV**](ejercicios/csv/ConvertirFicheroObjetosACSV.java)
+
+
+###### Ficheros XML
+- **Convertir fichero XML con atributos en fichero de objetos**
+
+  Escribir un programa en java que lea un fichero XML con datos sobre una persona que almacena los valores en atributos y los escriba como un fichero de objetos.
+    - Posible solución
+
+      ~~~java
+        package org.iesalandalus.programacion.xml;
+
+        import java.io.File;
+        import java.io.FileNotFoundException;
+        import java.io.FileOutputStream;
+        import java.io.IOException;
+        import java.io.ObjectOutputStream;
+
+        import org.iesalandalus.programacion.ficheros.secuencial.bytes.objetos.Persona;
+        import org.w3c.dom.Document;
+        import org.w3c.dom.Element;
+        import org.w3c.dom.Node;
+        import org.w3c.dom.NodeList;
+
+        public class ConvertirXmlConAtributosAFicheroObjetos {
+            
+            private static final String FICHERO_OBJETOS = String.format("%s%s%s","ficheros", File.separator, "personas.dat");
+            private static final String FICHERO_XML = String.format("%s%s%s", "ficheros", File.separator, "personasAtributos.xml");
+            
+            public static void main(String[] args) {
+                Document documentoXml = UtilidadesXml.leerDocumentoXml(FICHERO_XML);
+                if (documentoXml != null) {
+                    System.out.println("Fichero XML leído correctamente.");
+                    escribirXmlConAtributosAFicheroObjetos(documentoXml);
+                }
+            }
+            
+            private static void escribirXmlConAtributosAFicheroObjetos(Document documentoXml) {
+                try (ObjectOutputStream salida = new ObjectOutputStream(new FileOutputStream(FICHERO_OBJETOS))){
+                    NodeList personas = documentoXml.getElementsByTagName("persona");
+                    for (int i = 0; i < personas.getLength(); i++) {
+                        Node persona = personas.item(i);
+                        if (persona.getNodeType() == Node.ELEMENT_NODE) {
+                            String nombre = ((Element)persona).getAttribute("nombre");
+                            int edad = Integer.parseInt(((Element)persona).getAttribute("edad"));
+                            salida.writeObject(new Persona(nombre, edad));
+                        }
+                    }
+                    System.out.println("Fichero de objetos escrito correctamente.");
+                } catch (FileNotFoundException e) {
+                    System.out.printf("No se ha podido escribir el fichero %s.%n", FICHERO_OBJETOS);
+                } catch (IOException e) {
+                    System.out.println("Error inesperado de Entrada/Salida.");
+                }
+            }
+        }
+      ~~~
+  [Descargar posible solución para el programa **ConvertirXmlConAtributosAFicheroObjetos**](ejercicios/xml/ConvertirXmlConAtributosAFicheroObjetos.java)
+
+- **Convertir fichero XML con elementos en fichero de objetos**
+
+  Escribir un programa en java que lea un fichero XML con datos sobre una persona que almacena los valores en elementos y los escriba como un fichero de objetos.
+    - Posible solución
+
+      ~~~java
+        package org.iesalandalus.programacion.xml;
+
+        import java.io.File;
+        import java.io.FileOutputStream;
+        import java.io.IOException;
+        import java.io.ObjectOutputStream;
+
+        import org.iesalandalus.programacion.ficheros.secuencial.bytes.objetos.Persona;
+        import org.w3c.dom.Document;
+        import org.w3c.dom.Element;
+        import org.w3c.dom.Node;
+        import org.w3c.dom.NodeList;
+
+        public class ConvertirXmlConElementosAFicheroObjetos {
+            
+            private static final String FICHERO_OBJETOS = String.format("%s%s%s", "ficheros", File.separator, "personas.dat");
+            private static final String FICHERO_XML = String.format("%s%s%s", "ficheros", File.separator, "personasElementos.xml");
+            
+            public static void main(String[] args) {
+                Document documentoXml = UtilidadesXml.leerDocumentoXml(FICHERO_XML);
+                if (documentoXml != null) {
+                    System.out.println("Fichero XML leído correctamente.");
+                    escribirXmlConElementosAFicheroObjetos(documentoXml);
+                }
+            }
+            
+            private static void escribirXmlConElementosAFicheroObjetos(Document documentoXml) {
+                try (ObjectOutputStream salida = new ObjectOutputStream(new FileOutputStream(FICHERO_OBJETOS))){
+                    NodeList personas = documentoXml.getElementsByTagName("persona");
+                    for (int i = 0; i < personas.getLength(); i++) {
+                        Node persona = personas.item(i);
+                        if (persona.getNodeType() == Node.ELEMENT_NODE) {
+                            String nombre = ((Element)persona).getElementsByTagName("nombre").item(0).getTextContent();
+                            int edad = Integer.parseInt(((Element)persona).getElementsByTagName("edad").item(0).getTextContent());
+                            salida.writeObject(new Persona(nombre, edad));
+                        }
+                    }
+                    System.out.println("Fichero de objetos escrito correctamente.");
+                } catch (IOException e) {
+                    System.out.printf("No se ha podido escribir el fichero %s.%n", FICHERO_OBJETOS);
+                }
+            }
+        }
+      ~~~
+  [Descargar posible solución para el programa **ConvertirXmlConElementosAFicheroObjetos**](ejercicios/xml/ConvertirXmlConElementosAFicheroObjetos.java)
+
+- **Convertir fichero de objetos en XML con atributos**
+
+  Escribir un programa en java que lea un fichero de objetos con datos sobre una persona y los escriba como un fichero XML, almacenando los valores en atributos.
+    - Posible solución
+
+      ~~~java
+        package org.iesalandalus.programacion.xml;
+
+        import java.io.EOFException;
+        import java.io.File;
+        import java.io.FileInputStream;
+        import java.io.FileNotFoundException;
+        import java.io.IOException;
+        import java.io.ObjectInputStream;
+        import java.util.ArrayList;
+        import java.util.List;
+
+        import javax.xml.parsers.DocumentBuilder;
+
+        import org.iesalandalus.programacion.ficheros.secuencial.bytes.objetos.Persona;
+        import org.w3c.dom.Document;
+        import org.w3c.dom.Element;
+
+        public class ConvertirFicheroObjetosAXmlConAtributos {
+            
+            private static final String FICHERO_OBJETOS = String.format("%s%s%s", "ficheros", File.separator, "personas.dat");
+            private static final String FICHERO_XML = String.format("%s%s%s", "ficheros", File.separator, "personasAtributos.xml");
+            
+            public static void main(String[] args) {
+                List<Persona> personas = leerFicheroObjetos();
+                Document documentoXml = crearDocumentoXml(personas);
+                UtilidadesXml.escribirDocumentoXml(documentoXml, FICHERO_XML);
+            }
+            
+            private static List<Persona> leerFicheroObjetos() {
+                List<Persona> personas = new ArrayList<>();
+                try (ObjectInputStream entrada = new ObjectInputStream(new FileInputStream(FICHERO_OBJETOS))){
+                    Persona persona;
+                    while ((persona = (Persona)entrada.readObject()) != null) {
+                        personas.add(persona);
+                    }
+                } catch (FileNotFoundException fnfe) {
+                    System.out.printf("No se puede leer el fichero de entrada: %s.%n", FICHERO_OBJETOS);
+                } catch (ClassNotFoundException cnfee) {
+                    System.out.println("No puedo encontrar la clase que tengo que leer.");
+                } catch (EOFException eo) {
+                    System.out.println("Fichero de objetos leído satisfactoriamente.");
+                } catch (IOException e) {
+                    System.out.println("Error inesperado de Entrada/Salida.");
+                }
+                return personas;
+            }
+            
+
+            private static Document crearDocumentoXml(List<Persona> personas) {
+                DocumentBuilder constructor = UtilidadesXml.crearConstructorDocumentoXml();
+                Document documentoXml = null;
+                if (constructor != null) {
+                    documentoXml = constructor.newDocument();
+                    documentoXml.appendChild(documentoXml.createElement("personas"));
+                    for (Persona persona : personas) {
+                        Element elementoPersona = crearElementoPersonaConAtributos(documentoXml, persona);
+                        documentoXml.getDocumentElement().appendChild(elementoPersona);
+                    }
+                }
+                return documentoXml;
+            }
+
+            private static Element crearElementoPersonaConAtributos(Document documentoXML, Persona persona) {
+                Element elementoPersona = documentoXML.createElement("persona");
+                elementoPersona.setAttribute("nombre", persona.getNombre());
+                elementoPersona.setAttribute("edad", String.format("%d", persona.getEdad()));
+                return elementoPersona;
+            }
+
+        }
+      ~~~
+  [Descargar posible solución para el programa **ConvertirFicheroObjetosAXmlConAtributos**](ejercicios/xml/ConvertirFicheroObjetosAXmlConAtributos.java)
+
+- **Convertir fichero de objetos en XML con elementos**
+
+  Escribir un programa en java que lea un fichero de objetos con datos sobre una persona y los escriba como un fichero XML, almacenando los valores en elementos.
+    - Posible solución
+
+      ~~~java
+        package org.iesalandalus.programacion.xml;
+
+        import java.io.EOFException;
+        import java.io.File;
+        import java.io.FileInputStream;
+        import java.io.FileNotFoundException;
+        import java.io.IOException;
+        import java.io.ObjectInputStream;
+        import java.util.ArrayList;
+        import java.util.List;
+
+        import javax.xml.parsers.DocumentBuilder;
+
+        import org.iesalandalus.programacion.ficheros.secuencial.bytes.objetos.Persona;
+        import org.w3c.dom.Document;
+        import org.w3c.dom.Element;
+
+        public class ConvertirFicheroObjetosAXmlConElementos {
+            
+            private static final String FICHERO_OBJETOS = String.format("%s%s%s", "ficheros", File.separator, "personas.dat");
+            private static final String FICHERO_XML = String.format("%s%s%s", "ficheros", File.separator, "personasElementos.xml");
+            
+            public static void main(String[] args) {
+                List<Persona> personas = leerFicheroObjetos();
+                Document documentoXml = crearDocumentoXml(personas);
+                UtilidadesXml.escribirDocumentoXml(documentoXml, FICHERO_XML);
+            }
+            
+            private static List<Persona> leerFicheroObjetos() {
+                List<Persona> personas = new ArrayList<>();
+                try (ObjectInputStream entrada = new ObjectInputStream(new FileInputStream(FICHERO_OBJETOS))){
+                    Persona persona;
+                    while ((persona = (Persona)entrada.readObject()) != null) {
+                        personas.add(persona);
+                    }
+                } catch (FileNotFoundException fnfe) {
+                    System.out.printf("No se puede leer el fichero de entrada: %s.%n", FICHERO_OBJETOS);
+                } catch (ClassNotFoundException cnfee) {
+                    System.out.println("No puedo encontrar la clase que tengo que leer.");
+                } catch (EOFException eo) {
+                    System.out.println("Fichero de objetos leído satisfactoriamente.");
+                } catch (IOException e) {
+                    System.out.println("Error inesperado de Entrada/Salida.");
+                }
+                return personas;
+            }
+            
+            private static Document crearDocumentoXml(List<Persona> personas) {
+                DocumentBuilder constructor = UtilidadesXml.crearConstructorDocumentoXml();
+                Document documentoXml = null;
+                if (constructor != null) {
+                    documentoXml = constructor.newDocument();
+                    documentoXml.appendChild(documentoXml.createElement("personas"));
+                    for (Persona persona : personas) {
+                        Element elementoPersona = crearElementoPersonaConElementos(documentoXml, persona);
+                        documentoXml.getDocumentElement().appendChild(elementoPersona);
+                    }
+                }
+                return documentoXml;
+            }
+
+            private static Element crearElementoPersonaConElementos(Document documentoXml, Persona persona) {
+                Element elementoPersona = documentoXml.createElement("persona");
+                Element elementoNombre = documentoXml.createElement("nombre");
+                elementoNombre.setTextContent(persona.getNombre());
+                Element elementoEdad = documentoXml.createElement("edad");
+                elementoEdad.setTextContent(String.format("%d", persona.getEdad()));
+                elementoPersona.appendChild(elementoNombre);
+                elementoPersona.appendChild(elementoEdad);
+                return elementoPersona;
+            }
+
+        }
+      ~~~
+  [Descargar posible solución para el programa **ConvertirFicheroObjetosAXmlConElementos**](ejercicios/xml/ConvertirFicheroObjetosAXmlConElementos.java)
+
 
 

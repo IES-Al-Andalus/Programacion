@@ -16,6 +16,7 @@ Al igual que en otros apartados, el objetivo principal es que tengáis una ampl�
 - [El sistema de archivos](#el-sistema-de-archivos)
 - [Ficheros de texto](#ficheros-de-texto)
 - [Ficheros binarios](#ficheros-binarios)
+- [Ficheros especiales](#ficheros-especiales)
 - [Ejercicios](#ejercicios)
 
 
@@ -443,7 +444,48 @@ Podemos mover el puntero mediante el método `void seek(long posicion)` y nos of
 
 A la hora de trabajar con este tipo de ficheros, lo común es utilizar registros de longitud fija que albergarán los diferentes campos con los que vamos a trabajar. En el apartado de ejercicios puedes ver un ejemplo de su uso.
 
+## Ficheros especiales
 
+En este apartado vamos a comentar cómo trabajar con algunos ficheros especiales, tales como los ficheros CSV y XML.
+
+### Ficheros CSV
+
+CSV es la abraviatura en inglés de valores separados por comas. Son un caso especial de ficheros de texto, donde cada valor va separado por un caracter separador que generalmente es la coma, de ahí su nopmbre. Por tanto, los trataremos como un fichero de texto normal y cada línea la dividiremos utilizando el separador. Es un formato bastante utilizado para exportar datos dada su sencillez.
+
+~~~java
+    ...
+    private static final String FICHERO_CSV = String.format("%s%s%s", "ficheros", File.separator, "personas.csv");
+	private static final String SEPARADOR = ",";
+    ...
+    try (BufferedReader entrada = new BufferedReader(new FileReader(FICHERO_CSV))){
+        String linea;
+        while ((linea = entrada.readLine()) != null) {
+            String[] campos = linea.split(SEPARADOR);
+            //Procesamos cada campo
+        }
+        System.out.println("Fichero CSV leído correctamente.");
+    } catch (FileNotFoundException e) {
+        System.out.printf("No se puede leer el fichero de entrada: %s.%n", FICHERO_CSV);
+    } catch (IOException e) {
+        System.out.println("Error inesperado de Entrada/Salida.");
+    }
+    ...
+~~~
+
+Para escribir este tipo de ficheros, formaremos cada línea a escribir concatenando cada uno de los campos separados por el separador.
+
+~~~java
+    try (BufferedWriter salida = new BufferedWriter(new FileWriter(FICHERO_CSV))){
+        for (Persona persona : personas) {
+            salida.write(String.format("%s%s%d%n", persona.getNombre(), SEPARADOR, persona.getEdad()));
+        }
+        System.out.println("Fichero CSV escrito satisfactoriamente.");
+    } catch (FileNotFoundException fnfe) {
+        System.out.printf("No se puede leer el fichero de salida: %s.%n", FICHERO_CSV);
+    } catch (IOException e) {
+        System.out.printf("No se ha podido escribir el fichero %s.%n", FICHERO_CSV);
+    }
+~~~
 ## Ejercicios
 
 ###### File
@@ -1913,3 +1955,143 @@ public class Amigo {
         }
       ~~~
       [Acceder a la posible solución para el programa **Agenda de amigos**](https://github.com/JRJimenezReyes/Ficheros/tree/master/src/main/java/org/iesalandalus/programacion/ficheros/aleatorio)
+
+###### Ficheros CSV
+
+- **Convertir CSV en fichero de objetos**
+
+  Escribir un programa en java que lea un fichero CSV con datos sobre una persona y los escriba como un fichero de objetos.
+    - Posible solución
+
+      ~~~java
+        package org.iesalandalus.programacion.csv;
+
+        import java.io.BufferedReader;
+        import java.io.File;
+        import java.io.FileNotFoundException;
+        import java.io.FileOutputStream;
+        import java.io.FileReader;
+        import java.io.IOException;
+        import java.io.ObjectOutputStream;
+        import java.util.ArrayList;
+        import java.util.List;
+
+        import org.iesalandalus.programacion.ficheros.secuencial.bytes.objetos.Persona;
+
+        public class ConvertirCSVAFicheroObjetos {
+            
+            private static final String FICHERO_OBJETOS = String.format("%s%s%s", "ficheros", File.separator, "personas.dat");
+            private static final String FICHERO_CSV = String.format("%s%s%s", "ficheros", File.separator, "personas.csv");
+            
+            private static final String SEPARADOR = ",";
+            
+            public static void main(String[] args) {
+                List<Persona> personas = leerCSV();
+                escribirFicheroObjetos(personas);
+            }
+            
+            private static List<Persona> leerCSV() {
+                List<Persona> personas = new ArrayList<>();
+                try (BufferedReader entrada = new BufferedReader(new FileReader(FICHERO_CSV))){
+                    String linea;
+                    while ((linea = entrada.readLine()) != null) {
+                        String[] campos = linea.split(SEPARADOR);
+                        personas.add(new Persona(campos[0], Integer.parseInt(campos[1])));
+                    }
+                    System.out.println("Fichero CSV leído correctamente.");
+                } catch (FileNotFoundException e) {
+                    System.out.printf("No se puede leer el fichero de entrada: %s.%n", FICHERO_CSV);
+                } catch (IOException e) {
+                    System.out.println("Error inesperado de Entrada/Salida.");
+                }
+                return personas;
+            }
+            
+            private static void escribirFicheroObjetos(List<Persona> personas) {
+                try (ObjectOutputStream salida = new ObjectOutputStream(new FileOutputStream(FICHERO_OBJETOS))){
+                    for (Persona persona : personas) {
+                        salida.writeObject(persona);
+                    }
+                    System.out.println("Fichero de objetos escrito correctamente.");
+                } catch (FileNotFoundException e) {
+                    System.out.printf("No existe el directorio de destino o no tengo permiso de escritura: %s.%n", FICHERO_OBJETOS);
+                } catch (IOException e) {
+                    System.out.println("Error inesperado de Entrada/Salida.");
+                }
+            }
+        }
+      ~~~
+
+    [Descargar posible solución para el programa **ConvertirCSVAFicheroObjetos**](ejercicios/csv/ConvertirCSVAFicheroObjetos.java)
+
+- **Convertir fichero de objetos en CSV**
+
+  Escribir un programa en java que lea un fichero de objetos con datos sobre una persona y los escriba como un fichero CSV.
+    - Posible solución
+
+      ~~~java
+        package org.iesalandalus.programacion.csv;
+
+        import java.io.BufferedWriter;
+        import java.io.EOFException;
+        import java.io.File;
+        import java.io.FileInputStream;
+        import java.io.FileNotFoundException;
+        import java.io.FileWriter;
+        import java.io.IOException;
+        import java.io.ObjectInputStream;
+        import java.util.ArrayList;
+        import java.util.List;
+
+        import org.iesalandalus.programacion.ficheros.secuencial.bytes.objetos.Persona;
+
+        public class ConvertirFicheroObjetosACSV {
+            
+            private static final String FICHERO_OBJETOS = String.format("%s%s%s", "ficheros", File.separator, "personas.dat");
+            private static final String FICHERO_CSV = String.format("%s%s%s", "ficheros",  File.separator, "personas.csv");
+            
+            private static final String SEPARADOR = ",";
+
+            public static void main(String[] args) {
+                List<Persona> personas = leerFicheroObjetos();
+                escribirFicheroCSV(personas);
+            }
+            
+            private static List<Persona> leerFicheroObjetos() {
+                List<Persona> personas = new ArrayList<>();
+                try (ObjectInputStream entrada = new ObjectInputStream(new FileInputStream(FICHERO_OBJETOS))){
+                    Persona persona;
+                    while ((persona = (Persona) entrada.readObject()) != null) {
+                        personas.add(persona);
+                    }
+                } catch (FileNotFoundException fnfe) {
+                    System.out.printf("No se puede leer el fichero de entrada: %s.%n", FICHERO_OBJETOS);
+                } catch (ClassNotFoundException cnfee) {
+                    System.out.println("No puedo encontrar la clase que tengo que leer.");
+                } catch (EOFException eo) {
+                    System.out.println("Fichero de objetos leído satisfactoriamente.");
+                } catch (IOException e) {
+                    System.out.println("Error inesperado de Entrada/Salida.");
+                }
+                return personas;
+            }
+            
+            private static void escribirFicheroCSV(List<Persona> personas) {
+                try (BufferedWriter salida = new BufferedWriter(new FileWriter(FICHERO_CSV))){
+                    for (Persona persona : personas) {
+                        salida.write(String.format("%s%s%d%n", persona.getNombre(), SEPARADOR, persona.getEdad()));
+                    }
+                    System.out.println("Fichero CSV escrito satisfactoriamente.");
+                } catch (FileNotFoundException fnfe) {
+                    System.out.printf("No se puede leer el fichero de salida: %s.%n", FICHERO_CSV);
+                } catch (IOException e) {
+                    System.out.printf("No se ha podido escribir el fichero %s.%n", FICHERO_CSV);
+                }
+            }
+
+        }
+      ~~~
+      
+    [Descargar posible solución para el programa **ConvertirFicheroObjetosACSV**](ejercicios/csv/ConvertirFicheroObjetosACSV.java)
+
+

@@ -81,20 +81,20 @@ El lenguaje utilizado por PSeInt dispone de un conjunto básico de operadores qu
 
 Operador|Significado|Ejemplo
 ------------|--------------|------------
-`>` | Mayor que|3>2
-`<`| Menor que |'Hola'<'hola'
-`=`| Igual que|4=3
-`<=`| Menor o igual que| 2<=2
-`>=`| Mayor o igual que|  4>=5
-`<>`| Distinto que| 7<>8
+`>` | Mayor que|3 > 2
+`<`| Menor que |5 < 10
+`=`| Igual que|4 = 3
+`<=`| Menor o igual que| 2 <= 2
+`>=`| Mayor o igual que|  4 >= 5
+`<>`| Distinto que| 7 <> 8
 
 **Operadores Lógicos**
 
 Operador|Significado|Ejemplo
 ------------|--------------|------------
-`&` ó `Y`| Conjunción (y) |(8>5) & (5=3) //falso
-`|` ó `O` | Disyunción (o)| (8>5 \| 5=3) //verdadero
-`~` ó `NO`| Negación (no)| 	  ~(8>5) //falso
+`&` ó `Y`| Conjunción (y) |(8 > 5) & (5 = 3) //falso
+`|` ó `O` | Disyunción (o)| (8 > 5 \| 5 = 3) //verdadero
+`~` ó `NO`| Negación (no)| 	  ~(8 > 5) //falso
 
 **Operadores Algebraicos**
 
@@ -563,11 +563,11 @@ Para que todos y todas utilicemos la misma sintaxis del lenguaje utilizado por P
     	Leer nota
 
     	//Procesamiento
-    	Si (nota >= 5) Entonces
-    		calificacion = "aprobado"
-    	SiNo
-    		calificacion = "suspenso"
-    	FinSi
+    	Si (nota>=5) Entonces
+			calificacion <- 'aprobado'
+		SiNo
+			calificacion <- 'suspenso'
+		FinSi
 
     	//Escritura
     	Escribir "Estás " calificacion

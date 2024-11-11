@@ -1085,6 +1085,20 @@ Las aserciones son sentencias que comprueban si se cumple una cierta condición 
 
 Se suelen utilizar para comprobar valores de variables cuando estamos desarrollando. Cuando ejecutamos código que contiene aserciones debemos ejecutar la máquina virtual con la opción `-enableassertions` o `-ea`.
 
+El siguiente código asume que `personaje` es distinto de `null` y en caso contrario lanza `AssetionError` con el mensaje que le indicamos.
+
+~~~java
+	...
+	assert (personaje != null) : "El personaje debería ser distinto de null";
+	...
+~~~
+
+Si `personaje` fuese `null` y ejecutamos el código con las aserciones habilitados, nos mostraría la siguiente salida:
+~~~java
+Exception in thread "main" java.lang.AssertionError: El personaje debería ser distinto de null
+	at org.iesalandalus.programacion.poo.videojuego.Prueba.main(Main.java:83)
+~~~
+
 ## Registros
 
 En java los registros (`record`) son un tipo especial de declaración de una clase que nos permite evitar el código repetitivo cuando queremos implementar clases de objetos inmutables. Su intención es utilizarlos en clases de dominio cuyo cometido es simplemente contener datos y transferirlos entre diferentes módulos (vease el patrón DTO). Los registros están disponibles a partir de **java 14**.

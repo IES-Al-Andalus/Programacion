@@ -1096,7 +1096,7 @@ El siguiente código asume que `personaje` es distinto de `null` y en caso contr
 Si `personaje` fuese `null` y ejecutamos el código con las aserciones habilitados, nos mostraría la siguiente salida:
 ~~~java
 Exception in thread "main" java.lang.AssertionError: El personaje debería ser distinto de null
-	at org.iesalandalus.programacion.poo.videojuego.Prueba.main(Main.java:83)
+	at org.iesalandalus.programacion.poo.videojuego.Prueba.main(Prueba.java:83)
 ~~~
 
 ## Registros

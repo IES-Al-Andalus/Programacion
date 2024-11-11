@@ -1364,7 +1364,6 @@ public record Posicion(int x, int y) {
 ~~~java
 package org.iesalandalus.programacion.poo.videojuego;
 
-import javax.naming.OperationNotSupportedException;
 import java.util.Objects;
 
 public class Personaje {

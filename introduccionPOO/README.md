@@ -857,7 +857,7 @@ Este tipo de comprobación es muy común ya que siempre debemos evitar trabajar 
 
 Lo bueno que tiene este método es que además nos devuelve el objeto si éste no es `null`, por lo que en los métodos `set`, por ejemplo, nos viene muy bien.
 
-> Ahora que hemos visto el tratamiento de excepciones, queremos que nuestra clase Personaje pueda informar si se ha pasado algún valor incorrecto a los métodos. Además, como os comenté también utilizaré métodos modificadores privados que se encargarán de realizar la comprobación y que se llamarán en el constructor. Además queremos que el método `mover` lance una excepción comprobada `OperationNotSupportedException` cuando estemos intentando mover la posición de nuestro personaje y éste sobrepase los límites establecidos.
+> Ahora que hemos visto el tratamiento de excepciones, queremos que nuestra clase Personaje pueda informar si se ha pasado algún valor incorrecto a los métodos. Además, como os comenté también utilizaré métodos modificadores privados que se encargarán de realizar la comprobación y que se llamarán en el constructor. Además queremos que el método `mover` lance una excepción comprobada `OperationNotSupportedException` (escojo esta excepción por motivos didácticos, ya que lo correcto sería lanzar una excepción propia) cuando estemos intentando mover la posición de nuestro personaje y éste sobrepase los límites establecidos.
 > <div align="center">
 > <img alt="Diagramas de clases del Personaje" src="imagenes/personaje5.png"/>
 > </div>
@@ -1063,6 +1063,28 @@ public class Personaje {
 }
 ~~~
 
+##### Excepciones propias
+
+En java nosotros podemos declarar nuestras propias excepciones. Para ello simplemente debemos heredar de `Execption` si queremos declarar una excepción comprobada o de `RunTimeException` si no queremos que sea comprobada. Generalmente, crearemos nuestras propias excepciones comprobadas. Además de heredar, es conveniente sobreescribir el constructor al que le pasamos el mensaje con el motivo de la excepción. El IDE permite generarla de una forma cómoda y sencilla, aunque la crea como no comprobada. Veamos un ejemplo, para nuestro videojuego:
+
+###### VideojuegoExcepcion.java
+~~~java
+public class VideojuegoExcepcion extends Exception {
+    public VideojuegoExcepcion(String message) {
+        super(message);
+    }
+}
+~~~
+
+La forma en que lanzamos esta excepción sería igual que con cualquier otra: `throw new VideojuegoExcepcion("Se te ha acabado la energía.");`.
+
+Repasa el código anterior y sustituye `OperationNotSupportedException` por `VideojuegoExcepcion`.
+
+##### Aserciones
+Las aserciones son sentencias que comprueban si se cumple una cierta condición y en caso contrario lanza una excepción del tipo `AssetionError`.
+
+Se suelen utilizar para comprobar valores de variables cuando estamos desarrollando. Cuando ejecutamos código que contiene aserciones debemos ejecutar la máquina virtual con la opción `-enableassertions` o `-ea`.
+
 ## Registros
 
 En java los registros (`record`) son un tipo especial de declaración de una clase que nos permite evitar el código repetitivo cuando queremos implementar clases de objetos inmutables. Su intención es utilizarlos en clases de dominio cuyo cometido es simplemente contener datos y transferirlos entre diferentes módulos (vease el patrón DTO). Los registros están disponibles a partir de **java 14**.
@@ -1260,6 +1282,14 @@ Diciembre tiene 31 días.
 > <img alt="Diagramas de clases del Personaje" src="imagenes/personaje6.png"/>
 > </div>
 
+###### VideojuegoExcepcion.java
+~~~java
+public class VideojuegoExcepcion extends Exception {
+    public VideojuegoExcepcion(String message) {
+        super(message);
+    }
+}
+~~~
 ###### Direccion.java
 ~~~java
 package org.iesalandalus.programacion.poo.videojuego;
@@ -1427,15 +1457,15 @@ public class Personaje {
 		setEnergia(energia + posibleGanancia);
 	}
 
-	public void mover(int x, int y) throws OperationNotSupportedException{
+	public void mover(int x, int y) throws VideojuegoExcepcion{
 		try {
 			posicion = new Posicion(posicion.x() + x, posicion.y() + y);
 		} catch (IllegalArgumentException e) {
-			throw new OperationNotSupportedException("Movimiento no válido: " + e.getMessage());
+			throw new VideojuegoExcepcion("Movimiento no válido: " + e.getMessage());
 		}
 	}
 	
-	public void mover(Direccion direccion, int pasos) throws OperationNotSupportedException {
+	public void mover(Direccion direccion, int pasos) throws VideojuegoExcepcion {
 		Objects.requireNonNull(direccion, "La dirección no puede ser nula.");
 		if (pasos <= 0) {
 			throw new IllegalArgumentException("El número de pasos debe ser mayor que cero.");
@@ -1451,7 +1481,7 @@ public class Personaje {
 		try {
 			posicion = new Posicion(nuevaX, nuevaY);
 		} catch (IllegalArgumentException e) {
-			throw new OperationNotSupportedException("Movimiento no válido: " + e.getMessage());
+			throw new VideojuegoExcepcion("Movimiento no válido: " + e.getMessage());
 		}
 	}
 

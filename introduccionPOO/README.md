@@ -1065,7 +1065,7 @@ public class Personaje {
 
 ##### Excepciones propias
 
-En java nosotros podemos declarar nuestras propias excepciones. Para ello simplemente debemos heredar de `Execption` si queremos declarar una excepción comprobada o de `RunTimeException` si no queremos que sea comprobada. Generalmente, crearemos nuestras propias excepciones comprobadas. Además de heredar, es conveniente sobreescribir el constructor al que le pasamos el mensaje con el motivo de la excepción. El IDE permite generarla de una forma cómoda y sencilla, aunque la crea como no comprobada. Veamos un ejemplo, para nuestro videojuego:
+En java nosotros podemos declarar nuestras propias excepciones. Para ello simplemente debemos heredar de `Exception` si queremos declarar una excepción comprobada o de `RunTimeException` si no queremos que sea comprobada. Generalmente, crearemos nuestras propias excepciones comprobadas. Además de heredar, es conveniente sobreescribir el constructor al que le pasamos el mensaje con el motivo de la excepción. El IDE permite generarla de una forma cómoda y sencilla, aunque la crea como no comprobada. Veamos un ejemplo, para nuestro videojuego:
 
 ###### VideojuegoExcepcion.java
 ~~~java
@@ -1956,7 +1956,7 @@ public class Personaje {
 
 - **PenDrive**
 
-  Se trata de simular el funcionamiento de un pendrive en el que podemos escribir, se puede leer (simplemente devuelve la cantidad de información leída) y se puede borrar una determinada cantidad de información. Se deben tratar las posibles excepciones: si la cantidad de información pasada a los métodos es menor que cero se lanzará `IllegalArgumentException`, pero si se sobrepasa la capacidad, se quiere leer más información de la ocupada o se quiere borrar más información de la ocupada, la excepción a lanzar será `OperationNotSupportedException`. También debe tener métodos para consultar si el pendrive está vació y si está lleno. Dos pendrives los consideramos iguales si son del mismo fabricante y tienen la misma capacidad. El diagrama de clases es el que te muestro a continuación. Por supuesto debes hacer pruebas creando varios pendrives utilizando los diferentes constructores y realizar diferentes operaciones sobre los mismos.
+  Se trata de simular el funcionamiento de un pendrive en el que podemos escribir, se puede leer (simplemente devuelve la cantidad de información leída) y se puede borrar una determinada cantidad de información. Se deben tratar las posibles excepciones: si la cantidad de información pasada a los métodos es menor que cero se lanzará `IllegalArgumentException`, pero si se sobrepasa la capacidad, se quiere leer más información de la ocupada o se quiere borrar más información de la ocupada, la excepción propia comprobada a lanzar será `PenDriveExcepcion` . También debe tener métodos para consultar si el pendrive está vació y si está lleno. Dos pendrives los consideramos iguales si son del mismo fabricante y tienen la misma capacidad. El diagrama de clases es el que te muestro a continuación. Por supuesto debes hacer pruebas creando varios pendrives utilizando los diferentes constructores y realizar diferentes operaciones sobre los mismos.
 
   <div align="center">
   <img alt="Diagrama de clase de la clase PenDrive" src="imagenes/pendrive.png"/>
@@ -1966,11 +1966,21 @@ public class Personaje {
 
     Una posible solución podría ser la siguiente:
 
+	###### PenDriveExcepcion.java
+	~~~java
+	package org.iesalandalus.programacion.poo.pendrive.modelo;
+
+	public class PenDriveExcepcion extends Exception {
+		public PenDriveExcepcion(String message) {
+			super(message);
+		}
+	}
+	~~~
+
 	###### PenDrive.java
 	~~~java
-	package org.iesalandalus.programacion.poo.pendrive;
+	package org.iesalandalus.programacion.poo.pendrive.modelo;
 
-	import javax.naming.OperationNotSupportedException;
 	import java.util.Objects;
 
 	public class PenDrive {
@@ -2028,32 +2038,32 @@ public class Personaje {
 			return (ocupado == capacidad);
 		}
 
-		public void escribir(int cantidad) throws OperationNotSupportedException {
+		public void escribir(int cantidad) throws PenDriveExcepcion {
 			if (cantidad <= 0) {
 				throw new IllegalArgumentException("Debes escribir algo.");
 			}
 			if (cantidad > getLibre()) {
-				throw new OperationNotSupportedException("No se puede escribir más información del espacio restante.");
+				throw new PenDriveExcepcion("No se puede escribir más información del espacio restante.");
 			}
 			ocupado += cantidad;
 		}
 
-		public int leer(int cantidad) throws OperationNotSupportedException {
+		public int leer(int cantidad) throws PenDriveExcepcion {
 			if (cantidad <= 0) {
 				throw new IllegalArgumentException("Debes leer algo.");
 			}
 			if (cantidad > ocupado) {
-				throw new OperationNotSupportedException("No puedes leer más información de la que hay ocupada.");
+				throw new PenDriveExcepcion("No puedes leer más información de la que hay ocupada.");
 			}
 			return cantidad;
 		}
 
-		public void borrar(int cantidad) throws OperationNotSupportedException {
+		public void borrar(int cantidad) throws PenDriveExcepcion {
 			if (cantidad <= 0) {
 				throw new IllegalArgumentException("Debes borrar algo.");
 			}
 			if (cantidad > ocupado) {
-				throw new OperationNotSupportedException("No puedes borrar más información de la que hay ocupada.");
+				throw new PenDriveExcepcion("No puedes borrar más información de la que hay ocupada.");
 			}
 			ocupado -= cantidad;
 		}
@@ -2077,57 +2087,70 @@ public class Personaje {
 	}
 	~~~
 
+	###### Consola.java
+	~~~java
+	package org.iesalandalus.programacion.poo.pendrive.vista;
+
+	import org.iesalandalus.programacion.utilidades.Entrada;
+
+	public class Consola {
+
+		private Consola() {}
+
+		public static int leerInfromacionBorrar() {
+			System.out.print("Dima la cantidad de información que quieres borrar: ");
+			return Entrada.entero();
+		}
+
+		public static int leerInformacionEscribir() {
+			System.out.print("Dima la cantidad de información que quieres escribir: ");
+			return Entrada.entero();
+		}
+	}
+	~~~
+
 	###### Main.java
 	~~~java
 	package org.iesalandalus.programacion.poo.pendrive;
 
-	import org.iesalandalus.programacion.utilidades.Entrada;
-	import javax.naming.OperationNotSupportedException;
+	import org.iesalandalus.programacion.poo.pendrive.modelo.PenDrive;
+	import org.iesalandalus.programacion.poo.pendrive.modelo.PenDriveExcepcion;
+	import org.iesalandalus.programacion.poo.pendrive.vista.Consola;
 
 	public class Main {
 		public static void main(String[] args) {
 			System.out.println("******** Pen Drive 1 ********");
 			PenDrive penDrive1 = new PenDrive();
 			System.out.println("Pen Drive 1 creado: " + penDrive1);
-			try {
-				System.out.print("Dima la cantidad de información que quieres escribir: ");
-				penDrive1.escribir(Entrada.entero());
-				System.out.println("Escritura correcta: " + penDrive1);
-			} catch (IllegalArgumentException | OperationNotSupportedException e) {
-				System.out.println("Error al escribir: " + e.getMessage());
-			}
-			try {
-				System.out.print("Dima la cantidad de información que quieres borrar: ");
-				penDrive1.borrar(Entrada.entero());
-				System.out.println("Borrado correcto: " + penDrive1);
-			} catch (IllegalArgumentException | OperationNotSupportedException e) {
-				System.out.println("Error al borrar: " + e.getMessage());
-			}
+			utilizaPenDrive(penDrive1);
 
 			System.out.println("******** Pen Drive 2 ********");
 			PenDrive penDrive2 = new PenDrive("Kingston", 128);
 			System.out.println("Pen Drive 2 creado: " + penDrive2);
+			utilizaPenDrive(penDrive2);
+		}
+
+		private static void utilizaPenDrive(PenDrive penDrive) {
 			try {
-				System.out.print("Dima la cantidad de información que quieres escribir: ");
-				penDrive2.escribir(Entrada.entero());
-				System.out.println("Escritura correcta: " + penDrive2);
-			} catch (IllegalArgumentException | OperationNotSupportedException e) {
+				penDrive.escribir(Consola.leerInformacionEscribir());
+				System.out.println("Escritura correcta: " + penDrive);
+			} catch (IllegalArgumentException | PenDriveExcepcion e) {
 				System.out.println("Error al escribir: " + e.getMessage());
 			}
 			try {
-				System.out.print("Dima la cantidad de información que quieres borrar: ");
-				penDrive2.borrar(Entrada.entero());
-				System.out.println("Borrado correcto: " + penDrive2);
-			} catch (IllegalArgumentException | OperationNotSupportedException e) {
+				penDrive.borrar(Consola.leerInfromacionBorrar());
+				System.out.println("Borrado correcto: " + penDrive);
+			} catch (IllegalArgumentException | PenDriveExcepcion e) {
 				System.out.println("Error al borrar: " + e.getMessage());
 			}
 		}
+
 	}
 	~~~
 
 - **Vehiculo**
 
-  Se trata de simular el funcionamiento de un vehículo que consta de su cuentakilómetros y su depósito de combustible. El cuentakilómetros sólo puede avanzar en un kilómetro y puede dovolver la cuenta de los kilómetros e inicialmente dicha cuenta siempre es 0. El depósito tendrá una capacidad dada (que por defecto será 100) medida en litros, un contenido que es la cantidad de combustible que contiene actualmente. Un depósito se puede crear con una capacidad por defecto o con una capacidad dada y es posible llenar una cantidad entera de litros, es posible gastar una cantidad de litros expresada como un `double` y se puede consultar si está vacío y si está lleno. Por último tendremos un vehículo que posee un cuentakilómetros, un depósito, es de una determinada marca y modelo y tiene un consumo expresado como litros a los 100 km (que por defecto será 10). El vehículo puede avanzar una cantidad de kilómetros y repostar un determinado número de litros de combustible. La operación de avanzar debe ir avanzando el cuentakilómetros y gastando el combustible adecuado y avanzará mientras tenga combustible. Podemos crear un vehículo expresando su marca y modelo, o expresando marca, modelo, capacidad del depósito y consumo. También queremos poder representar un vehículo mediante su marca, modelo, consumo, kilómetros de su cuentakilómetros y combustible restante de su depósito. Se deben tratar las posibles excepciones analizando cuándo se lanzará `NullPointerException`, `IllegalArgumentException` o `OperationNotSupportedException`. El diagrama de clases es el que te muestro a continuación. Por supuesto debes hacer pruebas creando varios vehículos utilizando los diferentes constructores y realizar diferentes operaciones sobre los mismos.
+  Se trata de simular el funcionamiento de un vehículo que consta de su cuenta kilómetros y su depósito de combustible. El cuentakilómetros sólo puede avanzar en un kilómetro y puede dovolver la cuenta de los kilómetros e inicialmente dicha cuenta siempre es 0. El depósito tendrá una capacidad dada (que por defecto será 100) medida en litros, un contenido que es la cantidad de combustible que contiene actualmente. Un depósito se puede crear con una capacidad por defecto o con una capacidad dada y es posible llenar una cantidad entera de litros, es posible gastar una cantidad de litros expresada como un `double` y se puede consultar si está vacío y si está lleno. Por último tendremos un vehículo que posee un cuentakilómetros, un depósito, es de una determinada marca y modelo y tiene un consumo expresado como litros a los 100 km (que por defecto será 10). El vehículo puede avanzar una cantidad de kilómetros y repostar un determinado número de litros de combustible. La operación de avanzar debe ir avanzando el cuentakilómetros y gastando el combustible adecuado y avanzará mientras tenga combustible. Podemos crear un vehículo expresando su marca y modelo, o expresando marca, modelo, capacidad del depósito y consumo. También queremos poder representar un vehículo mediante su marca, modelo, consumo, kilómetros de su cuentakilómetros y combustible restante de su depósito. Se deben tratar las posibles excepciones analizando cuándo se lanzará `NullPointerException`, `IllegalArgumentException` o `VehiculoExcepcion`. El diagrama de clases es el que te muestro a continuación. Por supuesto debes hacer pruebas creando varios vehículos utilizando los diferentes constructores y realizar diferentes operaciones sobre los mismos.
 
   <div align="center">
   <img alt="Diagrama de clase de la clase PenDrive" src="imagenes/vehiculo.png"/>
@@ -2137,9 +2160,20 @@ public class Personaje {
 
     Una posible solución podría ser la siguiente:
 
+	###### VehiculoExcepcion.java
+	~~~java
+	package org.iesalandalus.programacion.poo.vehiculo.modelo;
+
+	public class VehiculoExcepcion extends Exception {
+		public VehiculoExcepcion(String message) {
+			super(message);
+		}
+	}
+	~~~
+
 	###### Cuentakilometros.java
 	~~~java
-	package org.iesalandalus.programacion.poo.vehiculo;
+	package org.iesalandalus.programacion.poo.vehiculo.modelo;
 
 	public class Cuentakilometros {
 
@@ -2162,9 +2196,7 @@ public class Personaje {
 
 	###### Deposito.java
 	~~~java
-	package org.iesalandalus.programacion.poo.vehiculo;
-
-	import javax.naming.OperationNotSupportedException;
+	package org.iesalandalus.programacion.poo.vehiculo.modelo;
 
 	public class Deposito {
 
@@ -2201,28 +2233,28 @@ public class Personaje {
 			return (contenido == capacidad);
 		}
 
-		public void llenar(int litros) throws OperationNotSupportedException {
+		public void llenar(int litros) throws VehiculoExcepcion {
 			if (litros <= 0) {
 				throw new IllegalArgumentException("Debes llenar con alguna cantidad.");
 			}
 			if (estaLleno()) {
-				throw new OperationNotSupportedException("No se puede repostar ya que el depósito está lleno.");
+				throw new VehiculoExcepcion("No se puede repostar ya que el depósito está lleno.");
 			}
 			if (contenido + litros > capacidad) {
-				throw new OperationNotSupportedException("Si se añade esa cantidad se excede la capacidad del depósito.");
+				throw new VehiculoExcepcion("Si se añade esa cantidad se excede la capacidad del depósito.");
 			}
 			contenido += litros;
 		}
 
-		public void gastar(double litros) throws OperationNotSupportedException {
+		public void gastar(double litros) throws VehiculoExcepcion {
 			if (litros <= 0) {
 				throw new IllegalArgumentException("Debes gastar alguna cantidad.");
 			}
 			if (estaVacio()) {
-				throw new OperationNotSupportedException("No se puede gastar combustible ya que el depósito está vacío.");
+				throw new VehiculoExcepcion("No se puede gastar combustible ya que el depósito está vacío.");
 			}
 			if (contenido - litros < 0) {
-				throw new OperationNotSupportedException("Si se gasta esa cantidad el depósito se queda vacío.");
+				throw new VehiculoExcepcion("Si se gasta esa cantidad el depósito se queda vacío.");
 			}
 			contenido -= litros;
 		}
@@ -2231,9 +2263,8 @@ public class Personaje {
 
 	###### Vehiculo.java
 	~~~java
-	package org.iesalandalus.programacion.poo.vehiculo;
+	package org.iesalandalus.programacion.poo.vehiculo.modelo;
 
-	import javax.naming.OperationNotSupportedException;
 	import java.util.Objects;
 
 	public class Vehiculo {
@@ -2281,15 +2312,15 @@ public class Personaje {
 			return deposito.getContenido();
 		}
 
-		private void avanzar() throws OperationNotSupportedException {
+		private void avanzar() throws VehiculoExcepcion {
 			try {
 				deposito.gastar(consumo / 100d );
 				cuentakilometros.avanzar();
-			} catch (IllegalArgumentException | OperationNotSupportedException e) {
-				throw new OperationNotSupportedException("Error al avanzar: " + e.getMessage());
+			} catch (IllegalArgumentException | VehiculoExcepcion e) {
+				throw new VehiculoExcepcion("Error al avanzar: " + e.getMessage());
 			}
 		}
-		public void avanzar(int kilometros) throws OperationNotSupportedException {
+		public void avanzar(int kilometros) throws VehiculoExcepcion {
 			if (kilometros <= 0) {
 				throw new IllegalArgumentException("Se debe avanzar al menos un kilómetro.");
 			}
@@ -2298,11 +2329,11 @@ public class Personaje {
 			}
 		}
 
-		public void repostar(int litros) throws OperationNotSupportedException {
+		public void repostar(int litros) throws VehiculoExcepcion {
 			try {
 				deposito.llenar(litros);
-			} catch (IllegalArgumentException | OperationNotSupportedException e) {
-				throw new OperationNotSupportedException("Error al repostar: " + e.getMessage());
+			} catch (IllegalArgumentException | VehiculoExcepcion e) {
+				throw new VehiculoExcepcion("Error al repostar: " + e.getMessage());
 			}
 		}
 
@@ -2313,43 +2344,97 @@ public class Personaje {
 	}
 	~~~
 
+	###### Consola.java
+	~~~java
+	package org.iesalandalus.programacion.poo.vehiculo.vista;
+
+	import org.iesalandalus.programacion.utilidades.Entrada;
+
+	public class Consola {
+
+		private Consola() {}
+
+		public static String leerMarca() {
+			System.out.println("Dime la marca del vehículo: ");
+			return Entrada.cadena();
+		}
+
+		public static String leerModelo() {
+			System.out.println("Dime el modelo del vehículo: ");
+			return Entrada.cadena();
+		}
+
+		public static double leerConsumo() {
+			double consumo;
+			do {
+				System.out.print("Dime el consumo del segundo vehículo: ");
+				consumo = Entrada.realDoble();
+			} while (consumo <= 0);
+			return consumo;
+		}
+
+		public static int leerCapacidad() {
+			int capacidad;
+			do {
+				System.out.print("Dime la capacidad del segundo vehículo: ");
+				capacidad = Entrada.entero();
+			} while (capacidad <= 0);
+			return capacidad;
+		}
+
+		public static int leerKilometrosAvanzar() {
+			int kilometros;
+			do {
+				System.out.print("Dime los kilómetros a avanzar: ");
+				kilometros = Entrada.entero();
+			} while (kilometros <= 0);
+			return kilometros;
+		}
+
+		public static int leerLitrosRepostar() {
+			int litros;
+			do {
+				System.out.print("Dime los litros a repostar: ");
+				litros = Entrada.entero();
+			} while (litros <= 0);
+			return litros;
+		}
+	}
+	~~~
+
 	###### Main.java
 	~~~java
 	package org.iesalandalus.programacion.poo.vehiculo;
 
-	import org.iesalandalus.programacion.utilidades.Entrada;
-
-	import javax.naming.OperationNotSupportedException;
+	import org.iesalandalus.programacion.poo.vehiculo.modelo.Vehiculo;
+	import org.iesalandalus.programacion.poo.vehiculo.modelo.VehiculoExcepcion;
+	import org.iesalandalus.programacion.poo.vehiculo.vista.Consola;
 
 	public class Main {
+
 		public static void main(String[] args) {
 			System.out.println("********* Vehículo 1 *********");
-			Vehiculo vehiculo1 = new Vehiculo("Seat", "Ibiza");
+			Vehiculo vehiculo1 = new Vehiculo(Consola.leerMarca(), Consola.leerModelo());
 			System.out.println(vehiculo1);
 			utilizarVehiculo(vehiculo1);
 			System.out.println("********* Vehículo 2 *********");
-			System.out.print("Dime la capacidad del segundo vehículo: ");
-			int capacidad = Entrada.entero();
-			System.out.print("Dime el consumo del segundo vehículo: ");
-			double consumo = Entrada.realDoble();
-			Vehiculo vehiculo2 = new Vehiculo("Renault", "Megane", capacidad, consumo);
+			Vehiculo vehiculo2 = new Vehiculo(Consola.leerMarca(), Consola.leerModelo(), Consola.leerCapacidad(), Consola.leerConsumo());
 			utilizarVehiculo(vehiculo2);
 		}
 
 		private static void utilizarVehiculo(Vehiculo vehiculo) {
 			try {
-				System.out.print("Dime los litros a repostar: ");
-				int litros = Entrada.entero();
+				int litros = Consola.leerLitrosRepostar();
 				vehiculo.repostar(litros);
 				System.out.println(vehiculo);
-				System.out.print("Dime los kilómetros a avanzar: ");
-				int kilometros = Entrada.entero();
+				int kilometros = Consola.leerKilometrosAvanzar();
 				vehiculo.avanzar(kilometros);
 				System.out.println(vehiculo);
-			} catch (OperationNotSupportedException e) {
-				System.out.println(e.getMessage());
+			} catch (VehiculoExcepcion e) {
+				System.out.println("ERROR: " + e.getMessage());
 				System.out.println(vehiculo);
 			}
 		}
+
 	}
 	~~~

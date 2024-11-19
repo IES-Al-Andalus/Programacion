@@ -960,11 +960,11 @@ public class Personaje {
 	private Posicion posicion;
 
 	public Personaje() {
-		numPersonajes++;
 		nombre = PREFIJO_NOMBRE + numPersonajes;
 		energia = ENERGIA_INICIAL;
 		color = COLOR_INICIAL;
 		posicion = new Posicion();
+		numPersonajes++;
 	}
 
 	public Personaje(String nombre) {
@@ -973,20 +973,20 @@ public class Personaje {
 	}
 
 	public Personaje(String nombre, int energia, String color, Posicion posicion) {
-		this();
 		setNombre(nombre);
 		setEnergia(energia);
 		setColor(color);
 		setPosicion(posicion);
+		numPersonajes++;
 	}
 
 	public Personaje(Personaje personaje) {
-		this();
 		Objects.requireNonNull(personaje, "No puedo copiar un personaje nulo.");
 		nombre = personaje.nombre;
 		energia = personaje.energia;
 		color = personaje.color;
 		posicion = new Posicion(personaje.posicion);
+		numPersonajes++;
 	}
 
 	public String getNombre() {
@@ -1396,11 +1396,11 @@ public class Personaje {
 	private Posicion posicion;
 
 	public Personaje() {
-		numPersonajes++;
-		nombre = PREFIJO_NOMBRE + numPersonajes;
+		nombre = PREFIJO_NOMBRE + ++numPersonajes;
 		energia = ENERGIA_INICIAL;
 		color = COLOR_INICIAL;
 		posicion = new Posicion();
+		numPersonajes++;
 	}
 
 	public Personaje(String nombre) {
@@ -1409,20 +1409,20 @@ public class Personaje {
 	}
 
 	public Personaje(String nombre, int energia, Color color, Posicion posicion) {
-		this();
 		setNombre(nombre);
 		setEnergia(energia);
 		setColor(color);
 		setPosicion(posicion);
+		numPersonajes++;
 	}
 
 	public Personaje(Personaje personaje) {
-		this();
 		Objects.requireNonNull(personaje, "No puedo copiar un personaje nulo.");
 		nombre = personaje.nombre;
 		energia = personaje.energia;
 		color = personaje.color;
 		posicion = personaje.posicion;
+		numPersonajes++;
 	}
 
 	public String getNombre() {

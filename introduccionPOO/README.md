@@ -1399,7 +1399,6 @@ public class Personaje {
 		energia = ENERGIA_INICIAL;
 		color = COLOR_INICIAL;
 		posicion = new Posicion();
-		numPersonajes++;
 	}
 
 	public Personaje(String nombre) {

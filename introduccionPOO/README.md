@@ -960,11 +960,10 @@ public class Personaje {
 	private Posicion posicion;
 
 	public Personaje() {
-		nombre = PREFIJO_NOMBRE + numPersonajes;
+		nombre = PREFIJO_NOMBRE + ++numPersonajes;
 		energia = ENERGIA_INICIAL;
 		color = COLOR_INICIAL;
 		posicion = new Posicion();
-		numPersonajes++;
 	}
 
 	public Personaje(String nombre) {

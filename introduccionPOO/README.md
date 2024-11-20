@@ -1987,18 +1987,16 @@ public class Personaje {
 		private static final int CAPACIDAD_MAXIMA = 1024;
 		private String fabricante;
 		private int capacidad;
-		private int ocupado;
+		private int ocupado = 0;
 		
 		public PenDrive() {
 			fabricante = FABRICANTE_DESCONOCIDO;
-			capacidad = 64;
-			ocupado = 0;
+			capacidad = CAPACIDAD_MINIMA;
 		}
 		
 		public PenDrive(String fabricante, int capacidad) {
 			setFabricante(fabricante);
 			setCapacidad(capacidad);
-			ocupado = 0;
 		}
 
 		public String getFabricante() {
@@ -2096,13 +2094,21 @@ public class Personaje {
 		private Consola() {}
 
 		public static int leerInfromacionBorrar() {
-			System.out.print("Dima la cantidad de información que quieres borrar: ");
-			return Entrada.entero();
+			int cantidad;
+			do {
+				System.out.print("Dima la cantidad de información que quieres borrar: ");
+				cantidad = Entrada.entero();
+			} while (cantidad <= 0);
+			return  cantidad;
 		}
 
 		public static int leerInformacionEscribir() {
-			System.out.print("Dima la cantidad de información que quieres escribir: ");
-			return Entrada.entero();
+			int cantidad;
+			do {
+				System.out.print("Dima la cantidad de información que quieres escribir: ");
+				cantidad = Entrada.entero();
+			} while (cantidad <= 0);
+			return cantidad;
 		}
 	}
 	~~~
@@ -2200,11 +2206,10 @@ public class Personaje {
 
 		public static final int CAPACIDAD_DEFECTO = 100;
 		private final int capacidad;
-		private double contenido;
+		private double contenido = 0;
 
 		public Deposito() {
 			capacidad = CAPACIDAD_DEFECTO;
-			contenido = 0;
 		}
 
 		public Deposito(int capacidad) {
@@ -2212,7 +2217,6 @@ public class Personaje {
 				throw new IllegalArgumentException("La capacidad debe ser mayor que cero.");
 			}
 			this.capacidad = capacidad;
-			contenido = 0;
 		}
 
 		public int getCapacidad() {

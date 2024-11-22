@@ -2274,14 +2274,13 @@ public class Personaje {
 		private final String marca;
 		private final String modelo;
 		private double consumo;
-		private final Cuentakilometros cuentakilometros;
+		private final Cuentakilometros cuentakilometros  = new Cuentakilometros();
 		private Deposito deposito;
 
 		public Vehiculo(String marca, String modelo) {
 			this.marca = Objects.requireNonNull(marca, "La marca no puede ser nula.");
 			this.modelo = Objects.requireNonNull(modelo, "El modelo no puede ser nulo.");
 			consumo = CONSUMO_DEFECTO;
-			cuentakilometros = new Cuentakilometros();
 			deposito = new Deposito();
 		}
 

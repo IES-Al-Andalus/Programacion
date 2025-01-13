@@ -956,7 +956,7 @@ Otra forma sería hacerlo con las funciones lambda de java 8:
 
 - **Media**
 
-	Escribir un programa en java que lea por teclado la cantidad de números a generar, que deberá ser al menos 3. Cree un array de dicho tamaño y los genere aleatoriamente entre 0 y 100. Debe calcular la media de los mismos como entero y contar la cantidad de números que hay por encima, por debajo y los que son iguales a la media. También debe anotar las posiciones en las que se encuentran los números iguales a la media. Para ello ve almacenando sus posiciones en un `StringBuffer` separados por comas y lo muestre solo en el caso de que haya números iguales. Si solo hay uno no debe mostrar la coma final.
+	Escribir un programa en java que lea por teclado la cantidad de números a generar, que deberá ser al menos 3. Cree un array de dicho tamaño y los genere aleatoriamente entre 0 y 100. Debe calcular la media de los mismos como entero y contar la cantidad de números que hay por encima, por debajo y los que son iguales a la media. También debe anotar las posiciones en las que se encuentran los números iguales a la media. Para ello ve almacenando sus posiciones en un `StringBuilder` separados por comas y lo muestre solo en el caso de que haya números iguales. Si solo hay uno no debe mostrar la coma final.
 
 	- Posible solución
 		~~~java

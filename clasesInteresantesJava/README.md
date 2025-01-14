@@ -1486,7 +1486,7 @@ Otra forma sería hacerlo con las funciones lambda de java 8:
 		}
 		~~~
 
-- **Ejemplo básico de fechas**
+- **Ejemplo básico de tiempos**
 
 	Crea un programa que imprima la hora actual en diferentes formatos (corto, largo, de texto, ...), que cree un objeto tiempo con la hora del mediodía mediante el método `of` y la muestre por pantalla y que cree un objeto con la hora de la medianoche mediante una cadena utilizando el método `parse` y posteriormente la muestre por pantalla.
 

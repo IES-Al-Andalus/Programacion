@@ -552,7 +552,7 @@ La API para trabajar con ficheros XML está dividida en los siguientes paquetes:
 - `javax.xml.transformer`: agrupa las funcionalidades para transformar el árbol DOM en un fichero. Algunas de las clases y/o interfaces que nos ofrece son: `Transform`, `TransformFactory`, `DOMSource` y `StreamResult`.
 - `org.w3c.dom`: agrupa las funcionalidades para trabajar con el árbol DOM. Algunas de las clases y/o interfaces que nos ofrece son: `Document`, `Element`, `Node` y `NodeList`.
 
-Para leer un fichero XML debemos crear un objeto de la clase `DocumentBuilder`, utilizando su fábrica y así obtener el árbol DOM. Partiendo de un árbol DOM ya creado, podemos escribirlo a un fichero utilizando un objeto de la clase `Tranform`, utilizando su fábrica, para posteriormente tranformar el árbol en un fichero. Dado que estas operaciones son muy comunes, te las he agrupado en una clase de utilidades que provee los métodos para leer un fichero XML y devolver su árbol DOM y viceversa.
+Para leer un fichero XML debemos crear un objeto de la clase `DocumentBuilder`, utilizando su fábrica y así obtener el árbol DOM. Partiendo de un árbol DOM ya creado, podemos escribirlo a un fichero utilizando un objeto de la clase `Transform`, utilizando su fábrica, para posteriormente transformar el árbol en un fichero. Dado que estas operaciones son muy comunes, te las he agrupado en una clase de utilidades que provee los métodos para leer un fichero XML y devolver su árbol DOM y viceversa.
 
 `UtilidadesXml.java`
 ~~~java

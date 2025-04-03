@@ -126,14 +126,14 @@ Hemos visto que con el método `list` podemos listar todos los archivos de una c
 Para ello tenemos las siguientes interfaces que determinan el comportamiento de las clases capaces de realizar este tipo de filtrado:
 
 - `FileFilter`: Para filtrar basándonos en el fichero (sus características). Obliga a implementar el método `boolean accept(File fichero)`.
-- `FilenameFilter`: Para filtrar basándonos en el nombre del fichero. Obliga a implementar el método `boolen accept(File padre, String nombre)`.
+- `FilenameFilter`: Para filtrar basándonos en el nombre del fichero. Obliga a implementar el método `boolean accept(File padre, String nombre)`.
 
 Recordad que podemos utilizar una clase anónima para este cometido o, dado que ambas son interfaces funcionales, podemos utilizar funciones lambda.
 
 Por ejemplo, podemos filtrar por extensión de la siguiente forma:
 ~~~java
     ...
-    File[] contenido = carpeta.listFiles(new FileFilter() {
+    File[] contenido = carpeta.listFiles(new FilenameFilter() {
 			
         @Override
         public boolean accept(File padre, String nombre) {
@@ -548,9 +548,9 @@ Veamos un par de ejemplos de ficheros XML que contienen la misma información:
 Como se puede apreciar la información que contienen es la misma. En el primero se utilizan los atributos del elemento `persona` para almacenar los valores. En el segundo se utilizan diferentes elementos dentro de cada elemento `persona`.
 
 La API para trabajar con ficheros XML está dividida en los siguientes paquetes:
-- `javax.xml.parsers`: agrupa las funcionalidades para realizar el procesamiento de un fichero XML y crear la estructura de árbol que representa dicho fichero. Dicho árbol es llamado **árbol DOM**. Algunas de las clases y/o interfaces que nos ofrece son: `DocumentBuilder` y `DocumentSbuilderFactory`. 
+- `javax.xml.parsers`: agrupa las funcionalidades para realizar el procesamiento de un fichero XML y crear la estructura de árbol que representa dicho fichero. Dicho árbol es llamado **árbol DOM**. Algunas de las clases y/o interfaces que nos ofrece son: `DocumentBuilder` y `DocumentBuilderFactory`. 
 - `javax.xml.transformer`: agrupa las funcionalidades para transformar el árbol DOM en un fichero. Algunas de las clases y/o interfaces que nos ofrece son: `Transform`, `TransformFactory`, `DOMSource` y `StreamResult`.
-- `org.w3c.dom`: agrupa las funcionalidades para trabajar con el árbolDOM. Algunas de las clases y/o interfaces que nos ofrece son: `Document`, `Element`, `Node` y `NodeList`.
+- `org.w3c.dom`: agrupa las funcionalidades para trabajar con el árbol DOM. Algunas de las clases y/o interfaces que nos ofrece son: `Document`, `Element`, `Node` y `NodeList`.
 
 Para leer un fichero XML debemos crear un objeto de la clase `DocumentBuilder`, utilizando su fábrica y así obtener el árbol DOM. Partiendo de un árbol DOM ya creado, podemos escribirlo a un fichero utilizando un objeto de la clase `Tranform`, utilizando su fábrica, para posteriormente tranformar el árbol en un fichero. Dado que estas operaciones son muy comunes, te las he agrupado en una clase de utilidades que provee los métodos para leer un fichero XML y devolver su árbol DOM y viceversa.
 

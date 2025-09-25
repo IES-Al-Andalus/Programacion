@@ -563,11 +563,11 @@ Para que todos y todas utilicemos la misma sintaxis del lenguaje utilizado por P
     	Leer nota
 
     	//Procesamiento
-    	Si (nota>=5) Entonces
-			calificacion <- 'aprobado'
-		SiNo
-			calificacion <- 'suspenso'
-		FinSi
+			Si (nota>=5) Entonces
+				calificacion <- 'aprobado'
+			SiNo
+				calificacion <- 'suspenso'
+			FinSi
 
     	//Escritura
     	Escribir "Estás " calificacion

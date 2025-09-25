@@ -51,19 +51,19 @@ Una variable en un algoritmo es un identificador en el que podemos almacenar inf
 
 El nombre o identificador de la variable debe comenzar con letras, y puede contener solo letras, números y el guión bajo.
 
-- Para acostumbrarnos, debe empezar en minúscula y si queremos utilizar varias palabras para nombrarla, las pondremos juntas y la segunda y restantes comenzarán en mayúscula: `numero`, `numCifras`, `fechaNacimiento`...
+- Para acostumbrarnos, debe empezar en minúscula y si queremos utilizar varias palabras para nombrarla, las pondremos juntas y la segunda y restantes comenzarán en mayúscula: `nota`, `numCifras`, `fechaNacimiento`...
 - No debe coincidir con una palabra reservada o función del lenguaje, para no generar ambigüedad.
 - El nombre de una variable debe ser lo más explicativo posible y así nos ayudará a comprender su cometido.
 - Toda variable tiene un tipo de dato asociado y sólo podrá contener datos de ese tipo (aunque en algunos lenguajes de programación esta afirmación no es cierta).
 - Aunque en PSeInt no es obligatorio, debemos acostumbrarnos a definir la variable antes de utilizarla:
 
-  `numero Es Entero`
+  `nota Es Entero`
 
-  `Definir numero Como Entero`
+  `Definir nota Como Entero`
 
-  `numero, numCifra Son Enteros`
+  `nota, numCifra Son Enteros`
 
-  `Definir numero, numCifras Como Enteros`
+  `Definir nota, numCifras Como Enteros`
 
 ## Tipos de datos
 

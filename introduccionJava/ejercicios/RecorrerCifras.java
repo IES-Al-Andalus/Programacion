@@ -9,6 +9,7 @@ public class RecorrerCifras {
             System.out.print("Escribe un número mayor que cero: ");
             numero = Entrada.entero();
         } while (numero <= 0);
+        
         int numeroCifras = (int) Math.log10(numero) + 1;
 
         System.out.println("Recorro las cifras de derecha a izquierda");

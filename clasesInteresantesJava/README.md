@@ -1082,11 +1082,13 @@ Otra forma sería hacerlo con las funciones lambda de java 8:
 		~~~java
 		package clasesdominio;
 
+		import java.util.Objects;
+
 		public class SujetoEstudio {
 			private String nombre;
 			private double peso;
 			private double altura;
-
+			
 			public SujetoEstudio(String nombre, double peso, double altura) {
 				setNombre(nombre);
 				setPeso(peso);
@@ -1098,19 +1100,17 @@ Otra forma sería hacerlo con las funciones lambda de java 8:
 			}
 
 			private void setNombre(String nombre) {
-				if (nombre == null) {
-					throw new IllegalArgumentException("El nombre de un sujeto no puede ser nulo.");
-				}
-				if (nombre.equals("")) {
+				Objects.requireNonNull(nombre, "El nombre de un sujeto no puede ser nulo.");
+				if (nombre.isBlank()) {
 					throw new IllegalArgumentException("El nombre de un sujeto no puede estar vacío.");
 				}
 				this.nombre = nombre;
 			}
-
+			
 			public double getPeso() {
 				return peso;
 			}
-
+			
 			private void setPeso(double peso) {
 				if (peso <= 0) {
 					throw new IllegalArgumentException("El peso del sujeto debe ser mayor que cero");
@@ -1121,14 +1121,14 @@ Otra forma sería hacerlo con las funciones lambda de java 8:
 			public double getAltura() {
 				return altura;
 			}
-
+			
 			private void setAltura(double altura) {
 				if (altura <= 0) {
 					throw new IllegalArgumentException("La altura del sujeto debe ser mayor que cero");
 				}
 				this.altura = altura;
 			}
-
+			
 			public double getIMC() {
 				return peso / (altura*altura);
 			}
@@ -1157,36 +1157,36 @@ Otra forma sería hacerlo con las funciones lambda de java 8:
 				int posicionMaximoImc = 0;
 				int sujetosPorEncimaMedia = 0;
 				int sujetosPorDebajoMedia = 0;
-
+				
 				int cantidadSujetos;
 				do {
 					System.out.print("Introduce la cantidad de sujetos a estudiar: ");
 					cantidadSujetos = Entrada.entero();
 				} while (cantidadSujetos < 3);
-
+				
 				SujetoEstudio[] sujetos = new SujetoEstudio[cantidadSujetos];
-				double[] imcs = new double[cantidadSujetos];
 
 				for (int i = 0; i < cantidadSujetos; i++) {
 					sujetos[i] = leerSujeto(i + 1);
-					imcs[i] = sujetos[i].getIMC();
-					if (imcs[i] < minimoImc) {
-						minimoImc = imcs[i];
+					double imc = sujetos[i].getIMC();
+					if (imc < minimoImc) {
+						minimoImc = imc;
 						posicionMinimoImc = i;
 					}
-					if (imcs[i] > maximoImc) {
-						maximoImc = imcs[i];
+					if (imc > maximoImc) {
+						maximoImc = imc;
 						posicionMaximoImc = i;
 					}
-					sumaImcs += imcs[i];
+					sumaImcs += imc;
 				}
 				mediaImcs = sumaImcs / cantidadSujetos;
 
-				for (int i = 0; i < imcs.length; i++) {
-					if (imcs[i] < mediaImcs) sujetosPorEncimaMedia++;
-					if (imcs[i] > mediaImcs) sujetosPorDebajoMedia++;
+				for (SujetoEstudio sujeto : sujetos) {
+					double imc = sujeto.getIMC();
+					if (imc < mediaImcs) sujetosPorEncimaMedia++;
+					if (imc > mediaImcs) sujetosPorDebajoMedia++;
 				}
-
+				
 				System.out.printf("%nResultados del estudio%n");
 				System.out.printf("----------------------%n");
 				System.out.printf("El sujeto con mayor IMC es: %s%n", sujetos[posicionMaximoImc].getNombre());
@@ -1195,7 +1195,7 @@ Otra forma sería hacerlo con las funciones lambda de java 8:
 				System.out.printf("Hay %d sujetos por encima de la media.%n", sujetosPorEncimaMedia);
 				System.out.printf("Hay %d sujetos por debajo de la media.%n", sujetosPorDebajoMedia);
 			}
-
+			
 			private static SujetoEstudio leerSujeto(int numero) {
 				String nombre;
 				do {
@@ -1216,7 +1216,6 @@ Otra forma sería hacerlo con las funciones lambda de java 8:
 			}
 
 		}
-
 		~~~
 		[Descargar clase **CalculoIMC.java**](ejercicios/arrays/CalculoIMC.java)
 

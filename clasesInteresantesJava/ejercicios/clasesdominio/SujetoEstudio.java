@@ -1,5 +1,7 @@
 package clasesdominio;
 
+import java.util.Objects;
+
 public class SujetoEstudio {
 	private String nombre;
 	private double peso;
@@ -16,10 +18,8 @@ public class SujetoEstudio {
 	}
 
 	private void setNombre(String nombre) {
-		if (nombre == null) {
-			throw new IllegalArgumentException("El nombre de un sujeto no puede ser nulo.");
-		}
-		if (nombre.equals("")) {
+		Objects.requireNonNull(nombre, "El nombre de un sujeto no puede ser nulo.");
+		if (nombre.isBlank()) {
 			throw new IllegalArgumentException("El nombre de un sujeto no puede estar vacío.");
 		}
 		this.nombre = nombre;
@@ -52,3 +52,4 @@ public class SujetoEstudio {
 	}
 
 }
+

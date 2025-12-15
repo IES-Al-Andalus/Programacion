@@ -23,27 +23,27 @@ public class CalculoIMC {
 		} while (cantidadSujetos < 3);
 		
 		SujetoEstudio[] sujetos = new SujetoEstudio[cantidadSujetos];
-		double[] imcs = new double[cantidadSujetos];
 
 		for (int i = 0; i < cantidadSujetos; i++) {
 			sujetos[i] = leerSujeto(i + 1);
-			imcs[i] = sujetos[i].getIMC();
-			if (imcs[i] < minimoImc) {
-				minimoImc = imcs[i];
+			double imc = sujetos[i].getIMC();
+			if (imc < minimoImc) {
+				minimoImc = imc;
 				posicionMinimoImc = i;
 			}
-			if (imcs[i] > maximoImc) {
-				maximoImc = imcs[i];
+			if (imc > maximoImc) {
+				maximoImc = imc;
 				posicionMaximoImc = i;
 			}
-			sumaImcs += imcs[i];
+			sumaImcs += imc;
 		}
 		mediaImcs = sumaImcs / cantidadSujetos;
 
-		for (int i = 0; i < imcs.length; i++) {
-			if (imcs[i] < mediaImcs) sujetosPorEncimaMedia++;
-			if (imcs[i] > mediaImcs) sujetosPorDebajoMedia++;
-		}
+        for (SujetoEstudio sujeto : sujetos) {
+            double imc = sujeto.getIMC();
+            if (imc < mediaImcs) sujetosPorEncimaMedia++;
+            if (imc > mediaImcs) sujetosPorDebajoMedia++;
+        }
 		
 		System.out.printf("%nResultados del estudio%n");
 		System.out.printf("----------------------%n");
